@@ -1,0 +1,221 @@
+﻿using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Unity.VisualScripting;
+using UnityEngine;
+
+namespace SephiriaMod
+{
+    public class Charm_PallasJoker : Charm_StatusInstance
+    {
+        public string damageId = "Charm_PallasJoker";
+        public int[] countByLevels = [2, 3, 4, 5, 6];
+        public static ItemPosition[] Directions = new ItemPosition[8]
+        {
+        new ItemPosition(-1, 0),
+        new ItemPosition(1, 0),
+        new ItemPosition(0, -1),
+        new ItemPosition(0, 1),
+        new ItemPosition(-1, -1),
+        new ItemPosition(1, -1),
+        new ItemPosition(-1, 1),
+        new ItemPosition(1, 1)
+        };
+
+        private List<Charm_PallasCard> cards = new List<Charm_PallasCard>();
+        private List<Charm_PallasAce> aces = new List<Charm_PallasAce>();
+
+        public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
+        {
+            string value = (showAllLevel ? (countByLevels.SafeRandomAccess(0) + "→" + countByLevels.SafeRandomAccess(maxLevel)) : countByLevels.SafeRandomAccess(LevelToIdx(level)).ToString());
+            return new Loc.KeywordValue[1]
+            {
+            new Loc.KeywordValue("COUNT", value, Charm_Basic.GetPositiveColor(virtualLevelOffset))
+            };
+        }
+        protected override void OnEnabledEffect()
+        {
+            base.OnEnabledEffect();
+            ModEvent.OnPallasSpawnChance += OnPallasSpawnChance;
+            ModEvent.OnAceSpawnChance += OnAceSpawnChance;
+            ClearCard();
+            SearchCard();
+        }
+
+        private void OnPallasSpawnChance(Charm_PallasCard instance, int idx)
+        {
+            if (instance.NetworkAvatar != base.NetworkAvatar)
+                return;
+            float num = instance.defaultChance + instance.throwChanceByLevel.SafeRandomAccess(instance.CurrentLevelToIdx()) * (float)Mathf.Clamp(base.NetworkAvatar.GetCustomStat(ECustomStat.Luck), 0, 9999);
+            num *= instance.WeaponController.currentWeapon.AttackWeightPerSwing;
+            num -= 100f;
+            if (num < 0f || UnityEngine.Random.Range(0f, 1f) > num / 100f)
+            {
+                return;
+            }
+
+            int count = countByLevels.SafeRandomAccess(CurrentLevelToIdx());
+            float anglePer = 8f;
+            float startAngle = anglePer * (float)(count - 1) * 0.5f;
+            float angle = (base.WeaponController.aimedPositionClientside - base.WeaponController.transform.position).GetAngle();
+            for (int q = 0; q < count; q++)
+            {
+                Vector3 vector3FromAngle = HorayUtility.GetVector3FromAngle(angle + (0f - startAngle + anglePer * q));
+                Vector3 motionDataBegin = base.NetworkAvatar.transform.position + vector3FromAngle * 0.2f;
+                Vector3 motionDataEnd = base.NetworkAvatar.transform.position + vector3FromAngle * 8f;
+                bool flag = UnityEngine.Random.Range(0f, 1f) < 0.2f;
+                Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), base.NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, instance.bulletDamage, instance.staggeringLevel, instance.externalForcePower, base.NetworkAvatar, base.NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), base.NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
+                bullet.pierceCreatureCount = 2;
+                Vector3 pos = base.NetworkAvatar.transform.position + (Vector3)(UnityEngine.Random.insideUnitCircle * 3f);
+                bullet.SetSpeedScale(2);
+
+            }
+        }
+        private void OnAceSpawnChance(Charm_PallasAce instance, int idx)
+        {
+            if (instance.NetworkAvatar != base.NetworkAvatar)
+                return;
+            float num = instance.defaultChance + instance.throwChanceByLevel.SafeRandomAccess(instance.CurrentLevelToIdx()) * (float)Mathf.Clamp(base.NetworkAvatar.GetCustomStat(ECustomStat.Luck), 0, 9999);
+            num *= instance.WeaponController.currentWeapon.AttackWeightPerSwing;
+            num -= 100f;
+            if (num < 0f || UnityEngine.Random.Range(0f, 1f) > num / 100f)
+            {
+                return;
+            }
+
+            int count = countByLevels.SafeRandomAccess(CurrentLevelToIdx());
+            float anglePer = 8f;
+            float startAngle = anglePer * (float)(count - 1) * 0.5f;
+            float angle = (base.WeaponController.aimedPositionClientside - base.WeaponController.transform.position).GetAngle();
+            for (int q = 0; q < count; q++)
+            {
+                Vector3 vector3FromAngle = HorayUtility.GetVector3FromAngle(angle + (0f - startAngle + anglePer * q));
+                Vector3 motionDataBegin = base.NetworkAvatar.transform.position + vector3FromAngle * 0.2f;
+                Vector3 motionDataEnd = base.NetworkAvatar.transform.position + vector3FromAngle * 8f;
+                bool flag = UnityEngine.Random.Range(0f, 1f) < 0.2f;
+                Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), base.NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, instance.bulletDamage, instance.staggeringLevel, instance.externalForcePower, base.NetworkAvatar, base.NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), base.NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
+                bullet.pierceCreatureCount = 2;
+                Vector3 pos = base.NetworkAvatar.transform.position + (Vector3)(UnityEngine.Random.insideUnitCircle * 3f);
+                bullet.SetSpeedScale(2);
+
+            }
+        }
+
+        protected override void OnDisabledEffect()
+        {
+            base.OnDisabledEffect();
+            ModEvent.OnPallasSpawnChance -= OnPallasSpawnChance;
+            ModEvent.OnAceSpawnChance -= OnAceSpawnChance;
+            ClearCard();
+        }
+
+        public override void OnCharmEffectRefreshed()
+        {
+            base.OnCharmEffectRefreshed();
+            ClearCard();
+            if (IsEffectEnabled)
+            {
+                SearchCard();
+            }
+        }
+
+        private void ClearCard()
+        {
+            foreach (Charm_PallasCard card in cards)
+            {
+                card.SetEnhancement(false);
+            }
+            foreach (Charm_PallasAce ace in aces)
+            {
+                ace.SetEnhancement(false);
+            }
+
+            cards.Clear();
+            aces.Clear();
+        }
+
+        private void SearchCard()
+        {
+            ItemPosition[] array = Directions;
+            foreach (ItemPosition itemPosition in array)
+            {
+                NewItemOwnInstance newItemOwnInstance = base.NetworkAvatar.Inventory.FindItem(new ItemPosition(base.Item.XIdx, base.Item.YIdx) + itemPosition);
+                if (newItemOwnInstance != null)
+                {
+                    Charm_Basic charm = newItemOwnInstance.Charm;
+                    if ((bool)charm && charm is Charm_PallasCard card)
+                    {
+                        card.SetEnhancement(true);
+                        cards.Add(card);
+                    }
+                    else if ((bool)charm && charm is Charm_PallasAce ace)
+                    {
+                        ace.SetEnhancement(true);
+                        aces.Add(ace);
+                    }
+                }
+            }
+        }
+
+        public override bool Weaved()
+        {
+            return true;
+        }
+
+
+        [HarmonyPatch(typeof(Charm_PallasCard), nameof(Charm_PallasCard.BuildKeywords), new Type[] { typeof(UnitAvatar), typeof(int), typeof(int), typeof(bool), typeof(bool) })]
+        public static class KeywordsPatch
+        {
+            static void Postfix(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus, Charm_PallasCard __instance, ref Loc.KeywordValue[] __result)
+            {
+                if (avatar == null)
+                    return;
+
+                float num = 1f;
+                if ((bool)avatar && avatar.TryGetComponent<WeaponControllerSimple>(out var component) && (bool)component.currentWeapon)
+                {
+                    num = component.currentWeapon.AttackWeightPerSwing;
+                }
+                ItemPosition[] array = Directions;
+                foreach (ItemPosition itemPosition in array)
+                {
+                    NewItemOwnInstance newItemOwnInstance = avatar.Inventory.FindItem(new ItemPosition(__instance.xIdx, __instance.yIdx) + itemPosition);
+                    if (newItemOwnInstance != null)
+                    {
+                        Charm_Basic charm = newItemOwnInstance.Charm;
+                        if ((bool)charm && charm is Charm_PallasJoker card)
+                        {
+                            float[] throwChance = [0f, 5f, 10f, 15f, 20f];
+                            float defaultChance = 100f;
+                            string value = (showAllLevel ? ((throwChance.SafeRandomAccess(0) * num).ToString("0.#") + "→" + (throwChance.SafeRandomAccess(__instance.maxLevel) * num).ToString("0.#") + "%") : ((throwChance.SafeRandomAccess(__instance.LevelToIdx(level)) * num).ToString("0.#") + "%"));
+                            float num2 = defaultChance * num;
+
+                            if (!ignoreAvatarStatus)
+                            {
+                                float num3 = num2 + throwChance.SafeRandomAccess(__instance.LevelToIdx(level)) * (float)Mathf.Clamp(avatar.GetCustomStat(ECustomStat.Luck), 0, 9999) * num;
+                                __result =
+                                    [
+                                        new Loc.KeywordValue("DEFAULT", num2.ToString("0.#")),
+                                    new Loc.KeywordValue("CHANCE", value, Charm_Basic.GetPositiveColor(virtualLevelOffset)),
+                                    new Loc.KeywordValue("DAMAGE", "30"),
+                                    new Loc.KeywordValue("CURRENT", num3.ToString("0.#") + "%")
+                                    ];
+                            }
+                            else
+                            {
+                                __result =
+                                    [
+                                        new Loc.KeywordValue("DEFAULT", num2.ToString("0.#")),
+                                    new Loc.KeywordValue("CHANCE", value, Charm_Basic.GetPositiveColor(virtualLevelOffset)),
+                                    new Loc.KeywordValue("DAMAGE", "30")
+                                    ];
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
