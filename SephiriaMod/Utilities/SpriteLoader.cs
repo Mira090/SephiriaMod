@@ -99,33 +99,5 @@ namespace SephiriaMod.Utilities
             //sprite.bounds.extents = new Vector3(sprite.bounds.extents.x * 6, sprite.bounds.extents.y * 6, sprite.bounds.extents.z);
             return sprite;
         }
-        [Obsolete("一部画像が正しく保存されない。保存機能は別プロジェクトに移行")]
-        public static void SaveSprite(Sprite sprite, string name)
-        {
-            if (sprite == null)
-                return;
-            SaveSprite(sprite.texture, name);
-        }
-        [Obsolete("一部画像が正しく保存されない。保存機能は別プロジェクトに移行")]
-        public static void SaveSprite(Texture2D texture, string name)
-        {
-            if (texture == null)
-                return;
-            string dllPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            DirectoryInfo directoryInfo = Directory.GetParent(dllPath);
-            string dllDirectory = directoryInfo.FullName;
-            var path = dllDirectory + @"\Outputs\" + name + ".png";
-            //var copyTexture = new Texture2D(texture.width, texture.height, texture.format, false);
-            // テクスチャのコピー
-            //Graphics.CopyTexture(texture, copyTexture);
-
-            //テクスチャの外側を定義
-            //Texture2D tex = new Texture2D(copyTexture.width, copyTexture.height);
-            //ピクセル情報を入れる処理
-            //tex.SetPixels(copyTexture.GetPixels());
-            //エンコード処理
-            var png = texture.EncodeToPNG();
-            File.WriteAllBytes(path, png);
-        }
     }
 }

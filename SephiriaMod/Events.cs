@@ -21,8 +21,6 @@ namespace SephiriaMod
         public static event Action<WeaponSimple_Crossbow> OnSubAttackCrossbow;
         public static event Action<WeaponSimple_Katana> OnSubAttackKatana;
         public static event Action<WeaponSimple_GreatSword> OnSubAttackGreatSword;
-        [Obsolete]
-        public static event Action<Charm_SummonUnit, DamageInstance> OnSummonUnitDied;
         public static event Action<Charm_PallasCard, int> OnPallasSpawnChance;
         public static event Action<Charm_PallasAce, int> OnAceSpawnChance;
         public static event Action<string, uint, int> OnValueRecieved;
@@ -153,15 +151,6 @@ namespace SephiriaMod
             static void Postfix(WeaponSimple_GreatSword __instance)
             {
                 OnSubAttackGreatSword?.Invoke(__instance);
-            }
-        }
-        [Obsolete]
-        [HarmonyPatch(typeof(Charm_SummonUnit), "HandleUnitDie", new Type[] { typeof(DamageInstance) })]
-        public static class Charm_SummonUnitHandleUnitDiePatch
-        {
-            static void Postfix(DamageInstance obj, Charm_SummonUnit __instance)
-            {
-                OnSummonUnitDied?.Invoke(__instance, obj);
             }
         }
         [HarmonyPatch(typeof(Charm_PallasCard), "OnBeginAttackAnimation", new Type[] { typeof(int) })]

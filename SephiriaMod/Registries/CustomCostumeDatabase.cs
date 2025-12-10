@@ -240,69 +240,6 @@ namespace SephiriaMod.Registries
 
             return entity;
         }
-        [Obsolete]
-        public static GameObject CreateGameObjectOld(this CustomCostumeEntity entity)
-        {
-            var example = CostumeDatabase.GetAll().First().costumePrefab.GetComponent<PlayerAvatarCostume>();
-            var egmaterials = example.gameObject.GetComponent<SpriteRenderer>().materials;
-            var egmaterial = example.gameObject.GetComponent<SpriteRenderer>().material;
-            var g = new GameObject();
-            g.name = entity.id;
-            var renderer = g.AddComponent<SpriteRenderer>();
-            renderer.sprite = entity.animationData[0].timeline[0].sprite;
-            renderer.materials = egmaterials;
-            renderer.material = egmaterial;
-            var animator = g.AddComponent<Animator2D_MultipleSpriteRenderer>();
-            var set = ScriptableObject.CreateInstance<AnimationSet>();
-            set.name = entity.id;
-            set.sprites = entity.animationData.ToList();
-            animator.ChangeSet(set);
-            var avatar = g.AddComponent<PlayerAvatarCostume>();
-            avatar.bodyScale = 1;
-            avatar.moveFxPrefab = example.moveFxPrefab;
-            avatar.movementColliderRadius = entity.movementCollisionRadius;
-
-            var hitbox = new GameObject();
-            hitbox.name = "Hitbox";
-            hitbox.transform.SetParent(g.transform);
-            var collider = hitbox.AddComponent<CircleCollider2D>();
-            collider.radius = 0.25f * entity.hitboxSize;
-            collider.offset = new Vector2(0, 0.25f * entity.hitboxSize);
-            var hitboxScript = hitbox.AddComponent<Hitbox>();
-
-            var stencilSolid = new GameObject();
-            stencilSolid.name = "StencilSolid";
-            stencilSolid.transform.SetParent(g.transform);
-            var stencilRenderer = stencilSolid.AddComponent<SpriteRenderer>();
-            stencilRenderer.color = new Color(1, 1, 1, 0.4118f);
-            stencilRenderer.materials = egmaterials;
-            stencilRenderer.material = egmaterial;
-
-            var water = new GameObject();
-            water.name = "WaterReflection";
-            water.transform.SetParent(g.transform);
-            var waterRenderer = water.AddComponent<SpriteRenderer>();
-            waterRenderer.color = new Color(0.2453f, 0.2453f, 0.2453f);
-            waterRenderer.materials = egmaterials;
-            waterRenderer.material = egmaterial;
-
-            var sync = water.AddComponent<SyncLocalPosition>();
-            sync.flipY = true;
-
-            avatar.hitbox = hitboxScript;
-            avatar.stencilSolid = stencilRenderer;
-            avatar.waterReflectionObject = water.transform;
-            animator.spriteRenderers = [renderer, stencilRenderer, waterRenderer];
-
-            renderer.size = Vector2.one;
-            /*
-            var bounds = renderer.localBounds;
-            bounds.center = new Vector3(0, 0.41f, 0);
-            renderer.localBounds = bounds;*/
-
-            entity.costumePrefab = g;
-            return g;
-        }
         public static GameObject CreateGameObject(this CustomCostumeEntity entity)
         {
             var example = CostumeDatabase.GetAll().First().costumePrefab.GetComponent<PlayerAvatarCostume>();
