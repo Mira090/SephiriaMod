@@ -31,15 +31,11 @@ namespace SephiriaMod
             }
         }
         public static Dictionary<int, string> ItemIdDic = new Dictionary<int, string>();
-        public Sprite NewKeywordSprite;
         /// <summary>
         /// Melonが登録された後に呼び出されます。このコールバックはMelonLoaderが完全に初期化されるまで待機します。このコールバック以降は、ゲーム/Unity の参照を安全に行うことができます。 
         /// </summary>
         public override void OnInitializeMelon()
         {
-            // T は対象の ScriptableObject クラス
-            //SephiriteSpawner a;
-            //PassiveObject_StartingItem
             LoggerInstance.Msg("Initialized.");
         }
         /// <summary>
@@ -48,15 +44,9 @@ namespace SephiriaMod
         public override void OnLateInitializeMelon()
         {
             CustomSpriteAsset.InitSprites();
-            //NetworkManager.singleton.spawnPrefabs.Add(ResourcesLoadAllPatch.StoneTabletMalice);
-            //NetworkManager.singleton.spawnPrefabs.Add(ResourcesLoadAllPatch.CharmPurgatory);
-            //NetworkManager.singleton.spawnPrefabs.Add(ResourcesLoadAllPatch.CharmReservedMPEvasion);
-            //ResourcesLoadAllPatch.StoneTabletMalice.SetActive(false);
-            //var a2 = typeof(NetworkIdentity).GetField("hasSpawned");
-            //a2.SetValue(ResourcesLoadAllPatch.StoneTabletMalice.GetComponent<NetworkIdentity>(), false);
+
             Data.Init();
             LoggerInstance.Msg("LateInitialized.");
-            //ModEvent.Charm_TuningForksPatch.Init();
             /*
             var guid = new FMOD.GUID();
             guid.Data1 = -1656330595;
@@ -70,13 +60,6 @@ namespace SephiriaMod
         {
             if(sceneName == "MainWorld")
             {
-                //return;
-                //TMP_SpriteAsset keywords = TMP_Settings.defaultSpriteAsset;
-                //foreach (var keyword in keywords.spriteCharacterTable)
-                //LoggerInstance.Msg($"keyword[{keyword.name}]: {keyword.glyph.glyphRect.x}, {keyword.glyph.glyphRect.y}");
-                //keywords.spriteSheet = NewKeywordSprite.texture;
-                //keywords.UpdateLookupTables();
-
                 CustomSpriteAsset.InitSpriteAsset();
             }
         }
@@ -106,15 +89,6 @@ namespace SephiriaMod
                 if (item.name.Contains("1039_AutoMagic"))
                 {
                     //item.activeType = EItemActiveType.Default;
-                }
-                if (item.name.Contains("1185_Burn") || item.name.Contains("1213_MagmaBead") || item.name.Contains("1128_FlameBall") || item.name.Contains("1153_FlamePlantRoot"))
-                {
-                    //item.categories.Clear();
-                    //item.categories = new List<string> { ItemCategories.Purgatory };
-                }
-                if (item.name.Contains("1214_FireFeather") || item.name.Contains("1018_WarmStone") || item.name.Contains("1193_BurnExplosion"))
-                {
-                    //item.categories = new List<string> { ItemCategories.Ember, ItemCategories.Purgatory };
                 }
                 if (item.name.Contains("1123_FinalHP") || item.name.Contains("1124_FinalMP"))
                 {
@@ -244,7 +218,6 @@ namespace SephiriaMod
             static void Postfix(string path, Type systemTypeInstance, ref UnityEngine.Object[] __result)
             {
                 //Melon<Core>.Logger.Msg("Postfix: (" + systemTypeInstance.ToString() + ") " + path);
-                // 例えば GameObject プレハブを追加したい場合
                 if (systemTypeInstance == typeof(ItemEntity) && path == "Item")
                 {
                     var list = __result.ToList();
