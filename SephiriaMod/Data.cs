@@ -273,7 +273,7 @@ namespace SephiriaMod
         /// Item_Bond_Maker_Name
         /// 恋結びのリボン
         /// Item_Bond_Maker_FlavorText
-        /// 彼女を作れず群れを追われたオスの孤独死
+        /// フレーバーテキスト募集中
         /// Item_Bond_Maker_Effect
         /// このアーティファクトのレベルが{LEVEL}になると、このアイテムと左右の枠にあるアーティファクトは壊れる。左右の枠にあったアーティファクトのカテゴリーに含まれるランダムな絆アーティファクト1つを獲得する。
         /// </summary>

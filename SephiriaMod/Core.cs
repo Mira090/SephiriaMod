@@ -107,7 +107,7 @@ namespace SephiriaMod
                 if(item.name == "1255_PlanetFire" || item.name == "1256_PlanetIce" || item.name == "1257_PlanetLightning")
                 {
                     //item.name == "1254_PlanetComet"
-                    item.activeType = EItemActiveType.Default;
+                    //item.activeType = EItemActiveType.Default;
                 }
                 if (item.name.Contains("1166_MagicCritical") || item.name.Contains("1169_MagicDamageBySpeed") || item.name.Contains("1075_GoldIsDamage") || item.name.Contains("1165_RylieWatch"))
                 {
