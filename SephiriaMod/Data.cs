@@ -46,18 +46,10 @@ namespace SephiriaMod
         /// </summary>
         public static ModStoneTablet Transcendent { get; } = ModStoneTablet.Create("Transcendent", "UP 5\nDOWN 5\nLEFT -2\nRIGHT -2", false).SetRarity(EItemRarity.Legend).SetCannotBeReward();
         /// <summary>
-        /// Item_Purgatory_Name
-        /// 火雷石
-        /// Item_Purgatory_FlavorText
-        /// 雷の呼吸、一の型――
-        /// </summary>
-        //public static ModCharmStatus Purgatory { get; } = ModCharmStatus.Create("Purgatory", 3, CreateStatusGroup("DARK_CLOUD_RESTORE_DURING_BATTLE", 2, 5, 8), CreateStatusGroup("BURN_STACK", 0, 1, 1))
-        //.SetCategory(ItemCategories.DarkCloud, ItemCategories.Ember).SetIsUniqueEffect().SetRarity(EItemRarity.Uncommon);
-        /// <summary>
         /// Item_Reserved_MP_Evasion_Name
         /// 鉄扇
         /// Item_Reserved_MP_Evasion_FlavorText
-        /// センスあるギャグで風を起こさんなな！　風を起こすのは扇子か！
+        /// フレーバーテキスト募集中
         /// Item_Reserved_MP_Evasion_Effect
         /// <tag=MP>を{MANA}<tag=ReservedMP>して以下の効果を得る
         /// </summary>
@@ -103,7 +95,7 @@ namespace SephiriaMod
         /// Item_Max_HP_Attack_Name
         /// 溢れる生命
         /// Item_Max_HP_Attack_FlavorText
-        /// せめてストーカーするなら女の子がいい
+        /// フレーバーテキスト募集中
         /// Item_Max_HP_Attack_Effect
         /// 敵にダメージを与える時、追加で最大<tag=HP>の{PERCENT}%のダメージを与える\n[ダメージ：{DAMAGE}]
         /// </summary>
@@ -424,7 +416,7 @@ namespace SephiriaMod
         /// Item_Double_Dash_Name
         /// 晴れ雲
         /// Item_Double_Dash_FlavorText
-        /// 女の子は柔らかいくらいがちょうどいいから
+        /// 空高く舞うフレーバーテキスト募集中
         /// Item_Double_Dash_Effect
         /// ダッシュした時、<tag=DashCount>が1回復し、もう一度ダッシュする
         /// </summary>
@@ -936,7 +928,7 @@ namespace SephiriaMod
         }).SetBladeSprite(Vector3.zero).SetHeadSprite();
         /// <summary>
         /// Weapon_Katana_Ice_T3_Flame_Name
-        /// アオイ・シネリス
+        /// ソリス・フロスト
         /// WeaponAddon_Katana_Ice_T3_Flame_Effect
         /// <tag=WeaponAction_DirectAttack>時、対象に<tag=FireDamage>の40%分の追加ダメージを与えます。\n<tag=FrostRelic>でダメージを与えると、<tag=FlameSword>を投げます。
         public static ModWeapon KatanaIceFlame { get; } = ModWeaponKatana.CreateKatana("Katana_Ice_T3_Flame", 421, 419).SetMainPrefabModifier(main =>
