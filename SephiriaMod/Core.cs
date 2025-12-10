@@ -83,10 +83,6 @@ namespace SephiriaMod
         [HarmonyPatch(typeof(Resources), nameof(Resources.LoadAll), new Type[] { typeof(string), typeof(Type) })]
         class ResourcesLoadAllPatch
         {
-            //public static GameObject StoneTabletMalice = CreateStoneTablet("Malice", "O 1\nUP -1\nDOWN -1\nLEFT -1\nRIGHT -1");
-            //public static GameObject CharmPurgatory = CreateCharmStatus("Purgatory", 3, CreateStatusGroup("DARK_CLOUD_RESTORE_DURING_BATTLE", 2, 5, 8), CreateStatusGroup("BURN_STACK", 0, 1, 1));
-            //public static GameObject CharmReservedMPEvasion = CreateCharmStatus<Charm_ReservedMPEvasion>("Reserved_MP_Evasion", 4, new LocalizedString("Item_Charm_Reserved_MP_Evasion_Effect"), CreateStatusGroup("EVASION", 200, 300, 400, 500, 700), CreateStatusGroup("PHYSICAL_DAMAGE", 0, 0, 1, 2, 3));
-
             private static void ModifyItemEntity(ItemEntity item)
             {
                 if (item.name.Contains("3022_MagicCharm_MeteorShower"))
@@ -111,18 +107,6 @@ namespace SephiriaMod
                 {
                     //item.activeType = EItemActiveType.Default;
                 }
-                /*
-                if (item.name.Contains("1193_BurnExplosion"))
-                {
-                    var prefab = item.resourcePrefab;
-                    if (prefab.TryGetComponent<Charm_BurnExplosion>(out var charm))
-                    {
-                        charm.explodeRadius = 5f;//3 =>
-                        charm.damageByLevel = new int[6] { 7, 16, 25, 34, 43, 52};//7の倍数 => 
-                        //charm.explosionFxPrefab = UnityEngine.Object.Instantiate(charm.explosionFxPrefab);
-                        //charm.explosionFxPrefab.transform.localScale = Vector3.one * 2;
-                    }
-                }*/
                 if (item.name.Contains("1185_Burn") || item.name.Contains("1213_MagmaBead") || item.name.Contains("1128_FlameBall") || item.name.Contains("1153_FlamePlantRoot"))
                 {
                     //item.categories.Clear();
@@ -221,16 +205,7 @@ namespace SephiriaMod
             }
             private static void ModifyItemCategoryEntity(ItemCategoryEntity category)
             {
-                /*
-                if(category.id == ItemCategories.Precision)
-                {
-                    category.setStatus = new ItemCategoryEntity.SetTarget[5] {
-                new ItemCategoryEntity.SetTarget() { itemCount = 2, status = "CRITICAL/400" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 3, status = "CRITICAL/800" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 4, status = "CRITICAL/1200" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 5, status = "CRITICAL/1600" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 6, status = "CRITICAL/2000" }};
-                }*/
+
             }
             private static void ModifyStatusEntity(StatusEntity status)
             {
@@ -275,88 +250,9 @@ namespace SephiriaMod
                     var list = __result.ToList();
 
                     Data.Register(list);
-                    /*
-                    var riteki = ScriptableObject.CreateInstance<ItemEntity>();
-                    riteki.name = "Item_StoneTablet_Malice";
-                    riteki.activeType = EItemActiveType.Default;
-                    riteki.aName = new LocalizedString("Item_StoneTablet_Malice_Name");
-                    //riteki.aFlavorText = null;
-                    riteki.categories = new();
-                    riteki.cost = 800;
-                    riteki.id = 8000;
-                    riteki.itemBehaviour = ItemEntity.EItemBehaviour.None;
-                    riteki.rarity = EItemRarity.Common;
-                    riteki.type = EItemType.StoneTablet;
-                    riteki.sapphirePrice = 4;
-                    //riteki.resourcePrefab = StoneTabletMalice;
-                    riteki.iconInWorld = IconInWorldTablet;
-
-                    //list.Add(riteki);
-
-                    var purgatory = ScriptableObject.CreateInstance<ItemEntity>();
-                    purgatory.name = "Item_Charm_Purgatory";
-                    purgatory.activeType = EItemActiveType.Default;
-                    purgatory.aName = new LocalizedString("Item_Charm_Purgatory_Name");
-                    purgatory.aFlavorText = new LocalizedString("Item_Charm_Purgatory_FlavorText");
-                    purgatory.categories = new() { "DARKCLOUD", "PURGATORY" };
-                    purgatory.cost = 600;
-                    purgatory.id = 8001;
-                    purgatory.itemBehaviour = ItemEntity.EItemBehaviour.None;
-                    purgatory.rarity = EItemRarity.Uncommon;
-                    purgatory.type = EItemType.Charm;
-                    purgatory.sapphirePrice = 3;
-                    //purgatory.resourcePrefab = CharmPurgatory;
-                    purgatory.icon = SpriteLoader.LoadSprite("Charm_Purgatory");
-                    purgatory.iconInWorld = IconInWorldCharm;
-
-                    //list.Add(purgatory);
-                    //list.Add(CreateCharmItemEntity("Reserved_MP_Evasion", ["STURDY", "SHADOW"], EItemRarity.Uncommon, CharmReservedMPEvasion));*/
 
                     foreach (var item in list)
                     {
-                        //Melon<Core>.Logger.Msg("tablet: " + item.ToString());
-                        /*
-                        if(item.ToString().Contains("Foundation"))
-                        {
-                            //Melon<Core>.Logger.Msg("contains");
-                            if (item is ItemEntity entity)
-                            {
-                                //Melon<Core>.Logger.Msg("entity");
-                                if (entity.resourcePrefab != null && entity.resourcePrefab.TryGetComponent<StoneTablet>(out StoneTablet t2))
-                                {
-                                    //riteki.resourcePrefab = GameObject.Instantiate(entity.resourcePrefab);
-                                    if (!NetworkManager.singleton.spawnPrefabs.Contains(riteki.resourcePrefab))
-                                    {
-                                        //NetworkManager.singleton.spawnPrefabs.Add(riteki.resourcePrefab);
-                                        //NetworkServer.Spawn(riteki.resourcePrefab);
-                                    }
-                                    //riteki.resourcePrefab.name = "StoneTablet-Malice";
-                                    //Melon<Core>.Logger.Msg("inventory: " + t2);
-                                    if (riteki.resourcePrefab.TryGetComponent<StoneTablet>(out StoneTablet t))
-                                    {
-                                        //t.query = "O 1\nUP -1\nDOWN -1\nLEFT -1\nRIGHT -1";
-                                        //Melon<Core>.Logger.Msg("not null: " + t2.Inventory != null);
-                                        //Melon<Core>.Logger.Msg(t2.Inventory.ToString());
-                                        //tablet.Connect(t2.Inventory);
-                                    }
-                                    if(riteki.resourcePrefab.TryGetComponent(out NetworkIdentity identity))
-                                    {
-                                        //Melon<Core>.Logger.Msg("id1: " + identity.assetId);
-                                        //var a = typeof(NetworkIdentity).GetProperty(nameof(identity.assetId));
-                                        //uint creatureAssetId = NetworkIdentity.AssetGuidToUint(Malice);
-                                        //a.SetValue(identity, creatureAssetId);
-
-                                        //var a2 = typeof(NetworkIdentity).GetField("hasSpawned");
-                                        //a2.SetValue(identity, false);
-                                    }
-                                    if (entity.resourcePrefab.TryGetComponent(out NetworkIdentity i2))
-                                    {
-                                        //Melon<Core>.Logger.Msg("id2: " + i2.assetId);
-                                    }
-                                }
-                            }
-                            //tablet.SetDirty();
-                        }*/
                         if (item is ItemEntity entity)
                             ModifyItemEntity(entity);
                     }
@@ -378,32 +274,6 @@ namespace SephiriaMod
                             }
                         }
                     }
-                    /*
-                    var burnSpeed = ScriptableObject.CreateInstance<ItemCategoryEntity>();
-                    burnSpeed.id = "PURGATORY";
-                    burnSpeed.name = "Purgatory";
-                    burnSpeed.categoryName = new LocalizedString("ItemCategory_Purgatory");
-                    burnSpeed.setStatus = new ItemCategoryEntity.SetTarget[5] {
-                new ItemCategoryEntity.SetTarget() { itemCount = 2, status = "BURN_SPEED/10" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 3, status = "BURN_SPEED/20" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 4, status = "BURN_SPEED/30" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 5, status = "BURN_SPEED/40" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 6, status = "BURN_SPEED/50" }};
-                    //burnSpeed.categoryIcon
-                    list.Add(burnSpeed);
-                    __result = list.ToArray();
-
-                    var max_hp = ScriptableObject.CreateInstance<ItemCategoryEntity>();
-                    max_hp.id = "VITALITY";
-                    max_hp.name = "Vitality";
-                    max_hp.categoryName = new LocalizedString("ItemCategory_Vitality");
-                    max_hp.setStatus = new ItemCategoryEntity.SetTarget[5] {
-                new ItemCategoryEntity.SetTarget() { itemCount = 2, status = "MAX_HP/5" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 3, status = "MAX_HP/10" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 4, status = "MAX_HP/15" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 5, status = "MAX_HP/20" },
-                new ItemCategoryEntity.SetTarget() { itemCount = 6, status = "MAX_HP/25" }};
-                    list.Add(max_hp);*/
 
                     Data.RegisterCombos(list);
 
@@ -549,39 +419,6 @@ namespace SephiriaMod
                     __result = list.ToArray();
                 }
             }
-            private static ItemEntity CreateCharmItemEntity(string name, List<string> categories, EItemRarity rarity, GameObject resource)
-            {
-                var entity = ScriptableObject.CreateInstance<ItemEntity>();
-                entity.name = "Item_Charm_" + name;
-                entity.activeType = EItemActiveType.Default;
-                entity.aName = new LocalizedString("Item_Charm_"+ name + "_Name");
-                entity.aFlavorText = new LocalizedString("Item_Charm_"+ name + "_FlavorText");
-                entity.categories = categories;
-                entity.cost = rarity switch
-                {
-                    EItemRarity.Common => 400,
-                    EItemRarity.Uncommon => 600,
-                    EItemRarity.Rare => 800,
-                    EItemRarity.Legend => 1100,
-                    _ => 200
-                };
-                entity.id = 8002;
-                entity.itemBehaviour = ItemEntity.EItemBehaviour.None;
-                entity.rarity = rarity;
-                entity.type = EItemType.Charm;
-                entity.sapphirePrice = rarity switch
-                {
-                    EItemRarity.Common => 2,
-                    EItemRarity.Uncommon => 3,
-                    EItemRarity.Rare => 4,
-                    EItemRarity.Legend => 5,
-                    _ => 1
-                };
-                entity.resourcePrefab = resource;
-                entity.icon = SpriteLoader.LoadSprite(name);
-                //entity.iconInWorld = IconInWorldCharm;
-                return entity;
-            }
         }
         [HarmonyPatch(typeof(GridInventory), nameof(GridInventory.GetItemDropWeight), new Type[] { typeof(ItemEntity) })]
         public static class GridInventoryGetItemDropWeightPatch
@@ -612,81 +449,6 @@ namespace SephiriaMod
                 }
             }
         }
-        /*        [HarmonyPatch(typeof(GridInventory), nameof(GridInventory.SetItem))]
-                class StoneTabletPatch
-                {
-                    static void Prefix(int instanceID, ItemEntity item, sbyte quantity, sbyte x, sbyte y, int rotation, ref GridInventory __instance)
-                    {
-                        //Melon<Core>.Logger.Msg("ApplyEffect: " + __instance.Inventory.stoneTablets.Count + ":" + __instance.Inventory.engravings.Count);
-                        Melon<Core>.Logger.Msg("Prefix1: " + __instance.stoneTablets.Count);
-
-                        Melon<Core>.Logger.Msg($"Prefix2({instanceID}): {item.Name} ({x}, {y})");
-
-
-                        foreach (var tab in __instance.stoneTablets)
-                        {
-                            //Melon<Core>.Logger.Msg($"Prefix3: {tab.Key.x}, {tab.Key.y}:{tab.Value}");
-                        }
-                        if(item.Name == "利敵")
-                        {
-                            //Melon<Core>.Logger.Msg($"Prefix4: {item.resourcePrefab.GetComponent<StoneTablet>().Inventory == null}");
-                        }
-                    }
-                    static void Postfix(ref GridInventory __instance)
-                    {
-                        Melon<Core>.Logger.Msg($"Postfix: ");
-                        foreach (var tab in __instance.stoneTablets)
-                        {
-                            Melon<Core>.Logger.Msg($"{tab.Key.x}, {tab.Key.y}:{tab.Value}");
-                        }
-                    }
-                }*/
-        /*
-        [HarmonyPatch]
-        public class InstantiatePatch
-        {
-            static System.Reflection.MethodBase TargetMethod()
-            {
-                // refer to C# reflection documentation:
-                return typeof(UnityEngine.Object).GetMethod(nameof(UnityEngine.Object.Instantiate), System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public).MakeGenericMethod(typeof(GameObject));
-            }
-            static void Prefix(GameObject original)
-            {
-                Melon<Core>.Logger.Msg($"Instantiate");
-                if (original is GameObject go)
-                {
-                    if (go == null)
-                        return;
-                    Melon<Core>.Logger.Msg($"Instantiate: {go.name}");
-                    if (go.name.Contains("StoneTablet-Malice")) // 対象判定
-                    {
-
-                    }
-                }
-            }
-        }*/
-        /*        [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(UnityEngine.Object) })]
-                public class DestroyPatch
-                {
-                    static void Prefix(UnityEngine.Object obj)
-                    {
-                        if (obj is GameObject go && go.name.Contains("Malice"))
-                        {
-                            Melon<Core>.Logger.Msg($"[DestroyPatch] Destroy called on {go.name}\n{Environment.StackTrace}");
-                        }
-                    }
-                }
-                [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.DestroyImmediate), new Type[] { typeof(UnityEngine.Object) })]
-                public class DestroyImmediatePatch
-                {
-                    static void Prefix(UnityEngine.Object obj)
-                    {
-                        if (obj is GameObject go && go.name.Contains("Malice"))
-                        {
-                            Melon<Core>.Logger.Msg($"[DestroyPatch] DestroyImmediate called on {go.name}\n{Environment.StackTrace}");
-                        }
-                    }
-                }*/
         /// <summary>
         /// アイテムのInstantiateパッチ
         /// </summary>
@@ -1110,350 +872,6 @@ namespace SephiriaMod
                 return NetworkClient.GetPrefab(assetId, out prefab);
             }
         }
-        //[HarmonyPatch(typeof(UnitAvatar), nameof(UnitAvatar.StartBattle))]
-        [Obsolete]
-        public static class UnitAvatarStartBattlePatch
-        {
-            static void Prefix(UnitAvatar __instance)
-            {
-                if (__instance is PlayerAvatar)
-                {
-                    //Melon<Core>.Logger.Msg("StartBattle: " + __instance.Name);
-                }
-            }
-        }
-        /*
-        [HarmonyPatch(typeof(NetworkClient), "SpawnPrefab")]
-        public static class GetPrefabNetworkClientPatch
-        {
-            static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-            {
-                Melon<Core>.Logger.Msg($"GetPrefabNetworkClientPatch Transpiler");
-
-                var replacement = AccessTools.Method(typeof(InstantiateNetworkClientPatch), nameof(CustomGetPrefab));
-
-                foreach (var code in instructions)
-                {
-                    if (code.opcode == OpCodes.Call && code.operand is MethodInfo mi && mi.Name == nameof(NetworkClient.GetPrefab))
-                    {
-                        // Instantiate(GameObject) 呼び出しを CustomInstantiate に差し替える
-                        code.operand = replacement;
-                    }
-                    yield return code;
-                }
-            }
-
-            // 差し替え用メソッド
-            public static bool CustomGetPrefab(uint assetId, out GameObject prefab)
-            {
-                Melon<Core>.Logger.Msg($"CustomGetPrefab: {assetId}");
-
-                // 通常の GetPrefab
-                return NetworkClient.GetPrefab(assetId, out prefab);
-            }
-        }*/
-        /*
-        [HarmonyPatch(typeof(LibraryFloorGenerator), ("DrawRoomInstance"), new Type[] { typeof(LibraryFloorRoomInstance), typeof(System.Random) })]
-        public static class Patch
-        {
-            static bool Prefix(LibraryFloorRoomInstance instance, System.Random propRand, ref LibraryFloorGenerator __instance)
-            {
-                Melon<Core>.Logger.Msg("Debug: 1");
-                Vector3Int vector3Int = new Vector3Int(instance.pos.x, instance.pos.y, 0);
-                Vector2Int vector2Int = new Vector2Int(instance.Size.x, instance.Size.y);
-                Vector2Int vector2Int2 = new Vector2Int(vector2Int.x + 2, vector2Int.y + 2);
-                Melon<Core>.Logger.Msg("Debug: 2");
-                if (__instance.floorArea_LB().x > vector3Int.x)
-                {
-                    Melon<Core>.Logger.Msg("Debug: 3");
-                    __instance.SetfloorArea_LBX(vector3Int.x);
-                }
-
-                if (__instance.floorArea_LB().y > vector3Int.y)
-                {
-                    Melon<Core>.Logger.Msg("Debug: 4");
-                    __instance.SetfloorArea_LBY(vector3Int.y);
-                }
-
-                if (__instance.floorArea_RT().x < vector3Int.x + vector2Int.x)
-                {
-                    Melon<Core>.Logger.Msg("Debug: 5");
-                    __instance.SetfloorArea_RTX(vector3Int.x + vector2Int.x);
-                }
-
-                if (__instance.floorArea_RT().y < vector3Int.y + vector2Int.y)
-                {
-                    Melon<Core>.Logger.Msg("Debug: 6");
-                    __instance.SetfloorArea_RTY(vector3Int.y + vector2Int.y);
-                }
-
-                Melon<Core>.Logger.Msg("Debug: 7");
-                Texture2D texture2D = new Texture2D(vector2Int2.x, vector2Int2.y, TextureFormat.RGBA32, mipChain: false, linear: false)
-                {
-                    filterMode = FilterMode.Point
-                };
-                Color32[] array = new Color32[vector2Int2.x * vector2Int2.y];
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array[i] = new Color32(0, 0, 0, 0);
-                }
-                Melon<Core>.Logger.Msg("Debug: 8");
-
-                texture2D.SetPixels32(array);
-                Melon<Core>.Logger.Msg("Debug: 9");
-                int[][] array2 = new int[vector2Int2.x][];
-                for (int j = 0; j < vector2Int2.x; j++)
-                {
-                    array2[j] = new int[vector2Int2.y];
-                }
-
-                Melon<Core>.Logger.Msg("Debug: 10");
-                for (int k = 0; k < vector2Int.x; k++)
-                {
-                    for (int l = 0; l < vector2Int.y; l++)
-                    {
-                        Vector3Int pos = vector3Int + new Vector3Int(k, l, 0);
-                        bool flag = false;
-                        Melon<Core>.Logger.Msg("Debug: 11");
-                        TileBase groundTile = instance.Metadata.mainLayer.GetGroundTile(k, l);
-                        __instance.SetGroundTile(pos, groundTile);
-                        Melon<Core>.Logger.Msg("Debug: 12");
-                        if ((bool)groundTile)
-                        {
-                            Melon<Core>.Logger.Msg("Debug: 13");
-                            GroundTileEntity groundTileEntity = TileDatabase.FindGroundTile(groundTile);
-                            Melon<Core>.Logger.Msg("Debug: 14");
-                            if ((bool)groundTileEntity && (groundTileEntity.type == GroundTileEntity.Type.Pit || groundTileEntity.type == GroundTileEntity.Type.Water))
-                            {
-                                flag = true;
-                            }
-                        }
-
-                        Melon<Core>.Logger.Msg("Debug: 15");
-                        TileBase upperGroundTile = instance.Metadata.mainLayer.GetUpperGroundTile(k, l);
-                        Melon<Core>.Logger.Msg("Debug: 16");
-                        __instance.SetUpperGroundTile(pos, upperGroundTile);
-                        Melon<Core>.Logger.Msg("Debug: 17");
-                        if ((bool)upperGroundTile)
-                        {
-                            Melon<Core>.Logger.Msg("Debug: 18");
-                            GroundTileEntity groundTileEntity2 = TileDatabase.FindGroundTile(upperGroundTile);
-                            if ((bool)groundTileEntity2 && (groundTileEntity2.type == GroundTileEntity.Type.Pit || groundTileEntity2.type == GroundTileEntity.Type.Water))
-                            {
-                                flag = true;
-                            }
-                            Melon<Core>.Logger.Msg("Debug: 19");
-                        }
-
-                        Melon<Core>.Logger.Msg("Debug: 20");
-                        TileBase wallTile = instance.Metadata.mainLayer.GetWallTile(k, l);
-                        Melon<Core>.Logger.Msg("Debug: 21");
-                        __instance.SetWallTile(pos, wallTile);
-                        Melon<Core>.Logger.Msg("Debug: 22");
-                        TileBase cliffTile = instance.Metadata.mainLayer.GetCliffTile(k, l);
-                        Melon<Core>.Logger.Msg("Debug: 23");
-                        __instance.SetCliffTile(pos, cliffTile);
-                        Melon<Core>.Logger.Msg("Debug: 24");
-                        if (flag)
-                        {
-                            array2[k + 1][l + 1] = 2;
-                        }
-                        else if (((bool)groundTile || (bool)upperGroundTile) && !wallTile && !cliffTile)
-                        {
-                            array2[k + 1][l + 1] = 1;
-                        }
-                        else
-                        {
-                            array2[k + 1][l + 1] = 0;
-                        }
-                        Melon<Core>.Logger.Msg("Debug: 25");
-                    }
-                }
-
-                Melon<Core>.Logger.Msg("Debug: 26");
-                for (int m = 0; m < vector2Int.x; m++)
-                {
-                    for (int n = 0; n < vector2Int.y; n++)
-                    {
-                        Melon<Core>.Logger.Msg("Debug: 27");
-                        if (array2[m + 1][n + 1] == 2)
-                        {
-                            texture2D.SetPixel(m + 1, n + 1, Color.gray);
-                        }
-                        else if (array2[m + 1][n + 1] == 1)
-                        {
-                            texture2D.SetPixel(m + 1, n + 1, new Color(0.1f, 0.1f, 0.25f, 0.6f));
-                        }
-                        Melon<Core>.Logger.Msg("Debug: 28");
-                    }
-                }
-
-                Melon<Core>.Logger.Msg("Debug: 29");
-                for (int num = 0; num < vector2Int2.x; num++)
-                {
-                    for (int num2 = 0; num2 < vector2Int2.y; num2++)
-                    {
-                        int num3 = array2[num][num2];
-                        bool flag2 = false;
-                        for (int num4 = -1; num4 <= 1; num4++)
-                        {
-                            for (int num5 = -1; num5 <= 1; num5++)
-                            {
-                                if (num + num4 >= 0 && num + num4 < vector2Int2.x && num2 + num5 >= 0 && num2 + num5 < vector2Int2.y)
-                                {
-                                    int num6 = array2[num + num4][num2 + num5];
-                                    if (num3 == 0 && num6 != 0)
-                                    {
-                                        flag2 = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (flag2)
-                        {
-                            Melon<Core>.Logger.Msg("Debug: 30");
-                            texture2D.SetPixel(num, num2, Color.white);
-                        }
-                    }
-                }
-                Melon<Core>.Logger.Msg("Debug: 31");
-
-                if (__instance.roomPassagePairList().TryGetValue(instance, out var value))
-                {
-                    Melon<Core>.Logger.Msg("Debug: 32");
-                    foreach (PassageData item in value)
-                    {
-                        Melon<Core>.Logger.Msg("Debug: 33");
-                        if (__instance.hiddenRoomInstances().Contains(item.parent) || __instance.hiddenRoomInstances().Contains(item.connect))
-                        {
-                            Melon<Core>.Logger.Msg("Debug: 34");
-                            continue;
-                        }
-                        Melon<Core>.Logger.Msg("Debug: 35");
-
-                        int num7 = item.dir switch
-                        {
-                            0 => 0,
-                            2 => 0,
-                            1 => 1,
-                            3 => 1,
-                            _ => -1,
-                        };
-                        Melon<Core>.Logger.Msg("Debug: 36");
-                        if (item.parent == instance)
-                        {
-                            Melon<Core>.Logger.Msg("Debug: 37");
-                            Vector2Int vector2Int3 = item.startPoint - item.parent.pos;
-                            if (num7 == 0)
-                            {
-                                Melon<Core>.Logger.Msg("Debug: 38");
-                                for (int num8 = 0; num8 < __instance.passageSize(); num8++)
-                                {
-                                    Melon<Core>.Logger.Msg("Debug: 39");
-                                    texture2D.SetPixel(vector2Int3.x + num8 + 1, vector2Int3.y + 1, Color.green);
-                                }
-                                Melon<Core>.Logger.Msg("Debug: 40");
-                            }
-                            else
-                            {
-                                Melon<Core>.Logger.Msg("Debug: 41");
-                                for (int num9 = 0; num9 < __instance.passageSize(); num9++)
-                                {
-                                    Melon<Core>.Logger.Msg("Debug: 42");
-                                    texture2D.SetPixel(vector2Int3.x + 1, vector2Int3.y - num9 + 1, Color.green);
-                                }
-                                Melon<Core>.Logger.Msg("Debug: 43");
-                            }
-                        }
-                        else
-                        {
-                            Melon<Core>.Logger.Msg("Debug: 44");
-                            if (item.connect != instance)
-                            {
-                                Melon<Core>.Logger.Msg("Debug: 45");
-                                continue;
-                            }
-                            Melon<Core>.Logger.Msg("Debug: 46");
-
-                            Vector2Int vector2Int4 = item.endPoint - item.connect.pos;
-                            Melon<Core>.Logger.Msg("Debug: 47");
-                            if (num7 == 0)
-                            {
-                                Melon<Core>.Logger.Msg("Debug: 48");
-                                for (int num10 = 0; num10 < __instance.passageSize(); num10++)
-                                {
-                                    Melon<Core>.Logger.Msg("Debug: 49");
-                                    texture2D.SetPixel(vector2Int4.x + num10 + 1, vector2Int4.y + 1, Color.green);
-                                }
-                                Melon<Core>.Logger.Msg("Debug: 50");
-                            }
-                            else
-                            {
-                                Melon<Core>.Logger.Msg("Debug: 51");
-                                for (int num11 = 0; num11 < __instance.passageSize(); num11++)
-                                {
-                                    Melon<Core>.Logger.Msg("Debug: 52");
-                                    texture2D.SetPixel(vector2Int4.x + 1, vector2Int4.y - num11 + 1, Color.green);
-                                }
-                                Melon<Core>.Logger.Msg("Debug: 53");
-                            }
-                        }
-                    }
-                }
-
-                Melon<Core>.Logger.Msg("Debug: 54");
-                texture2D.Apply();
-                Melon<Core>.Logger.Msg("Debug: 55");
-                __instance.managedTextures().Add(texture2D);
-                Melon<Core>.Logger.Msg("Debug: 56");
-                __instance.roomTraps()[instance] = new List<ITrap>();
-                Melon<Core>.Logger.Msg("Debug: 57");
-                LibraryFloorMetadataBaker.PropMetadata[] mainProps = instance.Metadata.mainProps;
-                Melon<Core>.Logger.Msg("Debug: 58");
-                foreach (LibraryFloorMetadataBaker.PropMetadata propMetadata in mainProps)
-                {
-                    Melon<Core>.Logger.Msg("Debug: 59");
-                    PropEntity propEntity = PropDatabase.FindPropById(propMetadata.id);
-                    Melon<Core>.Logger.Msg("Debug: 60");
-                    Vector3 vector = new Vector3(propMetadata.x, propMetadata.y);
-                    Melon<Core>.Logger.Msg("Debug: 61");
-                    XElement options = propMetadata.options;
-                    Melon<Core>.Logger.Msg("Debug: 62");
-                    GameObject gameObject = __instance.CreateProp(propRand.Next(), propEntity, __instance.transform.position + vector + vector3Int, Vector3.one, options);
-                    Melon<Core>.Logger.Msg("Debug: 63");
-                    if (propEntity.type == PropEntity.PropType.Breakable)
-                    {
-                        Melon<Core>.Logger.Msg("Debug: 64");
-                        __instance.allBreakableProps().Add(gameObject);
-                    }
-
-                    Melon<Core>.Logger.Msg("Debug: 65");
-                    if (gameObject.TryGetComponent<ITrap>(out var component))
-                    {
-                        Melon<Core>.Logger.Msg("Debug: 66");
-                        __instance.roomTraps()[instance].Add(component);
-                    }
-                }
-
-                Melon<Core>.Logger.Msg("Debug: 66");
-                HUDMapData value2 = new HUDMapData
-                {
-                    name = instance.Metadata.name,
-                    bottomLeft = (Vector2)__instance.transform.position + (Vector2)instance.pos,
-                    topRight = (Vector2)__instance.transform.position + (Vector2)instance.pos + instance.Size,
-                    sprite = texture2D
-                };
-                Melon<Core>.Logger.Msg("Debug: 67");
-                __instance.hudMap().Add(instance, value2);
-
-                Melon<Core>.Logger.Msg("Debug: 68");
-
-                return false;
-            }
-        }*/
-
         [HarmonyPatch(typeof(GameDataLoader), "Awake")]
         public static class GameDataLoaderAwakePatch
         {
@@ -1478,6 +896,7 @@ namespace SephiriaMod
             }
         }
         //[HarmonyPatch(typeof(PlayerAvatar), "UpdateCostumeOutfit", [typeof(string)])]
+        [Obsolete("CustomCustomeEntityのデバッグ用Patch")]
         public static class PlayerAvatarUpdateCostumeOutfit
         {
             static bool Prefix(string skinID, PlayerAvatar __instance)
