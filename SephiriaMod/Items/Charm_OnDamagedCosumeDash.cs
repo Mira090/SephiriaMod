@@ -53,7 +53,7 @@ namespace SephiriaMod.Items
         {
             base.OnEnabledEffect();
             cooldownTimer.time = time.SafeRandomAccess(CurrentLevelToIdx());
-            ModEvent.OnValueRecieved += OnValueRecieved;
+            Events.OnValueRecieved += OnValueRecieved;
         }
 
         private void OnValueRecieved(string command, uint netId, int value)
@@ -81,7 +81,7 @@ namespace SephiriaMod.Items
                 else
                 {
                     NetworkAvatar.CmdHeal(damage.damage * (percent.SafeRandomAccess(CurrentLevelToIdx()) / 100f));
-                    ModEvent.CommandValue(NetworkAvatar, Item, 1);
+                    Events.CommandValue(NetworkAvatar, Item, 1);
                 }
             }
         }

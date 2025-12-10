@@ -35,11 +35,11 @@ namespace SephiriaMod.Items
         }
         public void Start()
         {
-            ModEvent.OnValueRecieved += OnValueRecieved;
+            Events.OnValueRecieved += OnValueRecieved;
         }
         public void OnDestroy()
         {
-            ModEvent.OnValueRecieved -= OnValueRecieved;
+            Events.OnValueRecieved -= OnValueRecieved;
         }
         protected override void OnEnabledEffect()
         {
@@ -62,7 +62,7 @@ namespace SephiriaMod.Items
                 countView = count;
                 NetworkAvatar.SetEffectHUDValue(GetCharmHUDID(), $"{Mathf.Min(100, countView * percentByLevel.SafeRandomAccess(CurrentLevelToIdx()))}/{100}");
                 NetworkAvatar.SetEffectHUDFlash(GetCharmHUDID());
-                ModEvent.CommandValue(NetworkAvatar, Item, countView);
+                Events.CommandValue(NetworkAvatar, Item, countView);
                 SaveItemOnServer(SaveManager.CurrentRun);
             }
         }
@@ -83,7 +83,7 @@ namespace SephiriaMod.Items
             count = 0;
             countView = count;
             NetworkAvatar.SetEffectHUDValue(GetCharmHUDID(), $"{Mathf.Min(100, countView * percentByLevel.SafeRandomAccess(CurrentLevelToIdx()))}/{100}");
-            ModEvent.CommandValue(NetworkAvatar, Item, countView);
+            Events.CommandValue(NetworkAvatar, Item, countView);
             SaveItemOnServer(SaveManager.CurrentRun);
         }
         protected override void OnUpdatedLevel(int oldLevel, int newLevel)
@@ -102,7 +102,7 @@ namespace SephiriaMod.Items
             base.LoadItemOnServer(saveData);
             count = saveData.GetInt($"CharmSaveData_ElectricStun_{Item.InstanceID}_Stack", 0);
             countView = count;
-            ModEvent.CommandValue(NetworkAvatar, Item, countView);
+            Events.CommandValue(NetworkAvatar, Item, countView);
         }
     }
 }

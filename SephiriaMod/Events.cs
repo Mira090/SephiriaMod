@@ -16,7 +16,7 @@ using SephiriaMod.Utilities;
 
 namespace SephiriaMod
 {
-    public static class ModEvent
+    public static class Events
     {
         public static event Action<WeaponSimple_Crossbow> OnSubAttackCrossbow;
         public static event Action<WeaponSimple_Katana> OnSubAttackKatana;
@@ -34,7 +34,7 @@ namespace SephiriaMod
 
         public static EventReference HealSound { get; } = RuntimeManager.PathToEventReference("event:/Scene/healPotion_Small01");
         public static EventReference PerkSound { get; } = RuntimeManager.PathToEventReference("event:/System/talentPerk");
-        static ModEvent()
+        static Events()
         {
             OnValueRecieved += (string command, uint netId, int value) =>
             {
@@ -119,11 +119,11 @@ namespace SephiriaMod
                 }
             }
 
-            foreach (var sound in typeof(ModEvent).GetProperties().Where(p => p.PropertyType == typeof(EventReference)))
+            foreach (var sound in typeof(Events).GetProperties().Where(p => p.PropertyType == typeof(EventReference)))
             {
                 if (id != sound.Name)
                     continue;
-                EventInstance eventInstance = RuntimeManager.CreateInstance((EventReference)sound.GetValue(typeof(ModEvent)));
+                EventInstance eventInstance = RuntimeManager.CreateInstance((EventReference)sound.GetValue(typeof(Events)));
                 eventInstance.set3DAttributes(player.transform.position.To3DAttributes());
                 eventInstance.start();
                 eventInstance.release();

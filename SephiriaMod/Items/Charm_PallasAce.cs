@@ -112,7 +112,7 @@ namespace SephiriaMod.Items
         }
         private void OnDashAttack(ProjectileBase projectile)
         {
-            ModEvent.InvokeOnAceSpawnChance(0, this);
+            Events.InvokeOnAceSpawnChance(0, this);
             if (!WeaponController || !WeaponController.currentWeapon || !throwIntervalTimer.Check())
             {
                 return;

@@ -38,8 +38,8 @@ namespace SephiriaMod.Items
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
-            ModEvent.OnPallasSpawnChance += OnPallasSpawnChance;
-            ModEvent.OnAceSpawnChance += OnAceSpawnChance;
+            Events.OnPallasSpawnChance += OnPallasSpawnChance;
+            Events.OnAceSpawnChance += OnAceSpawnChance;
             ClearCard();
             SearchCard();
         }
@@ -106,8 +106,8 @@ namespace SephiriaMod.Items
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
-            ModEvent.OnPallasSpawnChance -= OnPallasSpawnChance;
-            ModEvent.OnAceSpawnChance -= OnAceSpawnChance;
+            Events.OnPallasSpawnChance -= OnPallasSpawnChance;
+            Events.OnAceSpawnChance -= OnAceSpawnChance;
             ClearCard();
         }
 

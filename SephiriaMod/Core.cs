@@ -47,7 +47,7 @@ namespace SephiriaMod
         /// </summary>
         public override void OnLateInitializeMelon()
         {
-            KeywordImages.InitSprites();
+            CustomSpriteAsset.InitSprites();
             //NetworkManager.singleton.spawnPrefabs.Add(ResourcesLoadAllPatch.StoneTabletMalice);
             //NetworkManager.singleton.spawnPrefabs.Add(ResourcesLoadAllPatch.CharmPurgatory);
             //NetworkManager.singleton.spawnPrefabs.Add(ResourcesLoadAllPatch.CharmReservedMPEvasion);
@@ -77,7 +77,7 @@ namespace SephiriaMod
                 //keywords.spriteSheet = NewKeywordSprite.texture;
                 //keywords.UpdateLookupTables();
 
-                KeywordImages.InitSpriteAsset();
+                CustomSpriteAsset.InitSpriteAsset();
             }
         }
         [HarmonyPatch(typeof(Resources), nameof(Resources.LoadAll), new Type[] { typeof(string), typeof(Type) })]
@@ -502,7 +502,7 @@ namespace SephiriaMod
                     binaryPlanet.detailedValue = new LocalizedString();
                     binaryPlanet.displayDetails = true;
                     binaryPlanet.textColor = new Color(0.7f, 0.4f, 0.1f);
-                    binaryPlanet.keywordImage = KeywordImages.BinaryPlanet;
+                    binaryPlanet.keywordImage = CustomSpriteAsset.BinaryPlanet;
                     Melon<Core>.Logger.Msg("New Keyword: " + binaryPlanet.visualText.ToString());
                     list.Add(binaryPlanet);
 

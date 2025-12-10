@@ -34,9 +34,9 @@ namespace SephiriaMod.Items
             NetworkAvatar.OnAttackUnit += OnAttackUnit;
             //NetworkAvatar.OnAttackUnitBeforeOperation += OnAttackUnitBeforeOperation;
             WeaponController.OnSpecialAttack += OnSpecialAttack;
-            ModEvent.OnSubAttackCrossbow += OnSubAttackCrossbow;
-            ModEvent.OnSubAttackKatana += OnSubAttackKatana;
-            ModEvent.OnSubAttackGreatSword += OnSubAttackGreatSword;
+            Events.OnSubAttackCrossbow += OnSubAttackCrossbow;
+            Events.OnSubAttackKatana += OnSubAttackKatana;
+            Events.OnSubAttackGreatSword += OnSubAttackGreatSword;
             NetworkAvatar.OnAddedDebuffOnTarget += OnAddedDebuffOnTarget;
 
             basic = NetworkAvatar.GetCustomStat(ECustomStat.BasicAttackDamageBonus) + 100;
@@ -125,9 +125,9 @@ namespace SephiriaMod.Items
             NetworkAvatar.OnAttackUnit -= OnAttackUnit;
             //NetworkAvatar.OnAttackUnitBeforeOperation -= OnAttackUnitBeforeOperation;
             WeaponController.OnSpecialAttack -= OnSpecialAttack;
-            ModEvent.OnSubAttackCrossbow -= OnSubAttackCrossbow;
-            ModEvent.OnSubAttackKatana -= OnSubAttackKatana;
-            ModEvent.OnSubAttackGreatSword -= OnSubAttackGreatSword;
+            Events.OnSubAttackCrossbow -= OnSubAttackCrossbow;
+            Events.OnSubAttackKatana -= OnSubAttackKatana;
+            Events.OnSubAttackGreatSword -= OnSubAttackGreatSword;
             NetworkAvatar.OnAddedDebuffOnTarget -= OnAddedDebuffOnTarget;
 
             NetworkAvatar.AddCustomStat(ECustomStat.BasicAttackDamageBonus, basic);

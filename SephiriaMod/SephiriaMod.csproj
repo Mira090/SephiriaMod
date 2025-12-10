@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -548,7 +548,7 @@
 		<Compile Include="Registries\CustomCostumeDatabase.cs" />
 		<Compile Include="Registries\CustomCostumeMetadata.cs" />
 		<Compile Include="Registries\IModDamageId.cs" />
-		<Compile Include="KeywordImages.cs" />
+		<Compile Include="Registries\CustomSpriteAsset.cs" />
 		<Compile Include="Registries\ModCustomStatus.cs" />
 		<Compile Include="Registries\ModMiracle.cs" />
 		<Compile Include="Registries\ModMiracleStatus.cs" />
@@ -566,7 +566,7 @@
 		<Compile Include="Registries\ModComboEffect.cs" />
 		<Compile Include="Registries\ModDamageId.cs" />
 		<Compile Include="Registries\ModEffectHUD.cs" />
-		<Compile Include="ModEvent.cs" />
+		<Compile Include="Events.cs" />
 		<Compile Include="Registries\ModItem.cs" />
 		<Compile Include="Registries\ModItemExtensions.cs" />
 		<Compile Include="Registries\ModStoneTablet.cs" />

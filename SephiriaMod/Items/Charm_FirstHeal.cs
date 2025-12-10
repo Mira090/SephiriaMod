@@ -42,7 +42,7 @@ namespace SephiriaMod.Items
                 heal = true;
                 NetworkAvatar.HealPercent(healPercent + NetworkAvatar.GetCustomStatUnsafe("DRUNKHEAL"));
                 SaveItemOnServer(SaveManager.CurrentRun);
-                ModEvent.ChatSound(NetworkAvatar, nameof(ModEvent.HealSound));
+                Events.ChatSound(NetworkAvatar, nameof(Events.HealSound));
             }
         }
         public override void SaveItemOnServer(ISaveData saveData)

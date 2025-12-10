@@ -51,8 +51,8 @@ namespace SephiriaMod.Items
         {
             Core.InstantiateNetworkClientPatch.OnGetPrefab += OnGetPrefab;
             Core.InstantiateNetworkClientPatch.OnInstantiate += OnInstantiate;
-            ModEvent.CustomBulletDestroyModuleName[bulletName] = "PallasCard_Big_B";
-            ModEvent.CustomBulletDestroyModule[bulletName] = (instance, ownerNetId, canBeTransparentOnMultiplayer, position, height, angle) => instance.CreateDestroyVisualOnClient(ModifyDestroySpriteFx, ownerNetId, canBeTransparentOnMultiplayer, position, height, angle);
+            Events.CustomBulletDestroyModuleName[bulletName] = "PallasCard_Big_B";
+            Events.CustomBulletDestroyModule[bulletName] = (instance, ownerNetId, canBeTransparentOnMultiplayer, position, height, angle) => instance.CreateDestroyVisualOnClient(ModifyDestroySpriteFx, ownerNetId, canBeTransparentOnMultiplayer, position, height, angle);
         }
 
         public static void ModifyDespawnSpriteFx(SpriteFx fx)

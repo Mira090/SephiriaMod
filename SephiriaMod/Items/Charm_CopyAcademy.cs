@@ -29,11 +29,11 @@ namespace SephiriaMod.Items
         public void Start()
         {
             magicCharmIconSprite = SpriteLoader.LoadSprite(ModUtil.MiscPath + "Academy_Charm");
-            ModEvent.OnValueRecieved += OnValueRecieved;
+            Events.OnValueRecieved += OnValueRecieved;
         }
         public void OnDestroy()
         {
-            ModEvent.OnValueRecieved -= OnValueRecieved;
+            Events.OnValueRecieved -= OnValueRecieved;
         }
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
@@ -68,7 +68,7 @@ namespace SephiriaMod.Items
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
-            ModEvent.OnValueRecieved -= OnValueRecieved;
+            Events.OnValueRecieved -= OnValueRecieved;
             NetworkAvatar.Inventory.AddItemDropBonusBySemantic(semantic, -semanticDropWeight);
         }
         public override void OnCharmEffectRefreshed()
@@ -128,7 +128,7 @@ namespace SephiriaMod.Items
                 return;
             count++;
             countView = count;
-            ModEvent.CommandValue(NetworkAvatar, Item, count);
+            Events.CommandValue(NetworkAvatar, Item, count);
             questCleared = count >= countRequire;
             NetworkAvatar.SetEffectHUDValue(GetCharmHUDID(), $"{count}/{countRequire}");
             NetworkAvatar.SetEffectHUDFlash(GetCharmHUDID());
@@ -180,7 +180,7 @@ namespace SephiriaMod.Items
             base.LoadItemOnServer(saveData);
             count = saveData.GetInt($"CharmSaveData_CopyAcademy_{Item.InstanceID}_Stack", 0);
             countView = count;
-            ModEvent.CommandValue(NetworkAvatar, Item, countView);
+            Events.CommandValue(NetworkAvatar, Item, countView);
         }
         public override CharmConnectionData[] GetConnectedCharmPositions()
         {

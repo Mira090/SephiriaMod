@@ -58,7 +58,7 @@ namespace SephiriaMod.Items
 
                 useCount++;
                 useCountView = useCount;
-                ModEvent.CommandValue(NetworkAvatar, Item, useCountView);
+                Events.CommandValue(NetworkAvatar, Item, useCountView);
                 using (new GridInventory.Permission(inventory))
                 {
                     Inventory.AddDungeonTempLevel(pos, -1);
@@ -86,7 +86,7 @@ namespace SephiriaMod.Items
                 return;
             count++;
             countView = count % countRequire;
-            ModEvent.CommandValue(NetworkAvatar, Item, countView);
+            Events.CommandValue(NetworkAvatar, Item, countView);
             questCleared = count >= countRequire;
             NetworkAvatar.SetEffectHUDValue(GetCharmHUDID(), $"{countView}/{countRequire}");
             NetworkAvatar.SetEffectHUDFlash(GetCharmHUDID());
@@ -111,9 +111,9 @@ namespace SephiriaMod.Items
             count = saveData.GetInt($"CharmSaveData_CreateStoneTablet_{Item.InstanceID}_Stack", 0);
             useCount = saveData.GetInt($"CharmSaveData_CreateStoneTablet_{Item.InstanceID}_Stack2", 0);
             countView = count;
-            ModEvent.CommandValue(NetworkAvatar, Item, countView);
+            Events.CommandValue(NetworkAvatar, Item, countView);
             useCountView = useCount;
-            ModEvent.CommandValue(NetworkAvatar, Item, useCountView);
+            Events.CommandValue(NetworkAvatar, Item, useCountView);
         }
     }
 }

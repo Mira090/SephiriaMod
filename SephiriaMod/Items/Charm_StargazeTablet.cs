@@ -153,11 +153,11 @@ namespace SephiriaMod.Items
         }
         public void Start()
         {
-            ModEvent.OnValueRecieved += OnValueRecieved;
+            Events.OnValueRecieved += OnValueRecieved;
         }
         public void OnDestroy()
         {
-            ModEvent.OnValueRecieved -= OnValueRecieved;
+            Events.OnValueRecieved -= OnValueRecieved;
         }
         protected override void OnConnected(int instanceID)
         {
@@ -235,7 +235,7 @@ namespace SephiriaMod.Items
                 countView = count % countRequire;
                 NetworkAvatar.SetEffectHUDValue(GetCharmHUDID(), $"{countView}/{countRequire}");
                 NetworkAvatar.SetEffectHUDFlash(GetCharmHUDID());
-                ModEvent.CommandValue(NetworkAvatar, Item, count % countRequire);
+                Events.CommandValue(NetworkAvatar, Item, count % countRequire);
                 questCleared = count >= countRequire;
                 SaveItemOnServer(SaveManager.CurrentRun);
             }
@@ -278,7 +278,7 @@ namespace SephiriaMod.Items
             base.LoadItemOnServer(saveData);
             count = saveData.GetInt($"CharmSaveData_StargazeTablet_{Item.InstanceID}_Stack", 0);
             countView = count;
-            ModEvent.CommandValue(NetworkAvatar, Item, countView);
+            Events.CommandValue(NetworkAvatar, Item, countView);
         }
     }
 }

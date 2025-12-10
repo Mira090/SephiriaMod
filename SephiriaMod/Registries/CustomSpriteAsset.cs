@@ -5,9 +5,9 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-namespace SephiriaMod
+namespace SephiriaMod.Registries
 {
-    public static class KeywordImages
+    public static class CustomSpriteAsset
     {
         public static TMP_SpriteAsset SpriteAsset;
         public static Sprite NewKeywordSprite;

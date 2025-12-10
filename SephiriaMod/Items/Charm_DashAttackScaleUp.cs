@@ -22,8 +22,8 @@ namespace SephiriaMod.Items
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
-            ModEvent.OnPreBasicAttack += OnPreAttack;
-            ModEvent.OnPreSpecialAttack += OnPreAttack;
+            Events.OnPreBasicAttack += OnPreAttack;
+            Events.OnPreSpecialAttack += OnPreAttack;
             WeaponController.OnBaisAttackSwing += OnAttackSwing;
             WeaponController.OnSpecialAttackSwing += OnAttackSwing;
             if (!effect)
@@ -58,8 +58,8 @@ namespace SephiriaMod.Items
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
-            ModEvent.OnPreBasicAttack -= OnPreAttack;
-            ModEvent.OnPreSpecialAttack -= OnPreAttack;
+            Events.OnPreBasicAttack -= OnPreAttack;
+            Events.OnPreSpecialAttack -= OnPreAttack;
             WeaponController.OnBaisAttackSwing -= OnAttackSwing;
             WeaponController.OnSpecialAttackSwing -= OnAttackSwing;
             if (effect)

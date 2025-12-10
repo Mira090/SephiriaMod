@@ -24,11 +24,11 @@ namespace SephiriaMod.Items
         }
         public void Start()
         {
-            ModEvent.OnValueRecieved += OnValueRecieved;
+            Events.OnValueRecieved += OnValueRecieved;
         }
         public void OnDestroy()
         {
-            ModEvent.OnValueRecieved -= OnValueRecieved;
+            Events.OnValueRecieved -= OnValueRecieved;
         }
 
         private void OnValueRecieved(string command, uint netId, int value)
