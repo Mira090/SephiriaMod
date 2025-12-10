@@ -7,6 +7,9 @@ using System.Reflection;
 using UnityEngine;
 using TMPro;
 using System.Text;
+using SephiriaMod.Items;
+using SephiriaMod.Utilities;
+using SephiriaMod.Registries;
 
 [assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.6.4", "Mira", null)]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
@@ -51,7 +54,7 @@ namespace SephiriaMod
             //ResourcesLoadAllPatch.StoneTabletMalice.SetActive(false);
             //var a2 = typeof(NetworkIdentity).GetField("hasSpawned");
             //a2.SetValue(ResourcesLoadAllPatch.StoneTabletMalice.GetComponent<NetworkIdentity>(), false);
-            Items.Init();
+            Data.Init();
             LoggerInstance.Msg("LateInitialized.");
             //ModEvent.Charm_TuningForksPatch.Init();
             /*
@@ -176,7 +179,7 @@ namespace SephiriaMod
                 {
                     if (item.resourcePrefab.TryGetComponent<Charm_StatusInstance>(out var charm))
                     {
-                        charm.stats[2] = Items.CreateStatusGroup("FIRE_DAMAGE", 1, 2, 4, 7, 10);
+                        charm.stats[2] = Data.CreateStatusGroup("FIRE_DAMAGE", 1, 2, 4, 7, 10);
                     }
                 }
                 if(item.id == 1235)//突き指南書
@@ -271,7 +274,7 @@ namespace SephiriaMod
                 {
                     var list = __result.ToList();
 
-                    Items.Register(list);
+                    Data.Register(list);
                     /*
                     var riteki = ScriptableObject.CreateInstance<ItemEntity>();
                     riteki.name = "Item_StoneTablet_Malice";
@@ -369,9 +372,9 @@ namespace SephiriaMod
                     {
                         if (item is ItemCategoryEntity entity)
                         {
-                            if (Items.DefaultEnableSound.IsNull)
+                            if (Data.DefaultEnableSound.IsNull)
                             {
-                                Items.DefaultEnableSound = entity.enableSound;
+                                Data.DefaultEnableSound = entity.enableSound;
                             }
                         }
                     }
@@ -402,7 +405,7 @@ namespace SephiriaMod
                 new ItemCategoryEntity.SetTarget() { itemCount = 6, status = "MAX_HP/25" }};
                     list.Add(max_hp);*/
 
-                    Items.RegisterCombos(list);
+                    Data.RegisterCombos(list);
 
                     foreach (var item in list)
                         if (item is ItemCategoryEntity entity)
@@ -414,7 +417,7 @@ namespace SephiriaMod
                 {
                     var list = __result.ToList();
 
-                    Items.RegisterEffectHUDs(list);
+                    Data.RegisterEffectHUDs(list);
 
                     __result = list.ToArray();
                 }
@@ -423,7 +426,7 @@ namespace SephiriaMod
                     //一回
                     var list = __result.ToList();
 
-                    Items.RegisterDamageIds(list);
+                    Data.RegisterDamageIds(list);
 
                     __result = list.ToArray();
                 }
@@ -432,7 +435,7 @@ namespace SephiriaMod
                     //複数回
                     var list = __result.ToList();
 
-                    Items.RegisterStatuses(list);
+                    Data.RegisterStatuses(list);
 
                     foreach (var item in list)
                         if (item is StatusEntity entity)
@@ -513,7 +516,7 @@ namespace SephiriaMod
                 {
                     var list = __result.ToList();
 
-                    Items.RegisterCostume(list);
+                    Data.RegisterCostume(list);
 
                     __result = list.ToArray();
                 }
@@ -521,7 +524,7 @@ namespace SephiriaMod
                 {
                     var list = __result.ToList();
 
-                    Items.RegisterCostumeSkin(list);
+                    Data.RegisterCostumeSkin(list);
 
                     __result = list.ToArray();
                 }
@@ -529,7 +532,7 @@ namespace SephiriaMod
                 {
                     var list = __result.ToList();
 
-                    Items.RegisterMiracles(list);
+                    Data.RegisterMiracles(list);
 
                     foreach (var item in list)
                         if (item is GameObject entity && entity.TryGetComponent<Miracle>(out var miracle))
@@ -541,7 +544,7 @@ namespace SephiriaMod
                 {
                     var list = __result.ToList();
 
-                    Items.RegisterWeapons(list);
+                    Data.RegisterWeapons(list);
 
                     __result = list.ToArray();
                 }
@@ -719,7 +722,7 @@ namespace SephiriaMod
                     return UnityEngine.Object.Instantiate(original);
 
                 //Melon<Core>.Logger.Msg($"CustomInstantiate: {original.name}");
-                foreach (var modItem in Items.All)
+                foreach (var modItem in Data.All)
                 {
                     if (original.name == modItem.ResourcePrefab.name)
                     {
@@ -780,7 +783,7 @@ namespace SephiriaMod
                     return UnityEngine.Object.Instantiate(original);
 
                 Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
-                foreach (var modItem in Items.Combos)
+                foreach (var modItem in Data.Combos)
                 {
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.name == modItem.ResourcePrefab.name)
@@ -838,7 +841,7 @@ namespace SephiriaMod
                     return UnityEngine.Object.Instantiate(original);
 
                 Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
-                foreach (var modItem in Items.Miracles)
+                foreach (var modItem in Data.Miracles)
                 {
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.gameObject.name == modItem.Prefab.name)
@@ -889,7 +892,7 @@ namespace SephiriaMod
                     return UnityEngine.Object.Instantiate(original);
 
                 Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
-                foreach (var modItem in Items.Weapons)
+                foreach (var modItem in Data.Weapons)
                 {
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.name == modItem.MainWeaponPrefab.name)
@@ -956,7 +959,7 @@ namespace SephiriaMod
                     return o;
                 }
                 //Melon<Core>.Logger.Msg($"CustomInstantiate: {original.name}");
-                foreach(var modItem in Items.All)
+                foreach(var modItem in Data.All)
                 {
                     if(original.name == modItem.ResourcePrefab.name)
                     {
@@ -977,7 +980,7 @@ namespace SephiriaMod
                         return ob;
                     }
                 }
-                foreach (var modItem in Items.Combos)
+                foreach (var modItem in Data.Combos)
                 {
                     if (original.name == modItem.ResourcePrefab.name)
                     {
@@ -994,7 +997,7 @@ namespace SephiriaMod
                         return ob;
                     }
                 }
-                foreach (var modItem in Items.Miracles)
+                foreach (var modItem in Data.Miracles)
                 {
                     if (original.name == modItem.Prefab.name)
                     {
@@ -1011,7 +1014,7 @@ namespace SephiriaMod
                         return ob;
                     }
                 }
-                foreach (var modItem in Items.Weapons)
+                foreach (var modItem in Data.Weapons)
                 {
                     if (modItem.WeaponEntity == null)
                         continue;
@@ -1030,7 +1033,7 @@ namespace SephiriaMod
                         return ob;
                     }
                 }
-                foreach (var modItem in Items.Buffs)
+                foreach (var modItem in Data.Buffs)
                 {
                     if (original.name == modItem.name)
                     {
@@ -1061,7 +1064,7 @@ namespace SephiriaMod
 
                 if (assetId != 0 && !NetworkClient.prefabs.TryGetValue(assetId, out _))
                 {
-                    foreach(var modItem in Items.All)
+                    foreach(var modItem in Data.All)
                     {
                         if (modItem.AssetId != assetId)
                             continue;
@@ -1069,7 +1072,7 @@ namespace SephiriaMod
                         prefab = modItem.ResourcePrefab;
                         return true;
                     }
-                    foreach (var modItem in Items.Combos)
+                    foreach (var modItem in Data.Combos)
                     {
                         if (modItem.AssetId != assetId)
                             continue;
@@ -1077,7 +1080,7 @@ namespace SephiriaMod
                         prefab = modItem.ResourcePrefab;
                         return true;
                     }
-                    foreach (var modItem in Items.Miracles)
+                    foreach (var modItem in Data.Miracles)
                     {
                         if (modItem.AssetId != assetId)
                             continue;
@@ -1085,7 +1088,7 @@ namespace SephiriaMod
                         prefab = modItem.Prefab;
                         return true;
                     }
-                    foreach (var modItem in Items.Weapons)
+                    foreach (var modItem in Data.Weapons)
                     {
                         if (modItem.AssetId != assetId)
                             continue;
@@ -1093,7 +1096,7 @@ namespace SephiriaMod
                         prefab = modItem.MainWeaponPrefab;
                         return true;
                     }
-                    foreach (var modItem in Items.Buffs)
+                    foreach (var modItem in Data.Buffs)
                     {
                         if (modItem.AssetId != assetId)
                             continue;

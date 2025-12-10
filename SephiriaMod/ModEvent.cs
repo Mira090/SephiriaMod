@@ -11,6 +11,8 @@ using static SephiriaMod.Core;
 using FMODUnity;
 using FMOD.Studio;
 using FMOD;
+using SephiriaMod.Items;
+using SephiriaMod.Utilities;
 
 namespace SephiriaMod
 {
