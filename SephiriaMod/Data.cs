@@ -1269,6 +1269,11 @@ namespace SephiriaMod
                     continue;
                 if (moditem.WeaponEntity == null)
                     moditem.Init(copy);
+                else if (moditem.MainWeaponPrefab == null)
+                {
+                    moditem.InitPrefab(copy);
+                    moditem.WeaponEntity.mainWeaponPrefab = moditem.MainWeaponPrefab;
+                }
                 list.Add(moditem.WeaponEntity);
             }
 

@@ -61,6 +61,11 @@ namespace SephiriaMod.Registries
         }
         public virtual void Init(WeaponEntity copy)
         {
+            InitPrefab(copy);
+            WeaponEntity = CreateWeaponEntity();
+        }
+        public void InitPrefab(WeaponEntity copy)
+        {
             Melon<Core>.Logger.Msg("CreateWeaponEntity from " + copy.name);
             WeaponWieldEntity = copy.wieldEntity;
             var main = UnityEngine.Object.Instantiate(copy.mainWeaponPrefab);
@@ -83,7 +88,7 @@ namespace SephiriaMod.Registries
                     if (HasHeadSprite)
                     {
                         var head = simple.mainWeaponBody.weaponSpriteRenderer.transform.Find("Head");
-                        if(head != null && head.gameObject.TryGetComponent<SpriteRenderer>(out var headSprite))
+                        if (head != null && head.gameObject.TryGetComponent<SpriteRenderer>(out var headSprite))
                         {
                             headSprite.sprite = SpriteLoader.LoadSprite(HeadSpriteFileName);
                             if (HeadSpritePosition.HasValue)
@@ -96,7 +101,7 @@ namespace SephiriaMod.Registries
                     simple.subWeaponBody.weaponSpriteRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
                     simple.subWeaponBody.weaponStencilRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
                 }
-                if(simple.subWeapon != null && simple.subWeapon.gameObject.TryGetComponent<SubWeapon>(out var shield))
+                if (simple.subWeapon != null && simple.subWeapon.gameObject.TryGetComponent<SubWeapon>(out var shield))
                 {
                     shield.weaponSpriteRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
                     shield.weaponStencilRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
@@ -105,8 +110,6 @@ namespace SephiriaMod.Registries
             }
 
             MainWeaponPrefab = main;
-
-            WeaponEntity = CreateWeaponEntity();
         }
         public WeaponEntity CreateWeaponEntity()
         {

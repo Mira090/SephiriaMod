@@ -11,7 +11,7 @@ using SephiriaMod.Items;
 using SephiriaMod.Utilities;
 using SephiriaMod.Registries;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.6.4", "Mira", null)]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.6.5", "Mira", null)]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod
@@ -600,7 +600,7 @@ namespace SephiriaMod
         {
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                Melon<Core>.Logger.Msg($"InstantiateMiraclePatch Transpiler");
+                Melon<Core>.Logger.Msg($"InstantiateWeaponPatch Transpiler");
                 var target = AccessTools.Method(
                     typeof(UnityEngine.Object),
                     nameof(UnityEngine.Object.Instantiate),
