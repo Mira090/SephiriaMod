@@ -11,7 +11,7 @@ using SephiriaMod.Items;
 using SephiriaMod.Utilities;
 using SephiriaMod.Registries;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.6.5", "Mira", null)]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.6.6", "Mira", null)]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod
@@ -119,6 +119,7 @@ namespace SephiriaMod
                 }
                 if(item.name == "1117_TuningFork")
                 {
+                    /*
                     if(item.resourcePrefab.TryGetComponent<Charm_TuningForks>(out var charm))
                     {
                         charm.effectsString = [new LocalizedString("Charm_TuningForksMkII_Effect"), new LocalizedString("Charm_TuningForksMkII_Effect2")];
@@ -130,10 +131,10 @@ namespace SephiriaMod
                         component.isUniqueEffect = charm.isUniqueEffect;
                         component.relatedWeapon = charm.relatedWeapon;
                         UnityEngine.Object.Destroy(charm);
-                    }
+                    }*/
                     //item.isDual = false;
                 }
-                if(item.name == "1076_Jeongseok")//魔法の定法
+                if (item.name == "1076_Jeongseok")//魔法の定法
                 {
                     if (item.resourcePrefab.TryGetComponent<Charm_StatusInstance>(out var charm))
                     {
