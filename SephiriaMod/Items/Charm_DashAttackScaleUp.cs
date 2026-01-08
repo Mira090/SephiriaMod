@@ -43,7 +43,7 @@ namespace SephiriaMod.Items
         {
             [HarmonyPatch(typeof(NewWeaponFireData), nameof(NewWeaponFireData.CreateAttack), [typeof(EDamageFromType), typeof(float), typeof(string),
                 typeof(bool), typeof(UnitAvatar), typeof(Vector2), typeof(Vector2), typeof(float), typeof(Action<int, ProjectileBase>), typeof(List<CombatBehaviour>),
-                typeof(float), typeof(Action<CombatBehaviour, DamageInstance, ProjectileBase>), typeof(bool), typeof(float), typeof(float), typeof(int)])]
+                typeof(float), typeof(Action<CombatBehaviour, DamageInstance, ProjectileBase>), typeof(bool), typeof(float), typeof(float), typeof(int), typeof(EDamageElementalType?)])]
             [HarmonyPrefix]
             static void PrefixNormal(string damageId, UnitAvatar owner, ref float rangeBonus)
             {
@@ -51,9 +51,9 @@ namespace SephiriaMod.Items
                     return;
                 rangeBonus += owner.GetCustomStat("DashAttackRange") / 100f;
             }
-            [HarmonyPatch(typeof(NewWeaponFireData), nameof(NewWeaponFireData.CreateAttack), [typeof(EDamageFromType), typeof(float), typeof(string), typeof(EDamageElementalType),
+            [HarmonyPatch(typeof(NewWeaponFireData), nameof(NewWeaponFireData.CreateAttack), [typeof(EDamageFromType), typeof(float), typeof(string), 
                 typeof(bool), typeof(UnitAvatar), typeof(Vector2), typeof(Vector2), typeof(float), typeof(Action<int, ProjectileBase>), typeof(List<CombatBehaviour>),
-                typeof(float), typeof(Action<CombatBehaviour, DamageInstance, ProjectileBase>), typeof(bool), typeof(float), typeof(float), typeof(int)])]
+                typeof(float), typeof(Action<CombatBehaviour, DamageInstance, ProjectileBase>), typeof(bool), typeof(float), typeof(float), typeof(int), typeof(EDamageElementalType?)])]
             [HarmonyPrefix]
             static void PrefixOverrideElementalDamage(string damageId, UnitAvatar owner, ref float rangeBonus)
             {
