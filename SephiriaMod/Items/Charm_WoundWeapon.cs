@@ -8,10 +8,10 @@ namespace SephiriaMod.Items
 {
     public class Charm_WoundWeapon : Charm_StatusInstance
     {
-        private int[] woundStack = [0, 2, 4, 6, 8];
+        private int[] woundStack = [0, 1, 2, 4, 6, 8, 10];
         private bool debuff = true;
         private int count = 0;
-        private int cost = 4;
+        private int cost = 3;
 
         private int basic = 0;
         public int MaxCostCount => 100 / cost;

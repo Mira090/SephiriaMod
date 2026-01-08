@@ -293,8 +293,8 @@ namespace SephiriaMod
         /// Item_Wound_Weapon_Effect
         /// <tag=BasicAttackDamage>を0%にする
         /// </summary>
-        public static ModCharm WoundWeapon { get; } = ModCharmStatus.Create<Charm_WoundWeapon>("Wound_Weapon", 4, CreateStatusGroup("ATTACK_SPEED", 8, 16, 24, 32, 40))//, CreateStatusGroup("BASIC_ATTACK_DAMAGE", -100, -125, -150, -175, -200), CreateStatusGroup("DASH_ATTACK_DAMAGE", -200)
-            .SetCategory(ItemCategories.WindSong).SetRelatedWeapon(EWeaponType.GreatSword).SetIsUniqueEffect().SetSimpleEffects(4).SetRarity(EItemRarity.Legend);
+        public static ModCharm WoundWeapon { get; } = ModCharmStatus.Create<Charm_WoundWeapon>("Wound_Weapon", 6, CreateStatusGroup("ATTACK_SPEED", 4, 8, 12, 16, 20, 25, 30))//, CreateStatusGroup("BASIC_ATTACK_DAMAGE", -100, -125, -150, -175, -200), CreateStatusGroup("DASH_ATTACK_DAMAGE", -200)
+            .SetCategory(ItemCategories.Curse).SetRelatedWeapon(EWeaponType.GreatSword).SetIsUniqueEffect().SetSimpleEffects(4).SetRarity(EItemRarity.Legend);
         /// <summary>
         /// Item_Max_MP_Power_Name
         /// 水神の目
