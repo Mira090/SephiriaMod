@@ -151,7 +151,7 @@ namespace SephiriaMod.Items
                 if (currentCastingTimer.Update(Time.deltaTime))
                 {
                     isCasting = false;
-                    ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1);
+                    ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, true);
                     //Melon<Core>.Logger.Msg("cast!" + (skillObject == null));
                     slot.Use(skillObject);
                     if ((bool)currentCastingCircle)
@@ -176,7 +176,7 @@ namespace SephiriaMod.Items
             }
 
             //Melon<Core>.Logger.Msg("waiting... " + castIntervalTimer.GetTimer());
-            if (slot != null && slot.HasAnyAmmo && !slot.CurrentUsing && magicCharm.CanCast(magicCharm.NetworkAvatar) == ECanUseSkillResult.Succeeded)
+            if (slot != null && slot.HasAnyAmmo && !slot.CurrentUsing && magicCharm.CanCast(magicCharm.NetworkAvatar, true, true) == ECanUseSkillResult.Succeeded)
             {
                 if (castIntervalTimer.Update(Time.deltaTime))
                 {
