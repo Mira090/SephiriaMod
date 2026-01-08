@@ -14,12 +14,15 @@ namespace SephiriaMod.Weapons
         {
             base.OnEnableAddon();
             parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FrostFlameSword".ToSephiriaUpperId(), 1);
+            parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FLAMESWORDCALLBACKFROST", 1);
         }
         protected override void OnDisableAddon()
         {
             base.OnDisableAddon();
             parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FrostFlameSword".ToSephiriaUpperId(), -1);
+            parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FLAMESWORDCALLBACKFROST", -1);
         }
+        /* v0.10.6より前
         [HarmonyPatch(typeof(ComboEffect_FlameSword), "HandleAttackUnit", [typeof(UnitAvatar), typeof(DamageInstance)])]
         public class FlameSwordPatch
         {
@@ -42,6 +45,6 @@ namespace SephiriaMod.Weapons
                     }
                 }
             }
-        }
+        }*/
     }
 }
