@@ -37,6 +37,8 @@ namespace SephiriaMod.Utilities
         public static string WindSong { get; private set; }
         public static string Academy { get; private set; }
         public static string Lake { get; private set; }
+        public static string Curse { get; private set; }
+        public static string Savvy { get; private set; }
         //public static string Purgatory { get; private set; }
         public static string Vitality { get; private set; }
         public static string Stargaze { get; private set; }
