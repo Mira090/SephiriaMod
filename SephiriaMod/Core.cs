@@ -11,7 +11,7 @@ using SephiriaMod.Items;
 using SephiriaMod.Utilities;
 using SephiriaMod.Registries;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.6.6", "Mira", null)]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.6.7", "Mira", null)]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod
@@ -136,12 +136,13 @@ namespace SephiriaMod
                 }
                 if (item.name == "1076_Jeongseok")//魔法の定法
                 {
+                    /*
                     if (item.resourcePrefab.TryGetComponent<Charm_StatusInstance>(out var charm))
                     {
                         charm.stats[2] = Data.CreateStatusGroup("FIRE_DAMAGE", 1, 2, 4, 7, 10);
-                    }
+                    }*/
                 }
-                if(item.id == 1235)//突き指南書
+                if (item.id == 1235)//突き指南書
                 {
                     item.categories = [ItemCategories.Sturdy, ItemCategories.SkySong];
                 }
