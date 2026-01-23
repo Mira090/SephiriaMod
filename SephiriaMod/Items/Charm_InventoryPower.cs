@@ -53,7 +53,15 @@ namespace SephiriaMod.Items
             status[ItemCategories.DarkCloud] = CreateStatusGroup("DARK_CLOUD_DAMAGE", 4);
             status[ItemCategories.Stargaze] = CreateStatusGroup("INV_LEVEL", 1);
             status[ItemCategories.Drunk] = CreateStatusGroup("FINAL_DAMAGE", 1);
-            foreach(var pair in status)
+            status[ItemCategories.Fortune] = CreateStatusGroup("LUCK", 3);
+
+            status[ItemCategories.Curse] = CreateStatusGroup("DEBUFF_DAMAGE", 4);
+            status[ItemCategories.Savvy] = CreateStatusGroup("NEGOTIATION", 2);
+            status[ItemCategories.Elemental] = CreateStatusGroup("HIGHEST_ELEMENTAL_DAMAGE", 2);
+            status[ItemCategories.Alchemy] = CreateStatusGroup("POTION_SLOT", 1);
+            status[ItemCategories.Weapon] = CreateStatusGroup("FINAL_WEAPONDAMAGE", 2);
+
+            foreach (var pair in status)
             {
                 keys.Add(pair.Key, list.Count);
                 list.Add(pair.Value);
