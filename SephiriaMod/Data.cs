@@ -111,7 +111,7 @@ namespace SephiriaMod
         /// 敵を{DIVIDE}回倒すごとに<tag=Luck>が{LUCK}増加する\n[現在の追加幸運：{CURRENT}(<tag=Luck>{LUCK}×{COUNT}回/{DIVIDE})]
         /// </summary>
         public static ModCharmStatus KillLuck { get; } = ModCharmStatus.Create<Charm_Kill_Luck>("Kill_Luck", 3, CreateStatusGroup("ATTACK_SPEED", 0, 4, 8, 8))
-            .SetCategory(ItemCategories.WindSong).SetIsUniqueEffect().SetSimpleEffect().SetRarity(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Fortune, ItemCategories.WindSong).SetIsUniqueEffect().SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsDual();
 
         /// <summary>
         /// Item_Legendary_Mania_Name
@@ -256,7 +256,7 @@ namespace SephiriaMod
         /// 現在の<tag=Magic>数：{COUNT}個
         /// </summary>
         public static ModCharm ManyGrimoire { get; } = ModCharm.Create<Charm_ManyGrimoire>("Many_Grimoire", 3, false)
-            .SetCategory(ItemCategories.Academy).SetEffects("Item_Many_Grimoire_Effect", "Item_Many_Grimoire_Effect2").SetRarity(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Academy, ItemCategories.Elemental).SetEffects("Item_Many_Grimoire_Effect", "Item_Many_Grimoire_Effect2").SetRarity(EItemRarity.Rare).SetIsDual();
 
         /// <summary>
         /// Item_Fire_Cooldown_Recovery_Name
@@ -327,8 +327,8 @@ namespace SephiriaMod
         /// Item_Pallas_Joker_Effect2
         /// パラスのカードの発射確率が100％を超えた場合、超過した分の確率が追加のカードの発射確率に変換される。\n[発射するカードの枚数：{COUNT}]
         /// </summary>
-        public static ModCharm PallasJoker { get; } = ModCharmStatus.Create<Charm_PallasJoker>("Pallas_Joker", 4, CreateStatusGroup("LUCK", 3, 6, 9, 12, 15), CreateStatusGroup("EVASION", 0, 200, 400, 600, 800))
-            .SetCategory(ItemCategories.WindSong, ItemCategories.Shadow).SetIsUniqueEffect().SetIsDual().SetSimpleEffects(2).SetDamageId().SetRarity(EItemRarity.Rare);
+        public static ModCharm PallasJoker { get; } = ModCharmStatus.Create<Charm_PallasJoker>("Pallas_Joker", 4, CreateStatusGroup("LUCK", 3, 6, 9, 12, 15))
+            .SetCategory(ItemCategories.Fortune).SetIsUniqueEffect().SetSimpleEffects(2).SetDamageId().SetRarity(EItemRarity.Legend);
 
         /// <summary>
         /// Item_Throw_Grimoire_Name
@@ -526,7 +526,7 @@ namespace SephiriaMod
         /// <tag=Luck>1ごとに発射確率が{CHANCE}増加（現在：{CURRENT}）\n[ダメージ：{DAMAGE}]
         /// </summary>
         public static ModCharm PallasAce { get; } = ModCharmStatus.Create<Charm_PallasAce>("Pallas_Ace", 4, true)
-            .SetCategory(ItemCategories.WindSong).SetSimpleEffects(2).SetRarity(EItemRarity.Uncommon);
+            .SetCategory(ItemCategories.Fortune).SetSimpleEffects(2).SetRarity(EItemRarity.Uncommon);
         /// <summary>
         /// Item_First_Heal_Name
         /// 酔狂のお守り
@@ -701,6 +701,11 @@ namespace SephiriaMod
         /// </summary>
         public static ModComboEffect Drunk { get; } = ModComboEffect.Create<ComboEffect_Drunk>("Drunk").SetStats(CreateComboStat(4, "DEFENSE/-10"), CreateComboStat(6, "DEFENSE/-10"), 
             CreateComboStat(8, "DEFENSE/-20"), CreateComboStat(10, "FINAL_DAMAGE/30")).SetDefaultEffect();
+        /// <summary>
+        /// ItemCategory_Fortune
+        /// 運命
+        /// </summary>
+        public static ModComboEffect Fortune { get; } = ModComboEffect.Create("Fortune").SetStats(CreateComboStat(2, "LUCK/4"), CreateComboStat(4, "LUCK/8"));
 
         /// <summary>
         /// EffectHUD_Physical_Damage_Buff_Name

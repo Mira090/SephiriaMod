@@ -158,11 +158,20 @@ namespace SephiriaMod
                 {
                     item.categories = [ItemCategories.SkySong];
                 }
-                if(item.id == 1262)
+                if (item.id == 1172)//パラスのカード
+                {
+                    item.categories = [ItemCategories.Fortune];
+                }
+                if(item.id == 1262)//神秘の振り子
                 {
                     //item.activeType = EItemActiveType.Default;
                 }
-                if(item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<Charm_Basic>(out var c))
+                if(item.id == 1265 || item.id == 1266 || item.id == 1274 || item.id == 1275 || item.id == 1276)//MPShield、MagicMP、フォールトファインダーニードル、さすらいの人の首飾り、獣の心臓
+                {
+                    //item.activeType = EItemActiveType.Default;
+                }
+
+                if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<Charm_Basic>(out var c))
                 {
                     ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? "(絆)" : "")}^{c.GetType().Name}";
                 }

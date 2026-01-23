@@ -119,5 +119,9 @@ namespace SephiriaMod.Utilities
         /// 酩酊
         /// </summary>
         public static string Drunk { get; private set; }
+        /// <summary>
+        /// 運命
+        /// </summary>
+        public static string Fortune { get; private set; }
     }
 }
