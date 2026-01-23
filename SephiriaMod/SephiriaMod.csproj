@@ -512,6 +512,7 @@
 		<Compile Include="Items\Charm_DrunkVitality.cs" />
 		<Compile Include="Items\Charm_ElectricCritical.cs" />
 		<Compile Include="Items\Charm_ElectricStun.cs" />
+		<Compile Include="Items\Charm_EvasionCurse.cs" />
 		<Compile Include="Items\Charm_EvasionFrost.cs" />
 		<Compile Include="Items\Charm_FireCooldownRecovery.cs" />
 		<Compile Include="Items\Charm_FirstHeal.cs" />

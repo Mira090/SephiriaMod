@@ -360,6 +360,18 @@ namespace SephiriaMod
                     Melon<Core>.Logger.Msg("New Keyword: " + binaryPlanet.visualText.ToString());
                     list.Add(binaryPlanet);
 
+                    var assasination = ScriptableObject.CreateInstance<KeywordEntity>();
+                    assasination.name = "Assasination";
+                    assasination.keyword = "Assasination";
+                    assasination.visualText = new LocalizedString("Status_Assasination_Name");
+                    assasination.description = new LocalizedString("Status_Assasination_Description");
+                    assasination.detailedValue = new LocalizedString();
+                    assasination.displayDetails = true;
+                    assasination.textColor = new Color(0.9f, 0.1f, 0.1f);
+                    assasination.keywordImage = CustomSpriteAsset.Assasination;
+                    Melon<Core>.Logger.Msg("New Keyword: " + assasination.visualText.ToString());
+                    list.Add(assasination);
+
                     foreach (var item in list)
                         if (item is KeywordEntity entity)
                             ModifyKeywordEntity(entity);

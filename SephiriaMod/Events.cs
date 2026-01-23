@@ -463,7 +463,12 @@ namespace SephiriaMod
             static void Prefix(Vector2 position, ref string msg, ref Color color, int fontSize, bool isPrivate, UnitAvatar self, UnitAvatar attacker, UnitAvatar __instance)
             {
                 //Melon<Core>.Logger.Msg("RpcShowDamageParticle");
-                if(color.a == 0)
+                if(color.a == 0 && color.r == 1 && color.g == 0 && color.b == 0)
+                {
+                    msg = msg.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=Assasination>");
+                    color = new Color(1, 0, 0);
+                }
+                else if(color.a == 0)
                 {
                     //Melon<Core>.Logger.Msg("RpcShowDamageParticle blue!");
                     msg = msg.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=MagicDamageBonus>");

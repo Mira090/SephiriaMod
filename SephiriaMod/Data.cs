@@ -675,6 +675,16 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm DrunkGuardian { get; } = ModCharmStatus.Create<Charm_DrunkGuardian>("Drunk_Guardian", 3, CreateStatusGroup("FINAL_DAMAGE", 5, 10, 15, 20))
             .SetCategory(ItemCategories.Drunk, ItemCategories.Guardian).SetIsDual().SetSimpleEffects(1).SetRarity(EItemRarity.Rare).SetDamageId();
+        /// <summary>
+        /// Item_Evasion_Curse_Name
+        /// 暗黙の大釘
+        /// Item_Evasion_Curse_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Evasion_Curse_Effect
+        /// <tag=Evasion>が<tag=Assasination>の発生率に変換されます。（<tag=Assasination>発生率：{PERCENT}）
+        /// </summary>
+        public static ModCharm EvasionCurse { get; } = ModCharmStatus.Create<Charm_EvasionCurse>("Evasion_Curse", 2, CreateStatusGroup("Evasion", 1, 2, 4))
+            .SetCategory(ItemCategories.Curse, ItemCategories.Shadow).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare);
 
         /// <summary>
         /// ItemCategory_Vitality

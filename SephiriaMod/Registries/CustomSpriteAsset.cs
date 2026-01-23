@@ -17,6 +17,7 @@ namespace SephiriaMod.Registries
         public static Sprite IceExecution;
         public static Sprite FireExecution;
         public static Sprite LightningExecution;
+        public static Sprite Assasination;
 
         public static int width = 10;
         public static int height = 10;
@@ -35,6 +36,7 @@ namespace SephiriaMod.Registries
             IceExecution = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "IceExecution", new Rect(0, height * 2, width, height));
             FireExecution = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "FireExecution", new Rect(0, height * 3, width, height));
             LightningExecution = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "LightningExecution", new Rect(0, height * 4, width, height));
+            Assasination = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Assasination", new Rect(0, height * 5, width, height));
 
         }
         public static void InitSpriteAsset()
@@ -55,7 +57,8 @@ namespace SephiriaMod.Registries
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 2, name = "IceExecution", sprite = IceExecution });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 3, name = "FireExecution", sprite = FireExecution });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 4, name = "LightningExecution", sprite = LightningExecution });
-            foreach(var sprite in SpriteAsset.spriteInfoList)
+            SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 5, name = "Assasination", sprite = Assasination });
+            foreach (var sprite in SpriteAsset.spriteInfoList)
             {
                 sprite.id = id++;
                 sprite.scale = 1.1f;
