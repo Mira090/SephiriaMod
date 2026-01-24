@@ -49,7 +49,7 @@ namespace SephiriaMod
         /// Item_Reserved_MP_Evasion_Name
         /// 鉄扇
         /// Item_Reserved_MP_Evasion_FlavorText
-        /// フレーバーテキスト募集中
+        /// 影を起こす扇子。
         /// Item_Reserved_MP_Evasion_Effect
         /// <tag=MP>を{MANA}<tag=ReservedMP>して以下の効果を得る
         /// </summary>
@@ -85,7 +85,7 @@ namespace SephiriaMod
         /// Item_Create_Regen_Potion_Name
         /// 再生の水筒
         /// Item_Create_Regen_Potion_FlavorText
-        /// フレーバーテキスト募集中
+        /// こまめな水分補給を忘れずに。
         /// Item_Create_Regen_Potion_Effect
         /// {REQUIRE}回ステージを移動するごとに{ITEM}を獲得する
         /// </summary>
@@ -106,7 +106,7 @@ namespace SephiriaMod
         /// Item_Kill_Luck_Name
         /// 無音の羽ペン
         /// Item_Kill_Luck_FlavorText
-        /// フレーバーテキスト募集中
+        /// そのインクは風に乗って伝わる。
         /// Item_Kill_Luck_Effect
         /// 敵を{DIVIDE}回倒すごとに<tag=Luck>が{LUCK}増加する\n[現在の追加幸運：{CURRENT}(<tag=Luck>{LUCK}×{COUNT}回/{DIVIDE})]
         /// </summary>
@@ -117,7 +117,7 @@ namespace SephiriaMod
         /// Item_Legendary_Mania_Name
         /// 英雄の剣
         /// Item_Legendary_Mania_FlavorText
-        /// 伝説厨
+        /// 伝説を紡ぐ剣
         /// Item_Legendary_Mania_Effect
         /// バッグの伝説アーティファクトの数だけ以下の効果を得る\n[現在の伝説アーティファクト数：{COUNT}個]
         /// </summary>
@@ -128,7 +128,7 @@ namespace SephiriaMod
         /// Item_Level_Distributer_Name
         /// 石版の欠片
         /// Item_Level_Distributer_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// まだ熱い。
         /// Item_Level_Distributer_Effect
         /// このアーティファクトのレベルと同じだけ、上の枠を+1する。
         /// </summary>
@@ -138,7 +138,7 @@ namespace SephiriaMod
         /// Item_More_Stone_Tablet_Name
         /// 羅針盤
         /// Item_More_Stone_Tablet_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// 星の向きを示す道具。
         /// Item_More_Stone_Tablet_Effect
         /// 報酬で{ITEM_TYPE}が出現する確率が{DROP_PERCENT}増加
         /// </summary>
@@ -148,7 +148,7 @@ namespace SephiriaMod
         /// Item_Double_Debuff_Stack_Name
         /// 夜空の香水
         /// Item_Double_Debuff_Stack_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// 景色も変わる星空の香り。
         /// </summary>
         public static ModCharm ChaosDamage { get; } = ModCharm.Create<Charm_ChaosDamage>("Chaos_Damage", 5, true)
             .SetCategory(ItemCategories.Stargaze).SetEffects("Charm_FrostiumRing_Effect").SetDamageId().SetRarity(EItemRarity.Uncommon);
@@ -156,7 +156,7 @@ namespace SephiriaMod
         /// Item_Double_Debuff_Stack_Name
         /// 稲妻の彗星
         /// Item_Double_Debuff_Stack_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// 星の力が注がれたエネルギーの塊。
         /// </summary>
         public static ModCharm DoubleDebuffStack { get; } = ModCharmStatus.Create<Charm_VariableMaxLevel>("Double_Debuff_Stack", 6,
             CreateStatusGroup("BURN_STACK", 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5),
@@ -166,7 +166,7 @@ namespace SephiriaMod
         /// Item_Create_Stone_Tablet_Name
         /// 流れ星の結晶
         /// Item_Create_Stone_Tablet_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// 隕石が形を変えていく。
         /// Item_Create_Stone_Tablet_Effect
         /// 敵を{QUEST}回倒すたびに、このアイテムがある枠を-1して石版{REWARD}を獲得する。\n[敵を倒した回数：{CURRENT}]
         /// Item_Create_Stone_Tablet_Effect2
@@ -178,7 +178,7 @@ namespace SephiriaMod
         /// Item_Triple_Attack_Debuff_Name
         /// 魔法仕掛けの天球儀
         /// Item_Triple_Attack_Debuff_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// 夜空に染まった球体。
         /// Item_Triple_Attack_Debuff_Effect
         /// 次に火属性のダメージを与えた時、<tag=Burn>デバフを付与し、次に氷属性のダメージを与えた時、<tag=Frostbite>を付与する。この次に雷属性のダメージを与えた時、<tag=Electric>を付与し、最初に戻る。[クールタイム：{INTERVAL}秒]
         /// </summary>
@@ -191,7 +191,7 @@ namespace SephiriaMod
         /// Item_Chaos_Attack_Name
         /// 三体模型
         /// Item_Chaos_Attack_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// 三つの天体の軌道。
         /// Item_Chaos_Attack_Effect
         /// <tag=WeaponAction_DirectAttack>が命中した時、{CHANCE}の確率で追加の<tag=Elemental_Chaos>ダメージを与える。\n[ダメージ：{DAMAGE}(<tag=FireDamage>{PERCENT}+<tag=IceDamage>{PERCENT}+<tag=LightningDamage>{PERCENT})]
         /// </summary>
@@ -201,7 +201,7 @@ namespace SephiriaMod
         /// Item_Stargaze_Tablet_Name
         /// 星見の石版
         /// Item_Stargaze_Tablet_FlavorText
-        /// キラキラ光るフレーバーテキスト募集中
+        /// 昼でもくっきりと星が見える。
         /// Item_Stargaze_Tablet_Effect
         /// 石版を手に入れるたびに破壊し、そのレアリティに応じたポイントを得る。\n{QUEST}ポイント得るごとに{COUNT}回、周囲8マスのうちアーティファクトがないランダムな枠1つを+{REWARD}する。\n[現在の石版ポイント：{CURRENT}]
         /// Item_Stargaze_Tablet_Effect2
@@ -227,7 +227,7 @@ namespace SephiriaMod
         /// Item_Auto_Buff_Name
         /// 簡易自律魔法陣
         /// Item_Auto_Buff_FlavorText
-        /// フレーバーテキスト募集中
+        /// IndexOutOfRangeException...
         /// Item_Auto_Buff_Effect
         /// 下の枠にあるバフ魔法の<tag=Magic>を{COOLDOWN}秒ごとに自動発動する。
         /// </summary>
@@ -238,7 +238,7 @@ namespace SephiriaMod
         /// Item_Auto_Magic_Legend_Name
         /// 試用自律魔法陣
         /// Item_Auto_Magic_Legend_FlavorText
-        /// フレーバーテキスト募集中
+        /// NullReferenceException...
         /// Item_Auto_Magic_Legend_Effect
         /// 上の枠にある<tag=Magic>を{COOLDOWN}秒遅れて自動発動する。
         /// </summary>
@@ -273,7 +273,7 @@ namespace SephiriaMod
         /// Item_Bond_Maker_Name
         /// 恋結びのリボン
         /// Item_Bond_Maker_FlavorText
-        /// フレーバーテキスト募集中
+        /// 淡い絆を結ぶ。
         /// Item_Bond_Maker_Effect
         /// このアーティファクトのレベルが{LEVEL}になると、このアイテムと左右の枠にあるアーティファクトは壊れる。左右の枠にあったアーティファクトのカテゴリーに含まれるランダムな絆アーティファクト1つを獲得する。
         /// </summary>
@@ -283,7 +283,7 @@ namespace SephiriaMod
         /// Item_Wound_Weapon_Name
         /// 血の入れ墨
         /// Item_Wound_Weapon_FlavorText
-        /// フレーバーテキスト募集中
+        /// 消えることのない呪われた傷跡。
         /// Item_Wound_Weapon_Effect2
         /// 敵を<tag=WeaponAction_DirectAttack>が命中した時、<tag=Debuff_Wound>を付与する。
         /// Item_Wound_Weapon_Effect3
@@ -299,7 +299,7 @@ namespace SephiriaMod
         /// Item_Max_MP_Power_Name
         /// 水神の目
         /// Item_Max_MP_Power_FlavorText
-        /// フレーバーテキスト募集中
+        /// 水を生み出す竜の宝石。
         /// Item_Max_MP_Power_Effect
         /// MP再生を最終MPに変換する。
         /// Item_Max_MP_Power_Effect2
@@ -311,7 +311,7 @@ namespace SephiriaMod
         /// Item_Follower_Died_Heal_Name
         /// 友情のリストバンド
         /// Item_Follower_Died_Heal_FlavorText
-        /// フレーバーテキスト募集中
+        /// 契約とは程遠い小さな、それでも太い糸。
         /// Item_Follower_Died_Heal_Effect
         /// HP消費以外によるダメージで<tag=Follower>が倒れた時、プレイヤーの<tag=HP>を回復する。（上限を超過して回復する）\n[HP回復量：倒れた<tag=Follower>の最大<tag=HP>{HEAL}]
         /// </summary>
@@ -321,7 +321,7 @@ namespace SephiriaMod
         /// Item_Pallas_Joker_Name
         /// パラスのジョーカー
         /// Item_Pallas_Joker_FlavorText
-        /// フレーバーテキスト募集中
+        /// 夢の中で失くしたカードがここにある。
         /// Item_Pallas_Joker_Effect
         /// 周囲8マスにあるパラスのカードを強化（強化されたパラスのカードは発射確率とダメージが増加）
         /// Item_Pallas_Joker_Effect2
@@ -342,7 +342,7 @@ namespace SephiriaMod
         /// Item_Electric_Stun_Name
         /// ビリビリクリームクロワッサン
         /// Item_Electric_Stun_FlavorText
-        /// フレーバーテキスト募集中
+        /// 痺れるカスタードクリーム入りクロワッサン。
         /// Item_Electric_Stun_Effect
         /// 感電を付与するたびに、感電が付与されていない敵に雷属性ダメージを与える時に、気絶させる確率が{PERCENT}増加する（気絶させると確率はリセットされる）\n[現在の気絶確率：{CURRENT}]
         /// </summary>
@@ -370,7 +370,7 @@ namespace SephiriaMod
         /// Item_Attack_Speed_Name
         /// 風のお守り
         /// Item_Attack_Speed_FlavorText
-        /// フレーバーテキスト募集中
+        /// 嵐の前の静かな風。
         /// </summary>
         public static ModCharm AttackSpeed { get; } = ModCharmStatus.Create("Attack_Speed", 2, CreateStatusGroup("ATTACK_SPEED", 2, 4, 8))
             .SetCategory(ItemCategories.WindSong).SetIsUniqueEffect().SetRarity(EItemRarity.Common);
@@ -386,7 +386,7 @@ namespace SephiriaMod
         /// Item_Dash_Attack_Scale_Up_Name
         /// 楽譜「空」
         /// Item_Dash_Attack_Scale_Up_FlavorText
-        /// 空高く舞うフレーバーテキスト募集中
+        /// 空が吹く。
         /// Item_Dash_Attack_Scale_Up_Effect
         /// <tag=WeaponAction_DashAttack>の範囲{RANGE}増加
         /// </summary>
@@ -396,7 +396,7 @@ namespace SephiriaMod
         /// Item_Dash_Attack_More_Name
         /// 追撃の籠手
         /// Item_Dash_Attack_More_FlavorText
-        /// 空高く舞うフレーバーテキスト募集中
+        /// 青く透き通った空から逃れることはできません。
         /// Item_Dash_Attack_More_Effect
         /// <tag=WeaponAction_DashAttack>が命中した時、{PERCENT}の確率で<tag=DashCount>が1回復する（クールタイム{COOLDOWN}秒）
         /// </summary>
@@ -406,7 +406,7 @@ namespace SephiriaMod
         /// Item_On_Damaged_Cosume_Dash_Name
         /// 翔ける羽根飾り
         /// Item_On_Damaged_Cosume_Dash_FlavorText
-        /// 空高く舞うフレーバーテキスト募集中
+        /// 傷を癒す不死鳥の羽根。
         /// Item_On_Damaged_Cosume_Dash_Effect
         /// ダメージを受けた時、<tag=DashCount>を{DASH}消費することで受けたダメージの{PERCENT}を回復する（クールタイム{COOLDOWN}秒、<tag=DashRecovery>が適用されます）
         /// </summary>
@@ -416,7 +416,7 @@ namespace SephiriaMod
         /// Item_Double_Dash_Name
         /// 晴れ雲
         /// Item_Double_Dash_FlavorText
-        /// 空高く舞うフレーバーテキスト募集中
+        /// 透き通った雲。
         /// Item_Double_Dash_Effect
         /// ダッシュした時、<tag=DashCount>が1回復し、もう一度ダッシュする
         /// </summary>
@@ -426,7 +426,7 @@ namespace SephiriaMod
         /// Item_Fixed_Move_Speed_Name
         /// 歪んだ靴
         /// Item_Fixed_Move_Speed_FlavorText
-        /// 空高く舞うフレーバーテキスト募集中
+        /// 靴があなたを履いている。
         /// Item_Fixed_Move_Speed_Effect
         /// <tag=MoveSpeed>が{PERCENT}に固定されます
         /// </summary>
@@ -436,7 +436,7 @@ namespace SephiriaMod
         /// Item_Another_Execution_Name
         /// ウリエルの手斧
         /// Item_Another_Execution_FlavorText
-        /// フレーバーテキスト募集中
+        /// 手に持って使うには少し小さい。
         /// Item_Another_Execution_Effect
         /// 攻撃の<tag=CriticalChance>が100％を超えた場合、超過した分の確率が<tag=MagicExecution>の発生率に変換される。
         /// Item_Another_Execution_Effect2
@@ -448,7 +448,7 @@ namespace SephiriaMod
         /// Item_Electric_Critical_Name
         /// 雷鳴の槌
         /// Item_Electric_Critical_FlavorText
-        /// フレーバーテキスト募集中
+        /// 騒音の苦情があったため今は使われていません。
         /// Item_Electric_Critical_Effect
         /// <tag=WeaponAction_DirectAttack>または雷属性攻撃<sprite=\"Keyword\" name=LightningDamage>の<tag=CriticalChance>が雷属性ダメージの{PERCENT}増加\n[増加確率：+{CRITICAL}%]
         /// </summary>
@@ -458,7 +458,7 @@ namespace SephiriaMod
         /// Item_Separate_Direct_Attack_Name
         /// 惜別のアレキサンドライト
         /// Item_Separate_Direct_Attack_FlavorText
-        /// フレーバーテキスト募集中
+        /// 赤と青の扉。
         /// Item_Separate_Direct_Attack_Effect
         /// 元のダメージが{DAMAGE}以上の<tag=WeaponAction_DirectAttack>を2回に分割する
         /// </summary>
@@ -468,7 +468,7 @@ namespace SephiriaMod
         /// Item_Evasion_Frost_Name
         /// 氷の簪
         /// Item_Evasion_Frost_FlavorText
-        /// フレーバーテキスト募集中
+        /// 冷たい表情を伴った簪。
         /// Item_Evasion_Frost_Effect
         /// <tag=Evasion>するたびに右の枠の<tag=FrostRelic>アーティファクトのチャージを少しだけ進める
         /// Item_Evasion_Frost_Effect2
@@ -480,7 +480,7 @@ namespace SephiriaMod
         /// Item_Super_Meteor_Name
         /// メテオライトの指輪
         /// Item_Super_Meteor_FlavorText
-        /// フレーバーテキスト募集中
+        /// 煌びやかな装飾がお気に入り。
         /// Item_Super_Meteor_Effect
         /// 隕石の落下速度 {SPEED}
         /// Item_Super_Meteor_Effect2
@@ -494,7 +494,7 @@ namespace SephiriaMod
         /// Item_Blood_Mp_Name
         /// 血の祭壇
         /// Item_Blood_Mp_FlavorText
-        /// フレーバーテキスト募集中
+        /// かつて魔力で甦りを果たそうとした者がいた。
         /// Item_Blood_Mp_Effect
         /// 血の魔力：<tag=MP>の代わりに<tag=HP>を消費する
         /// Item_Blood_Mp_Effect2
@@ -507,7 +507,7 @@ namespace SephiriaMod
         /// Item_Inventory_Power_Name
         /// カジノチップ
         /// Item_Inventory_Power_FlavorText
-        /// フレーバーテキスト募集中
+        /// ここでは何の価値も無い。
         /// Item_Inventory_Power_Effect
         /// 周囲8枠にあるカジノチップ以外のアーティファクトをカジノチップに変える
         /// Item_Inventory_Power_Effect2
@@ -519,7 +519,7 @@ namespace SephiriaMod
         /// Item_Pallas_Ace_Name
         /// パラスのエース
         /// Item_Pallas_Ace_FlavorText
-        /// フレーバーテキスト募集中
+        /// スペードがどこかに行ってしまったんだ。
         /// Item_Pallas_Ace_Effect
         /// ダッシュ攻撃時に{DEFAULT}%の確率でカードを発射
         /// Item_Pallas_Ace_Effect2
@@ -531,7 +531,7 @@ namespace SephiriaMod
         /// Item_First_Heal_Name
         /// 酔狂のお守り
         /// Item_First_Heal_FlavorText
-        /// 狂ったフレーバーテキスト募集中
+        /// このお守りを見て思い出す。
         /// Item_First_Heal_Effect
         /// このアーティファクトを初めて獲得した時、プレイヤーの<tag=HP>を{HEAL}回復する
         /// </summary>
@@ -541,7 +541,7 @@ namespace SephiriaMod
         /// Item_Drunk_Elemental_Name
         /// 虹の欠片
         /// Item_Drunk_Elemental_FlavorText
-        /// 狂ったフレーバーテキスト募集中
+        /// 辛酸と共に零れた七色の欠片。
         /// </summary>
         public static ModCharm DrunkElemental { get; } = ModCharmStatus.Create("Drunk_Elemental", 3, CreateStatusGroup("DEFENSE", -2, -3, -5, -7),
             CreateStatusGroup("PHYSICAL_DAMAGE", 1, 2, 3, 5),
@@ -571,7 +571,7 @@ namespace SephiriaMod
             .SetCategory(ItemCategories.Drunk).SetIsUniqueEffect().SetSimpleEffect().SetRarity(EItemRarity.Rare);
         /// <summary>
         /// Item_Half_HP_Name
-        /// 百薬
+        /// 百の薬
         /// Item_Half_HP_FlavorText
         /// 狂ったフレーバーテキスト募集中
         /// Item_Half_HP_Effect
@@ -585,7 +585,7 @@ namespace SephiriaMod
         /// Item_All_Ignore_Defense_Name
         /// リシュリューの高級ワイン
         /// Item_All_Ignore_Defense_FlavorText
-        /// 狂ったフレーバーテキスト募集中
+        /// 何年たっても動物を惑わせる香り。
         /// Item_All_Ignore_Defense_Effect
         /// <tag=Defense>{DEFENSE}ごとに次の効果を獲得
         /// Item_All_Ignore_Defense_Effect2
@@ -597,7 +597,7 @@ namespace SephiriaMod
         /// Item_Companion_Sacrifice_Name
         /// 裏サイン
         /// Item_Companion_Sacrifice_FlavorText
-        /// 狂ったフレーバーテキスト募集中
+        /// 明かしてはならない相手との契約。
         /// Item_Companion_Sacrifice_Effect
         /// <tag=Defense>-50以下の時、\n<tag=FollowerDamage> {FOLLOWER1}
         /// Item_Companion_Sacrifice_Effect2
@@ -611,7 +611,7 @@ namespace SephiriaMod
         /// Item_Drunk_Shadow_Name
         /// 黒い香車
         /// Item_Drunk_Shadow_FlavorText
-        /// フレーバーテキスト募集中
+        /// 黒く固まった一つの駒。
         /// Item_Drunk_Shadow_Effect
         /// 死亡するダメージを受ける時、必ず<tag=Evasion>する（クールタイム{COOLDOWN}秒、<tag=Evasion>が適用されます）
         /// </summary>
@@ -621,7 +621,7 @@ namespace SephiriaMod
         /// Item_Drunk_Ember_Name
         /// 汽車の玩具
         /// Item_Drunk_Ember_FlavorText
-        /// フレーバーテキスト募集中
+        /// 衝突するまで止まらないブレーキの壊れた汽車。
         /// Item_Drunk_Ember_Effect
         /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Defense>-1につき{PERCENT}の確率で<tag=Burn>を付与する（クールタイム0.5秒）
         /// Item_Drunk_Ember_Effect2
@@ -633,7 +633,7 @@ namespace SephiriaMod
         /// Item_Drunk_Glacier_Name
         /// 雪の待ち針
         /// Item_Drunk_Glacier_FlavorText
-        /// フレーバーテキスト募集中
+        /// その雪だけは溶けることはない。
         /// Item_Drunk_Glacier_Effect
         /// <tag=Freeze>のスタン効果が無くなる
         /// Item_Drunk_Glacier_Effect2
@@ -645,7 +645,7 @@ namespace SephiriaMod
         /// Item_Drunk_Dark_Cloud_Name
         /// 割れた電球
         /// Item_Drunk_Dark_Cloud_FlavorText
-        /// フレーバーテキスト募集中
+        /// 自ら壊れ自由になった光。
         /// Item_Drunk_Dark_Cloud_Effect
         /// <tag=DarkCloud>の消費速度増幅 {SPEED}
         /// Item_Drunk_Dark_Cloud_Effect2
@@ -657,7 +657,7 @@ namespace SephiriaMod
         /// Item_Drunk_Vitality_Name
         /// 経口輸血液
         /// Item_Drunk_Vitality_FlavorText
-        /// フレーバーテキスト募集中
+        /// 美味しい。
         /// Item_Drunk_Vitality_Effect
         /// {ITEM}の<tag=HP>回復量 {HEAL}
         /// Item_Drunk_Vitality_Effect2
@@ -669,7 +669,7 @@ namespace SephiriaMod
         /// Item_Drunk_Guardian_Name
         /// 存在の天秤
         /// Item_Drunk_Guardian_FlavorText
-        /// フレーバーテキスト募集中
+        /// 天使と悪魔が囁く。
         /// Item_Drunk_Guardian_Effect
         /// <tag=WeaponAction_DirectAttack>が命中した時、追加の<tag=PhysicalDamage>を与える\n[ダメージ：{DAMAGE}（守護アーティファクトの数×酩酊アーティファクトの数{PERCENT} - <tag=Defense>の絶対値）]
         /// </summary>
@@ -679,7 +679,7 @@ namespace SephiriaMod
         /// Item_Evasion_Curse_Name
         /// 暗黙の毒針
         /// Item_Evasion_Curse_FlavorText
-        /// フレーバーテキスト募集中
+        /// 声は出ない。
         /// Item_Evasion_Curse_Effect
         /// <tag=WeaponAction_DirectAttack>が命中した時、{POISON}の確率で<tag=Debuff_Poison>を付与する。（クールタイム{COOLDOWN}秒）
         /// Item_Evasion_Curse_Effect2
