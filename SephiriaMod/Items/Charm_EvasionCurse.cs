@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SephiriaMod.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -8,39 +9,66 @@ namespace SephiriaMod.Items
 {
     public class Charm_EvasionCurse : Charm_StatusInstance
     {
+        public int[] poison = [5, 10, 20];
+
+        public Timer cooldownTimer = new Timer(7f);
+        public bool isInCooldown;
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
-            if(avatar == null || ignoreAvatarStatus)
+            string value2 = showAllLevel ? poison.SafeRandomAccess(0) + "→" + poison.SafeRandomAccess(maxLevel) : poison.SafeRandomAccess(LevelToIdx(level)).ToString();
+            if (avatar == null || ignoreAvatarStatus)
             {
-                return new Loc.KeywordValue[1]
+                return new Loc.KeywordValue[3]
                 {
-            new Loc.KeywordValue("PERCENT", "-", GetPositiveColor(virtualLevelOffset))
+                    new Loc.KeywordValue("PERCENT", "-" + "%"),
+                new Loc.KeywordValue("POISON", value2 + "%", GetPositiveColor(virtualLevelOffset)),
+                new Loc.KeywordValue("COOLDOWN", cooldownTimer.time.ToString())
                 };
             }
             float percent = GetAssasinateRate(avatar.GetCustomStat(ECustomStat.Evasion));
             string value = percent.ToString(".##");
-            return new Loc.KeywordValue[1]
+            return new Loc.KeywordValue[3]
             {
-            new Loc.KeywordValue("PERCENT", value, GetPositiveColor(virtualLevelOffset))
+                new Loc.KeywordValue("PERCENT", value + "%"),
+                new Loc.KeywordValue("POISON", value2 + "%", GetPositiveColor(virtualLevelOffset)),
+                new Loc.KeywordValue("COOLDOWN", cooldownTimer.time.ToString())
             };
+        }
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+            if (isInCooldown && cooldownTimer.Update(Time.deltaTime))
+            {
+                isInCooldown = false;
+            }
         }
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
             NetworkAvatar.AddCustomStatUnsafe("ABSOLUTEEVASION", -10000);
             NetworkAvatar.OnAttackUnitBeforeOperation += OnAttackUnitBeforeOperation;
+            NetworkAvatar.OnAttackUnit += OnAttackUnit;
         }
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
             NetworkAvatar.AddCustomStatUnsafe("ABSOLUTEEVASION", 10000);
             NetworkAvatar.OnAttackUnitBeforeOperation -= OnAttackUnitBeforeOperation;
+            NetworkAvatar.OnAttackUnit -= OnAttackUnit;
         }
         public override void OnCharmEffectRefreshed()
         {
             base.OnCharmEffectRefreshed();
             NetworkAvatar.OnAttackUnitBeforeOperation -= OnAttackUnitBeforeOperation;
             NetworkAvatar.OnAttackUnitBeforeOperation += OnAttackUnitBeforeOperation;
+        }
+        private void OnAttackUnit(UnitAvatar unitAvatar, DamageInstance damageInstance)
+        {
+            if (IsEffectEnabled && !isInCooldown && poison.SafeRandomAccess(CurrentLevelToIdx()).Chance() && damageInstance.fromType == EDamageFromType.DirectAttack)
+            {
+                isInCooldown = true;
+                unitAvatar.ApplyDebuff(SephiriaPrefabs.Poison, NetworkAvatar);
+            }
         }
 
         public float GetAssasinateRate(int evasion)

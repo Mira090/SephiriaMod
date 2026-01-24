@@ -286,6 +286,17 @@ namespace SephiriaMod.Utilities
         }
         #endregion
 
+        #region 乱数関連
+        public static bool Chance(this int percent)
+        {
+            return Random.Range(0, 100) < percent;
+        }
+        public static bool Chance(this float probability)
+        {
+            return Random.Range(0, 1f) <= probability;
+        }
+        #endregion
+
         public static string ToJapanese(this EItemType type)
         {
             return type switch

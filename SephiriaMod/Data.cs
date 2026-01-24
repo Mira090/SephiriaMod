@@ -677,14 +677,16 @@ namespace SephiriaMod
             .SetCategory(ItemCategories.Drunk, ItemCategories.Guardian).SetIsDual().SetSimpleEffects(1).SetRarity(EItemRarity.Rare).SetDamageId();
         /// <summary>
         /// Item_Evasion_Curse_Name
-        /// 暗黙の大釘
+        /// 暗黙の毒針
         /// Item_Evasion_Curse_FlavorText
         /// フレーバーテキスト募集中
         /// Item_Evasion_Curse_Effect
-        /// <tag=Evasion>が<tag=Assasination>の発生率に変換されます。（<tag=Assasination>発生率：{PERCENT}）
+        /// <tag=WeaponAction_DirectAttack>が命中した時、{POISON}の確率で<tag=Debuff_Poison>を付与する。（クールタイム{COOLDOWN}秒）
+        /// Item_Evasion_Curse_Effect2
+        /// <tag=Evasion>の発生率が<tag=Assasination>の発生率に変換される。（<tag=Assasination>発生率：{PERCENT}）
         /// </summary>
-        public static ModCharm EvasionCurse { get; } = ModCharmStatus.Create<Charm_EvasionCurse>("Evasion_Curse", 2, CreateStatusGroup("Evasion", 1, 2, 4))
-            .SetCategory(ItemCategories.Curse, ItemCategories.Shadow).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare);
+        public static ModCharm EvasionCurse { get; } = ModCharmStatus.Create<Charm_EvasionCurse>("Evasion_Curse", 2, CreateStatusGroup("EVASION", 100, 200, 400))
+            .SetCategory(ItemCategories.Curse, ItemCategories.Shadow).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare);
 
         /// <summary>
         /// ItemCategory_Vitality

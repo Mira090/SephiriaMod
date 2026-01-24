@@ -20,6 +20,16 @@ namespace SephiriaMod.Utilities
             }
         }
         private static CharacterDebuff _wound;
+        public static CharacterDebuff Poison
+        {
+            get
+            {
+                if (_poison == null)
+                    _poison = WeaponDatabase.FindWeaponById(119).mainWeaponPrefab.GetComponent<WeaponAddonCommon_DebuffAttack>().debuffPrefab;
+                return _poison;
+            }
+        }
+        private static CharacterDebuff _poison;
         private static GameObject _pallasBigBullet;
         public static GameObject PallasBigBullet
         {
