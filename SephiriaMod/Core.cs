@@ -2,14 +2,14 @@
 using HarmonyLib;
 using MelonLoader;
 using Mirror;
-using System.Reflection.Emit;
-using System.Reflection;
-using UnityEngine;
-using TMPro;
-using System.Text;
 using SephiriaMod.Items;
-using SephiriaMod.Utilities;
 using SephiriaMod.Registries;
+using SephiriaMod.Utilities;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Text;
+using TMPro;
+using UnityEngine;
 
 [assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.7.1", "Mira", null)]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
@@ -30,7 +30,29 @@ namespace SephiriaMod
                 return sb.ToString();
             }
         }
+        public static string StatusId
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                foreach (var status in StatusIdDic.OrderBy(x => x.Key).Select(x => x.Value))
+                {
+                    var name = KeywordDatabase.Convert(status.StatusName, useColor: false, useSprite: false, true);
+                    var desc = KeywordDatabase.Convert(status.StatusDescription, useColor: false, useSprite: false, true);
+                    if (name == $"Status_{status.StatusName}_Name")
+                        name = string.Empty;
+                    if (desc == $"Status_{status.StatusDescription}_Description")
+                        desc = string.Empty;
+                    //name = status.StatusName;
+                    //desc = status.StatusDescription;
+                    var line = $"{status.id}^{name.ToNoTag()}^{desc.ToNoTag()}";
+                    sb.AppendLine(line.Replace('^', '	'));
+                }
+                return sb.ToString();
+            }
+        }
         public static Dictionary<int, string> ItemIdDic = new Dictionary<int, string>();
+        public static Dictionary<string, StatusEntity> StatusIdDic = new Dictionary<string, StatusEntity>();
         /// <summary>
         /// Melonが登録された後に呼び出されます。このコールバックはMelonLoaderが完全に初期化されるまで待機します。このコールバック以降は、ゲーム/Unity の参照を安全に行うことができます。 
         /// </summary>
@@ -198,7 +220,7 @@ namespace SephiriaMod
                 {
                     status.divideForDisplay = 1;
                 }
-                //Melon<Core>.Logger.Msg($"{new LocalizedString("Status_" + status.StatusName + "_Name")}({status.id}): {new LocalizedString("Status_" + status.StatusDescription + "_Description")}");
+                StatusIdDic[status.id] = status;
             }
             private static void ModifyMiracle(Miracle miracle)
             {

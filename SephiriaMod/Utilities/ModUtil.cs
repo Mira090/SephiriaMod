@@ -337,6 +337,27 @@ namespace SephiriaMod.Utilities
                 _ => "？？？",
             };
         }
+        public static string ToNoTag(this string text)
+        {
+            if(string.IsNullOrWhiteSpace(text))
+                return text;
+            StringBuilder sb = new();
+            bool tag = false;
+            foreach (var c in text)
+            {
+                if (c == '<')
+                {
+                    tag = true;
+                }
+                if (!tag)
+                    sb.Append(c);
+                if (c == '>')
+                {
+                    tag = false;
+                }
+            }
+            return sb.ToString();
+        }
         public static string GUIDToPath(this EventReference eventRef)
         {
             if (eventRef.IsNull)
