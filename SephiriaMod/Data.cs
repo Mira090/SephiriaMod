@@ -686,7 +686,7 @@ namespace SephiriaMod
         /// <tag=Evasion>の発生率が<tag=Assasination>の発生率に変換される。（<tag=Assasination>発生率：{PERCENT}）
         /// </summary>
         public static ModCharm EvasionCurse { get; } = ModCharmStatus.Create<Charm_EvasionCurse>("Evasion_Curse", 2, CreateStatusGroup("EVASION", 100, 200, 400))
-            .SetCategory(ItemCategories.Curse, ItemCategories.Shadow).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Curse, ItemCategories.Shadow).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
 
         /// <summary>
         /// ItemCategory_Vitality
