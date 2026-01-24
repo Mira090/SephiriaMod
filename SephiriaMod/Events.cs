@@ -163,6 +163,25 @@ namespace SephiriaMod
                 ModListText.raycastTarget = false;
             }
         }
+        [HarmonyPatch(typeof(UnitAvatar), nameof(UnitAvatar.GetMysticPotItems), [typeof(EItemRarity)])]
+        public static class UnitAvatarGetMysticPotItemsPatch
+        {
+            static void Postfix(EItemRarity targetRarity, ref ItemEntity[] __result, UnitAvatar __instance)
+            {
+                if(targetRarity == EItemRarity.Legend)
+                {
+                    var temp = __result.ToList();
+                    temp.Remove(Data.WarCrime.ItemEntity);
+                    __result = temp.ToArray();
+                }
+                else if(targetRarity == EItemRarity.Common)
+                {
+                    var temp = __result.ToList();
+                    temp.Remove(Data.Malice.ItemEntity);
+                    __result = temp.ToArray();
+                }
+            }
+        }
         [HarmonyPatch(typeof(WeaponSimple_Crossbow), nameof(WeaponSimple_Crossbow.SubAttackButtonDown))]
         public static class WeaponSimple_CrossbowPatch
         {
