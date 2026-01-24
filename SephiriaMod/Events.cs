@@ -290,13 +290,30 @@ namespace SephiriaMod
                 //Melon<Core>.Logger.Msg("RpcShowDamageParticle");
                 if(color.a == 0 && color.r == 1 && color.g == 0 && color.b == 0)
                 {
-                    msg = msg.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=Assasination>");
+                    msg = "<sprite=\"Keyword\" name=Assasination>" + msg;
                     color = new Color(1, 0, 0);
                 }
                 else if(color.a == 0)
                 {
                     //Melon<Core>.Logger.Msg("RpcShowDamageParticle blue!");
                     msg = msg.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=MagicDamageBonus>");
+                    color = new Color(0.2784f, 0.5529f, 0.9804f);
+                }
+            }
+        }
+        [HarmonyPatch(typeof(UI_DamageParticle), nameof(UI_DamageParticle.SetDamage))]
+        public static class UI_DamageParticlePatch
+        {
+            static void Prefix(ref string damage, ref Color color, UI_DamageParticle __instance)
+            {
+                if (color.a == 0 && color.r == 1 && color.g == 0 && color.b == 0)
+                {
+                    damage = "<sprite=\"Keyword\" name=Assasination>" + damage;
+                    color = new Color(1, 0, 0);
+                }
+                else if (color.a == 0)
+                {
+                    damage = damage.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=MagicDamageBonus>");
                     color = new Color(0.2784f, 0.5529f, 0.9804f);
                 }
             }
