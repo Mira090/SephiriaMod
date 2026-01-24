@@ -11,7 +11,7 @@ using SephiriaMod.Items;
 using SephiriaMod.Utilities;
 using SephiriaMod.Registries;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.7.0", "Mira", null)]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.7.1", "Mira", null)]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod

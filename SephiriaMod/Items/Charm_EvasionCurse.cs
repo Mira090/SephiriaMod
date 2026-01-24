@@ -79,6 +79,8 @@ namespace SephiriaMod.Items
         }
         private void OnAttackUnitBeforeOperation(UnitAvatar avatar, DamageInstance damage)
         {
+            if (damage.fromType != EDamageFromType.DirectAttack)
+                return;
             var evasion = NetworkAvatar.GetCustomStat(ECustomStat.Evasion);
             float rate = GetAssasinateRate(evasion);
             var assassinate = Mathf.Clamp(rate, 0f, 100f);
@@ -88,7 +90,7 @@ namespace SephiriaMod.Items
                 damage.criticalChancePercent = 0;
                 damage.color = new Color(1, 0, 0, 0);
                 damage.useCustomColor = true;
-                damage.damage += avatar.MaxHp * 0.1f * avatar.Debuffs.Count();
+                damage.damage += avatar.MaxHp * 0.04f * avatar.Debuffs.Count();
                 //damage.ignoreDefense += ignoreDegence.SafeRandomAccess(CurrentLevelToIdx());
                 //Melon<Core>.Logger.Msg("暗閃!: " + (max / min));
             }
