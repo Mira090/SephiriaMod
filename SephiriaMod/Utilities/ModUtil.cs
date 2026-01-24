@@ -320,6 +320,7 @@ namespace SephiriaMod.Utilities
                 EItemRarity.Uncommon => "高級",
                 EItemRarity.Rare => "希少",
                 EItemRarity.Legend => "伝説",
+                EItemRarity.Eternal => "永遠",
                 _ => "？？？",
             };
         }
@@ -332,6 +333,7 @@ namespace SephiriaMod.Utilities
                 EItemActiveType.PocketDimensionShop => "PocketDimensionShop",
                 EItemActiveType.Locked => "Locked",
                 EItemActiveType.Disabled => "Disabled",
+                EItemActiveType.TestOnly => "TestOnly",
                 _ => "？？？",
             };
         }
