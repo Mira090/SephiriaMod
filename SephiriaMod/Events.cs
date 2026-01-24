@@ -13,6 +13,7 @@ using FMOD.Studio;
 using FMOD;
 using SephiriaMod.Items;
 using SephiriaMod.Utilities;
+using TMPro;
 
 namespace SephiriaMod
 {
@@ -129,6 +130,39 @@ namespace SephiriaMod
             }
         }
 
+        [HarmonyPatch(typeof(UI_TitleLobby), ("Start"))]
+        public static class UI_TitleLobbyPatch
+        {
+            public static GameObject ModListObject = null;
+            public static RectTransform ModListTransform = null;
+            public static TextMeshProUGUI ModListText = null;
+            static void Postfix(UI_TitleLobby __instance)
+            {
+                ModListObject = new GameObject("ModListObject");
+                ModListObject.transform.SetParent(__instance.transform);
+                ModListText = ModListObject.AddComponent<TextMeshProUGUI>();
+                ModListObject.AddComponent<UI_LocalizationFontChanger>();
+                ModListTransform = ModListObject.transform as RectTransform;
+                ModListTransform.localPosition = Vector3.zero;
+                ModListTransform.localScale = Vector3.one * 0.75f;
+                ModListTransform.anchorMin = new Vector2(0f, 1f);
+                ModListTransform.anchorMax = new Vector2(0f, 1f);
+                ModListTransform.pivot = new Vector2(0f, 1f);
+                ModListTransform.anchoredPosition = new Vector2(0f, 0f);
+
+
+                StringBuilder sb = new("Mods\n");
+                foreach (var melon in MelonMod.RegisteredMelons)
+                {
+                    sb.AppendLine("<size=150%>" + melon.Info.Name + "</size> <alpha=#AA>v" + melon.Info.Version + "\nby " + melon.Info.Author + "<alpha=#FF>");
+                }
+                ModListText.text = sb.ToString();
+                ModListText.fontSize = 8;
+                ModListText.enableWordWrapping = false;
+                ModListText.margin = Vector4.one * 12f;
+                ModListText.raycastTarget = false;
+            }
+        }
         [HarmonyPatch(typeof(WeaponSimple_Crossbow), nameof(WeaponSimple_Crossbow.SubAttackButtonDown))]
         public static class WeaponSimple_CrossbowPatch
         {
@@ -227,218 +261,9 @@ namespace SephiriaMod
                     }
                     return false;
                 }
-                /*
-                if (name == "KKA" || name == "kka")
-                {
-                    if ((message.Contains("しか") || message.Contains("シカ") || message.Contains("deers") || message.Contains("Deers")))
-                    {
-                        message = message.Replace("しか", "Shika").Replace("シカ", "Shika").Replace("deers", "shikas").Replace("Deers", "Shikas");
-                    }
-                    else
-                    {
-                        message = "せめてストーカーするなら女の子がいい";
-                    }
-                    string text = name + " : " + message;
-                    GameLogWriter.Instance.WriteLog(text, Color.cyan);
-                    if ((bool)avatar)
-                    {
-                        avatar.CreateChatBubble(message);
-                    }
-                    return false;
-                }*/
                 return true;
             }
         }
-        /*
-        public static class Charm_TuningForksPatch
-        {
-
-            public static string damageId = "Charm_ThrowGrimoire";
-
-            public static float bulletDamage = 100f;
-            public static int staggeringLevel = 1;
-
-            public static Dictionary<uint, int> remain = new();
-
-            public static float externalForcePower = 1f;
-            public static int[] damageByLevel = [80, 160, 240, 320, 400, 480];
-            public static uint AssetId
-            {
-                get
-                {
-                    _assetId ??= SephiriaPrefabs.PallasBigBullet.GetComponent<NetworkIdentity>().assetId + 1;
-                    return _assetId.Value;
-                }
-            }
-            private static uint? _assetId = null;
-            public static Sprite bulletSprite;
-            public static void Init()
-            {
-                //bulletSprite = SpriteLoader.LoadSprite(ModUtil.MiscPath + "GrimoireBullet");
-                //Core.InstantiateNetworkClientPatch.OnGetPrefab += OnGetPrefab;
-                //Core.InstantiateNetworkClientPatch.OnInstantiate += OnInstantiate;
-            }
-
-            private static GameObject OnInstantiate(GameObject original, Vector3 position, Quaternion rotation)
-            {
-                if (original.name != SephiriaPrefabs.PallasBigBullet.name)
-                    return null;
-                var ob = UnityEngine.Object.Instantiate(original, position, rotation);
-                ob.AddComponent<NetworkIdentity>().SetAssetId(AssetId);
-                ModifyPrefab(ob.GetComponent<Bullet>());
-                return ob;
-            }
-
-            private static GameObject OnGetPrefab(uint assetId)
-            {
-                if (assetId == AssetId)
-                {
-                    return SephiriaPrefabs.PallasBigBullet;
-                }
-                return null;
-            }
-            public static void ModifyPrefab(Bullet bullet)
-            {
-                //Melon<Core>.Logger.Msg("0: " + (bullet != null));
-                var wrapper = bullet.transform.GetChild(0);
-                //Melon<Core>.Logger.Msg("1: " + (wrapper != null));
-                var body = wrapper.GetChild(0);
-                //Melon<Core>.Logger.Msg("2: " + (body != null));
-                var animator = body.GetComponent<Animator2D_SpriteRenderer>();
-                //Melon<Core>.Logger.Msg("3: " + (animator != null));
-                //Melon<Core>.Logger.Msg("4: " + (animator.currentSet != null));
-                var stateinfo = animator.currentSet.sprites;
-                //Melon<Core>.Logger.Msg("5: " + (stateinfo != null));
-                if (stateinfo.Count > 0)
-                {
-                    var sprites = stateinfo[0].timeline;
-                    //Melon<Core>.Logger.Msg("6: " + (sprites.Count));
-                    for (int q = 0; q < sprites.Count; q++)
-                    {
-                        sprites[q].sprite = bulletSprite;
-                    }
-                }
-                var key = animator.GetCurrentBakedKeyFrame();
-                foreach (var time in key.timeline.Values)
-                {
-                    for (int q = 0; q < time.Count; q++)
-                    {
-                        time[q] = bulletSprite;
-                    }
-                }
-                var destroy = bullet.gameObject.GetComponent<BulletDestroyModule_DestroyImmediate>();
-                //animator.ChangeSet(animator.currentSet);
-            }
-            public static void OnAttack(CombatBehaviour combat, DamageInstance damageInstance, ProjectileBase projectile, Charm_TuningForks __instance)
-            {
-                Melon<Core>.Logger.Msg("OnAttack");
-                if (!remain.ContainsKey(__instance.netId))
-                    return;
-                if (remain[__instance.netId] > 0 && !__instance.NetworkAvatar.IsDead && __instance.IsEffectEnabled && damageInstance.fromType == EDamageFromType.DirectAttack)
-                {
-                    remain[__instance.netId]--;
-                    int count = 4 + __instance.NetworkAvatar.Inventory.charms.Values.Count(charm => charm is Charm_Magic);
-                    bulletDamage = __instance.NetworkAvatar.GetCustomStat(ECustomStat.PhysicalDamage) * (damageByLevel.SafeRandomAccess(__instance.CurrentLevelToIdx()) / 100f);
-                    bulletDamage += bulletDamage * (__instance.NetworkAvatar.GetCustomStat(ECustomStat.MagicDamageBonus) / 100f);
-                    float anglePer = 6f;
-                    float startAngle = anglePer * (float)(count - 1) * 0.5f;
-                    float angle = (__instance.WeaponController.aimedPositionClientside - __instance.WeaponController.transform.position).GetAngle();
-                    for (int q = 0; q < count; q++)
-                    {
-                        Vector3 vector3FromAngle = HorayUtility.GetVector3FromAngle(angle + (0f - startAngle + anglePer * q));
-                        Vector3 motionDataBegin = __instance.NetworkAvatar.transform.position + vector3FromAngle * 0.2f;
-                        Vector3 motionDataEnd = __instance.NetworkAvatar.transform.position + vector3FromAngle * 8f;
-                        bool flag = UnityEngine.Random.Range(0f, 1f) < 0.2f;
-                        //Melon<Core>.Logger.Msg("Prefab: " + (BulletPrefab != null));
-                        Bullet bullet = Bullet.Pool.Spawn(AssetId, SephiriaPrefabs.PallasBigBullet, __instance.NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, bulletDamage, staggeringLevel, externalForcePower, __instance.NetworkAvatar, __instance.NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), __instance.NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
-                        bullet.pierceCreatureCount = 3;
-                        ModifyPrefab(bullet);
-                        Vector3 pos = __instance.NetworkAvatar.transform.position + (Vector3)(UnityEngine.Random.insideUnitCircle * 3f);
-                        bullet.SetSpeedScale(2);
-
-                        if (bullet.MoveModule is BulletMoveModule_FireworkHoming bulletMoveModule_FireworkHoming)
-                        {
-                            //bulletMoveModule_FireworkHoming.TurnOnFakeTarget(pos);
-                        }
-                    }
-                }
-            }
-
-            //[HarmonyPatch(typeof(Charm_TuningForks), "OnEnabledEffect")]
-            public static class EnablePatch
-            {
-                static void Postfix(Charm_TuningForks __instance)
-                {
-                    Melon<Core>.Logger.Msg("OnEnabledEffect");
-                    __instance.WeaponController.OnBasicAttack += (combat, damage, projectile) => OnAttack(combat, damage, projectile, __instance);
-                }
-            }
-
-
-            //[HarmonyPatch(typeof(Charm_TuningForks), "OnDisabledEffect")]
-            public static class DisablePatch
-            {
-                static void Postfix(Charm_TuningForks __instance)
-                {
-                    Melon<Core>.Logger.Msg("OnDisabledEffect");
-                    __instance.WeaponController.OnBasicAttack -= (combat, damage, projectile) => OnAttack(combat, damage, projectile, __instance);
-                }
-            }
-            //[HarmonyPatch(typeof(Charm_TuningForks), "OnBeginCastMagicServerside")]
-            public static class AttackPatch
-            {
-                static void Prefix(Charm_TuningForks __instance)
-                {
-                    if (!__instance.GetEnhancedWeaponDamage() && __instance.cooldownTimer.Check())
-                    {
-                        remain[__instance.netId] = 3;
-                    }
-                    if (remain.ContainsKey(__instance.netId))
-                        Melon<Core>.Logger.Msg("OnBeginCastMagicServerside: " + remain[__instance.netId]);
-                }
-            }
-
-            //[HarmonyPatch(typeof(Charm_TuningForks), nameof(Charm_TuningForks.BuildKeywords), new Type[] { typeof(UnitAvatar), typeof(int), typeof(int), typeof(bool), typeof(bool) })]
-            public static class KeywordsPatch
-            {
-                static void Postfix(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus, Charm_TuningForks __instance, ref Loc.KeywordValue[] __result)
-                {
-                    string value = (showAllLevel ? (damageByLevel.SafeRandomAccess(0) + "→" + damageByLevel.SafeRandomAccess(__instance.maxLevel)) : damageByLevel.SafeRandomAccess(__instance.LevelToIdx(level)).ToString());
-                    var list = __result.ToList();
-                    list.Add(new Loc.KeywordValue("DAMAGE", value, Charm_Basic.GetPositiveColor(virtualLevelOffset)));
-                    __result = list.ToArray();
-                }
-            }
-        }*/
-        /*
-        [HarmonyPatch(typeof(BulletDestroyModule), nameof(BulletDestroyModule.CreateDestroyVisualOnClient))]
-        public static class BulletDestroyModulePatch<T> where T : ObjectPoolable
-        {
-
-            static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-            {
-                Melon<Core>.Logger.Msg($"BulletDestroyModulePatch Transpiler");
-
-                var replacement = AccessTools.Method(typeof(BulletDestroyModulePatch<SpriteFx>), nameof(SpriteFx.Pool.Spawn));
-
-                foreach (var code in instructions)
-                {
-                    if (code.opcode == OpCodes.Call && code.operand is MethodInfo mi && mi.Name == nameof(SpriteFx.Pool.Spawn))
-                    {
-                        // Instantiate(GameObject) 呼び出しを CustomInstantiate に差し替える
-                        Melon<Core>.Logger.Msg($"Transpiler!");
-                        code.operand = replacement;
-                    }
-                    yield return code;
-                }
-            }
-            private static T CustomSpawn(GameObject key, Vector3 pos, GameObject owner = null)
-            {
-                var spawned = SpriteFx.Pool.Spawn(key, pos, owner);
-                OnBulletDestroyModuleSpriteFxSpawned?.Invoke(spawned, pos, owner);
-                return spawned as T;
-            }
-        }*/
         [HarmonyPatch(typeof(DungeonManager), "UserCode_RpcBulletDestroyed__UInt32__Boolean__String__Vector3__Single__Single", new Type[] { typeof(uint), typeof(bool), typeof(string), typeof(Vector3), typeof(float), typeof(float) })]
         public static class DungeonManagerBulletDestroyPatch
         {
