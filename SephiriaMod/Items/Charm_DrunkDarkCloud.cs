@@ -84,7 +84,7 @@ namespace SephiriaMod.Items
                 var addition = __instance.Networkavatar.GetCustomStatUnsafe("DARKCLOUDSERIESUNDEFENSE");
                 if (addition > 0)
                 {
-                    series += Mathf.Max(0, -__instance.Networkavatar.GetCustomStat(ECustomStat.DamageReduction)) / 10 * addition;
+                    series += Mathf.Max(0, -__instance.Networkavatar.GetCustomStat(ECustomStat.DamageReduction)) / 20 * addition;
                 }
                 if (series <= 0)
                     return;
