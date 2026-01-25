@@ -396,7 +396,7 @@ namespace SephiriaMod
         /// Item_Dash_Attack_More_Name
         /// 追撃の籠手
         /// Item_Dash_Attack_More_FlavorText
-        /// 青く透き通った空から逃れることはできません。
+        /// 青く透き通った空から逃れることはできない。
         /// Item_Dash_Attack_More_Effect
         /// <tag=WeaponAction_DashAttack>が命中した時、{PERCENT}の確率で<tag=DashCount>が1回復する（クールタイム{COOLDOWN}秒）
         /// </summary>
