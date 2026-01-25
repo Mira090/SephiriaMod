@@ -240,6 +240,10 @@ namespace SephiriaMod
                 {
                     miracle.categories = [ItemCategories.Drunk];
                 }
+                if (miracle.id == "Elementalist")
+                {
+                    miracle.categories = [ItemCategories.Elemental];
+                }
             }
             private static void ModifyKeywordEntity(KeywordEntity keyword)
             {
