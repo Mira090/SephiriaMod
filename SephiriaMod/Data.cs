@@ -1194,7 +1194,7 @@ namespace SephiriaMod
                 moditem.AssetId = assetId++;
                 Buffs.Add(moditem);
             }
-            CustomCostumeDatabase.Initialize();
+            //CustomCostumeDatabase.Initialize();
         }
         public static void Register(List<UnityEngine.Object> list)
         {

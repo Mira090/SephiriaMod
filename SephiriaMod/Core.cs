@@ -400,6 +400,7 @@ namespace SephiriaMod
 
                     __result = list.ToArray();
                 }
+                /*
                 if(systemTypeInstance == typeof(CostumeEntity) && path == "Costume")
                 {
                     var list = __result.ToList();
@@ -415,8 +416,8 @@ namespace SephiriaMod
                     Data.RegisterCostumeSkin(list);
 
                     __result = list.ToArray();
-                }
-                if(systemTypeInstance == typeof(GameObject) && path == "Miracle")
+                }*/
+                if (systemTypeInstance == typeof(GameObject) && path == "Miracle")
                 {
                     var list = __result.ToList();
 
@@ -898,8 +899,7 @@ namespace SephiriaMod
                 if (__instance == null || __instance != ModUtil.GetGameDataLoader())
                     return;
                 Melon<Core>.Logger.Msg("Mod GameData Loading...");
-                //CustomCostumeDatabase.Initialize();
-                CustomCostumeDatabase.LoadAllStartingItems(CostumeDatabase.GetAll());
+                //CustomCostumeDatabase.LoadAllStartingItems(CostumeDatabase.GetAll());
             }
         }
         [HarmonyPatch(typeof(GameDataLoader), "OnDestroy")]
@@ -910,7 +910,6 @@ namespace SephiriaMod
                 if (__instance == null || __instance != ModUtil.GetGameDataLoader())
                     return;
                 Melon<Core>.Logger.Msg("Mod GameData Destroying...");
-                //CustomCostumeDatabase.Destroy();
             }
         }
         //[HarmonyPatch(typeof(PlayerAvatar), "UpdateCostumeOutfit", [typeof(string)])]
