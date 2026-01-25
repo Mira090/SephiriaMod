@@ -13,6 +13,7 @@ Team Horay の <a href="https://store.steampowered.com/app/2436940/_/">Sephiria<
 4. `Program Files (x86)\Steam\steamapps\common\Sephiria\Mods` フォルダ内に `CustomImages`フォルダをコピーします。
 5. `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `ja-JP.json` を上書きコピーします。
 
+例：
 ```
 Sephiria/
 ├── Mods/
