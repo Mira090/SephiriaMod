@@ -1,4 +1,5 @@
-﻿using SephiriaMod.Utilities;
+﻿using MelonLoader;
+using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,11 @@ namespace SephiriaMod.Registries
         public static void InitSprites()
         {
             NewKeywordSprite = SpriteLoader.LoadSprite(ModUtil.UIPath + "Keyword");
+            if(NewKeywordSprite == null)
+            {
+                Melon<Core>.Logger.Warning("Failed to load Keyword sprite sheet!\nPlease place the keyword image in path " + SpriteLoader.GetCustomImagePath(ModUtil.UIPath + "Keyword"));
+                return;
+            }
             NewKeywordSprite.texture.wrapMode = TextureWrapMode.Clamp;
             NewKeywordSprite.texture.wrapModeU = TextureWrapMode.Clamp;
             NewKeywordSprite.texture.wrapModeV = TextureWrapMode.Clamp;
@@ -41,6 +47,11 @@ namespace SephiriaMod.Registries
         }
         public static void InitSpriteAsset()
         {
+            if(NewKeywordSprite == null)
+            {
+                Melon<Core>.Logger.Warning("Keyword sprite sheet is null, cannot create sprite asset!");
+                return;
+            }
             if (SpriteAsset != null)
                 return;
             int max = 100 - height;

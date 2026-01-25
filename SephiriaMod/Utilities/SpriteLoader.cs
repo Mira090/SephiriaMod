@@ -8,12 +8,17 @@ namespace SephiriaMod.Utilities
 {
     public class SpriteLoader
     {
-        public static Sprite LoadSprite(string name)
+        public static string GetCustomImagePath(string name)
         {
             string dllPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             DirectoryInfo directoryInfo = Directory.GetParent(dllPath);
             string dllDirectory = directoryInfo.FullName;
             var path = dllDirectory + @"\CustomImages\" + name + ".png";
+            return path;
+        }
+        public static Sprite LoadSprite(string name)
+        {
+            var path = GetCustomImagePath(name);
             if (!File.Exists(path))
             {
                 Melon<Core>.Logger.Msg(path + " is not exist!");
