@@ -211,7 +211,7 @@ namespace SephiriaMod.Items
         {
             if ((bool)item.StoneTablet)
             {
-                if(NetworkAvatar.GetCustomStatUnsafe("DISCONNECT") > 0 && (item.EntityID == 2049 || item.EntityID == Data.Transcendent.Id))
+                if(NetworkAvatar.GetCustomStatUnsafe("DISCONNECT") > 0 && (item.EntityID == 2049))// || item.EntityID == Data.Transcendent.Id
                 {
                     return;
                 }

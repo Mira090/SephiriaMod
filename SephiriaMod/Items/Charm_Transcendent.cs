@@ -8,7 +8,7 @@ namespace SephiriaMod.Items
 {
     public class Charm_Transcendent : Charm_StatusInstance
     {
-        public int Transcendent => Data.Transcendent.Id;
+        public int Transcendent => 2049;//Data.Transcendent.Id;
         public LocalizedString semanticName = new LocalizedString("Item_StoneTablet_Disconnect_Name");
         public string semantic = "DISCONNECT";
         public string semanticNo = "NO_DISCONNECT";

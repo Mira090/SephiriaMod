@@ -34,7 +34,7 @@ namespace SephiriaMod
         /// Item_Bitterness_Name
         /// 辛辣
         /// </summary>
-        public static ModStoneTablet Bitterness { get; } = ModStoneTablet.Create("Bitterness", "UP -1\nDOWN -1\nLEFT +3\nRIGHT +3", false).SetRarity(EItemRarity.Rare);
+        //public static ModStoneTablet Bitterness { get; } = ModStoneTablet.Create("Bitterness", "UP -1\nDOWN -1\nLEFT +3\nRIGHT +3", false).SetRarity(EItemRarity.Rare);
         /// <summary>
         /// Item_War_Crime_Name
         /// 戦犯
@@ -44,7 +44,7 @@ namespace SephiriaMod
         /// Item_Transcendent_Name
         /// 超絶
         /// </summary>
-        public static ModStoneTablet Transcendent { get; } = ModStoneTablet.Create("Transcendent", "UP 5\nDOWN 5\nLEFT -2\nRIGHT -2", false).SetRarity(EItemRarity.Legend).SetCannotBeReward();
+        //public static ModStoneTablet Transcendent { get; } = ModStoneTablet.Create("Transcendent", "UP 5\nDOWN 5\nLEFT -2\nRIGHT -2", false).SetRarity(EItemRarity.Legend).SetCannotBeReward();
         /// <summary>
         /// Item_Reserved_MP_Evasion_Name
         /// 鉄扇
