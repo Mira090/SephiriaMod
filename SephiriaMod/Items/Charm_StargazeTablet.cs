@@ -229,6 +229,7 @@ namespace SephiriaMod.Items
                     EItemRarity.Uncommon => 2,
                     EItemRarity.Rare => 3,
                     EItemRarity.Legend => 5,
+                    EItemRarity.Eternal => 10,
                     _ => 1
                 };
 
