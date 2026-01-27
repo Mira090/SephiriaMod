@@ -227,6 +227,49 @@ namespace SephiriaMod.Registries
             item.DisplayValue = displayValue;
             return item;
         }
+        public static T SetDisplayDetails<T>(this T item, bool displayDetails = false) where T : ModKeyword
+        {
+            item.DisplayDetails = displayDetails;
+            return item;
+        }
+        public static T SetDisplayDetails<T>(this T item, LocalizedString detailedValue) where T : ModKeyword
+        {
+            item.DetailedValue = detailedValue;
+            return item;
+        }
+        public static T SetTextColor<T>(this T item, Color color) where T : ModKeyword
+        {
+            item.TextColor = color;
+            item.TextColorOriginal = null;
+            return item;
+        }
+        public static T SetKeywordImage<T>(this T item, Func<Sprite> image) where T : ModKeyword
+        {
+            item.KeywordImage = image;
+            item.KeywordImageOriginal = null;
+            return item;
+        }
+        public static T SetOriginal<T>(this T item, string keyword) where T : ModKeyword
+        {
+            item.TextColorOriginal = keyword;
+            item.KeywordImageOriginal = keyword;
+            return item;
+        }
+        public static T SetTextColorOriginal<T>(this T item, string keyword) where T : ModKeyword
+        {
+            item.TextColorOriginal = keyword;
+            return item;
+        }
+        public static T SetKeywordImageOriginal<T>(this T item, string keyword) where T : ModKeyword
+        {
+            item.KeywordImageOriginal = keyword;
+            return item;
+        }
+        public static T SetConnectedDetailEntities<T>(this T item, params string[] keywords) where T : ModKeyword
+        {
+            item.ConnectedDetailEntities = keywords.ToList();
+            return item;
+        }
         public static T SetStandardEnhancements<T>(this T item, params int[] enhancements) where T : ModWeapon
         {
             item.StandardEnhancements = enhancements.ToList();

@@ -327,6 +327,7 @@ namespace SephiriaMod
                 {
                     var list = __result.ToList();
 
+                    /*
                     var magicExecution = ScriptableObject.CreateInstance<KeywordEntity>();
                     magicExecution.name = "MagicExecution";
                     magicExecution.keyword = "MagicExecution";
@@ -349,8 +350,9 @@ namespace SephiriaMod
                         }
 
                     Melon<Core>.Logger.Msg("New Keyword: " + magicExecution.visualText.ToString());
-                    list.Add(magicExecution);
+                    list.Add(magicExecution);*/
 
+                    /*
                     var stargazeLevel = ScriptableObject.CreateInstance<KeywordEntity>();
                     stargazeLevel.name = "StargazeLevel";
                     stargazeLevel.keyword = "StargazeLevel";
@@ -372,8 +374,9 @@ namespace SephiriaMod
                     invLevel.displayDetails = true;
                     invLevel.textColor = Color.white;
                     Melon<Core>.Logger.Msg("New Keyword: " + invLevel.visualText.ToString());
-                    list.Add(invLevel);
+                    list.Add(invLevel);*/
 
+                    /*
                     var binaryPlanet = ScriptableObject.CreateInstance<KeywordEntity>();
                     binaryPlanet.name = "BinaryPlanet";
                     binaryPlanet.keyword = "BinaryPlanet";
@@ -396,7 +399,10 @@ namespace SephiriaMod
                     assasination.textColor = new Color(0.9f, 0.1f, 0.1f);
                     assasination.keywordImage = CustomSpriteAsset.Assasination;
                     Melon<Core>.Logger.Msg("New Keyword: " + assasination.visualText.ToString());
-                    list.Add(assasination);
+                    list.Add(assasination);*/
+
+
+                    Data.RegisterKeywords(list);
 
                     foreach (var item in list)
                         if (item is KeywordEntity entity)

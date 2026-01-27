@@ -18,6 +18,7 @@ namespace SephiriaMod.Registries
             StatKeyword = name;
             ClassName = "StatusInstance_Custom/" + name;
             Id = name.ToFileNameUpper();
+            Keyword = ModKeyword.CreateKeyword(name);
             return this;
         }
         public string Name { get; internal set; }
@@ -31,10 +32,15 @@ namespace SephiriaMod.Registries
         public string Symbol { get; internal set; } = "";
         public string StatKeyword { get; internal set; }
         public StatusEntity StatusEntity { get; internal set; }
+        public ModKeyword Keyword { get; internal set; }
+        public KeywordEntity KeywordEntity => Keyword?.KeywordEntity;
+        public bool HasKeyword => Keyword != null;
 
         public void Init()
         {
             StatusEntity = CreateStatusEntity();
+            if (HasKeyword)
+                Keyword.Init();
         }
         public StatusEntity CreateStatusEntity()
         {

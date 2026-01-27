@@ -24,6 +24,7 @@ namespace SephiriaMod
         public static List<ModCustomStatus> Statuses { get; private set; } = new();
         public static List<ModWeapon> Weapons { get; private set; } = new();
         public static List<CharacterBuffMod> Buffs { get; private set; } = new();
+        public static List<ModKeyword> Keywords { get; private set; } = new();
         public static List<string> AllResourcePrefabNames { get; private set; }
         /// <summary>
         /// Item_Malice_Name
@@ -772,6 +773,27 @@ namespace SephiriaMod
         /// インベントリにある光のレンズの最大レベルが増加します
         /// </summary>
         public static ModCustomStatus InvLevel { get; } = ModCustomStatus.CreateStatus("InvLevel");
+        /// <summary>
+        /// Status_MagicExecution_Name
+        /// 天罰
+        /// Status_MagicExecution_Description
+        /// 最も高い属性ダメージまたは物理ダメージを、最も低い属性ダメージまたは物理ダメージで割った値を掛けた<tag=Elemental_Chaos>ダメージを与えます（最大4倍、クリティカル扱いされます）
+        /// </summary>
+        public static ModKeyword MagicExecution { get; } = ModKeyword.CreateKeyword("MagicExecution").SetOriginal("MagicDamageBonus").SetConnectedDetailEntities("Elemental_Chaos");
+        /// <summary>
+        /// Status_BinaryPlanet_Name
+        /// 連星
+        /// Status_BinaryPlanet_Description
+        /// 惑星が3回攻撃します
+        /// </summary>
+        public static ModKeyword BinaryPlanet { get; } = ModKeyword.CreateKeyword("BinaryPlanet").SetTextColor(new Color(0.7f, 0.4f, 0.1f)).SetKeywordImage(() => CustomSpriteAsset.BinaryPlanet);
+        /// <summary>
+        /// Status_Assasination_Name
+        /// 暗閃
+        /// Status_Assasination_Description
+        /// <tag=WeaponAction_DirectAttack>が命中した時、確率で対象に付与されたデバフ1つにつき、<tag=MaxHP>の4%の追加ダメージを与えます
+        /// </summary>
+        public static ModKeyword Assasination { get; } = ModKeyword.CreateKeyword("Assasination").SetTextColor(new Color(0.9f, 0.1f, 0.1f)).SetKeywordImage(() => CustomSpriteAsset.Assasination);
 
         /// <summary>
         /// Miracle_FlameSword_Name
@@ -1194,6 +1216,14 @@ namespace SephiriaMod
                 moditem.AssetId = assetId++;
                 Buffs.Add(moditem);
             }
+            var pros8 = type.GetProperties(BindingFlags.Static | BindingFlags.Public).Where(p => p.PropertyType == typeof(ModKeyword) || p.PropertyType.IsSubclassOf(typeof(ModKeyword)));
+            foreach (var pro in pros8)
+            {
+                var moditem = pro.GetValue(type) as ModKeyword;
+                Melon<Core>.Logger.Msg("New Keyword: " + pro.Name);
+                moditem.Init();
+                Keywords.Add(moditem);
+            }
             //CustomCostumeDatabase.Initialize();
         }
         public static void Register(List<UnityEngine.Object> list)
@@ -1341,6 +1371,39 @@ namespace SephiriaMod
         public static void RegisterCostumeSkin(List<UnityEngine.Object> list)
         {
             list.AddRange(CustomCostumeDatabase.CreateAllSkin());
+        }
+        public static void RegisterKeywords(List<UnityEngine.Object> list)
+        {
+            foreach (var moditem in Keywords)
+            {
+                list.Add(moditem.KeywordEntity);
+            }
+            foreach (var moditem in Statuses)
+            {
+                if(moditem.HasKeyword)
+                    list.Add(moditem.KeywordEntity);
+            }
+            foreach (var item in list)
+            {
+                if (item is KeywordEntity entity)
+                {
+                    foreach (var moditem in Keywords)
+                    {
+                        moditem.Init(entity);
+                    }
+                }
+            }
+            foreach (var item in list)
+            {
+                if (item is KeywordEntity entity)
+                {
+                    foreach (var moditem in Statuses)
+                    {
+                        if (moditem.HasKeyword)
+                            moditem.Keyword.Init(entity);
+                    }
+                }
+            }
         }
         public static int GetFirstModId()
         {

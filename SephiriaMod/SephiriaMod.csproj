@@ -551,6 +551,7 @@
 		<Compile Include="Registries\IModDamageId.cs" />
 		<Compile Include="Registries\CustomSpriteAsset.cs" />
 		<Compile Include="Registries\ModCustomStatus.cs" />
+		<Compile Include="Registries\ModKeyword.cs" />
 		<Compile Include="Registries\ModMiracle.cs" />
 		<Compile Include="Registries\ModMiracleStatus.cs" />
 		<Compile Include="Registries\ModMiracleStatusDice.cs" />
