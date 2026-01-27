@@ -68,7 +68,6 @@ namespace SephiriaMod.Items
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
-            Events.OnValueRecieved -= OnValueRecieved;
             NetworkAvatar.Inventory.AddItemDropBonusBySemantic(semantic, -semanticDropWeight);
         }
         public override void OnCharmEffectRefreshed()
