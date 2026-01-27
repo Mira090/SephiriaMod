@@ -38,6 +38,7 @@ namespace SephiriaMod.Registries
         public Sprite Icon { get; internal set; }
         public Sprite IconInWorld { get; internal set; }
         public bool CannotBeReward { get; internal set; } = false;
+        public bool CannotThrow { get; internal set; } = false;
         public bool IsDual { get; internal set; } = false;
         public GameObject ResourcePrefab
         {
@@ -92,6 +93,7 @@ namespace SephiriaMod.Registries
                 _ => Data.IconInWorldPotion,
             };
             entity.cannotBeReward = CannotBeReward;
+            entity.cannotThrow = CannotThrow;
             entity.isDual = IsDual;
             return entity;
         }

@@ -57,6 +57,11 @@ namespace SephiriaMod.Registries
             item.CannotBeReward = cannotBeReward;
             return item;
         }
+        public static T SetCannotThrow<T>(this T item, bool cannotThrow = true) where T : ModItem
+        {
+            item.CannotThrow = cannotThrow;
+            return item;
+        }
         public static T SetIsDual<T>(this T item, bool isDual = true) where T : ModItem
         {
             item.IsDual = isDual;
