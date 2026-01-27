@@ -141,7 +141,7 @@ namespace SephiriaMod
                 ModListObject = new GameObject("ModListObject");
                 ModListObject.transform.SetParent(__instance.transform);
                 ModListText = ModListObject.AddComponent<TextMeshProUGUI>();
-                ModListObject.AddComponent<UI_LocalizationFontChanger>();
+                //ModListObject.AddComponent<UI_LocalizationFontChanger>();
                 ModListTransform = ModListObject.transform as RectTransform;
                 ModListTransform.localPosition = Vector3.zero;
                 ModListTransform.localScale = Vector3.one * 0.75f;
