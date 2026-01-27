@@ -133,6 +133,10 @@ namespace SephiriaMod.Utilities
         {
             return (Charm_SummonGreenBat)instance.GetType().GetField("charm", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
         }
+        public static UnitAvatar GetUnitAvatar(this AvatarStatsHooker instance)
+        {
+            return (UnitAvatar)instance.GetType().GetField("unitAvatar", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
 
 
         public static Vector2Int floorArea_LB(this LibraryFloorGenerator instance)

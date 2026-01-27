@@ -11,7 +11,7 @@ namespace SephiriaMod.Items
     public class Charm_BloodMP : Charm_StatusInstance
     {
         public int requireLevel = 0;
-        public int[] percent = [20];
+        public int[] percent = [10];
         public int[] steal = [8, 8, 8, 10, 12, 15];
         public bool toHPRegen = false;
         private int mp = 0;
@@ -218,6 +218,32 @@ namespace SephiriaMod.Items
                 else
                 {
                     __instance.mpBar.color = DefaultColor.Value;
+                }
+            }
+        }
+        [HarmonyPatch(typeof(UnitAvatar), nameof(UnitAvatar.MaxMp), MethodType.Getter)]
+        public static class UnitAvatarMaxMPPatch
+        {
+            static void Postfix(UnitAvatar __instance, ref int __result)
+            {
+                if (__instance.GetCustomStatUnsafe("INFINITYMP") > 0 && __instance.GetCustomStatUnsafe("BLOODMP") > 0)
+                {
+                    __result = __instance.maxMp + (int)((float)(__instance.GetCustomStat(ECustomStat.FinalMP) * __instance.maxMp) / 100f);
+                }
+            }
+        }
+        [HarmonyPatch(typeof(AvatarStatsHooker), nameof(AvatarStatsHooker.HookStat))]
+        public static class AvatarStatsHookerHookStatPatch
+        {
+            static void Postfix(AvatarStatsHooker __instance, string id, ref string __result)
+            {
+                if (id == "MAX_MP" && __instance.GetCustomStatUnsafe("INFINITYMP") > 0 && __instance.GetCustomStatUnsafe("BLOODMP") > 0)
+                {
+                    __result = __instance.GetUnitAvatar().maxMp.ToString();
+                }
+                if (id == "FINAL_MP" && __instance.GetCustomStatUnsafe("INFINITYMP") > 0 && __instance.GetCustomStatUnsafe("BLOODMP") > 0)
+                {
+                    __result = $"{(int)((float)(__instance.GetUnitAvatar().GetCustomStat(ECustomStat.FinalMP) * __instance.GetUnitAvatar().maxMp) / 100f)} ({__instance.GetUnitAvatar().GetCustomStat(ECustomStat.FinalMP)}%)";
                 }
             }
         }
