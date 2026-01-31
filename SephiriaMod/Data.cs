@@ -707,7 +707,7 @@ namespace SephiriaMod
         /// Item_Dash_Flame_Sword_Effect
         /// ダッシュすると<tag=FlameSword>が発動する
         /// </summary>
-        public static ModCharm DashFlameSword { get; } = ModCharmStatus.Create<Charm_DashFlameSword>("Dash_Flame_Sword", 4, CreateStatusGroup("FLAME_SWORD_DAMAGE", 5, 10, 15, 25, 40), CreateStatusGroup("FLAME_SWORD_MAX", 0, 1, 2, 3, 5))
+        public static ModCharm DashFlameSword { get; } = ModCharmStatus.Create<Charm_DashFlameSword>("Dash_Flame_Sword", 4, CreateStatusGroup("FIRE_DAMAGE", 3, 6, 9, 12, 15), CreateStatusGroup("FLAME_SWORD_MAX", 0, 1, 2, 3, 5))
             .SetCategory(ItemCategories.SkySong, ItemCategories.FlameSword).SetIsDual().SetSimpleEffects(1).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
         /// <summary>
         /// Item_Planet_Stargaze_Name
