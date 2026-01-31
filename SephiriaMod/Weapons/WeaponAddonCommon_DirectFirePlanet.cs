@@ -8,7 +8,7 @@ namespace SephiriaMod.Weapons
 {
     public class WeaponAddonCommon_DirectFirePlanet : WeaponAddon
     {
-        public int percent = 5;
+        public int percent = 3;
         protected override void OnEnableAddon()
         {
             base.OnEnableAddon();
