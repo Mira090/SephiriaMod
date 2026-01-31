@@ -39,7 +39,7 @@ namespace SephiriaMod.Items
 
         private void OnAttackUnit(UnitAvatar unit, DamageInstance damage)
         {
-            if(damage.elementalType == EDamageElementalType.Fire)
+            if(damage.IsSameElementalType(EDamageElementalType.Fire))
             {
                 count++;
                 if (count >= requireCount.SafeRandomAccess(CurrentLevelToIdx()) && cooldownTimer.Check())

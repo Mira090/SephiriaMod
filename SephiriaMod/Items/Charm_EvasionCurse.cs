@@ -25,7 +25,7 @@ namespace SephiriaMod.Items
                 new Loc.KeywordValue("COOLDOWN", cooldownTimer.time.ToString())
                 };
             }
-            float percent = GetAssasinateRate(avatar.GetCustomStat(ECustomStat.Evasion));
+            float percent = GetAssasinateChance(avatar.GetCustomStat(ECustomStat.Evasion));
             string value = percent.ToString(".##");
             return new Loc.KeywordValue[3]
             {
@@ -64,14 +64,14 @@ namespace SephiriaMod.Items
         }
         private void OnAttackUnit(UnitAvatar unitAvatar, DamageInstance damageInstance)
         {
-            if (IsEffectEnabled && !isInCooldown && poison.SafeRandomAccess(CurrentLevelToIdx()).Chance() && damageInstance.fromType == EDamageFromType.DirectAttack)
+            if (IsEffectEnabled && !isInCooldown && poison.SafeRandomAccess(CurrentLevelToIdx()).Percent() && damageInstance.fromType == EDamageFromType.DirectAttack)
             {
                 isInCooldown = true;
                 unitAvatar.ApplyDebuff(SephiriaPrefabs.Poison, NetworkAvatar);
             }
         }
 
-        public float GetAssasinateRate(int evasion)
+        public float GetAssasinateChance(int evasion)
         {
             if (evasion > 10000)
                 evasion = 10000;
@@ -82,7 +82,7 @@ namespace SephiriaMod.Items
             if (damage.fromType != EDamageFromType.DirectAttack)
                 return;
             var evasion = NetworkAvatar.GetCustomStat(ECustomStat.Evasion);
-            float rate = GetAssasinateRate(evasion);
+            float rate = GetAssasinateChance(evasion);
             var assassinate = Mathf.Clamp(rate, 0f, 100f);
             //Melon<Core>.Logger.Msg("暗閃: " + assassinate + "%");
             if (Random.Range(0f, 100f) < assassinate)

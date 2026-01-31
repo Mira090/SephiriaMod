@@ -10,9 +10,9 @@ namespace SephiriaMod.Items
     public class Charm_VariableMaxLevel : Charm_StatusInstance
     {
         public virtual string StatusName => "STARGAZELEVEL";
-        public virtual int ValiableMax => 16;
-        public int AdditionalMaxLevel { get; private set; }
-        public int OriginalMaxLevel { get; private set; }
+        public virtual int ValiableMax => 20;
+        public int AdditionalMaxLevel { get; protected set; }
+        public int OriginalMaxLevel { get; protected set; }
         private void Awake()
         {
             UITierPatch.Init();

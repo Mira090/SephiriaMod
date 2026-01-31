@@ -16,6 +16,7 @@ namespace SephiriaMod.Utilities
     public static class ModUtil
     {
         public static List<string> PlanetDamageIds = ["Charm_Planet_Black", "Charm_Planet_Yellow", "Charm_Planet_White", "Charm_Planet_Red", "Charm_Planet_Blue", "Charm_Planet_Sky", "Charm_Planet_Gray"];
+        public static readonly Vector2 NoDashMotionTo = Vector2.negativeInfinity;
 
         public static readonly string ItemPath = "Item\\";
         public static readonly string ItemCategoryPath = "ItemCategory\\";
@@ -287,9 +288,13 @@ namespace SephiriaMod.Utilities
         #endregion
 
         #region 乱数関連
-        public static bool Chance(this int percent)
+        public static bool Percent(this int percent)
         {
             return Random.Range(0, 100) < percent;
+        }
+        public static bool Percent(this float percent)
+        {
+            return Random.Range(0, 100f) <= percent;
         }
         public static bool Chance(this float probability)
         {

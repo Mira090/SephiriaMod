@@ -1,6 +1,7 @@
 ﻿using MelonLoader;
 using Mirror;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -115,11 +116,17 @@ namespace SephiriaMod.Utilities
         {
             instance.GetType().GetField("cooldownTimer", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
         }
-        public static void InvokeLocalFireSword(this ComboEffect_FlameSword instance, Vector3 motionTo)
+        public static void InvokeLocalFireSword(this ComboEffect_FlameSword instance, Vector3 motionTo, bool isDirectAttack, bool isMagic)
         {
             var type = typeof(ComboEffect_FlameSword);
             var method = type.GetMethod("LocalFireSword", BindingFlags.Instance | BindingFlags.NonPublic);
-            method.Invoke(instance, [motionTo]);
+            method.Invoke(instance, [motionTo, isDirectAttack, isMagic]);
+        }
+        public static IEnumerator InvokeCreateFlameSword(this ComboEffect_FlameSword instance, Vector3 motionTo)
+        {
+            var type = typeof(ComboEffect_FlameSword);
+            var method = type.GetMethod("CreateFlameSword", BindingFlags.Instance | BindingFlags.NonPublic);
+            return (IEnumerator)method.Invoke(instance, [motionTo]);
         }
         public static void SetDefaultSpriteAsset(this TMP_Settings instance, TMP_SpriteAsset value)
         {
@@ -139,6 +146,34 @@ namespace SephiriaMod.Utilities
         }
 
 
+
+        #region ECustomItemRarity関連
+
+        public static Dictionary<EItemRarity, LocalizedString> GetRarityNames()
+        {
+            return (Dictionary<EItemRarity, LocalizedString>)typeof(ItemDatabase).GetField("rarityNames", BindingFlags.Static | BindingFlags.NonPublic).GetValue(typeof(ItemDatabase));
+        }
+        public static Dictionary<EItemRarity, Color> GetItemColorByRarity()
+        {
+            return (Dictionary<EItemRarity, Color>)typeof(ItemDatabase).GetField("itemColorByRarity", BindingFlags.Static | BindingFlags.NonPublic).GetValue(typeof(ItemDatabase));
+        }
+        public static List<UI_JournalPanel_SearchOptionButton> GetRarityOptionButtons(this UI_DimensionPocketPanel instance)
+        {
+            return (List<UI_JournalPanel_SearchOptionButton>)instance.GetType().GetField("rarityOptionButtons", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static List<UI_JournalPanel_SearchOptionButton> GetRarityOptionButtons(this UI_JournalContent_Item instance)
+        {
+            return (List<UI_JournalPanel_SearchOptionButton>)instance.GetType().GetField("rarityOptionButtons", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static MysticPot GetConnectedPot(this UI_MysticPotPanel instance)
+        {
+            return (MysticPot)instance.GetType().GetField("connectedPot", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static void SetIsReadyToMix(this UI_MysticPotPanel instance, bool value)
+        {
+            instance.GetType().GetField("isReadyToMix", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
+        }
+        #endregion
         public static Vector2Int floorArea_LB(this LibraryFloorGenerator instance)
         {
             return (Vector2Int)typeof(LibraryFloorGenerator).GetField("floorArea_LB", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);

@@ -1,4 +1,5 @@
 ﻿using SephiriaMod.Buffs;
+using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,6 +31,18 @@ namespace SephiriaMod.Registries
                 EItemRarity.Legend => 5,
                 _ => 1
             };
+            return item;
+        }
+        public static T SetSacrifice<T>(this T item) where T : ModItem
+        {
+            item.Rarity = ECustomItemRarity.Sacrifice.ToSephiria();
+            item.Cost = 999999999;
+            item.SapphirePrice = 0;
+            //item.CannotBeReward = true;
+            item.CannotThrow = true;
+            if(item is ModCharm charm)
+                charm.IsUniqueEffect = true;
+            item.IconFileName = ModUtil.ItemPath + "Sacrifice";
             return item;
         }
         public static T SetCategory<T>(this T item, params List<string> categories) where T : ModItem
@@ -109,6 +122,22 @@ namespace SephiriaMod.Registries
         public static T SetStats<T>(this T item, params Charm_StatusInstance.StatusGroup[] stats) where T : ModCharmStatus
         {
             item.Stats = stats;
+            return item;
+        }
+        public static T SetFromType<T>(this T item, EDamageFromType fromType) where T : ModCharmSacrificeDamage
+        {
+            item.FromType = fromType;
+            return item;
+        }
+        public static T SetElementalType<T>(this T item, EDamageElementalType elementalType) where T : ModCharmSacrificeDamage
+        {
+            item.ElementalType = elementalType;
+            return item;
+        }
+        public static T SetDamageType<T>(this T item, EDamageFromType fromType, EDamageElementalType elementalType) where T : ModCharmSacrificeDamage
+        {
+            item.FromType = fromType;
+            item.ElementalType = elementalType;
             return item;
         }
         public static T SetConditionQuery<T>(this T item, string query) where T : ModStoneTablet

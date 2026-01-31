@@ -8,7 +8,7 @@ namespace SephiriaMod.Items
     public class Charm_VariableMaxLevelWhitePaper : Charm_WhitePaper
     {
         public virtual string StatusName => "STARGAZELEVEL";
-        public virtual int ValiableMax => 16;
+        public virtual int ValiableMax => 20;
         public int AdditionalMaxLevel { get; private set; }
         public int OriginalMaxLevel { get; private set; }
         public override int GetSubIconCount()

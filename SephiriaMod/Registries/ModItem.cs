@@ -70,6 +70,10 @@ namespace SephiriaMod.Registries
             AssetId = assetId;
             ItemEntity = CreateItemEntity();
         }
+        public virtual void LateInit()
+        {
+
+        }
         public ItemEntity CreateItemEntity()
         {
             var entity = ScriptableObject.CreateInstance<ItemEntity>();

@@ -503,6 +503,7 @@
 		<Compile Include="Items\Charm_CreateRegenPotion.cs" />
 		<Compile Include="Items\Charm_CreateStoneTablet.cs" />
 		<Compile Include="Items\Charm_DashAttackMore.cs" />
+		<Compile Include="Items\Charm_DashFlameSword.cs" />
 		<Compile Include="Items\Charm_DoubleDash.cs" />
 		<Compile Include="Items\Charm_DrunkDarkCloud.cs" />
 		<Compile Include="Items\Charm_DrunkEmber.cs" />
@@ -531,6 +532,9 @@
 		<Compile Include="Items\Charm_OtherDefense.cs" />
 		<Compile Include="Items\Charm_PallasAce.cs" />
 		<Compile Include="Items\Charm_PallasJoker.cs" />
+		<Compile Include="Items\Charm_PlanetMystic.cs" />
+		<Compile Include="Items\Charm_PlanetStargaze.cs" />
+		<Compile Include="Items\Charm_RandomDebuff.cs" />
 		<Compile Include="Items\Charm_ReservedMPEvasion.cs" />
 		<Compile Include="Items\Charm_ReviveHeal.cs" />
 		<Compile Include="Items\Charm_SeparateDirectAttack.cs" />
@@ -546,10 +550,18 @@
 		<Compile Include="Combos\ComboEffect_Drunk.cs" />
 		<Compile Include="Combos\ComboEffect_Stargaze.cs" />
 		<Compile Include="Core.cs" />
+		<Compile Include="Items\Eternal\Charm_EmberFlameSword.cs" />
+		<Compile Include="Items\Eternal\Charm_GlacierFrost.cs" />
+		<Compile Include="Items\Eternal\Charm_MagitechDarkCloud.cs" />
+		<Compile Include="Items\Sacrifice\Charm_Sacrifice.cs" />
+		<Compile Include="Items\Sacrifice\Charm_SacrificeDamage.cs" />
 		<Compile Include="Registries\CustomCostumeDatabase.cs" />
 		<Compile Include="Registries\CustomCostumeMetadata.cs" />
+		<Compile Include="ECustomItemRarity.cs" />
 		<Compile Include="Registries\IModDamageId.cs" />
 		<Compile Include="Registries\CustomSpriteAsset.cs" />
+		<Compile Include="Registries\ModCharmSacrifice.cs" />
+		<Compile Include="Registries\ModCharmSacrificeDamage.cs" />
 		<Compile Include="Registries\ModCustomStatus.cs" />
 		<Compile Include="Registries\ModKeyword.cs" />
 		<Compile Include="Registries\ModMiracle.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SephiriaMod.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -51,7 +52,7 @@ namespace SephiriaMod.Combos
 
         private void OnAttackUnit(UnitAvatar avatar, DamageInstance damage)
         {
-            if (!Networkavatar.IsDead && (damage.id == "Weapon_SpecialAttack" || damage.id == "Weapon_SpecialAttack_Amethyst"))
+            if (!Networkavatar.IsDead && IsSpecialAttack(damage))
             {
                 float customStatUnsafe = Networkavatar.Inventory.charms.Values.Sum(charm => charm.CurrentLevelToIdx());
                 if (customStatUnsafe > 0 && avatar != null)
@@ -61,6 +62,12 @@ namespace SephiriaMod.Combos
                     avatar.ApplyDamage(d);
                 }
             }
+        }
+        private bool IsSpecialAttack(DamageInstance damage)
+        {
+            if(Networkavatar.GetCustomStatUnsafe("PlanetStargaze".ToUpperInvariant()) > 0)
+                return ModUtil.PlanetDamageIds.Contains(damage.id);
+            return damage.id == "Weapon_SpecialAttack" || damage.id == "Weapon_SpecialAttack_Amethyst";
         }
 
         protected override void OnDisableEffect()

@@ -1,4 +1,5 @@
 ﻿using MelonLoader;
+using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -88,7 +89,7 @@ namespace SephiriaMod.Items
         private void OnDashConsumed()
         {
             Melon<Core>.Logger.Msg("OnDashConsumed");
-            NetworkAvatar.OnDashServerside(Vector2.zero, true);
+            NetworkAvatar.OnDashServerside(ModUtil.NoDashMotionTo, true);
             return;
             if (WeaponController.currentWeapon.gameObject.TryGetComponent<WeaponAddonKatana_SummonGhost>(out var ghost))
             {

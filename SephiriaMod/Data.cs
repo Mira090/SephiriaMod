@@ -12,6 +12,7 @@ using SephiriaMod.Utilities;
 using SephiriaMod.Weapons;
 using SephiriaMod.Registries;
 using SephiriaMod.Buffs;
+using SephiriaMod.Items.Eternal;
 
 namespace SephiriaMod
 {
@@ -688,6 +689,108 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm EvasionCurse { get; } = ModCharmStatus.Create<Charm_EvasionCurse>("Evasion_Curse", 2, CreateStatusGroup("EVASION", 100, 200, 400))
             .SetCategory(ItemCategories.Curse, ItemCategories.Shadow).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Random_Debuff_Name
+        /// 赤黒いルーレット
+        /// Item_Random_Debuff_FlavorText
+        /// 塔の下から流れ着いた様々な思念が詰まった板。
+        /// Item_Random_Debuff_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、{PERCENT}の確率でランダムなデバフを付与する。（<tag=Luck>で確率が増加）
+        /// </summary>
+        public static ModCharm RandomDebuff { get; } = ModCharmStatus.Create<Charm_RandomDebuff>("Random_Debuff", 6, CreateStatusGroup("DEBUFF_DAMAGE", 10, 20, 30, 45, 70, 100, 150))
+            .SetCategory(ItemCategories.Curse, ItemCategories.Fortune).SetIsDual().SetSimpleEffects(1).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Dash_Flame_Sword_Name
+        /// 過熱したエンジン
+        /// Item_Dash_Flame_Sword_FlavorText
+        /// 高い空に憧れた。
+        /// Item_Dash_Flame_Sword_Effect
+        /// ダッシュすると<tag=FlameSword>が発動する
+        /// </summary>
+        public static ModCharm DashFlameSword { get; } = ModCharmStatus.Create<Charm_DashFlameSword>("Dash_Flame_Sword", 4, CreateStatusGroup("FLAME_SWORD_DAMAGE", 5, 10, 15, 25, 40), CreateStatusGroup("FLAME_SWORD_MAX", 0, 1, 2, 3, 5))
+            .SetCategory(ItemCategories.SkySong, ItemCategories.FlameSword).SetIsDual().SetSimpleEffects(1).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Planet_Stargaze_Name
+        /// リリィの星図
+        /// Item_Planet_Stargaze_FlavorText
+        /// 光に込められた破れかけの形。
+        /// Item_Planet_Stargaze_Effect
+        /// 夜空のコンボ効果が<tag=WeaponAction_SpecialAttack>ではなく惑星の攻撃で発動する
+        /// Item_Planet_Stargaze_Effect2
+        /// 周囲8枠にある惑星の数だけこのアーティファクトの最大レベル {LEVEL}
+        /// </summary>
+        public static ModCharm PlanetStargaze { get; } = ModCharmStatus.Create<Charm_PlanetStargaze>("Planet_Stargaze", 8, CreateStatusGroup("PLANET_DAMAGE", 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 100, 120, 140, 160, 180, 200, 225, 250, 275, 300))
+            .SetCategory(ItemCategories.Planet, ItemCategories.Stargaze).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Planet_Mystic_Name
+        /// 夕焼けの星座
+        /// Item_Planet_Mystic_FlavorText
+        /// 赤くぼんやりと見える。
+        /// Item_Planet_Mystic_Effect
+        /// 神秘のコンボ効果の枠に置いた惑星を巨大化
+        /// Item_Planet_Mystic_Effect2
+        /// 神秘のコンボ効果の枠に置いた惑星のレベル合計1につき惑星攻撃速度 {SPEED}
+        /// </summary>
+        public static ModCharm PlanetMystic { get; } = ModCharmStatus.Create<Charm_PlanetMystic>("Planet_Mystic", 4, CreateStatusGroup("PLANET_DAMAGE", 2, 4, 6, 8, 10))
+            .SetCategory(ItemCategories.Planet, ItemCategories.Mystic).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+
+        /// <summary>
+        /// Item_Sacrifice_Fire_Name
+        /// 炎の儀式
+        /// Item_Sacrifice_Fire_FlavorText
+        /// 神に捧げる儀式。
+        /// Item_Sacrifice_Fire_Effect
+        /// 儀式：<tag=FireDamage>を合計{DAMAGE}以上与えると、{REWARD}を1つ獲得する（現在：{CURRENT}）
+        public static ModCharm SacrificeFire { get; } = ModCharmSacrificeDamage.Create("Sacrifice_Fire", () => SacrificeFireReward.ItemEntity, 333333, CreateStatusGroup("PHYSICAL_DAMAGE", -10), CreateStatusGroup("DEFENSE", -20))
+            .SetCategory(ItemCategories.Ember, ItemCategories.FlameSword).SetSimpleEffect().SetElementalType(EDamageElementalType.Fire);
+        /// <summary>
+        /// Item_Sacrifice_Fire_Reward_Name
+        /// 熾天使の聖剣
+        /// Item_Sacrifice_Fire_Reward_FlavorText
+        /// 燃え尽きた剣。
+        /// Item_Sacrifice_Fire_Reward_Effect
+        /// <tag=FlameSword>が<tag=Burn>スタックの数だけ追加発動する
+        /// </summary>
+        public static ModCharm SacrificeFireReward { get; } = ModCharmStatus.Create<Charm_EmberFlameSword>("Sacrifice_Fire_Reward", 5, CreateStatusGroup("FIRE_DAMAGE", 2, 3, 5, 7, 10, 15))
+            .SetCategory(ItemCategories.Ember, ItemCategories.FlameSword).SetIsDual().SetRarity(EItemRarity.Eternal).SetIsUniqueEffect().SetSimpleEffect();
+        /// <summary>
+        /// Item_Sacrifice_Ice_Name
+        /// 氷の儀式
+        /// Item_Sacrifice_Ice_FlavorText
+        /// 神に捧げる儀式。
+        /// Item_Sacrifice_Ice_Effect
+        /// 儀式：<tag=IceDamage>を合計{DAMAGE}以上与えると、{REWARD}を1つ獲得する（現在：{CURRENT}）
+        public static ModCharm SacrificeIce { get; } = ModCharmSacrificeDamage.Create("Sacrifice_Ice", () => SacrificeIceReward.ItemEntity, 333333, CreateStatusGroup("PHYSICAL_DAMAGE", -10), CreateStatusGroup("ATTACK_SPEED", -20))
+            .SetCategory(ItemCategories.Glacier, ItemCategories.Frost).SetSimpleEffect().SetElementalType(EDamageElementalType.Ice);
+        /// <summary>
+        /// Item_Sacrifice_Ice_Reward_Name
+        /// 極氷の曲剣
+        /// Item_Sacrifice_Ice_Reward_FlavorText
+        /// 凍てついた剣。
+        /// Item_Sacrifice_Ice_Reward_Effect
+        /// <tag=Freeze>発動時に<tag=FrostRelic>のチャージを加速させる
+        /// </summary>
+        public static ModCharm SacrificeIceReward { get; } = ModCharmStatus.Create<Charm_GlacierFrost>("Sacrifice_Ice_Reward", 5, CreateStatusGroup("ICE_DAMAGE", 2, 3, 5, 7, 10, 15))
+            .SetCategory(ItemCategories.Glacier, ItemCategories.Frost).SetIsDual().SetRarity(EItemRarity.Eternal).SetIsUniqueEffect().SetSimpleEffect();
+        /// <summary>
+        /// Item_Sacrifice_Lightning_Name
+        /// 雷の儀式
+        /// Item_Sacrifice_Lightning_FlavorText
+        /// 神に捧げる儀式。
+        /// Item_Sacrifice_Lightning_Effect
+        /// 儀式：<tag=LightningDamage>を合計{DAMAGE}以上与えると、{REWARD}を1つ獲得する（現在：{CURRENT}）
+        public static ModCharm SacrificeLightning { get; } = ModCharmSacrificeDamage.Create("Sacrifice_Lightning", () => SacrificeLightningReward.ItemEntity, 333333, CreateStatusGroup("PHYSICAL_DAMAGE", -10), CreateStatusGroup("CRITICAL", -2000))
+            .SetCategory(ItemCategories.Magitech, ItemCategories.DarkCloud).SetSimpleEffect().SetElementalType(EDamageElementalType.Lightning);
+        /// <summary>
+        /// Item_Sacrifice_Lightning_Reward_Name
+        /// 迅雷の直剣
+        /// Item_Sacrifice_Lightning_Reward_FlavorText
+        /// いなずまの剣。
+        /// Item_Sacrifice_Lightning_Reward_Effect
+        /// <tag=DarkCloud>の稲妻が命中した敵に<tag=Electric>デバフを付与する
+        /// </summary>
+        public static ModCharm SacrificeLightningReward { get; } = ModCharmStatus.Create<Charm_MagitechDarkCloud>("Sacrifice_Lightning_Reward", 5, CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 5, 7, 10, 15))
+            .SetCategory(ItemCategories.Magitech, ItemCategories.DarkCloud).SetIsDual().SetRarity(EItemRarity.Eternal).SetIsUniqueEffect().SetSimpleEffect();
 
         /// <summary>
         /// ItemCategory_Vitality
@@ -1163,7 +1266,14 @@ namespace SephiriaMod
                 moditem.Init(id++, assetId++);
                 All.Add(moditem);
             }
-            AllResourcePrefabNames = All.Select(x => x.ResourcePrefab.name).ToList();
+            AllResourcePrefabNames = new();
+            foreach (var item in All)
+            {
+                //Melon<Core>.Logger.Msg("LateInit Item: " + item.Name);
+                item.LateInit();
+                AllResourcePrefabNames.Add(item.ResourcePrefab.name);
+            }
+            //AllResourcePrefabNames = All.Select(x => x.ResourcePrefab.name).ToList();
 
 
             var pros2 = type.GetProperties(BindingFlags.Static | BindingFlags.Public).Where(p => p.PropertyType == typeof(ModComboEffect) || p.PropertyType.IsSubclassOf(typeof(ModComboEffect)));
