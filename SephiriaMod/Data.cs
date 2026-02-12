@@ -880,7 +880,7 @@ namespace SephiriaMod
         /// Status_MagicExecution_Name
         /// 天罰
         /// Status_MagicExecution_Description
-        /// 最も高い属性ダメージまたは物理ダメージを、最も低い属性ダメージまたは物理ダメージで割った値を掛けた<tag=Elemental_Chaos>ダメージを与えます（最大4倍、クリティカル扱いされます）
+        /// 最も高い属性ダメージまたは物理ダメージを、最も低い属性ダメージまたは物理ダメージで割った値を掛けた<tag=Elemental_Chaos>ダメージを与えます（最大8倍、クリティカル扱いされます）
         /// </summary>
         public static ModKeyword MagicExecution { get; } = ModKeyword.CreateKeyword("MagicExecution").SetOriginal("MagicDamageBonus").SetConnectedDetailEntities("Elemental_Chaos");
         /// <summary>

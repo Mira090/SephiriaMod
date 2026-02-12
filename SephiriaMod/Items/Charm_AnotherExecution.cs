@@ -12,7 +12,7 @@ namespace SephiriaMod.Items
         public int[] criticalByLevel = [20, 16, 12, 8];
         public int[] ignoreDegence = [8, 12, 16, 20];
         public string damageId = "Charm_AnotherExecution";
-        public static float MagicExecutionMax = 4f;
+        public static float MagicExecutionMax = 8f;
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
             string value = showAllLevel ? ignoreDegence.SafeRandomAccess(0) + "→" + ignoreDegence.SafeRandomAccess(maxLevel) : ignoreDegence.SafeRandomAccess(LevelToIdx(level)).ToString();
