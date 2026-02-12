@@ -41,6 +41,8 @@ namespace SephiriaMod.Items
             if (!isInCooldown && UnityEngine.Random.Range(0f, 100f) < percent.SafeRandomAccess(CurrentLevelToIdx()))
             {
                 isInCooldown = true;
+                NetworkAvatar.CurrentDashModule.RestoreDashCount(1);
+                /*
                 if (NetworkClient.active)
                 {
                     if (NetworkAvatar.CurrentDashModule.currentDashCount > 0)
@@ -49,7 +51,7 @@ namespace SephiriaMod.Items
                 else
                 {
                     DungeonManager.Instance.Chat(NetworkAvatar as PlayerAvatar, "Mod", "/dash_heal");
-                }
+                }*/
             }
         }
         protected override void OnUpdatedLevel(int oldLevel, int newLevel)
