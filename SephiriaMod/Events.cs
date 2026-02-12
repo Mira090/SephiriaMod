@@ -353,7 +353,7 @@ namespace SephiriaMod
             {
                 OnPreBasicAttack?.Invoke(__instance, __instance.unitAvatar);
             }
-            [HarmonyPatch(typeof(WeaponControllerSimple), nameof(WeaponControllerSimple.CreateBasicAttackSwing_ManualDirection), [typeof(int), typeof(Vector2)])]
+            [HarmonyPatch(typeof(WeaponControllerSimple), nameof(WeaponControllerSimple.CreateBasicAttackSwing_ManualDirection), [typeof(int), typeof(Vector2), typeof(string)])]
             [HarmonyPrefix]
             public static void PrefixBasicManualDirection(WeaponControllerSimple __instance)
             {
