@@ -648,13 +648,13 @@ namespace SephiriaMod
         /// 割れた電球
         /// Item_Drunk_Dark_Cloud_FlavorText
         /// 自ら壊れ自由になった光。
-        /// Item_Drunk_Dark_Cloud_Effect
-        /// <tag=DarkCloud>の消費速度増幅 {SPEED}
         /// Item_Drunk_Dark_Cloud_Effect2
+        /// <tag=DarkCloud>の消費速度増幅 {SPEED}
+        /// Item_Drunk_Dark_Cloud_Effect
         /// <tag=DarkCloud>発動時に<tag=Defense>-1ごとに追加消費 {SERIES}
         /// </summary>
-        public static ModCharm DrunkDarkCloud { get; } = ModCharmStatus.Create<Charm_DrunkDarkCloud>("Drunk_Dark_Cloud", 2, CreateStatusGroup("DEFENSE", -10, -15, -20))
-            .SetCategory(ItemCategories.Drunk, ItemCategories.DarkCloud).SetIsUniqueEffect().SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare);
+        public static ModCharm DrunkDarkCloud { get; } = ModCharmStatus.Create<Charm_DrunkDarkCloud>("Drunk_Dark_Cloud", 2, CreateStatusGroup("DEFENSE", -10, -15, -20), CreateStatusGroup("DARK_CLOUD_SPEED", -100))
+            .SetCategory(ItemCategories.Drunk, ItemCategories.DarkCloud).SetIsUniqueEffect().SetIsDual().SetSimpleEffects(1).SetRarity(EItemRarity.Rare);
         /// <summary>
         /// Item_Drunk_Vitality_Name
         /// 経口輸血液
