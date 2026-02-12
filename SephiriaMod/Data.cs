@@ -617,7 +617,7 @@ namespace SephiriaMod
         /// Item_Drunk_Shadow_Effect
         /// 死亡するダメージを受ける時、必ず<tag=Evasion>する（クールタイム{COOLDOWN}秒、<tag=Evasion>が適用されます）
         /// </summary>
-        public static ModCharm DrunkShadow { get; } = ModCharmStatus.Create<Charm_DrunkShadow>("Drunk_Shadow", 3, CreateStatusGroup("DEFENSE", -4, -8, -12, -20), CreateStatusGroup("PHYSICAL_DAMAGE", 1, 2, 3, 5), CreateStatusGroup("EVASION", 100, 200, 300, 500))
+        public static ModCharm DrunkShadow { get; } = ModCharmStatus.Create<Charm_DrunkShadow>("Drunk_Shadow", 3, CreateStatusGroup("DEFENSE", -4, -8, -12, -20), CreateStatusGroup("PHYSICAL_DAMAGE", 2, 3, 5, 8), CreateStatusGroup("EVASION", 300, 500, 900, 1300))
             .SetCategory(ItemCategories.Drunk, ItemCategories.Shadow).SetIsUniqueEffect().SetSimpleEffect().SetIsDual().SetRarity(EItemRarity.Rare);
         /// <summary>
         /// Item_Drunk_Ember_Name
