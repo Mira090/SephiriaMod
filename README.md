@@ -8,7 +8,7 @@ Team Horay の <a href="https://store.steampowered.com/app/2436940/_/">Sephiria<
 
 ## 📥 インストール
 1. <a href="https://github.com/LavaGang/MelonLoader">MelonLoader v0.7.1</a> をSephiriaにインストールしてください。
-2. Releases から最新の `SephiriaMod.zip` をダウンロードし、解凍してください。
+2. Releases から最新の `SephiriaMod-0.X.X.zip` をダウンロードし、解凍してください。
 3. `Program Files (x86)\Steam\steamapps\common\Sephiria\Mods` フォルダ内に `SephiriaMod.dll` を配置します。
 4. `Program Files (x86)\Steam\steamapps\common\Sephiria\Mods` フォルダ内に `CustomImages`フォルダをコピーします。
 5. `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `ja-JP.json` を上書きコピーします。
