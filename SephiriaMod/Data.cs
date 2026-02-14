@@ -653,7 +653,7 @@ namespace SephiriaMod
         /// Item_Drunk_Dark_Cloud_Effect
         /// <tag=DarkCloud>発動時に<tag=Defense>-1ごとに追加消費 {SERIES}
         /// </summary>
-        public static ModCharm DrunkDarkCloud { get; } = ModCharmStatus.Create<Charm_DrunkDarkCloud>("Drunk_Dark_Cloud", 2, CreateStatusGroup("DEFENSE", -10, -15, -20), CreateStatusGroup("DARK_CLOUD_SPEED", -100))
+        public static ModCharm DrunkDarkCloud { get; } = ModCharmStatus.Create<Charm_DrunkDarkCloud>("Drunk_Dark_Cloud", 2, CreateStatusGroup("DEFENSE", -10, -15, -20), CreateStatusGroup("DARK_CLOUD_SPEED", -500))
             .SetCategory(ItemCategories.Drunk, ItemCategories.DarkCloud).SetIsUniqueEffect().SetIsDual().SetSimpleEffects(1).SetRarity(EItemRarity.Rare);
         /// <summary>
         /// Item_Drunk_Vitality_Name
