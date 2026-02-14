@@ -7,7 +7,7 @@ namespace SephiriaMod.Items
 {
     public class Charm_CompanionDiedHeal : Charm_Basic
     {
-        private int[] healByLevel = [4, 5, 6, 7, 8];
+        private int[] healByLevel = [4, 5, 7, 10, 15];
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
             string value = showAllLevel ? healByLevel.SafeRandomAccess(0) + "→" + healByLevel.SafeRandomAccess(maxLevel) : healByLevel.SafeRandomAccess(LevelToIdx(level)).ToString();
