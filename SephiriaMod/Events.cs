@@ -325,10 +325,37 @@ namespace SephiriaMod
         {
             static void Prefix(ref string damage, ref Color color, UI_DamageParticle __instance)
             {
+                var text = __instance.GetText();
+                text.enableVertexGradient = false;
                 if (color.a == 0 && color.r == 1 && color.g == 0 && color.b == 0)
                 {
                     damage = "<sprite=\"Keyword\" name=Assasination>" + damage;
                     color = new Color(1, 0, 0);
+                }
+                else if (color == ModUtil.FourGradation)
+                {
+                    text.colorGradient = new VertexGradient()
+                    {
+                        bottomLeft = Color.white,
+                        bottomRight = Color.cyan,
+                        topLeft = new Color(0.2f, 0.5f, 1f),
+                        topRight = new Color(1, 1, 0),
+                    };
+                    text.enableVertexGradient = true;
+                    color = Color.white;
+                }
+                else if (color == ModUtil.FourGradationMagicExecution)
+                {
+                    text.colorGradient = new VertexGradient()
+                    {
+                        bottomLeft = Color.white,
+                        bottomRight = Color.cyan,
+                        topLeft = new Color(0.2f, 0.5f, 1f),
+                        topRight = new Color(1, 1, 0),
+                    };
+                    text.enableVertexGradient = true;
+                    damage = damage.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=MagicDamageBonus>");
+                    color = Color.white;
                 }
                 else if (color.a == 0)
                 {

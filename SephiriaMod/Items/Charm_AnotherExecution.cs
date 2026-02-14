@@ -1,4 +1,5 @@
 ﻿using MelonLoader;
+using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -44,7 +45,10 @@ namespace SephiriaMod.Items
                 damage.criticalChancePercent = 0;
                 damage.isCriticalAttack = true;
                 damage.elementalType = EDamageElementalType.Chaos;
-                damage.color = new Color(1, 1, 1, 0);
+                if (damage.IsFourGradation())
+                    damage.color = ModUtil.FourGradationMagicExecution;
+                else
+                    damage.color = new Color(1, 1, 1, 0);
                 damage.useCustomColor = true;
                 var phy = NetworkAvatar.GetCustomStat(ECustomStat.PhysicalDamage);
                 var fire = NetworkAvatar.GetCustomStat(ECustomStat.FireDamage);

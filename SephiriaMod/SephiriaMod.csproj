@@ -518,6 +518,7 @@
 		<Compile Include="Items\Charm_FireCooldownRecovery.cs" />
 		<Compile Include="Items\Charm_FirstHeal.cs" />
 		<Compile Include="Items\Charm_FixedMoveSpeed.cs" />
+		<Compile Include="Items\Charm_GuardianDarkCloud.cs" />
 		<Compile Include="Items\Charm_HalfHP.cs" />
 		<Compile Include="Items\Charm_InventoryPower.cs" />
 		<Compile Include="Items\Charm_Kill_Luck.cs" />
@@ -535,6 +536,7 @@
 		<Compile Include="Items\Charm_PlanetMystic.cs" />
 		<Compile Include="Items\Charm_PlanetStargaze.cs" />
 		<Compile Include="Items\Charm_RandomDebuff.cs" />
+		<Compile Include="Items\Charm_ReddewMagicExecution.cs" />
 		<Compile Include="Items\Charm_ReservedMPEvasion.cs" />
 		<Compile Include="Items\Charm_ReviveHeal.cs" />
 		<Compile Include="Items\Charm_SeparateDirectAttack.cs" />

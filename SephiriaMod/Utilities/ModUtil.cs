@@ -377,5 +377,25 @@ namespace SephiriaMod.Utilities
             RuntimeManager.StudioSystem.lookupPath(guid, out path);
             return path;
         }
+        public static bool IsMagicExecution(this DamageInstance damage)
+        {
+            if (!damage.useCustomColor)
+                return false;
+            return damage.color.a == 0 && damage.color.r == 1 && damage.color.g == 1 && damage.color.b == 1;
+        }
+        public static bool IsAssasination(this DamageInstance damage)
+        {
+            if (!damage.useCustomColor)
+                return false;
+            return damage.color.a == 0 && damage.color.r == 1 && damage.color.g == 0 && damage.color.b == 0;
+        }
+        public static bool IsFourGradation(this DamageInstance damage)
+        {
+            if (!damage.useCustomColor)
+                return false;
+            return damage.color == FourGradation;
+        }
+        public static Color FourGradation = new Color(0, 1, 0, 0);
+        public static Color FourGradationMagicExecution = new Color(0, 0, 1, 0);
     }
 }

@@ -144,6 +144,30 @@ namespace SephiriaMod.Utilities
         {
             return (UnitAvatar)instance.GetType().GetField("unitAvatar", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
         }
+        public static bool GetIsHitInvincibleEnabled(this UnitAvatar instance)
+        {
+            return (bool)typeof(UnitAvatar).GetField("isHitInvincibleEnabled", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static float GetInvincibleTimer(this UnitAvatar instance)
+        {
+            return (float)typeof(UnitAvatar).GetField("invincibleTimer", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static EInvincibleType GetInvincibleType(this UnitAvatar instance)
+        {
+            return (EInvincibleType)typeof(UnitAvatar).GetField("invincibleType", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static Timer GetRestoreFallingTimer(this UnitAvatar instance)
+        {
+            return (Timer)typeof(UnitAvatar).GetField("restoreFallingTimer", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static bool GetChance(this Charm_Reddew instance)
+        {
+            return (bool)instance.GetType().GetField("chance", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static TextMeshProUGUI GetText(this UI_DamageParticle instance)
+        {
+            return (TextMeshProUGUI)instance.GetType().GetField("text", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
 
 
 

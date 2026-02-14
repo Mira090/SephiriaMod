@@ -733,6 +733,26 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm PlanetMystic { get; } = ModCharmStatus.Create<Charm_PlanetMystic>("Planet_Mystic", 4, CreateStatusGroup("PLANET_DAMAGE", 2, 4, 6, 8, 10))
             .SetCategory(ItemCategories.Planet, ItemCategories.Mystic).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Guardian_Dark_Cloud_Name
+        /// オーロラのヴェール
+        /// Item_Guardian_Dark_Cloud_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Guardian_Dark_Cloud_Effect
+        /// 攻撃を受けた時の無敵時間の<tag=DarkCloud>の消費速度 {PERCENT}
+        /// </summary>
+        public static ModCharm GuardianDarkCloud { get; } = ModCharmStatus.Create<Charm_GuardianDarkCloud>("Guardian_Dark_Cloud", 4, CreateStatusGroup("DARK_CLOUD_DAMAGE", 10, 25, 40, 60, 90), CreateStatusGroup("DEFENSE", 2, 3, 4, 6, 9))
+            .SetCategory(ItemCategories.Guardian, ItemCategories.DarkCloud).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Reddew_Magic_Execution_Name
+        /// 赤い山頂
+        /// Item_Reddew_Magic_Execution_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Reddew_Magic_Execution_Effect
+        /// <tag=MagicExecution>によって{ITEM}が発動した時、最も高い属性値の{PERCENT}の追加ダメージを{COUNT}回与える
+        /// </summary>
+        public static ModCharm ReddewMagicExecution { get; } = ModCharmStatus.Create<Charm_ReddewMagicExecution>("Reddew_Magic_Execution", 2, CreateStatusGroup("CRITICAL", 300, 600, 1000), CreateStatusGroup("HIGHEST_ELEMENTAL_DAMAGE", 1, 3, 5))
+            .SetCategory(ItemCategories.Precision, ItemCategories.Elemental).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
 
         /// <summary>
         /// Item_Sacrifice_Fire_Name
