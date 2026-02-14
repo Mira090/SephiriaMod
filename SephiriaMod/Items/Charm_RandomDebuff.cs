@@ -65,11 +65,7 @@ namespace SephiriaMod.Items
             };
             foreach (var debuff in target.Debuffs)
             {
-                if(debuff.ID == SephiriaPrefabs.Poison.ID)
-                {
-                    list.Remove(debuff);
-                }
-                else if(debuff.CurrentStack == debuff.MaxStackCount)
+                if(debuff.CurrentStack == debuff.MaxStackCount)
                 {
                     list.Remove(debuff);
                 }
