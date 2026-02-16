@@ -10,6 +10,7 @@ namespace SephiriaMod.Items
     {
         public Timer cooldownTimer = new Timer(1f);
         public bool isInCooldown;
+        public float[] chance = [0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f];
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
             if (avatar == null || ignoreAvatarStatus)
@@ -20,11 +21,11 @@ namespace SephiriaMod.Items
                 new Loc.KeywordValue("COOLDOWN", cooldownTimer.time.ToString())
                 };
             }
-            float percent = GetDebuffChance(avatar.GetCustomStat(ECustomStat.Luck));
+            float percent = GetDebuffChance(avatar.GetCustomStat(ECustomStat.Luck), LevelToIdx(level));
             string value = percent.ToString(".##");
             return new Loc.KeywordValue[2]
             {
-                new Loc.KeywordValue("PERCENT", value + "%"),
+                new Loc.KeywordValue("PERCENT", value + "%", GetPositiveColor(virtualLevelOffset)),
                 new Loc.KeywordValue("COOLDOWN", cooldownTimer.time.ToString())
             };
         }
@@ -48,10 +49,10 @@ namespace SephiriaMod.Items
             }
         }
 
-        public float GetDebuffChance(int luck)
+        public float GetDebuffChance(int luck, int idx)
         {
             luck *= 100;
-            return 100f * Mathf.Log(luck / 6200f + 1f) * 0.2f;
+            return 100f * Mathf.Log(luck / 6200f + 1f) * chance.SafeRandomAccess(idx);
         }
         public CharacterDebuff GetDebuff(UnitAvatar target)
         {
@@ -77,7 +78,7 @@ namespace SephiriaMod.Items
         {
             if (damage.fromType != EDamageFromType.DirectAttack)
                 return;
-            var chance = GetDebuffChance(NetworkAvatar.GetCustomStat(ECustomStat.Luck));
+            var chance = GetDebuffChance(NetworkAvatar.GetCustomStat(ECustomStat.Luck), CurrentLevelToIdx());
             if (IsEffectEnabled && !isInCooldown && chance.Percent())
             {
                 isInCooldown = true;
