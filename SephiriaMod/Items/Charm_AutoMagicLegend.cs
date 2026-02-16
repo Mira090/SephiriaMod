@@ -146,12 +146,19 @@ namespace SephiriaMod.Items
             {
                 return;
             }
+
+            if (NetworkAvatar == null || NetworkAvatar.IsDead || NetworkAvatar is not PlayerAvatar player || !NetworkAvatar.IsInBattle)
+            {
+                return;
+            }
+
             if (isCasting)
             {
                 if (currentCastingTimer.Update(Time.deltaTime))
                 {
                     isCasting = false;
                     ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, true);
+                    player.GetSkillController().SetLastUsedMagicServerside(magicCharm);
                     //Melon<Core>.Logger.Msg("cast!" + (skillObject == null));
                     slot.Use(skillObject);
                     if ((bool)currentCastingCircle)
@@ -168,11 +175,6 @@ namespace SephiriaMod.Items
             if (slot != null)
             {
                 slot.Update(0);
-            }
-
-            if (NetworkAvatar == null || NetworkAvatar.IsDead || NetworkAvatar is not PlayerAvatar player || !NetworkAvatar.IsInBattle)
-            {
-                return;
             }
 
             //Melon<Core>.Logger.Msg("waiting... " + castIntervalTimer.GetTimer());

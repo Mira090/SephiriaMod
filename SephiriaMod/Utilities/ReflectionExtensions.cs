@@ -174,6 +174,10 @@ namespace SephiriaMod.Utilities
             var method = type.GetMethod("Attack", BindingFlags.Instance | BindingFlags.NonPublic);
             method.Invoke(instance, [target, stack, damageRatio]);
         }
+        public static void SetLastUsedMagicServerside(this SkillController instance, Charm_Magic value)
+        {
+            instance.GetType().GetField("lastUsedMagicServerside", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
+        }
 
 
 
