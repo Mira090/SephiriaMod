@@ -492,6 +492,7 @@
 		<Compile Include="Items\Charm_AllIgnoreDefense.cs" />
 		<Compile Include="Items\Charm_AnotherExecution.cs" />
 		<Compile Include="Items\Charm_AutoBuff.cs" />
+		<Compile Include="Items\Charm_AutoMagicDarkCloud.cs" />
 		<Compile Include="Items\Charm_AutoMagicLegend.cs" />
 		<Compile Include="Items\Charm_BloodMP.cs" />
 		<Compile Include="Items\Charm_BondMaker.cs" />
@@ -524,6 +525,8 @@
 		<Compile Include="Items\Charm_Kill_Luck.cs" />
 		<Compile Include="Items\Charm_LegendaryMania.cs" />
 		<Compile Include="Items\Charm_LevelDistributer.cs" />
+		<Compile Include="Items\Charm_MagitechFlameSword.cs" />
+		<Compile Include="Items\Charm_MagitechFrostRelic.cs" />
 		<Compile Include="Items\Charm_ManyGrimoire.cs" />
 		<Compile Include="Items\Charm_MaxHPAttack.cs" />
 		<Compile Include="Items\Charm_MaxMPPower.cs" />

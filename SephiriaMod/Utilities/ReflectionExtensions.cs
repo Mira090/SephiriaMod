@@ -168,6 +168,12 @@ namespace SephiriaMod.Utilities
         {
             return (TextMeshProUGUI)instance.GetType().GetField("text", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
         }
+        public static void InvokeAttack(this CharacterDebuff_Electric instance, UnitAvatar target, int stack, float damageRatio)
+        {
+            var type = typeof(CharacterDebuff_Electric);
+            var method = type.GetMethod("Attack", BindingFlags.Instance | BindingFlags.NonPublic);
+            method.Invoke(instance, [target, stack, damageRatio]);
+        }
 
 
 

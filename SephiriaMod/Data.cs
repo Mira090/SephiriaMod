@@ -753,6 +753,38 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm ReddewMagicExecution { get; } = ModCharmStatus.Create<Charm_ReddewMagicExecution>("Reddew_Magic_Execution", 2, CreateStatusGroup("CRITICAL", 300, 600, 1000), CreateStatusGroup("HIGHEST_ELEMENTAL_DAMAGE", 1, 3, 5))
             .SetCategory(ItemCategories.Precision, ItemCategories.Elemental).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
+        /// <summary>
+        /// Item_Magitech_Flame_Sword_Name
+        /// 燃える日時計
+        /// Item_Magitech_Flame_Sword_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Magitech_Flame_Sword_Effect
+        /// <tag=WeaponAction_DirectAttack>や<tag=Magic>によって<tag=FlameSword>が発動しなくなる。かわりに、<tag=Electric>ダメージを与えると<tag=FlameSword>を最大<tag=Electric>スタックの分だけ投げる
+        /// </summary>
+        public static ModCharm MagitechFlameSword { get; } = ModCharmStatus.Create<Charm_MagitechFlameSword>("Magitech_Flame_Sword", 5, CreateStatusGroup("ELECTRIC_DAMAGE", 25, 30, 40, 55, 75, 100), CreateStatusGroup("FIRE_DAMAGE", 2, 3, 5, 7, 10, 13))
+            .SetCategory(ItemCategories.Magitech, ItemCategories.FlameSword).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Magitech_Frost_Relic_Name
+        /// 凍える氷磁石
+        /// Item_Magitech_Frost_Relic_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Magitech_Frost_Relic_Effect
+        /// <tag=FrostRelic>が命中した時、{PERCENT}の確率で<tag=Electric>のショックを即座に発動させる。<tag=Electric>のショックが発動した時、「雹の手」バフを獲得
+        /// Item_Magitech_Frost_Relic_Effect2
+        /// 雹の手：{BUFF}秒の間、<tag=IceDamage>が2増加（最大20スタック）
+        /// </summary>
+        public static ModCharm MagitechFrostRelic { get; } = ModCharmStatus.Create<Charm_MagitechFrostRelic>("Magitech_Frost_Relic", 5, CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 5, 7, 10, 13))
+            .SetCategory(ItemCategories.Magitech, ItemCategories.Frost).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Auto_Magic_Dark_Cloud_Name
+        /// 巨大実験台
+        /// Item_Auto_Magic_Dark_Cloud_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Auto_Magic_Dark_Cloud_Effect
+        /// <tag=MP>を消費するかわりに<tag=DarkCloud>を{CLOUD}消費して、上の枠にある<tag=Magic>を{COOLDOWN}秒遅れて自動発動する
+        /// </summary>
+        public static ModCharm AutoMagicDarkCloud { get; } = ModCharmStatus.Create<Charm_AutoMagicDarkCloud>("Auto_Magic_Dark_Cloud", 5, CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 5, 7, 10, 13))
+            .SetCategory(ItemCategories.Academy, ItemCategories.DarkCloud).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare);
 
         /// <summary>
         /// Item_Sacrifice_Fire_Name
@@ -852,6 +884,15 @@ namespace SephiriaMod
         public static ModEffectHUD EffectPhysicalDamageBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Physical_Damage_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
         public static CharacterBuffMod_StatusInstance PhysicalDamageBuff { get; } = CreateBuff("PhysicalDamageBuff", "PhysicalDamageBuff", 4, CreateBuffStatus("PHYSICAL_DAMAGE", 5))
             .SetDefaultDuration(8f);
+        /// <summary>
+        /// EffectHUD_Magitech_Frost_Relic_Buff_Name
+        /// 雹の手
+        /// EffectHUD_Magitech_Frost_Relic_Buff_FlavorText
+        /// 氷属性ダメージ増加（最大20スタック）
+        /// </summary>
+        public static ModEffectHUD EffectMagitechFrostRelicBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Magitech_Frost_Relic_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
+        public static CharacterBuffMod_StatusInstance MagitechFrostRelicBuff { get; } = CreateBuff("MagitechFrostRelicBuff", "MagitechFrostRelicBuff", 20, CreateBuffStatus("ICE_DAMAGE", 2))
+            .SetDefaultDuration(Charm_MagitechFrostRelic.BuffDuration);
 
         /// <summary>
         /// EffectHUD_Stargaze_Tablet_Name

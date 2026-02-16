@@ -24,10 +24,24 @@ namespace SephiriaMod.Items.Eternal
         public static class ComboEffect_FlameSwordHandleAttackUnitPatch
         {
             public static UnitAvatar RecentTarget;
-            static void Prefix(UnitAvatar target, DamageInstance damage, ComboEffect_FlameSword __instance)
+            static bool Prefix(UnitAvatar target, DamageInstance damage, ComboEffect_FlameSword __instance)
             {
                 if ((bool)target && !target.IsDead && !__instance.GetIsCooldown())
                 {
+                    var magitech = __instance.Networkavatar.GetCustomStatUnsafe(Charm_MagitechFlameSword.Status);
+
+                    if (magitech > 0)
+                    {
+                        if(damage.id == "Debuff_Electric")
+                        {
+                            __instance.SetIsCooldown(true);
+                            __instance.SetCooldownTimer(0);
+                            __instance.InvokeLocalFireSword(target.transform.position, false, false);
+                        }
+                        return false;
+                    }
+
+
                     bool flag = damage.fromType == EDamageFromType.DirectAttack;
                     bool flag2 = damage.fromType == EDamageFromType.Magic;
                     if (flag || flag2)
@@ -47,6 +61,8 @@ namespace SephiriaMod.Items.Eternal
                 {
                     RecentTarget = null;
                 }
+
+                return true;
             }
         }
         [HarmonyPatch(typeof(ComboEffect_FlameSword), "LocalFireSword")]
