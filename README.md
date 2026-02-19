@@ -11,7 +11,7 @@ Team Horay の <a href="https://store.steampowered.com/app/2436940/_/">Sephiria<
 2. Releases から最新の `SephiriaMod-0.X.X.zip` をダウンロードし、解凍してください。
 3. `Program Files (x86)\Steam\steamapps\common\Sephiria\Mods` フォルダ内に `SephiriaMod.dll` を配置します。
 4. `Program Files (x86)\Steam\steamapps\common\Sephiria\Mods` フォルダ内に `CustomImages`フォルダをコピーします。
-5. `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `ja-JP.json` を上書きコピーします。
+5. 日本語ユーザーの場合<br> `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `ja-JP.json` を上書きコピーします。<br>韓国語ユーザーの場合<br> `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `ko-KR.json` を上書きコピーします。
 
 例：
 ```
@@ -24,13 +24,13 @@ Sephiria/
         ├── Costume/
         │   └── RainbowRabbit/
         └── Localization/
-            ├── en-US.json
+            ├── ko-KR.json
             └── ja-JP.json
 ```
 
 6. ゲームを起動すると自動的に反映されます。
 
-※翻訳ファイル（ja-JP.json）は Sephiria 本体の翻訳も含まれるので、異なるSephiriaのバージョンのものを上書きしてしまうと、Sephiria本体の翻訳が欠ける可能性があります。また、Sephiria本体の更新によって翻訳ファイルも更新され、Modの翻訳が消えることがあります。その場合、翻訳jsonファイルに手動でModの翻訳ファイルの必要箇所をコピペしてください。
+※翻訳ファイル（ja-JP.json、ko-KR.json）は Sephiria 本体のアップデートによって上書きされる場合があります。ご自身で翻訳されたファイルは必ずバックアップしておいてください。
 
 ## 📝 注意事項
 - このリポジトリおよびその貢献者は、Sephiria、Team Horay、または関連団体とは一切関係がありません
@@ -173,6 +173,9 @@ HP回復や最大HP増加などの効果を持つアーティファクトが追�
 - タイトル画面の左上にMelonLoaderのMod一覧が表示されます。
 
 ## 備考
-- ビリビリクリームクロワッサン、友情のリストバンド、烈火の原子時計などの一部のアーティファクトの画像は私の友人が描いたものです
 - レベル1以上の石版の欠片がバッグにある状態でセーブし、Sephiriaを再起動して、プレイを再開するとバッグの枠レベルが不正に増加したままになるバグがありますが、面倒なので修正せずに放置しています。
 - <a href="https://github.com/Mira090/CustomCostume">Custom Costume Mod</a>は元々このModから分離させたModです。なので、そのソースコードがこのリポジトリにも残っています。
+
+## スペシャルサンクス（敬称略）
+- 私の友人（ビリビリクリームクロワッサン、友情のリストバンド、烈火の原子時計などの一部のアーティファクトのイラスト）
+- 태현（ko-KR.json）
