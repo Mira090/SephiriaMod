@@ -161,7 +161,7 @@ namespace SephiriaMod.Items
         {
             return new Vector2(4f, -4f);
         }
-        [HarmonyPatch(typeof(ChargingCharm), nameof(ChargingCharm.ActivateChargingCharm), [typeof(float)])]
+        [HarmonyPatch(typeof(ChargingCharm), nameof(ChargingCharm.ActivateChargingCharm), [typeof(float), typeof(bool)])]
         public static class ChargingCharmPatch
         {
             public static float GetChargeChance(UnitAvatar avatar)
@@ -172,7 +172,7 @@ namespace SephiriaMod.Items
             {
                 return Mathf.FloorToInt(avatar.GetCustomStat(ECustomStat.Evasion) / 100f) * (percent / 100f);
             }
-            static bool Prefix(float damageMultiplier, ChargingCharm __instance)
+            static bool Prefix(float damageMultiplier, bool canRetrigger, ChargingCharm __instance)
             {
                 var avatar = __instance.GetAvatar();
                 if(avatar != null && avatar.GetCustomStatUnsafe("EVASIONCHARGE") > 0)
@@ -180,14 +180,14 @@ namespace SephiriaMod.Items
                     float percent = GetChargeChance(avatar);
                     if (UnityEngine.Random.Range(0f, 100f) < percent)
                     {
-                        __instance.ActivateChargingCharmNoCount(damageMultiplier);
+                        __instance.ActivateChargingCharmNoCount(damageMultiplier, canRetrigger);
                         return false;
                     }
                 }
                 return true;
             }
         }
-        [HarmonyPatch(typeof(Charm_IceBow), "Fire", [typeof(int), typeof(float), typeof(float), typeof(float)])]
+        [HarmonyPatch(typeof(Charm_IceBow), "Fire", [typeof(int), typeof(float), typeof(float), typeof(float), typeof(bool)])]
         public static class IceBowPatch
         {
             static void Prefix(Charm_IceBow __instance)
