@@ -1295,6 +1295,23 @@ namespace SephiriaMod
             }
         });
 
+        /// <summary>
+        /// Passive_Grimoire_Name
+        /// 追憶
+        /// Passive_Grimoire_Description
+        /// 魔法に使う様々な記憶を思い出します。
+        /// Passive_Grimoire_Effect_LV5
+        /// <tag=CooldownRecovery>が+20%増加します。
+        /// Passive_Grimoire_Effect_LV10
+        /// 全ての<tag=Magic>に魔導書コンボが追加されます。MP再生が+5増加します。
+        /// Passive_Grimoire_Effect_LV20
+        /// <tag=Magic>ダメージが+30%増加し、<tag=Magic>クリティカル確率が+20%増加します。
+        /// </summary>
+        public static ModPassive GrimoirePassive { get; } = ModPassive.CreatePassive("Grimoire", new Color32(66, 152, 245, byte.MaxValue), "MAX_MP/2")
+            .CreatePerk(EPassivePerkLv.lv5, "CooldownRecovery").SetPerkSupplierStatus("COOLDOWN_RECOVERY_SPEED/20").Parent
+            .CreatePerk(EPassivePerkLv.lv10, "AddGrimoire").SetPerkSupplierStatus("ADD_GRIMOIRE/1", "MP_REGEN/5").Parent
+            .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/30", "MAGIC_CRITICAL/2000").Parent;
+
         public static Sprite IconInWorldPotion { get; internal set; }
         public static Sprite IconInWorldCharm { get; internal set; }
         public static Sprite IconInWorldTablet { get; internal set; }
