@@ -879,16 +879,16 @@ namespace SephiriaMod
         /// ItemCategory_Grimoire
         /// 魔導書
         /// ComboEffectDefault_Grimoire_Effect2
-        /// +2 火・氷・雷属性ダメージ
+        /// +3 火・氷・雷属性ダメージ
         /// ComboEffectDefault_Grimoire_Effect4
-        /// +4 火・氷・雷属性ダメージ
-        /// ComboEffectDefault_Grimoire_Effect6
         /// +6 火・氷・雷属性ダメージ
+        /// ComboEffectDefault_Grimoire_Effect6
+        /// +9 火・氷・雷属性ダメージ
         /// ComboEffectDefault_Grimoire_Effect8
-        /// +8 火・氷・雷属性ダメージ
+        /// +12 火・氷・雷属性ダメージ
         /// </summary>
-        public static ModComboEffect Grimoire { get; } = ModComboEffect.Create("Grimoire").SetStats(CreateComboStatThreeDamage(2, "Grimoire", 2), CreateComboStatThreeDamage(4, "Grimoire", 4),
-            CreateComboStatThreeDamage(6, "Grimoire", 6), CreateComboStatThreeDamage(8, "Grimoire", 8));
+        public static ModComboEffect Grimoire { get; } = ModComboEffect.Create("Grimoire").SetStats(CreateComboStatThreeDamage(2, "Grimoire", 3), CreateComboStatThreeDamage(4, "Grimoire", 6),
+            CreateComboStatThreeDamage(6, "Grimoire", 9), CreateComboStatThreeDamage(8, "Grimoire", 12));
 
         /// <summary>
         /// EffectHUD_Physical_Damage_Buff_Name
@@ -1301,16 +1301,16 @@ namespace SephiriaMod
         /// Passive_Grimoire_Description
         /// 魔法に使う様々な記憶を思い出します。
         /// Passive_Grimoire_Effect_LV5
-        /// <tag=CooldownRecovery>が+20%増加します。
+        /// <tag=CooldownRecovery>が+30%増加します。
         /// Passive_Grimoire_Effect_LV10
-        /// 全ての<tag=Magic>に魔導書コンボが追加されます。MP再生が+5増加します。
+        /// 全ての<tag=Magic>に魔導書コンボが追加されます。MP再生が+4増加します。
         /// Passive_Grimoire_Effect_LV20
-        /// <tag=Magic>ダメージが+30%増加し、<tag=Magic>クリティカル確率が+20%増加します。
+        /// <tag=Magic>ダメージが+20%増加し、<tag=Magic>クリティカル確率が+50%増加します。
         /// </summary>
         public static ModPassive GrimoirePassive { get; } = ModPassive.CreatePassive("Grimoire", new Color32(66, 152, 245, byte.MaxValue), "MAX_MP/2")
-            .CreatePerk(EPassivePerkLv.lv5, "CooldownRecovery").SetPerkSupplierStatus("COOLDOWN_RECOVERY_SPEED/20").Parent
-            .CreatePerk(EPassivePerkLv.lv10, "AddGrimoire").SetPerkSupplierStatus("ADD_GRIMOIRE/1", "MP_REGEN/5").Parent
-            .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/30", "MAGIC_CRITICAL/2000").Parent;
+            .CreatePerk(EPassivePerkLv.lv5, "CooldownRecovery").SetPerkSupplierStatus("COOLDOWN_RECOVERY_SPEED/30").Parent
+            .CreatePerk(EPassivePerkLv.lv10, "AddGrimoire").SetPerkSupplierStatus("ADD_GRIMOIRE/1", "MP_REGEN/4").Parent
+            .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/20", "MAGIC_CRITICAL/5000").Parent;
 
         public static Sprite IconInWorldPotion { get; internal set; }
         public static Sprite IconInWorldCharm { get; internal set; }
