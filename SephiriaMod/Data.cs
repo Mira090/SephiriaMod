@@ -876,7 +876,7 @@ namespace SephiriaMod
         public static ModComboEffect Fortune { get; } = ModComboEffect.Create("Fortune").SetStats(CreateComboStat(2, "LUCK/4"), CreateComboStat(4, "LUCK/8"));
         /// <summary>
         /// ItemCategory_Grimoire
-        /// 魔法書
+        /// 魔導書
         /// ComboEffectDefault_Grimoire_Effect2
         /// +2 火・氷・雷属性ダメージ
         /// ComboEffectDefault_Grimoire_Effect4
