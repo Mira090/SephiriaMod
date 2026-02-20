@@ -484,6 +484,21 @@ namespace SephiriaMod
                         __result += bonus;
                     }
                 }
+                if(__instance.UnitAvatar.GetCustomStatUnsafe("AddGrimoire".ToUpperInvariant()) > 0)
+                {
+                    if (entity.resourcePrefab != null && entity.resourcePrefab.TryGetComponent<Charm_Magic>(out var magic))
+                    {
+                        var num = __result;
+                        var value = 0;
+                        if(__instance.itemDropBonusBySemantic.TryGetValue("GRIMOIRE", out value))
+                        {
+                            num -= value;
+                        }
+                        int currentCategoryItemDropWeight2 = __instance.GetCurrentCategoryItemDropWeight(ItemCategories.Grimoire, 0, bondBonus: false, allBondCategoryAcquired: false, addDefaultWeight: true);
+                        num = Mathf.Max(num, currentCategoryItemDropWeight2);
+                        __result = num + value;
+                    }
+                }
             }
         }
         /// <summary>

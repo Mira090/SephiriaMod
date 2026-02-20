@@ -443,26 +443,5 @@ namespace SephiriaMod
                 }
             }
         }
-
-        [HarmonyPatch(typeof(Charm_Basic), nameof(Charm_Basic.GetPossibleCategory), [typeof(ItemEntity)])]
-        public static class CharmGetPossibleCategoryPatch
-        {
-            static void Postfix(Charm_Basic __instance, ref IEnumerable<string> __result, ItemEntity baseEntity)
-            {
-                if (__instance is not Charm_Magic magic)
-                    return;
-
-                var local = NetworkServer.localConnection;
-                if (local == null)
-                    return;
-                var identity = local.identity;
-                if (identity == null || !identity.TryGetComponent<PlayerAvatar>(out var player))
-                    return;
-                if (player.GetCustomStatUnsafe("AddGrimoire".ToUpperInvariant()) > 0 && !__result.Contains(ItemCategories.Grimoire))
-                {
-                    __result = [.. __result, ItemCategories.Grimoire];
-                }
-            }
-        }
     }
 }
