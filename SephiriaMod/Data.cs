@@ -874,6 +874,20 @@ namespace SephiriaMod
         /// 運命
         /// </summary>
         public static ModComboEffect Fortune { get; } = ModComboEffect.Create("Fortune").SetStats(CreateComboStat(2, "LUCK/4"), CreateComboStat(4, "LUCK/8"));
+        /// <summary>
+        /// ItemCategory_Grimoire
+        /// 魔法書
+        /// ComboEffectDefault_Grimoire_Effect2
+        /// +2 火・氷・雷属性ダメージ
+        /// ComboEffectDefault_Grimoire_Effect4
+        /// +4 火・氷・雷属性ダメージ
+        /// ComboEffectDefault_Grimoire_Effect6
+        /// +6 火・氷・雷属性ダメージ
+        /// ComboEffectDefault_Grimoire_Effect8
+        /// +8 火・氷・雷属性ダメージ
+        /// </summary>
+        public static ModComboEffect Grimoire { get; } = ModComboEffect.Create("Grimoire").SetStats(CreateComboStatThreeDamage(2, "Grimoire", 2), CreateComboStatThreeDamage(4, "Grimoire", 4),
+            CreateComboStatThreeDamage(6, "Grimoire", 6), CreateComboStatThreeDamage(8, "Grimoire", 8));
 
         /// <summary>
         /// EffectHUD_Physical_Damage_Buff_Name
@@ -1289,6 +1303,15 @@ namespace SephiriaMod
         public static ComboEffectBase.ComboStat CreateComboStat(int count, params string[] status)
         {
             return new ComboEffectBase.ComboStat() { comboCount = count, status = status };
+        }
+        public static ComboEffectBase.ComboStat CreateComboStatReplaceText(int count, string id, params string[] status)
+        {
+            return new ComboEffectBase.ComboStat() { comboCount = count, status = status, replaceEffectText = true, replaceEffectTextString = new LocalizedString($"ComboEffectDefault_{id}_Effect{count}") };
+        }
+        public static ComboEffectBase.ComboStat CreateComboStatThreeDamage(int count, string id, int status)
+        {
+            return new ComboEffectBase.ComboStat() { comboCount = count, status = ["FIRE_DAMAGE/" + status, "ICE_DAMAGE/" + status, "LIGHTNING_DAMAGE/" + status],
+                replaceEffectText = true, replaceEffectTextString = new LocalizedString($"ComboEffectDefault_{id}_Effect{count}") };
         }
         public static Miracle_StatusInstance.StatInfo CreatePositiveStat(string status)
         {

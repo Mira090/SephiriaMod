@@ -123,5 +123,9 @@ namespace SephiriaMod.Utilities
         /// 運命
         /// </summary>
         public static string Fortune { get; private set; }
+        /// <summary>
+        /// 魔導書
+        /// </summary>
+        public static string Grimoire { get; private set; }
     }
 }
