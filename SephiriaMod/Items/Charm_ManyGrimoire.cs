@@ -6,7 +6,7 @@ namespace SephiriaMod.Items
 {
     public class Charm_ManyGrimoire : Charm_Basic
     {
-        public int[] criticalBonusByLevel = new int[4] { 1, 1, 2, 3};
+        public int[] criticalBonusByLevel = [1, 1, 2, 2, 3];
 
         private int enabledCriticalBonus;
 

@@ -258,8 +258,8 @@ namespace SephiriaMod
         /// Item_Many_Grimoire_Effect2
         /// 現在の<tag=Magic>数：{COUNT}個
         /// </summary>
-        public static ModCharm ManyGrimoire { get; } = ModCharm.Create<Charm_ManyGrimoire>("Many_Grimoire", 3, false)
-            .SetCategory(ItemCategories.Academy, ItemCategories.Elemental).SetEffects("Item_Many_Grimoire_Effect", "Item_Many_Grimoire_Effect2").SetRarity(EItemRarity.Rare).SetIsDual();
+        public static ModCharm ManyGrimoire { get; } = ModCharm.Create<Charm_ManyGrimoire>("Many_Grimoire", 4, false)
+            .SetCategory(ItemCategories.Academy, ItemCategories.Elemental).SetEffects("Item_Many_Grimoire_Effect", "Item_Many_Grimoire_Effect2").SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();
 
         /// <summary>
         /// Item_Fire_Cooldown_Recovery_Name
