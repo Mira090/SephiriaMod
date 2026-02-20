@@ -953,6 +953,13 @@ namespace SephiriaMod
         /// </summary>
         public static ModCustomStatus InvLevel { get; } = ModCustomStatus.CreateStatus("InvLevel");
         /// <summary>
+        /// Status_AddGrimoire_Name
+        /// 
+        /// Status_AddGrimoire_Description
+        /// 
+        /// </summary>
+        public static ModCustomStatus AddGrimoire { get; } = ModCustomStatus.CreateStatus("AddGrimoire");
+        /// <summary>
         /// Status_MagicExecution_Name
         /// 天罰
         /// Status_MagicExecution_Description
