@@ -886,9 +886,11 @@ namespace SephiriaMod
         /// +9 火・氷・雷属性ダメージ
         /// ComboEffectDefault_Grimoire_Effect8
         /// +12 火・氷・雷属性ダメージ
+        /// ComboEffectDefault_Grimoire_Effect10
+        /// +15 火・氷・雷属性ダメージ
         /// </summary>
         public static ModComboEffect Grimoire { get; } = ModComboEffect.Create("Grimoire").SetStats(CreateComboStatThreeDamage(2, "Grimoire", 3), CreateComboStatThreeDamage(4, "Grimoire", 6),
-            CreateComboStatThreeDamage(6, "Grimoire", 9), CreateComboStatThreeDamage(8, "Grimoire", 12));
+            CreateComboStatThreeDamage(6, "Grimoire", 9), CreateComboStatThreeDamage(8, "Grimoire", 12), CreateComboStatThreeDamage(10, "Grimoire", 15));
 
         /// <summary>
         /// EffectHUD_Physical_Damage_Buff_Name
