@@ -326,6 +326,38 @@ namespace SephiriaMod.Registries
             item.defaultDuration = duration;
             return item;
         }
+        public static ModPassivePerk CreatePerk<T>(this T item, EPassivePerkLv lv, string name) where T : ModPassive
+        {
+            var perk = ModPassivePerk.CreatePassivePerk(item, name, lv);
+            if(lv == EPassivePerkLv.lv5)
+            {
+                item.Lv5Perk = perk;
+            }
+            else if(lv == EPassivePerkLv.lv10)
+            {
+                item.Lv10Perk = perk;
+            }
+            else if(lv == EPassivePerkLv.lv20)
+            {
+                item.Lv20Perk = perk;
+            }
+            return perk;
+        }
+        public static T SetPerkSupplier<T>(this T item, Func<GameObject, PassiveObject> supplier) where T : ModPassivePerk
+        {
+            item.PerkSupplier = supplier;
+            return item;
+        }
+        public static T SetPerkSupplierStatus<T>(this T item, params string[] stats) where T : ModPassivePerk
+        {
+            item.PerkSupplier = gameObject =>
+            {
+                var perk = gameObject.AddComponent<PassiveObject_StatusInstance>();
+                perk.stats = stats;
+                return perk;
+            };
+            return item;
+        }
 
 
         public static Charm_StatusInstance.StatusGroup CreateStatusGroup(string id, params int[] values)

@@ -26,6 +26,7 @@ namespace SephiriaMod.Utilities
         public static readonly string ProjectilePath = "Projectile\\";
         public static readonly string UIPath = "UI\\";
         public static readonly string WeaponPath = "Weapon\\";
+        public static readonly string PassivePath = "Passive\\";
 
         public static readonly string KeywordPath = "Keyword\\";
         /// <summary>

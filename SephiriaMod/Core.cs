@@ -447,6 +447,14 @@ namespace SephiriaMod
 
                     __result = list.ToArray();
                 }
+                if(systemTypeInstance == typeof(PassiveEntity) && path == "Passive")
+                {
+                    var list = __result.ToList();
+
+                    Data.RegisterPassives(list);
+
+                    __result = list.ToArray();
+                }
             }
         }
         [HarmonyPatch(typeof(GridInventory), nameof(GridInventory.GetItemDropWeight), new Type[] { typeof(ItemEntity) })]
@@ -702,6 +710,89 @@ namespace SephiriaMod
                 return UnityEngine.Object.Instantiate(original);
             }
         }
+        [HarmonyPatch(typeof(PlayerAvatar), "AddPassiveStatOnServer")]
+        public static class InstantiatePassivePatch
+        {
+            static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+            {
+                Melon<Core>.Logger.Msg($"InstantiatePassivePatch Transpiler");
+                var target = AccessTools.Method(
+                    typeof(UnityEngine.Object),
+                    nameof(UnityEngine.Object.Instantiate),
+                    new[] { typeof(GameObject) }
+                );
+
+                var replacement = AccessTools.Method(typeof(InstantiatePassivePatch), nameof(CustomInstantiate));
+
+                foreach (var code in instructions)
+                {
+                    if (code.opcode == OpCodes.Call && code.operand is MethodInfo mi && mi.Name == nameof(UnityEngine.Object.Instantiate))
+                    {
+                        // Instantiate(GameObject) 呼び出しを CustomInstantiate に差し替える
+                        code.operand = replacement;
+                    }
+                    yield return code;
+                }
+            }
+
+            // 差し替え用メソッド
+            public static GameObject CustomInstantiate(GameObject original)
+            {
+                if (original == null)
+                    return UnityEngine.Object.Instantiate(original);
+
+                Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
+                foreach (var modItem in Data.Passives)
+                {
+                    //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
+                    if (original.name == modItem.Lv5Perk.PerkPrefab.name)
+                    {
+                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
+
+                        var ob = UnityEngine.Object.Instantiate(original);
+                        var identity = ob.gameObject.AddComponent<NetworkIdentity>();
+                        var assetId = identity.GetType().GetProperty("assetId");
+                        assetId.SetValue(identity, modItem.Lv5Perk.AssetId);
+                        if (ob.TryGetComponent<PassiveObject>(out var perk))
+                        {
+                            perk.enabled = true;
+                        }
+                        return ob;
+                    }
+                    else if (original.name == modItem.Lv10Perk.PerkPrefab.name)
+                    {
+                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
+
+                        var ob = UnityEngine.Object.Instantiate(original);
+                        var identity = ob.gameObject.AddComponent<NetworkIdentity>();
+                        var assetId = identity.GetType().GetProperty("assetId");
+                        assetId.SetValue(identity, modItem.Lv10Perk.AssetId);
+                        if (ob.TryGetComponent<PassiveObject>(out var perk))
+                        {
+                            perk.enabled = true;
+                        }
+                        return ob;
+                    }
+                    else if (original.name == modItem.Lv20Perk.PerkPrefab.name)
+                    {
+                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
+
+                        var ob = UnityEngine.Object.Instantiate(original);
+                        var identity = ob.gameObject.AddComponent<NetworkIdentity>();
+                        var assetId = identity.GetType().GetProperty("assetId");
+                        assetId.SetValue(identity, modItem.Lv20Perk.AssetId);
+                        if (ob.TryGetComponent<PassiveObject>(out var perk))
+                        {
+                            perk.enabled = true;
+                        }
+                        return ob;
+                    }
+                }
+
+                // 通常の Instantiate
+                return UnityEngine.Object.Instantiate(original);
+            }
+        }
         [HarmonyPatch(typeof(NetworkClient), "SpawnPrefab")]
         public static class InstantiateNetworkClientPatch
         {
@@ -834,6 +925,51 @@ namespace SephiriaMod
                         var identity = ob.AddComponent<NetworkIdentity>();
                         var assetId = identity.GetType().GetProperty("assetId");
                         assetId.SetValue(identity, modItem.AssetId);
+                        return ob;
+                    }
+                }
+                foreach (var modItem in Data.Passives)
+                {
+                    if (original.name == modItem.Lv5Perk.PerkPrefab.name)
+                    {
+                        //Melon<Core>.Logger.Msg($"Bypassing Instantiate for: {original.name}");
+
+                        var ob = UnityEngine.Object.Instantiate(original, position, rotation);
+                        var identity = ob.AddComponent<NetworkIdentity>();
+                        var assetId = identity.GetType().GetProperty("assetId");
+                        assetId.SetValue(identity, modItem.Lv5Perk.AssetId);
+                        if (ob.TryGetComponent<PassiveObject>(out var perk))
+                        {
+                            perk.enabled = true;
+                        }
+                        return ob;
+                    }
+                    else if (original.name == modItem.Lv10Perk.PerkPrefab.name)
+                    {
+                        //Melon<Core>.Logger.Msg($"Bypassing Instantiate for: {original.name}");
+
+                        var ob = UnityEngine.Object.Instantiate(original, position, rotation);
+                        var identity = ob.AddComponent<NetworkIdentity>();
+                        var assetId = identity.GetType().GetProperty("assetId");
+                        assetId.SetValue(identity, modItem.Lv10Perk.AssetId);
+                        if (ob.TryGetComponent<PassiveObject>(out var perk))
+                        {
+                            perk.enabled = true;
+                        }
+                        return ob;
+                    }
+                    else if (original.name == modItem.Lv20Perk.PerkPrefab.name)
+                    {
+                        //Melon<Core>.Logger.Msg($"Bypassing Instantiate for: {original.name}");
+
+                        var ob = UnityEngine.Object.Instantiate(original, position, rotation);
+                        var identity = ob.AddComponent<NetworkIdentity>();
+                        var assetId = identity.GetType().GetProperty("assetId");
+                        assetId.SetValue(identity, modItem.Lv20Perk.AssetId);
+                        if (ob.TryGetComponent<PassiveObject>(out var perk))
+                        {
+                            perk.enabled = true;
+                        }
                         return ob;
                     }
                 }

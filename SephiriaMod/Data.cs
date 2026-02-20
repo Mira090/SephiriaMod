@@ -26,6 +26,7 @@ namespace SephiriaMod
         public static List<ModWeapon> Weapons { get; private set; } = new();
         public static List<CharacterBuffMod> Buffs { get; private set; } = new();
         public static List<ModKeyword> Keywords { get; private set; } = new();
+        public static List<ModPassive> Passives { get; private set; } = new();
         public static List<string> AllResourcePrefabNames { get; private set; }
         /// <summary>
         /// Item_Malice_Name
@@ -1418,6 +1419,15 @@ namespace SephiriaMod
                 moditem.Init();
                 Keywords.Add(moditem);
             }
+            var passiveId = GetFirstPassiveId();
+            var pros9 = type.GetProperties(BindingFlags.Static | BindingFlags.Public).Where(p => p.PropertyType == typeof(ModPassive) || p.PropertyType.IsSubclassOf(typeof(ModPassive)));
+            foreach (var pro in pros9)
+            {
+                var moditem = pro.GetValue(type) as ModPassive;
+                Melon<Core>.Logger.Msg("New Passive: " + pro.Name);
+                moditem.Init(passiveId++, assetId++, assetId++, assetId++);
+                Passives.Add(moditem);
+            }
             //CustomCostumeDatabase.Initialize();
         }
         public static void Register(List<UnityEngine.Object> list)
@@ -1599,6 +1609,13 @@ namespace SephiriaMod
                 }
             }
         }
+        public static void RegisterPassives(List<UnityEngine.Object> list)
+        {
+            foreach (var moditem in Passives)
+            {
+                list.Add(moditem.PassiveEntity);
+            }
+        }
         public static int GetFirstModId()
         {
             return 14000;
@@ -1610,6 +1627,10 @@ namespace SephiriaMod
         public static uint GetFirstAssetId()
         {
             return 5;
+        }
+        public static ulong GetFirstPassiveId()
+        {
+            return 140;
         }
 
         public static T CreateBuff<T>(string name, string hud) where T : CharacterBuffMod
