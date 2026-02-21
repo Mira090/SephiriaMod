@@ -28,7 +28,7 @@ namespace SephiriaMod.Registries
         {
             var o = new GameObject("TMiracle_" + Name);
             var miracle = o.AddComponent(MiracleType) as Miracle_Gambler;
-            Melon<Core>.Logger.Msg($"CreateMiracleStatusDice");
+            //Melon<Core>.Logger.Msg($"CreateMiracleStatusDice");
             o.AddComponent<LogComponent>();
             o.hideFlags = HideFlags.HideAndDontSave;
             miracle.id = Id;

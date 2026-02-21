@@ -28,7 +28,7 @@ namespace SephiriaMod.Registries
         {
             var o = new GameObject(ResourcePrefabName);
             var charm = o.AddComponent(CharmType) as Charm_Sacrifice;
-            Melon<Core>.Logger.Msg($"CreateCharm");
+            //Melon<Core>.Logger.Msg($"CreateCharm");
             o.AddComponent<LogComponent>();
             o.hideFlags = HideFlags.HideAndDontSave;
             charm.maxLevel = MaxLevel;

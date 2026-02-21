@@ -111,7 +111,7 @@ namespace SephiriaMod.Items
                 }
                 else
                 {
-                    Melon<Core>.Logger.Msg("could not get SkillController");
+                    Melon<Core>.Logger.Warning("could not get SkillController");
                 }
             }
             //networkAvatar.OnMpUsedServerside += OnMpUsedServerside;
@@ -162,7 +162,7 @@ namespace SephiriaMod.Items
                 }
                 else
                 {
-                    Melon<Core>.Logger.Msg("could not get SkillController");
+                    Melon<Core>.Logger.Warning("could not get SkillController");
                 }
             }
             //networkAvatar.OnMpUsedServerside -= OnMpUsedServerside;

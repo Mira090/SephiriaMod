@@ -53,7 +53,7 @@ namespace SephiriaMod
             }
             else
             {
-                Melon<Core>.Logger.Msg("CommandValue() DungeonManager.Instance is null!!");
+                Melon<Core>.Logger.Warning("CommandValue() DungeonManager.Instance is null!!");
             }
         }
         public static void ChatSound(UnitAvatar player, string name)
@@ -64,7 +64,7 @@ namespace SephiriaMod
             }
             else
             {
-                Melon<Core>.Logger.Msg("CommandValue() DungeonManager.Instance is null!!");
+                Melon<Core>.Logger.Warning("CommandValue() DungeonManager.Instance is null!!");
             }
         }
         public static void PlaySound(UnitAvatar player, string message)//  /sound 
@@ -274,7 +274,7 @@ namespace SephiriaMod
                             }
                             else
                             {
-                                Melon<Core>.Logger.Msg("Error: " + message);
+                                Melon<Core>.Logger.Warning("Error: " + message);
                             }
                         }
                     }

@@ -21,7 +21,7 @@ namespace SephiriaMod.Utilities
             var path = GetCustomImagePath(name);
             if (!File.Exists(path))
             {
-                Melon<Core>.Logger.Msg(path + " is not exist!");
+                Melon<Core>.Logger.Warning(path + " is not exist!");
                 return null;
             }
 
@@ -47,7 +47,7 @@ namespace SephiriaMod.Utilities
             var path = dllDirectory + @"\CustomImages\" + name + ".png";
             if (!File.Exists(path))
             {
-                Melon<Core>.Logger.Msg(path + " is not exist!");
+                Melon<Core>.Logger.Warning(path + " is not exist!");
                 return null;
             }
 
@@ -86,7 +86,7 @@ namespace SephiriaMod.Utilities
         {
             if (!File.Exists(path))
             {
-                Melon<Core>.Logger.Msg(path + " is not exist!");
+                Melon<Core>.Logger.Warning(path + " is not exist!");
                 return null;
             }
 

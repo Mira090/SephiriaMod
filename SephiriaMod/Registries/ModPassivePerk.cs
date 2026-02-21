@@ -43,7 +43,7 @@ namespace SephiriaMod.Registries
             meta.effectString = EffectString;
             meta.icon = SpriteLoader.LoadSprite(IconPath);
             o.AddComponent<LogComponent>();
-            Melon<Core>.Logger.Msg($"CreatePassivePerk");
+            //Melon<Core>.Logger.Msg($"CreatePassivePerk");
             o.hideFlags = HideFlags.HideAndDontSave;
             if (PerkSupplier != null)
             {

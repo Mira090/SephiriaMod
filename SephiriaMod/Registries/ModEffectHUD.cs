@@ -34,7 +34,7 @@ namespace SephiriaMod.Registries
         public GameObject ResourcePrefab { get; internal set; }
         public void SetResourcePrefab(GameObject prefab)
         {
-            Melon<Core>.Logger.Msg("SetResourcePrefab: " + LocalizedName.ToString());
+            //Melon<Core>.Logger.Msg("SetResourcePrefab: " + LocalizedName.ToString());
             var basic = prefab.GetComponent<UI_EffectHUD_Basic>();
             basic.effectName = LocalizedName;
             basic.effectFlavorText = FlavorText;

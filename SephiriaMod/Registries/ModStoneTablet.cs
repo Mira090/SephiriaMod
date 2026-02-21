@@ -36,7 +36,7 @@ namespace SephiriaMod.Registries
             tablet.query = Query;
             tablet.conditionQuery = ConditionQuery;
             tablet.isRotatable = IsRotatable;
-            Melon<Core>.Logger.Msg($"CreateStoneTablet");
+            //Melon<Core>.Logger.Msg($"CreateStoneTablet");
             o.AddComponent<LogComponent>();
             o.hideFlags = HideFlags.HideAndDontSave;
             tablet.enabled = false;

@@ -80,7 +80,7 @@ namespace SephiriaMod.Items
             {
                 isInCooldown = true;
                 damage.absoluteEvasionPercent = 100f;
-                Melon<Core>.Logger.Msg("絶対回避！");
+                //Melon<Core>.Logger.Msg("Evade!");
             }
         }
         protected override void OnDisabledEffect()

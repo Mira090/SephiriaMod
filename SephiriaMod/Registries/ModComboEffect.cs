@@ -97,7 +97,7 @@ namespace SephiriaMod.Registries
         {
             var o = new GameObject(ResourcePrefabName);
             var combo = o.AddComponent(ComboEffectType) as ComboEffectBase;
-            Melon<Core>.Logger.Msg($"CreateComboEffect");
+            //Melon<Core>.Logger.Msg($"CreateComboEffect");
             o.AddComponent<LogComponent>();
             o.hideFlags = HideFlags.HideAndDontSave;
             combo.addStatByCombo = Stats;

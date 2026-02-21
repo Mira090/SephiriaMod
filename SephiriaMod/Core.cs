@@ -596,13 +596,13 @@ namespace SephiriaMod
                 if (original == null)
                     return UnityEngine.Object.Instantiate(original);
 
-                Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
+                //Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
                 foreach (var modItem in Data.Combos)
                 {
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.name == modItem.ResourcePrefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for2: {original.name}");
+                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for Combo: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.AddComponent<NetworkIdentity>();
@@ -654,13 +654,13 @@ namespace SephiriaMod
                 if (original == null)
                     return UnityEngine.Object.Instantiate(original);
 
-                Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
+                //Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
                 foreach (var modItem in Data.Miracles)
                 {
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.gameObject.name == modItem.Prefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for3: {original.name}");
+                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for Miracle: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.gameObject.AddComponent<NetworkIdentity>();
@@ -705,13 +705,13 @@ namespace SephiriaMod
                 if (original == null)
                     return UnityEngine.Object.Instantiate(original);
 
-                Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
+                //Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
                 foreach (var modItem in Data.Weapons)
                 {
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.name == modItem.MainWeaponPrefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for3: {original.name}");
+                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for Weapon: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.gameObject.AddComponent<NetworkIdentity>();
@@ -756,7 +756,7 @@ namespace SephiriaMod
                 if (original == null)
                     return UnityEngine.Object.Instantiate(original);
 
-                Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
+                //Melon<Core>.Logger.Msg($"CustomInstantiate2: {original.name}");
                 foreach (var modItem in Data.Passives)
                 {
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
@@ -830,13 +830,13 @@ namespace SephiriaMod
                     if (code.opcode == OpCodes.Call && code.operand is MethodInfo mi && mi.Name == nameof(UnityEngine.Object.Instantiate))
                     {
                         // Instantiate(GameObject) 呼び出しを CustomInstantiate に差し替える
-                        Melon<Core>.Logger.Msg($"Transpiler?");
+                        Melon<Core>.Logger.Msg($"Transpiler SpawnPrefab Instantiate");
                         code.operand = replacement;
                     }
                     if (code.opcode == OpCodes.Call && code.operand is MethodInfo mi2 && mi2.Name == nameof(NetworkClient.GetPrefab))
                     {
                         // Instantiate(GameObject) 呼び出しを CustomInstantiate に差し替える
-                        Melon<Core>.Logger.Msg($"Transpiler!");
+                        Melon<Core>.Logger.Msg($"Transpiler SpawnPrefab GetPrefab");
                         code.operand = replacement2;
                     }
                     yield return code;
