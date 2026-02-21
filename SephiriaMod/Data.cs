@@ -804,7 +804,7 @@ namespace SephiriaMod
         /// Item_Sacrifice_Fire_Reward_Effect
         /// <tag=FlameSword>が<tag=Burn>スタックの数だけ追加発動する
         /// </summary>
-        public static ModCharm SacrificeFireReward { get; } = ModCharmStatus.Create<Charm_EmberFlameSword>("Sacrifice_Fire_Reward", 5, CreateStatusGroup("FIRE_DAMAGE", 2, 3, 5, 7, 10, 15))
+        public static ModCharm SacrificeFireReward { get; } = ModCharmStatus.Create<Charm_EmberFlameSword>("Sacrifice_Fire_Reward", 5, CreateStatusGroup("FIRE_DAMAGE", 2, 3, 5, 7, 10, 15), CreateStatusGroup("FLAME_SWORD_MAX", 1, 2, 3, 4, 5, 6))
             .SetCategory(ItemCategories.Ember, ItemCategories.FlameSword).SetIsDual().SetRarity(EItemRarity.Eternal).SetIsUniqueEffect().SetSimpleEffect();
         /// <summary>
         /// Item_Sacrifice_Ice_Name
@@ -823,7 +823,7 @@ namespace SephiriaMod
         /// Item_Sacrifice_Ice_Reward_Effect
         /// <tag=Freeze>発動時に<tag=FrostRelic>のチャージを加速させる
         /// </summary>
-        public static ModCharm SacrificeIceReward { get; } = ModCharmStatus.Create<Charm_GlacierFrost>("Sacrifice_Ice_Reward", 5, CreateStatusGroup("ICE_DAMAGE", 2, 3, 5, 7, 10, 15))
+        public static ModCharm SacrificeIceReward { get; } = ModCharmStatus.Create<Charm_GlacierFrost>("Sacrifice_Ice_Reward", 5, CreateStatusGroup("ICE_DAMAGE", 2, 3, 5, 7, 10, 15), CreateStatusGroup("CHARGING_CHARM_BONUS", 15, 30, 45, 60, 75, 90))
             .SetCategory(ItemCategories.Glacier, ItemCategories.Frost).SetIsDual().SetRarity(EItemRarity.Eternal).SetIsUniqueEffect().SetSimpleEffect();
         /// <summary>
         /// Item_Sacrifice_Lightning_Name
@@ -842,7 +842,7 @@ namespace SephiriaMod
         /// Item_Sacrifice_Lightning_Reward_Effect
         /// <tag=DarkCloud>の稲妻が命中した敵に<tag=Electric>デバフを付与する
         /// </summary>
-        public static ModCharm SacrificeLightningReward { get; } = ModCharmStatus.Create<Charm_MagitechDarkCloud>("Sacrifice_Lightning_Reward", 5, CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 5, 7, 10, 15))
+        public static ModCharm SacrificeLightningReward { get; } = ModCharmStatus.Create<Charm_MagitechDarkCloud>("Sacrifice_Lightning_Reward", 5, CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 5, 7, 10, 15), CreateStatusGroup("ELECTRIC_STACK", 1, 1, 2, 2, 3, 3))
             .SetCategory(ItemCategories.Magitech, ItemCategories.DarkCloud).SetIsDual().SetRarity(EItemRarity.Eternal).SetIsUniqueEffect().SetSimpleEffect();
 
         /// <summary>
