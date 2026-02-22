@@ -497,7 +497,7 @@ namespace SephiriaMod
                 if (money > 0)
                 {
                     __instance.Avatar.AddMoney(money);
-                    Melon<Core>.Logger.Msg($"{__instance.name}: Add {money} leafs");
+                    //Melon<Core>.Logger.Msg($"{__instance.name}: Add {money} leafs");
                 }
                 if(legendary > 0 && merchant != EProceduralMerchantType.VendorButNoItem)
                 {
@@ -526,7 +526,7 @@ namespace SephiriaMod
                         __instance.Avatar.Inventory.AddItems(legendaries.ToArray());
                     }
 
-                    Melon<Core>.Logger.Msg($"{__instance.name}: Add {legendaries.Count} legendary items");
+                    //Melon<Core>.Logger.Msg($"{__instance.name}: Add {legendaries.Count} legendary items");
                 }
 
 
@@ -556,7 +556,7 @@ namespace SephiriaMod
                 if (more <= 0)
                     return;
 
-                Melon<Core>.Logger.Msg($"{__instance.name}: Add {more} items");
+                //Melon<Core>.Logger.Msg($"{__instance.name}: Add {more} items");
 
                 List<ItemMetadata> list = new List<ItemMetadata>();
                 switch (merchant)
