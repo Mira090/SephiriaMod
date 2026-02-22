@@ -443,5 +443,278 @@ namespace SephiriaMod
                 }
             }
         }
+
+
+        public static readonly string AdditionalShop = "AdditionalShop".ToUpperInvariant();
+        public static readonly string AdditionalShopLegendary = "AdditionalShopLegendary".ToUpperInvariant();
+        public static readonly string AdditionalShopInventory = "AdditionalShopInventory".ToUpperInvariant();
+        public static readonly string AdditionalMoney = "AdditionalMoney".ToUpperInvariant();
+
+        public static readonly string ReplenishmentCharm = "ReplenishmentCharm".ToUpperInvariant();
+        public static readonly string ReplenishmentTablet = "ReplenishmentTablet".ToUpperInvariant();
+
+        public static int DefaultAdditionalShop = 0;
+        public static int DefaultAdditionalShopLegendary = 0;
+        public static int DefaultAdditionalMoney = 0;
+
+        public static int DefaultReplenishmentCharm = 0;
+        public static int DefaultReplenishmentTablet = 0;
+
+        [HarmonyPatch(typeof(UnitAI_NewBasic), nameof(UnitAI_NewBasic.SetSocialID))]
+        public static class SetSocialIDPatch
+        {
+            static void Postfix(UnitAI_NewBasic __instance, string socialID, string nameSource, EPersonality personality, EFactionAlignment alignment, string roleName, EProceduralMerchantType merchant, int startingMoney, ItemMetadata[] startingItems)
+            {
+                if (merchant == EProceduralMerchantType.None)
+                    return;
+                System.Random random = new System.Random(__instance.Avatar.RandomID);
+
+                int more = DefaultAdditionalShop;
+                int legendary = DefaultAdditionalShopLegendary;
+                int money = DefaultAdditionalMoney;
+                List<int> inventory = [];
+                foreach (var connection in NetworkServer.connections.Values)
+                {
+                    if (connection == null || connection.identity == null || connection.identity.gameObject == null)
+                        return;
+                    if (!connection.identity.gameObject.TryGetComponent<PlayerAvatar>(out var player))
+                        return;
+                    more += player.GetCustomStatUnsafe(AdditionalShop);
+                    money += player.GetCustomStatUnsafe(AdditionalMoney);
+                    legendary += player.GetCustomStatUnsafe(AdditionalShopLegendary);
+                    inventory.Add(player.GetCustomStatUnsafe(AdditionalShopInventory));
+                }
+                if (more < 0)
+                    more = 0;
+                if (legendary < 0)
+                    legendary = 0;
+
+                if ((bool)DungeonManager.Instance && DungeonManager.Instance.dungeonEnvironment.TryGetValue("RedMerchant", out var value2) && value2 > 0 && __instance.Avatar.faction == "Merchant")
+                {
+                    return;
+                }
+
+                if (money > 0)
+                {
+                    __instance.Avatar.AddMoney(money);
+                    Melon<Core>.Logger.Msg($"{__instance.name}: Add {money} leafs");
+                }
+                if(legendary > 0 && merchant != EProceduralMerchantType.VendorButNoItem)
+                {
+                    List<ItemMetadata> legendaries = new List<ItemMetadata>();
+
+                    if (merchant == EProceduralMerchantType.Vendor || merchant == EProceduralMerchantType.MerchantUnionVendor || merchant == EProceduralMerchantType.SmallVendor)
+                    {
+                        Events.AddTradingCharms(random, legendaries, legendary, EItemRarity.Legend);
+                    }
+                    else if(merchant == EProceduralMerchantType.PotionVendor)
+                    {
+                        int potion = random.Next(0, 2) switch
+                        {
+                            0 => 35,
+                            _ => 36,
+                        };
+                        legendaries.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(potion), 1));
+                    }
+
+                    if ((bool)__instance.NetworkMySafe)
+                    {
+                        __instance.NetworkMySafe.GenerateItemInInventory(legendaries.ToArray());
+                    }
+                    else if ((bool)__instance.Avatar.Inventory)
+                    {
+                        __instance.Avatar.Inventory.AddItems(legendaries.ToArray());
+                    }
+
+                    Melon<Core>.Logger.Msg($"{__instance.name}: Add {legendaries.Count} legendary items");
+                }
+
+
+                List<ItemMetadata> invlist = new List<ItemMetadata>();
+                foreach (var inv in inventory)
+                {
+                    if (inv <= 0)
+                        continue;
+                    if(random.Next(0, 100) < inv)
+                    {
+                        invlist.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(Data.AddInventory.Id), 1));
+                    }
+                }
+
+                if(invlist.Count > 0)
+                {
+                    if ((bool)__instance.NetworkMySafe)
+                    {
+                        __instance.NetworkMySafe.GenerateItemInInventory(invlist.ToArray());
+                    }
+                    else if ((bool)__instance.Avatar.Inventory)
+                    {
+                        __instance.Avatar.Inventory.AddItems(invlist.ToArray());
+                    }
+                }
+
+                if (more <= 0)
+                    return;
+
+                Melon<Core>.Logger.Msg($"{__instance.name}: Add {more} items");
+
+                List<ItemMetadata> list = new List<ItemMetadata>();
+                switch (merchant)
+                {
+                    case EProceduralMerchantType.Vendor:
+                        {
+                            int charms = random.Next(0, more + 1);
+                            int stoneTablets = more - charms;
+                            UnitAI_NewBasic.AddTradingItems(random, list, charms, stoneTablets);
+                            break;
+                        }
+                    case EProceduralMerchantType.MerchantUnionVendor:
+                        {
+                            int charms2 = random.Next(0, more + 1);
+                            int stoneTablets2 = more - charms2;
+                            UnitAI_NewBasic.AddTradingItems(random, list, charms2, stoneTablets2);
+                            break;
+                        }
+                    case EProceduralMerchantType.SmallVendor:
+                        {
+                            int charms3 = more;
+                            UnitAI_NewBasic.AddTradingItems(random, list, charms3, 0);
+                            break;
+                        }
+                    case EProceduralMerchantType.PotionVendor:
+                        {
+                            for (int q = 0; q < more; q++)
+                            {
+                                switch (UnityEngine.Random.Range(0, 8))
+                                {
+                                    case 1:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(36), 1));
+                                        break;
+                                    case 2:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(30), 1));
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(31), 1));
+                                        break;
+                                    case 3:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(33), 1));
+                                        break;
+                                    case 4:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(28), 1));
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(29), 1));
+                                        break;
+                                    case 5:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(28), 1));
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(30), 1));
+                                        break;
+                                    case 6:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(34), 1));
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(27), 1));
+                                        break;
+                                    case 7:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(34), 1));
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(38), 1));
+                                        break;
+                                    default:
+                                        list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(35), 1));
+                                        break;
+                                }
+                            }
+                            break;
+                        }
+                    case EProceduralMerchantType.VendorButNoItem:
+                        //list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(1), 1));
+                        break;
+                }
+
+                if ((bool)__instance.NetworkMySafe)
+                {
+                    __instance.NetworkMySafe.GenerateItemInInventory(list.ToArray());
+                }
+                else if ((bool)__instance.Avatar.Inventory)
+                {
+                    __instance.Avatar.Inventory.AddItems(list.ToArray());
+                }
+            }
+        }
+        [HarmonyPatch(typeof(UnitAI_NewBasic), nameof(UnitAI_NewBasic.AddReplenishmentItemsClientside))]
+        public static class AddReplenishmentItemsClientsidePatch
+        {
+            static void Prefix(UnitAI_NewBasic __instance, ref int charms, ref int stoneTablets)
+            {
+                if (NetworkClient.localPlayer == null || NetworkClient.localPlayer.gameObject == null)
+                    return;
+                if (!NetworkClient.localPlayer.TryGetComponent<PlayerAvatar>(out var player))
+                    return;
+                charms += DefaultReplenishmentCharm;
+                stoneTablets += DefaultReplenishmentTablet;
+                charms += player.GetCustomStatUnsafe(ReplenishmentCharm);
+                stoneTablets += player.GetCustomStatUnsafe(ReplenishmentTablet);
+                if (charms < 0)
+                    charms = 0;
+                if (stoneTablets < 0)
+                    stoneTablets = 0;
+            }
+        }
+        [HarmonyPatch(typeof(UI_ShopPanel), "UpdateReplenishmentIcon")]
+        public static class UpdateReplenishmentIconPatch
+        {
+            static void Postfix(UI_ShopPanel __instance)
+            {
+                __instance.replenishmentZone.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 14 + __instance.replenishmentIcons.Count * 40);
+            }
+        }
+        [HarmonyPatch(typeof(UI_ScrollToSelection), "ScrollRectToLevelSelection")]
+        public static class ScrollRectToLevelSelectionPatch
+        {
+            static bool Prefix(UI_ScrollToSelection __instance)
+            {
+                var target = typeof(UI_ScrollToSelection).GetProperty("CurrentTargetRectTransform", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(__instance) as RectTransform;
+                if (target != null && target.gameObject.name == "ReplenishmentZone")
+                    return false;
+                return true;
+            }
+        }
+
+        public static void AddTradingCharms(System.Random itemSeed, List<ItemMetadata> list, int charms, EItemRarity rarity)
+        {
+            if (charms <= 0)
+                return;
+
+            List<int> items = new List<int>();
+            foreach (PlayerSpawner multiplayer in PlayerSpawner.MultiplayerList)
+            {
+                if (!multiplayer)
+                {
+                    continue;
+                }
+
+                PlayerAvatar playerAvatar = multiplayer.PlayerAvatar;
+                multiplayer.GetComponent<WeaponControllerSimple>();
+                foreach (int unlockedCharm in multiplayer.unlockedCharms)
+                {
+                    ItemEntity itemEntity = ItemDatabase.FindItemById(unlockedCharm);
+                    if ((bool)itemEntity && !itemEntity.isDual)
+                    {
+                        Charm_Basic charm_Basic = (itemEntity.resourcePrefab ? itemEntity.resourcePrefab.GetComponent<Charm_Basic>() : null);
+                        if ((bool)charm_Basic && !charm_Basic.isWeaponRelatedCharm && !itemEntity.cannotBeReward && !playerAvatar.Inventory.HasItem(itemEntity, out var _, out var _, out var _))
+                        {
+                            if (itemEntity.rarity == rarity)
+                                items.Add(unlockedCharm);
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < charms; i++)
+            {
+                int elementAt = items[itemSeed.Next(0, items.Count)];
+                ItemEntity itemEntity2 = ItemDatabase.FindItemById(elementAt);
+
+                if (itemEntity2 != null)
+                {
+                    list.Add(new ItemMetadata(itemSeed.Next(), itemEntity2, 1));
+                }
+            }
+        }
+
     }
 }

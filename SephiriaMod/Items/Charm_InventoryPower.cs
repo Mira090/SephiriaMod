@@ -25,6 +25,7 @@ namespace SephiriaMod.Items
         public List<StatusGroup> list = [];
         public Dictionary<string, int> keys = [];
         public List<int> indexes = [];
+        public List<int> indexesClient = [];
 
         public bool active = false;
         public string category = null;
@@ -76,18 +77,38 @@ namespace SephiriaMod.Items
         private void Start()
         {
             assignedCategory.Clear();
+            Events.OnValueRecieved += OnValueRecieved;
+        }
+        private void OnValueRecieved(string command, uint netId, int value)
+        {
+            //Melon<Core>.Logger.Msg("OnValueRecieved: " + netId + " to " + base.netId);
+            if (netId == base.netId)
+            {
+                if(value == -1)
+                {
+                    indexesClient.Clear();
+                }
+                else
+                {
+                    indexesClient.Add(value);
+                }
+            }
+        }
+        public void OnDestroy()
+        {
+            Events.OnValueRecieved -= OnValueRecieved;
         }
         public override int GetEffectStringCount()
         {
-            if (indexes.Count == 0)
+            if (indexesClient.Count == 0)
                 return list.Count + effectsString.Length;
             else
-                return indexes.Count + effectsString.Length;
+                return indexesClient.Count + effectsString.Length;
         }
 
         public override string GetEffectString(int idx, int level, int virtualLevelOffset, bool showAllLevel)
         {
-            if(indexes.Count == 0)
+            if(indexesClient.Count == 0)
             {
                 var stats = list.ToArray();
                 if (idx < effectsString.Length)
@@ -115,8 +136,8 @@ namespace SephiriaMod.Items
                 }
 
                 idx -= effectsString.Length;
-                StatusInstance statusInstance2 = StatusDatabase.CreateStatusEntity(list[indexes[idx]].statusID, list[indexes[idx]].valuesByLevel.SafeRandomAccess(level));
-                if (list[indexes[idx]].hideIfStatValueIsZero && statusInstance2.Value == 0)
+                StatusInstance statusInstance2 = StatusDatabase.CreateStatusEntity(list[indexesClient[idx]].statusID, list[indexesClient[idx]].valuesByLevel.SafeRandomAccess(level));
+                if (list[indexesClient[idx]].hideIfStatValueIsZero && statusInstance2.Value == 0)
                 {
                     return null;
                 }
@@ -214,9 +235,10 @@ namespace SephiriaMod.Items
                         EItemRarity.Uncommon => 2,
                         EItemRarity.Rare => 3,
                         EItemRarity.Legend => 5,
-                        _ => 0,
+                        EItemRarity.Eternal => 10,
+                        _ => 1,
                     };
-                    Activate(newItemOwnInstance.Entity.categories, rarity + UnityEngine.Random.Range(0, 3));
+                    Activate(newItemOwnInstance.Charm.GetItemCategory().ToList(), rarity + UnityEngine.Random.Range(0, 3));
 
                     using (new GridInventory.Permission(Inventory))
                     {
@@ -273,6 +295,7 @@ namespace SephiriaMod.Items
         private void Activate(List<string> categories, int count)
         {
             indexes.Clear();
+            Events.CommandValue(NetworkAvatar, Item, -1);
             if (categories.Count > 0)
             {
                 category = categories.GetRandom();
@@ -284,16 +307,18 @@ namespace SephiriaMod.Items
             {
                 if (l.Count <= 0)
                     break;
-                if(categories.Count > q)
+                if(categories.Count > q && keys.ContainsKey(categories[q]))
                 {
                     var index = keys[categories[q]];
                     indexes.Add(index);
+                    Events.CommandValue(NetworkAvatar, Item, index);
                     //l.Remove(index);
                 }
                 else
                 {
                     var random = l.GetRandom();
                     indexes.Add(random);
+                    Events.CommandValue(NetworkAvatar, Item, random);
                     //l.Remove(random);
                 }
             }
@@ -319,12 +344,17 @@ namespace SephiriaMod.Items
             base.LoadItemOnServer(saveData);
             var count = saveData.GetInt($"CharmSaveData_InventoryPower_{Item.InstanceID}_Stack", 0);
             indexes.Clear();
-            for(int q = 0; q < count; q++)
+            Events.CommandValue(NetworkAvatar, Item, -1);
+            for (int q = 0; q < count; q++)
             {
                 indexes.Add(saveData.GetInt($"CharmSaveData_InventoryPower_{Item.InstanceID}_Stack" + q, -1));
                 if (indexes[^1] == -1)
                 {
                     indexes.RemoveAt(indexes.Count - 1);
+                }
+                else
+                {
+                    Events.CommandValue(NetworkAvatar, Item, indexes[^1]);
                 }
             }
             var cate = saveData.GetString($"CharmSaveData_InventoryPower_{Item.InstanceID}_Category", null);

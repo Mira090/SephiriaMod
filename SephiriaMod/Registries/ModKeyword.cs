@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using static Febucci.UI.TextAnimatorSettings;
 
 namespace SephiriaMod.Registries
 {
@@ -25,6 +24,7 @@ namespace SephiriaMod.Registries
         public LocalizedString Description { get; internal set; }
         public LocalizedString DetailedValue { get; internal set; } = new LocalizedString();
         public bool DisplayDetails { get; internal set; } = true;
+        public bool NeedParseValueOnVisualText { get; internal set; } = false;
         public string TextColorOriginal { get; internal set; } = null;
         public Color TextColor { get; internal set;  } = Color.white;
         public string KeywordImageOriginal { get; internal set; } = null;
@@ -65,7 +65,8 @@ namespace SephiriaMod.Registries
             entity.description = Description;
             entity.detailedValue = DetailedValue;
             entity.displayDetails = DisplayDetails;
-            if(!UseCopyTextColor)
+            entity.needParseValueOnVisualText = NeedParseValueOnVisualText;
+            if (!UseCopyTextColor)
                 entity.textColor = TextColor;
             if(!UseCopyKeywordImage && KeywordImage != null)
                 entity.keywordImage = KeywordImage();

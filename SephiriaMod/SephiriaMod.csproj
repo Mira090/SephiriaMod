@@ -488,6 +488,7 @@
 	<ItemGroup>
 		<Compile Include="Buffs\CharacterBuffMod.cs" />
 		<Compile Include="Buffs\CharacterBuffMod_StatusInstance.cs" />
+		<Compile Include="Items\Charm_AddInventory.cs" />
 		<Compile Include="Items\Charm_AddStarRuby.cs" />
 		<Compile Include="Items\Charm_AllIgnoreDefense.cs" />
 		<Compile Include="Items\Charm_AnotherExecution.cs" />

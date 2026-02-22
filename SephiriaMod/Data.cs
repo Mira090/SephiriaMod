@@ -786,6 +786,40 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm AutoMagicDarkCloud { get; } = ModCharmStatus.Create<Charm_AutoMagicDarkCloud>("Auto_Magic_Dark_Cloud", 5, CreateStatusGroup("COOLDOWN_RECOVERY_SPEED", 10, 20, 30, 40, 60, 80))
             .SetCategory(ItemCategories.Academy, ItemCategories.DarkCloud).SetIsDual().SetSimpleEffect().SetRarity(EItemRarity.Rare);
+        /// <summary>
+        /// Item_More_Shop_Name
+        /// 行商人の手形
+        /// Item_More_Shop_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm SavvyUncommon { get; } = ModCharmStatus.Create("More_Shop", 2, CreateStatusGroup("AdditionalShop".ToSephiriaId(), 0, 1, 2), CreateStatusGroup("AdditionalMoney".ToSephiriaId(), 500, 1000, 2000))
+            .SetCategory(ItemCategories.Savvy).SetSimpleEffects(0).SetRarity(EItemRarity.Uncommon).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_More_Replenishment_Name
+        /// 勇者優待券
+        /// Item_More_Replenishment_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm SavvyRare { get; } = ModCharmStatus.Create("More_Replenishment", 3, CreateStatusGroup("NEGOTIATION", 2, 5, 12, 20), CreateStatusGroup("ReplenishmentCharm".ToSephiriaId(), 0, 1, 1, 2), CreateStatusGroup("ReplenishmentTablet".ToSephiriaId(), 0, 0, 1, 1))
+            .SetCategory(ItemCategories.Savvy).SetSimpleEffects(0).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_More_Shop_Legendary_Name
+        /// 名だたる鑑定書
+        /// Item_More_Shop_Legendary_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm SavvyLegendary { get; } = ModCharmStatus.Create("More_Shop_Legendary", 5, CreateStatusGroup("AdditionalShopLegendary".ToSephiriaId(), 1), CreateStatusGroup("AdditionalShopInventory".ToSephiriaId(), 20, 30, 40, 60, 80, 100))
+            .SetCategory(ItemCategories.Savvy).SetSimpleEffects(0).SetRarity(EItemRarity.Legend).SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Add_Inventory_Name
+        /// バッグの拡張キット
+        /// Item_Add_Inventory_FlavorText
+        /// 希少な魔法の布を使用した高級品。
+        /// Item_Add_Inventory_Effect
+        /// このアーティファクトを消費して、バッグの枠を{COUNT}拡張します
+        /// </summary>
+        public static ModCharm AddInventory { get; } = ModCharm.Create<Charm_AddInventory>("Add_Inventory", 0, true).SetActiveType(EItemActiveType.Hidden)
+            .SetCategory().SetSimpleEffect().SetRarity(EItemRarity.Legend);
 
         /// <summary>
         /// Item_Sacrifice_Fire_Name
@@ -949,9 +983,9 @@ namespace SephiriaMod
         public static ModCustomStatus StargazeLevel { get; } = ModCustomStatus.CreateStatus("StargazeLevel");
         /// <summary>
         /// Status_InvLevel_Name
-        /// 光のレンズの最大レベル
+        /// カジノチップの最大レベル
         /// Status_InvLevel_Description
-        /// インベントリにある光のレンズの最大レベルが増加します
+        /// インベントリにあるカジノチップの最大レベルが増加します
         /// </summary>
         public static ModCustomStatus InvLevel { get; } = ModCustomStatus.CreateStatus("InvLevel");
         /// <summary>
@@ -961,6 +995,51 @@ namespace SephiriaMod
         /// 
         /// </summary>
         public static ModCustomStatus AddGrimoire { get; } = ModCustomStatus.CreateStatus("AddGrimoire");
+        /// <summary>
+        /// Status_AdditionalShop_Name
+        /// ステージを移動した時、そのステージにいる商人の品数が{VALUE}増加
+        /// Status_AdditionalShop_Description
+        /// 商人が持つアイテムの数が増加します。
+        /// </summary>
+        public static ModCustomStatus AdditionalShop { get; } = ModCustomStatus.CreateStatus("AdditionalShop").SetIncludePositiveNegativeSign()
+            .DoKeyword(keyword => keyword.SetNeedParseValueOnVisualText());
+        /// <summary>
+        /// Status_AdditionalShopLegendary_Name
+        /// ステージを移動した時、そのステージにいる商人に伝説アーティファクトを{VALUE}個追加
+        /// Status_AdditionalShopLegendary_Description
+        /// 商人が持つ伝説アーティファクトの数が増加します
+        /// </summary>
+        public static ModCustomStatus AdditionalShopLegendary { get; } = ModCustomStatus.CreateStatus("AdditionalShopLegendary").SetIncludePositiveNegativeSign()
+            .DoKeyword(keyword => keyword.SetNeedParseValueOnVisualText());
+        /// <summary>
+        /// Status_AdditionalShopInventory_Name
+        /// ステージを移動した時、そのステージにいる商人がバッグの枠拡張キットを売る確率
+        /// Status_AdditionalShopInventory_Description
+        /// 確率で商人がバッグの枠拡張キットを売ります
+        /// </summary>
+        public static ModCustomStatus AdditionalShopInventory { get; } = ModCustomStatus.CreateStatus("AdditionalShopInventory").SetSymbol("%");
+        /// <summary>
+        /// Status_AdditionalMoney_Name
+        /// ステージを移動した時、そのステージにいる<tag=MerchantLeaf>が{VALUE}増加
+        /// Status_AdditionalMoney_Description
+        /// 商人が持つ<tag=Leaf>が増加します。
+        /// </summary>
+        public static ModCustomStatus AdditionalMoney { get; } = ModCustomStatus.CreateStatus("AdditionalMoney").SetIncludePositiveNegativeSign()
+            .DoKeyword(keyword => keyword.SetNeedParseValueOnVisualText());
+        /// <summary>
+        /// Status_ReplenishmentCharm_Name
+        /// サファイアを使った時に商人が入荷するアーティファクトの数
+        /// Status_ReplenishmentCharm_Description
+        /// サファイアを使って商人に入荷させた時のアーティファクトの数が増加します
+        /// </summary>
+        public static ModCustomStatus ReplenishmentCharm { get; } = ModCustomStatus.CreateStatus("ReplenishmentCharm");
+        /// <summary>
+        /// Status_ReplenishmentTablet_Name
+        /// サファイアを使った時に商人が入荷する石版の数
+        /// Status_ReplenishmentTablet_Description
+        /// サファイアを使って商人に入荷させた時の石版の数が増加します
+        /// </summary>
+        public static ModCustomStatus ReplenishmentTablet { get; } = ModCustomStatus.CreateStatus("ReplenishmentTablet");
         /// <summary>
         /// Status_MagicExecution_Name
         /// 天罰
@@ -982,6 +1061,14 @@ namespace SephiriaMod
         /// <tag=WeaponAction_DirectAttack>が命中した時、確率で対象に付与されたデバフ1つにつき、<tag=MaxHP>の4%の追加ダメージを与えます
         /// </summary>
         public static ModKeyword Assasination { get; } = ModKeyword.CreateKeyword("Assasination").SetTextColor(new Color(0.9f, 0.1f, 0.1f)).SetKeywordImage(() => CustomSpriteAsset.Assasination);
+        /// <summary>
+        /// Status_MerchantLeaf_Name
+        /// 商人のリーフ
+        /// Status_MerchantLeaf_Description
+        /// 商人が持つ<tag=Leaf>です
+        /// </summary>
+        public static ModKeyword MerchantLeaf { get; } = ModKeyword.CreateKeyword("MerchantLeaf").SetDisplayDetails().SetKeywordImage(() => CustomSpriteAsset.MerchantLeaf);
+
 
         /// <summary>
         /// Miracle_FlameSword_Name

@@ -256,6 +256,16 @@ namespace SephiriaMod.Registries
             item.DisplayValue = displayValue;
             return item;
         }
+        public static T DoKeyword<T>(this T item, Action<ModKeyword> action) where T : ModCustomStatus
+        {
+            action?.Invoke(item.Keyword);
+            return item;
+        }
+        public static T SetNeedParseValueOnVisualText<T>(this T item, bool needParseValueOnVisualText = true) where T : ModKeyword
+        {
+            item.NeedParseValueOnVisualText = needParseValueOnVisualText;
+            return item;
+        }
         public static T SetDisplayDetails<T>(this T item, bool displayDetails = false) where T : ModKeyword
         {
             item.DisplayDetails = displayDetails;

@@ -64,7 +64,7 @@ namespace SephiriaMod.Utilities
             return property.ToFileName().ToUpperInvariant();
         }
         /// <summary>
-        /// 「ToFileName」を「To_File_Name」に変換する
+        /// 「ToFileName」を「TO_FILE_NAME」に変換する
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
@@ -85,7 +85,7 @@ namespace SephiriaMod.Utilities
                     sb.Append(chara);
                 }
             }
-            return sb.ToString();
+            return sb.ToString().ToUpperInvariant();
         }
         /// <summary>
         /// 「To_File_Name」を「TOFILENAME」に変換する

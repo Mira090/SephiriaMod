@@ -19,6 +19,7 @@ namespace SephiriaMod.Registries
         public static Sprite FireExecution;
         public static Sprite LightningExecution;
         public static Sprite Assasination;
+        public static Sprite MerchantLeaf;
 
         public static int width = 10;
         public static int height = 10;
@@ -43,6 +44,7 @@ namespace SephiriaMod.Registries
             FireExecution = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "FireExecution", new Rect(0, height * 3, width, height));
             LightningExecution = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "LightningExecution", new Rect(0, height * 4, width, height));
             Assasination = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Assasination", new Rect(0, height * 5, width, height));
+            MerchantLeaf = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "MerchantLeaf", new Rect(0, height * 6, width, height));
 
         }
         public static void InitSpriteAsset()
@@ -69,6 +71,7 @@ namespace SephiriaMod.Registries
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 3, name = "FireExecution", sprite = FireExecution });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 4, name = "LightningExecution", sprite = LightningExecution });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 5, name = "Assasination", sprite = Assasination });
+            SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 6, name = "MerchantLeaf", sprite = MerchantLeaf });
             foreach (var sprite in SpriteAsset.spriteInfoList)
             {
                 sprite.id = id++;

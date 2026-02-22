@@ -45,9 +45,9 @@ namespace SephiriaMod.Items
             var item1 = inventory.FindItem(pos1);
             var item2 = inventory.FindItem(pos2);
 
-            if (item1 != null && (bool)item1.Charm && item1.Charm.IsEffectEnabled && item1.Entity.categories.Count > 0)
+            if (item1 != null && (bool)item1.Charm && item1.Charm.IsEffectEnabled && item1.Charm.GetItemCategory().Count() > 0 && item1.Entity != null && item1.Entity.rarity != ECustomItemRarity.Sacrifice.ToSephiria())
             {
-                if (item2 != null && (bool)item2.Charm && item2.Charm.IsEffectEnabled && item1.Entity.categories.Count > 0)
+                if (item2 != null && (bool)item2.Charm && item2.Charm.IsEffectEnabled && item2.Charm.GetItemCategory().Count() > 0 && item2.Entity != null && item2.Entity.rarity != ECustomItemRarity.Sacrifice.ToSephiria())
                 {
                     return true;
                 }
@@ -63,17 +63,17 @@ namespace SephiriaMod.Items
             int instanceID = Item.InstanceID;
             var item1 = inventory.FindItem(pos1);
             var item2 = inventory.FindItem(pos2);
-            if (item1 != null && (bool)item1.Charm && item1.Charm.IsEffectEnabled)
+            if (item1 != null && (bool)item1.Charm && item1.Charm.IsEffectEnabled && item1.Entity != null && item1.Entity.rarity != ECustomItemRarity.Sacrifice.ToSephiria())
             {
-                if (item2 != null && (bool)item2.Charm && item2.Charm.IsEffectEnabled)
+                if (item2 != null && (bool)item2.Charm && item2.Charm.IsEffectEnabled && item2.Entity != null && item2.Entity.rarity != ECustomItemRarity.Sacrifice.ToSephiria())
                 {
                     var categories = new List<string>();
-                    categories.AddRange(item1.Entity.categories);
-                    categories.AddRange(item2.Entity.categories);
+                    categories.AddRange(item1.Charm.GetItemCategory());
+                    categories.AddRange(item2.Charm.GetItemCategory());
                     var list = new List<ItemEntity>();
                     foreach(var item in ReflectionExtensions.GetItemDictionary().Values)
                     {
-                        if (item.isDual && item.categories.All(c => categories.Contains(c)))
+                        if (item.isDual && item.categories.All(c => categories.Contains(c)) && item.rarity != EItemRarity.Eternal)
                         {
                             list.Add(item);
                         }
@@ -97,6 +97,8 @@ namespace SephiriaMod.Items
         {
             base.OnCharmEffectRefreshed();
             Inventory.UpdatePing(Item.Position);
+            if (!quest)
+                quest = CurrentLevelToIdx() >= requireLevel && CanCreateBond();
         }
 
         public override CharmConnectionData[] GetConnectedCharmPositions()
