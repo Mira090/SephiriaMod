@@ -60,6 +60,7 @@ namespace SephiriaMod.Items
             status[ItemCategories.Elemental] = CreateStatusGroup("HIGHEST_ELEMENTAL_DAMAGE", 2);
             status[ItemCategories.Alchemy] = CreateStatusGroup("POTION_SLOT", 1);
             status[ItemCategories.Weapon] = CreateStatusGroup("FINAL_WEAPONDAMAGE", 2);
+            status[ItemCategories.Grimoire] = CreateStatusGroup("MAGIC_DAMAGE_BONUS", 4);
 
             foreach (var pair in status)
             {
