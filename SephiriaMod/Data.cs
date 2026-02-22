@@ -792,7 +792,7 @@ namespace SephiriaMod
         /// Item_More_Shop_FlavorText
         /// フレーバーテキスト募集中
         /// </summary>
-        public static ModCharm SavvyUncommon { get; } = ModCharmStatus.Create("More_Shop", 2, CreateStatusGroup("AdditionalShop".ToSephiriaId(), 0, 1, 2), CreateStatusGroup("AdditionalMoney".ToSephiriaId(), 500, 1000, 2000))
+        public static ModCharm SavvyUncommon { get; } = ModCharmStatus.Create("More_Shop", 2, CreateStatusGroup("AdditionalShop".ToSephiriaId(), 1, 1, 2), CreateStatusGroup("AdditionalMoney".ToSephiriaId(), 500, 1000, 2000))
             .SetCategory(ItemCategories.Savvy).SetSimpleEffects(0).SetRarity(EItemRarity.Uncommon).SetIsUniqueEffect();
         /// <summary>
         /// Item_More_Replenishment_Name
