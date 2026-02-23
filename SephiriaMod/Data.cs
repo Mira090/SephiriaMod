@@ -1565,7 +1565,8 @@ namespace SephiriaMod
             {
                 if(moditem is IModDamageId charm && charm.HasDamageId)
                 {
-                    Melon<Core>.Logger.Msg("New DamageId: " + charm.DamageIdEntity.name);
+                    if (Core.LogFew)
+                        Melon<Core>.Logger.Msg("New DamageId: " + charm.DamageIdEntity.name);
                     list.Add(charm.DamageIdEntity);
                 }
             }
@@ -1573,7 +1574,8 @@ namespace SephiriaMod
             {
                 if (moditem is IModDamageId charm && charm.HasDamageId)
                 {
-                    Melon<Core>.Logger.Msg("New DamageId: " + charm.DamageIdEntity.name);
+                    if (Core.LogFew)
+                        Melon<Core>.Logger.Msg("New DamageId: " + charm.DamageIdEntity.name);
                     list.Add(charm.DamageIdEntity);
                 }
             }
