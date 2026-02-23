@@ -229,7 +229,8 @@ namespace SephiriaMod
             {
                 if (name == "Mod" && message.StartsWith("/"))
                 {
-                    //Melon<Core>.Logger.Msg($"Mod Chat({avatar.Name}): {message}");
+                    if (Core.LogMany)
+                        Melon<Core>.Logger.Msg($"Mod Chat({avatar.Name}): {message}");
                     if (message.StartsWith("/sound"))
                     {
                         PlaySound(avatar, message);

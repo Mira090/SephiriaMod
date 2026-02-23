@@ -88,7 +88,8 @@ namespace SephiriaMod.Items
         }
         private void OnDashConsumed()
         {
-            Melon<Core>.Logger.Msg("OnDashConsumed");
+            if (Core.LogMedium)
+                Melon<Core>.Logger.Msg("OnDashConsumed");
             NetworkAvatar.OnDashServerside(ModUtil.NoDashMotionTo, true);
             return;
             if (WeaponController.currentWeapon.gameObject.TryGetComponent<WeaponAddonKatana_SummonGhost>(out var ghost))

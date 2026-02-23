@@ -11,7 +11,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.9.1", "Mira", null)]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.9.1", "Mira", "https://github.com/Mira090/SephiriaMod")]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod
@@ -53,6 +53,27 @@ namespace SephiriaMod
         }
         public static Dictionary<int, string> ItemIdDic = new Dictionary<int, string>();
         public static Dictionary<string, StatusEntity> StatusIdDic = new Dictionary<string, StatusEntity>();
+
+        public List<List<string>> ModOptions => [["No Log", "Few", "Medium", "Many"]];
+        public List<string> ModOptionsDescription => ["Log Mode"];
+        public List<int> ModOptionsDefault => [1];
+
+        public static int LogMode = 1;
+        public static bool LogFew => LogMode >= 1;
+        public static bool LogMedium => LogMode >= 2;
+        public static bool LogMany => LogMode >= 3;
+        public void OnModOptionChanged(int index, int value)
+        {
+            if (index == 0)
+                LogMode = value;
+            Melon<Core>.Logger.Msg("Changed: " + ModOptions[index][value]);
+        }
+        public void OnModOptionLoaded(int index, int value)
+        {
+            if (index == 0)
+                LogMode = value;
+            Melon<Core>.Logger.Msg("Loaded: " + ModOptions[index][value]);
+        }
         /// <summary>
         /// Melonが登録された後に呼び出されます。このコールバックはMelonLoaderが完全に初期化されるまで待機します。このコールバック以降は、ゲーム/Unity の参照を安全に行うことができます。 
         /// </summary>
@@ -509,7 +530,8 @@ namespace SephiriaMod
         {
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                Melon<Core>.Logger.Msg($"InstantiateStoneTabletPatch Transpiler");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg($"InstantiateStoneTabletPatch Transpiler");
                 var target = AccessTools.Method(
                     typeof(UnityEngine.Object),
                     nameof(UnityEngine.Object.Instantiate),
@@ -570,7 +592,8 @@ namespace SephiriaMod
         {
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                Melon<Core>.Logger.Msg($"InstantiateItemCategoryPatch Transpiler");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg($"InstantiateItemCategoryPatch Transpiler");
                 var target = AccessTools.Method(
                     typeof(UnityEngine.Object),
                     nameof(UnityEngine.Object.Instantiate),
@@ -602,7 +625,8 @@ namespace SephiriaMod
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.name == modItem.ResourcePrefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for Combo: {original.name}");
+                        if (Core.LogMedium)
+                            Melon<Core>.Logger.Msg($"Bypassing Instantiate for Combo: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.AddComponent<NetworkIdentity>();
@@ -628,7 +652,8 @@ namespace SephiriaMod
         {
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                Melon<Core>.Logger.Msg($"InstantiateMiraclePatch Transpiler");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg($"InstantiateMiraclePatch Transpiler");
                 var target = AccessTools.Method(
                     typeof(UnityEngine.Object),
                     nameof(UnityEngine.Object.Instantiate),
@@ -660,7 +685,8 @@ namespace SephiriaMod
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.gameObject.name == modItem.Prefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for Miracle: {original.name}");
+                        if (Core.LogMedium)
+                            Melon<Core>.Logger.Msg($"Bypassing Instantiate for Miracle: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.gameObject.AddComponent<NetworkIdentity>();
@@ -679,7 +705,8 @@ namespace SephiriaMod
         {
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                Melon<Core>.Logger.Msg($"InstantiateWeaponPatch Transpiler");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg($"InstantiateWeaponPatch Transpiler");
                 var target = AccessTools.Method(
                     typeof(UnityEngine.Object),
                     nameof(UnityEngine.Object.Instantiate),
@@ -711,7 +738,8 @@ namespace SephiriaMod
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.name == modItem.MainWeaponPrefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for Weapon: {original.name}");
+                        if (Core.LogMedium)
+                            Melon<Core>.Logger.Msg($"Bypassing Instantiate for Weapon: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.gameObject.AddComponent<NetworkIdentity>();
@@ -730,7 +758,8 @@ namespace SephiriaMod
         {
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                Melon<Core>.Logger.Msg($"InstantiatePassivePatch Transpiler");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg($"InstantiatePassivePatch Transpiler");
                 var target = AccessTools.Method(
                     typeof(UnityEngine.Object),
                     nameof(UnityEngine.Object.Instantiate),
@@ -762,7 +791,8 @@ namespace SephiriaMod
                     //Melon<Core>.Logger.Msg($"A: {modItem.ResourcePrefab.name}");
                     if (original.name == modItem.Lv5Perk.PerkPrefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
+                        if (Core.LogMedium)
+                            Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.gameObject.AddComponent<NetworkIdentity>();
@@ -776,7 +806,8 @@ namespace SephiriaMod
                     }
                     else if (original.name == modItem.Lv10Perk.PerkPrefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
+                        if (Core.LogMedium)
+                            Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.gameObject.AddComponent<NetworkIdentity>();
@@ -790,7 +821,8 @@ namespace SephiriaMod
                     }
                     else if (original.name == modItem.Lv20Perk.PerkPrefab.name)
                     {
-                        Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
+                        if (Core.LogMedium)
+                            Melon<Core>.Logger.Msg($"Bypassing Instantiate for lv5: {original.name}");
 
                         var ob = UnityEngine.Object.Instantiate(original);
                         var identity = ob.gameObject.AddComponent<NetworkIdentity>();
@@ -815,7 +847,8 @@ namespace SephiriaMod
             public static event Func<GameObject, Vector3, Quaternion, GameObject> OnInstantiate;
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                Melon<Core>.Logger.Msg($"InstantiateNetworkClientPatch Transpiler");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg($"InstantiateNetworkClientPatch Transpiler");
                 var target = AccessTools.Method(
                     typeof(UnityEngine.Object),
                     nameof(UnityEngine.Object.Instantiate),
@@ -830,13 +863,15 @@ namespace SephiriaMod
                     if (code.opcode == OpCodes.Call && code.operand is MethodInfo mi && mi.Name == nameof(UnityEngine.Object.Instantiate))
                     {
                         // Instantiate(GameObject) 呼び出しを CustomInstantiate に差し替える
-                        Melon<Core>.Logger.Msg($"Transpiler SpawnPrefab Instantiate");
+                        if (Core.LogFew)
+                            Melon<Core>.Logger.Msg($"Transpiler SpawnPrefab Instantiate");
                         code.operand = replacement;
                     }
                     if (code.opcode == OpCodes.Call && code.operand is MethodInfo mi2 && mi2.Name == nameof(NetworkClient.GetPrefab))
                     {
                         // Instantiate(GameObject) 呼び出しを CustomInstantiate に差し替える
-                        Melon<Core>.Logger.Msg($"Transpiler SpawnPrefab GetPrefab");
+                        if (Core.LogFew)
+                            Melon<Core>.Logger.Msg($"Transpiler SpawnPrefab GetPrefab");
                         code.operand = replacement2;
                     }
                     yield return code;
@@ -1059,7 +1094,8 @@ namespace SephiriaMod
             {
                 if (__instance == null || __instance != ModUtil.GetGameDataLoader())
                     return;
-                Melon<Core>.Logger.Msg("Mod GameData Loading...");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("Mod GameData Loading...");
                 //CustomCostumeDatabase.LoadAllStartingItems(CostumeDatabase.GetAll());
             }
         }
@@ -1070,7 +1106,8 @@ namespace SephiriaMod
             {
                 if (__instance == null || __instance != ModUtil.GetGameDataLoader())
                     return;
-                Melon<Core>.Logger.Msg("Mod GameData Destroying...");
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("Mod GameData Destroying...");
             }
         }
         //[HarmonyPatch(typeof(PlayerAvatar), "UpdateCostumeOutfit", [typeof(string)])]

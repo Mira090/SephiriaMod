@@ -1459,7 +1459,8 @@ namespace SephiriaMod
             uint assetId = GetFirstAssetId();
             foreach (var pro in pros)
             {
-                Melon<Core>.Logger.Msg("New Item: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Item: " + pro.Name);
                 var moditem = pro.GetValue(type) as ModItem;
                 moditem.Init(id++, assetId++);
                 All.Add(moditem);
@@ -1477,7 +1478,8 @@ namespace SephiriaMod
             var pros2 = type.GetProperties(BindingFlags.Static | BindingFlags.Public).Where(p => p.PropertyType == typeof(ModComboEffect) || p.PropertyType.IsSubclassOf(typeof(ModComboEffect)));
             foreach (var pro in pros2)
             {
-                Melon<Core>.Logger.Msg("New Category: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Category: " + pro.Name);
                 var moditem = pro.GetValue(type) as ModComboEffect;
                 moditem.Init(assetId++);
                 Combos.Add(moditem);
@@ -1487,7 +1489,8 @@ namespace SephiriaMod
             foreach (var pro in pros3)
             {
                 var moditem = pro.GetValue(type) as ModEffectHUD;
-                Melon<Core>.Logger.Msg("New EffectHUD: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New EffectHUD: " + pro.Name);
                 EffectHUDs.Add(moditem);
             }
 
@@ -1495,7 +1498,8 @@ namespace SephiriaMod
             foreach (var pro in pros4)
             {
                 var moditem = pro.GetValue(type) as ModMiracle;
-                Melon<Core>.Logger.Msg("New Miracle: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Miracle: " + pro.Name);
                 moditem.Init(assetId++);
                 Miracles.Add(moditem);
             }
@@ -1503,7 +1507,8 @@ namespace SephiriaMod
             foreach (var pro in pros5)
             {
                 var moditem = pro.GetValue(type) as ModCustomStatus;
-                Melon<Core>.Logger.Msg("New Status: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Status: " + pro.Name);
                 moditem.Init();
                 Statuses.Add(moditem);
             }
@@ -1512,7 +1517,8 @@ namespace SephiriaMod
             foreach (var pro in pros6)
             {
                 var moditem = pro.GetValue(type) as ModWeapon;
-                Melon<Core>.Logger.Msg("New Weapon: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Weapon: " + pro.Name);
                 moditem.Init(id++, assetId++);
                 Weapons.Add(moditem);
             }
@@ -1520,7 +1526,8 @@ namespace SephiriaMod
             foreach (var pro in pros7)
             {
                 var moditem = pro.GetValue(type) as CharacterBuffMod;
-                Melon<Core>.Logger.Msg("New Buff: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Buff: " + pro.Name);
                 moditem.AssetId = assetId++;
                 Buffs.Add(moditem);
             }
@@ -1528,7 +1535,8 @@ namespace SephiriaMod
             foreach (var pro in pros8)
             {
                 var moditem = pro.GetValue(type) as ModKeyword;
-                Melon<Core>.Logger.Msg("New Keyword: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Keyword: " + pro.Name);
                 moditem.Init();
                 Keywords.Add(moditem);
             }
@@ -1537,7 +1545,8 @@ namespace SephiriaMod
             foreach (var pro in pros9)
             {
                 var moditem = pro.GetValue(type) as ModPassive;
-                Melon<Core>.Logger.Msg("New Passive: " + pro.Name);
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Passive: " + pro.Name);
                 moditem.Init(passiveId++, assetId++, assetId++, assetId++);
                 Passives.Add(moditem);
             }

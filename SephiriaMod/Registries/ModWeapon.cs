@@ -66,7 +66,8 @@ namespace SephiriaMod.Registries
         }
         public void InitPrefab(WeaponEntity copy)
         {
-            Melon<Core>.Logger.Msg("CreateWeaponEntity from " + copy.name);
+            if (Core.LogMedium)
+                Melon<Core>.Logger.Msg("CreateWeaponEntity from " + copy.name);
             WeaponWieldEntity = copy.wieldEntity;
             var main = UnityEngine.Object.Instantiate(copy.mainWeaponPrefab);
             main.name = "Weapon_" + Name;

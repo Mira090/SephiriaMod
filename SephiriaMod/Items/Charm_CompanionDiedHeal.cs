@@ -48,7 +48,8 @@ namespace SephiriaMod.Items
         {
             if (instance.NetworkAvatar == NetworkAvatar)
             {
-                Melon<Core>.Logger.Msg("Heal: " + healByLevel.SafeRandomAccess(CurrentLevelToIdx()));
+                if (Core.LogMedium)
+                    Melon<Core>.Logger.Msg("Heal: " + healByLevel.SafeRandomAccess(CurrentLevelToIdx()));
                 NetworkAvatar.Heal(healByLevel.SafeRandomAccess(CurrentLevelToIdx()), true);
             }
         }
