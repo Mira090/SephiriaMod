@@ -24,6 +24,8 @@ namespace SephiriaMod.Items
 
         private void OnAttackUnitBeforeOperation(UnitAvatar avatar, DamageInstance damage)
         {
+            if (damage.id == "Charm_MinHPKill")//白い卵の殻は除外
+                return;
             if(damage.fromType == EDamageFromType.DirectAttack && damage.damage >= separate.SafeRandomAccess(CurrentLevelToIdx()))
             {
                 damage.damage -= damage.damage / 2f;
