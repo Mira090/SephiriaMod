@@ -16,6 +16,7 @@ namespace SephiriaMod.Utilities
     public static class ModUtil
     {
         public static List<string> PlanetDamageIds = ["Charm_Planet_Black", "Charm_Planet_Yellow", "Charm_Planet_White", "Charm_Planet_Red", "Charm_Planet_Blue", "Charm_Planet_Sky", "Charm_Planet_Gray"];
+        [Obsolete]
         public static readonly Vector2 NoDashMotionTo = Vector2.negativeInfinity;
 
         public static readonly string ItemPath = "Item\\";

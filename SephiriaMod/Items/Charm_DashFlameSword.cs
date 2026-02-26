@@ -24,8 +24,6 @@ namespace SephiriaMod.Items
             if(combo == null || !combo.isEnabled || combo is not ComboEffect_FlameSword flame)
                 return;
 
-            if (motionTo == ModUtil.NoDashMotionTo)
-                return;
 
             flame.InvokeLocalFireSword((Vector2)NetworkAvatar.transform.position + motionTo / 2f, false, false);
         }
