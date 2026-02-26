@@ -34,6 +34,7 @@ namespace SephiriaMod.Items
                 EventAvatar = NetworkAvatar;
                 EventAvatar.OnDamagedClientside += OnDamageApplied;
             }
+            Events.OnValueRecieved += OnValueRecieved;
         }
         private void OnDestroy()
         {
@@ -41,6 +42,7 @@ namespace SephiriaMod.Items
             {
                 EventAvatar.OnDamagedClientside -= OnDamageApplied;
             }
+            Events.OnValueRecieved -= OnValueRecieved;
         }
         protected override void OnUpdate()
         {
@@ -54,7 +56,6 @@ namespace SephiriaMod.Items
         {
             base.OnEnabledEffect();
             cooldownTimer.time = time.SafeRandomAccess(CurrentLevelToIdx());
-            Events.OnValueRecieved += OnValueRecieved;
         }
 
         private void OnValueRecieved(string command, uint netId, int value)
@@ -90,7 +91,7 @@ namespace SephiriaMod.Items
         {
             if (Core.LogMedium)
                 Melon<Core>.Logger.Msg("OnDashConsumed");
-            NetworkAvatar.OnDashServerside(ModUtil.NoDashMotionTo, true);
+            NetworkAvatar.OnDashServerside(NetworkAvatar.transform.position, true);
             return;
             if (WeaponController.currentWeapon.gameObject.TryGetComponent<WeaponAddonKatana_SummonGhost>(out var ghost))
             {
