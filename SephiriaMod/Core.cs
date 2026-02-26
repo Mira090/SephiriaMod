@@ -11,7 +11,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.9.2", "Mira", "https://github.com/Mira090/SephiriaMod")]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.9.3", "Mira", "https://github.com/Mira090/SephiriaMod")]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod
