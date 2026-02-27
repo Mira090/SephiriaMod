@@ -51,6 +51,8 @@ namespace SephiriaMod.Registries
         public Action<WeaponSimple> MainPrefabModifier { get; internal set; }
         public bool HasBladeSprite { get; internal set; }
         public Vector3? BladeSpritePosition { get; internal set; }
+        public bool HasBladeUnlitSprite { get; internal set; }
+        public Vector3? BladeUnlitSpritePosition { get; internal set; }
         public bool HasHeadSprite { get; internal set; }
         public Vector3? HeadSpritePosition { get; internal set; }
 
@@ -85,6 +87,16 @@ namespace SephiriaMod.Registries
                         simple.mainWeaponBody.bladeAddOnRenderer.sprite = SpriteLoader.LoadSprite(BladeSpriteFileName);
                         if (BladeSpritePosition.HasValue)
                             simple.mainWeaponBody.bladeAddOnRenderer.transform.localPosition = BladeSpritePosition.Value;
+                    }
+                    if (HasBladeUnlitSprite)
+                    {
+                        var unlit = simple.mainWeaponBody.transform.Find("BladeUnlit");
+                        if (unlit != null && unlit.gameObject.TryGetComponent<SpriteRenderer>(out var unlitSprite))
+                        {
+                            unlitSprite.sprite = SpriteLoader.LoadSprite(BladeSpriteFileName);
+                            if (BladeUnlitSpritePosition.HasValue)
+                                unlit.localPosition = BladeUnlitSpritePosition.Value;
+                        }
                     }
                     if (HasHeadSprite)
                     {

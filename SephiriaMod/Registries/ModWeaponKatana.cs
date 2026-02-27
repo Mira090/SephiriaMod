@@ -70,6 +70,16 @@ namespace SephiriaMod.Registries
                         if (BladeSpritePosition.HasValue)
                             simple.mainWeaponBody.bladeAddOnRenderer.transform.localPosition = BladeSpritePosition.Value;
                     }
+                    if (HasBladeUnlitSprite)
+                    {
+                        var unlit = simple.mainWeaponBody.transform.Find("BladeUnlit");
+                        if (unlit != null && unlit.gameObject.TryGetComponent<SpriteRenderer>(out var unlitSprite))
+                        {
+                            unlitSprite.sprite = SpriteLoader.LoadSprite(BladeSpriteFileName);
+                            if (BladeUnlitSpritePosition.HasValue)
+                                unlit.localPosition = BladeUnlitSpritePosition.Value;
+                        }
+                    }
                     if (HasHeadSprite)
                     {
                         var head = simple.mainWeaponBody.weaponSpriteRenderer.transform.Find("Head");

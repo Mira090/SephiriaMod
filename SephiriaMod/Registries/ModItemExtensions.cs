@@ -325,6 +325,12 @@ namespace SephiriaMod.Registries
             item.BladeSpritePosition = pos;
             return item;
         }
+        public static T SetBladeUnlitSprite<T>(this T item, Vector3? pos = null) where T : ModWeapon
+        {
+            item.HasBladeUnlitSprite = true;
+            item.BladeUnlitSpritePosition = pos;
+            return item;
+        }
         public static T SetHeadSprite<T>(this T item, Vector3? pos = null) where T : ModWeapon
         {
             item.HasHeadSprite = true;
