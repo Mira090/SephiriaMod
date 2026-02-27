@@ -1,12 +1,12 @@
 ﻿using Harmony;
 using HeathenEngineering.SteamworksIntegration.API;
+using MelonLoader;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using static Charm_StatusInstance;
-using static Febucci.UI.TextAnimatorSettings;
 using static MelonLoader.MelonLogger;
 
 namespace SephiriaMod.Items
@@ -74,10 +74,17 @@ namespace SephiriaMod.Items
                     pair.Value.valuesByLevel = Enumerable.Range(1, ValiableMax + 1).Select(x => x * value).ToArray();
             }
         }
+        private bool start = false;
         private void Start()
         {
-            assignedCategory.Clear();
+            if (start)
+                return;
+            if (isOwned)
+            {
+                assignedCategory.Clear();
+            }
             Events.OnValueRecieved += OnValueRecieved;
+            start = true;
         }
         private void OnValueRecieved(string command, uint netId, int value)
         {
@@ -87,10 +94,14 @@ namespace SephiriaMod.Items
                 if(value == -1)
                 {
                     indexesClient.Clear();
+                    if (Core.LogMany)
+                        Melon<Core>.Logger.Msg("OnValueRecieved: Clear");
                 }
                 else
                 {
                     indexesClient.Add(value);
+                    if (Core.LogMany)
+                        Melon<Core>.Logger.Msg("OnValueRecieved: Add " + list[value].statusID);
                 }
             }
         }
@@ -342,6 +353,9 @@ namespace SephiriaMod.Items
         public override void LoadItemOnServer(ISaveData saveData)
         {
             base.LoadItemOnServer(saveData);
+            if (!start)
+                Start();
+
             var count = saveData.GetInt($"CharmSaveData_InventoryPower_{Item.InstanceID}_Stack", 0);
             indexes.Clear();
             Events.CommandValue(NetworkAvatar, Item, -1);
