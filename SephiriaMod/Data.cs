@@ -1383,6 +1383,26 @@ namespace SephiriaMod
                 main.addons = [status, @unsafe];
             }
         });
+        /// <summary>
+        /// Weapon_GreatSword_Fire_T3_FlameSwordRange_Name
+        /// ソリス・レアノ
+        /// WeaponAddon_GreatSword_Fire_T3_FlameSwordRange_Effect
+        /// <tag=WeaponAction_Sweep>をした時、すべての<tag=FlameSword>を失う代わりに、12個の<tag=FlameSword>を生成して周囲に投げます。
+        /*
+        public static ModWeapon GreatSwordFlameSwordRange { get; } = ModWeapon.CreateWeapon("GreatSword_Fire_T3_FlameSwordRange", 1124, 1122).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_AdditionalElementalDamage>(out var additional))
+            {
+
+                var @unsafe = main.gameObject.AddComponent<WeaponAddonCommon_SpecialFlameSword>();
+                
+                //@unsafe.status = [CreateWeaponStat("FLAME_SWORD_MAX", -4)];
+                @unsafe.effectText = new LocalizedString("WeaponAddon_GreatSword_Fire_T3_FlameSwordRange_Effect");
+                @unsafe.parent = additional.parent;
+
+                main.addons = [additional, @unsafe];
+            }
+        }).SetBladeSprite().SetBladeUnlitSprite();*/
 
         /// <summary>
         /// Passive_Grimoire_Name

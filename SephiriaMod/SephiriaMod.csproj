@@ -599,6 +599,7 @@
 		<Compile Include="Weapons\WeaponAddonCommon_CriticalFire.cs" />
 		<Compile Include="Weapons\WeaponAddonCommon_DirectFirePlanet.cs" />
 		<Compile Include="Weapons\WeaponAddonCommon_PlanetWeaponDamage.cs" />
+		<Compile Include="Weapons\WeaponAddonCommon_SpecialFlameSword.cs" />
 		<Compile Include="Weapons\WeaponAddonDagger_CounterEvasion.cs" />
 		<Compile Include="Weapons\WeaponAddonDagger_FireFury.cs" />
 		<Compile Include="Weapons\WeaponAddonDagger_FuryMP.cs" />
