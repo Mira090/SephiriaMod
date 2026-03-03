@@ -31,6 +31,7 @@ namespace SephiriaMod.Registries
         public UI_EffectHUD_Basic.EEffectType EffectType { get; internal set; }
         public LocalizedString LocalizedName { get; internal set; }
         public LocalizedString FlavorText {  get; internal set; }
+        public bool HasStackText { get; internal set; } = true;
         public GameObject ResourcePrefab { get; internal set; }
         public void SetResourcePrefab(GameObject prefab)
         {
@@ -39,6 +40,10 @@ namespace SephiriaMod.Registries
             basic.effectName = LocalizedName;
             basic.effectFlavorText = FlavorText;
             basic.effectType = EffectType;
+            if(basic is UI_EffectHUD_Stack stack)
+            {
+                stack.stackText.gameObject.SetActive(HasStackText);
+            }
             var rect = prefab.transform as RectTransform;
             var icon = rect.GetChild(1).GetComponent<Image>();//Icon
             icon.sprite = (Icon ?? SpriteLoader.LoadSprite(IconFileName)) ?? SpriteLoader.LoadSprite(ModUtil.EffectHUDPath + "Empty");

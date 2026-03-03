@@ -261,6 +261,11 @@ namespace SephiriaMod.Registries
             action?.Invoke(item.Keyword);
             return item;
         }
+        public static T SetHasStackText<T>(this T item, bool hasStackText = false) where T : ModEffectHUD
+        {
+            item.HasStackText = hasStackText;
+            return item;
+        }
         public static T SetNeedParseValueOnVisualText<T>(this T item, bool needParseValueOnVisualText = true) where T : ModKeyword
         {
             item.NeedParseValueOnVisualText = needParseValueOnVisualText;
