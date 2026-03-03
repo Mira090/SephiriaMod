@@ -20,7 +20,7 @@ namespace SephiriaMod.Weapons
         {
             if (parent is not WeaponSimple_Dagger dagger)
                 return;
-            if (dagger.currentFury >= dagger.maxFury)
+            if (dagger.currentFury >= dagger.maxFury + parent.Networkowner.unitAvatar.GetCustomStatUnsafe("DAGGERTRANCEBONUS"))
                 return;
             if (damage.IsSameElementalType(EDamageElementalType.Fire))
             {
