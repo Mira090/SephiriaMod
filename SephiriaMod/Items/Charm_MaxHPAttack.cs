@@ -37,6 +37,8 @@ namespace SephiriaMod.Items
 
         private void OnAttackUnit(UnitAvatar unitAvatar, DamageInstance damageInstance)
         {
+            if (damageInstance.id == "Charm_MinHPKill")//白い卵の殻は除外
+                return;
             if (!NetworkAvatar.IsDead && IsEffectEnabled && damageInstance.id != damageId)
             {
                 float customStatUnsafe = NetworkAvatar.MaxHp * (damageByLevel.SafeRandomAccess(CurrentLevelToIdx()) * 0.01f);
@@ -49,6 +51,5 @@ namespace SephiriaMod.Items
                 }
             }
         }
-
     }
 }
