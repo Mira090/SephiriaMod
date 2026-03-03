@@ -119,6 +119,11 @@ namespace SephiriaMod.Registries
             item.DamageId = ModDamageId.CreateAbility(item.Name);
             return item;
         }
+        public static T SetDamageIdAbility<T>(this T item, string id) where T : ModCharm
+        {
+            item.DamageId = ModDamageId.CreateAbility(id);
+            return item;
+        }
         public static T SetStats<T>(this T item, params Charm_StatusInstance.StatusGroup[] stats) where T : ModCharmStatus
         {
             item.Stats = stats;
