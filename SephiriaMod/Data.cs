@@ -973,6 +973,13 @@ namespace SephiriaMod
         /// <tag=Electric>が付与されていない敵に<tag=LightningDamage>を与えた時の気絶確率
         /// </summary>
         public static ModEffectHUD EffectElectricStun { get; } = ModEffectHUD.CreateStackEffectHUD("Electric_Stun", UI_EffectHUD_Basic.EEffectType.Boon);
+        /// <summary>
+        /// EffectHUD_Immersion_Ice_Name
+        /// 冷静
+        /// EffectHUD_Immersion_Ice_FlavorText
+        /// <tag=FrostRelic>が1回追加発動します。
+        /// </summary>
+        public static ModEffectHUD EffectIceTrance { get; } = ModEffectHUD.CreateStackEffectHUD("Immersion_Ice", UI_EffectHUD_Basic.EEffectType.Boon).SetHasStackText();
 
         /// <summary>
         /// Status_StargazeLevel_Name
@@ -1068,6 +1075,13 @@ namespace SephiriaMod
         /// 商人が持つ<tag=Leaf>です
         /// </summary>
         public static ModKeyword MerchantLeaf { get; } = ModKeyword.CreateKeyword("MerchantLeaf").SetDisplayDetails().SetKeywordImage(() => CustomSpriteAsset.MerchantLeaf);
+        /// <summary>
+        /// Status_WeaponAction_IceTrance_Name
+        /// 冷静
+        /// Status_WeaponAction_IceTrance_Description
+        /// <tag=FrostRelic>が1回追加発動します。
+        /// </summary>
+        public static ModKeyword IceTrance { get; } = ModKeyword.CreateKeyword("WeaponAction_IceTrance").SetTextColorOriginal("WeaponAction_Trance").SetDisplayDetails();
 
 
         /// <summary>
@@ -1402,6 +1416,103 @@ namespace SephiriaMod
                 main.addons = [additional, @unsafe];
             }
         }).SetBladeSprite().SetBladeUnlitSprite();
+        /// <summary>
+        /// Weapon_Dagger_Ice_T2_Name
+        /// 氷の短剣
+        /// WeaponAddon_Dagger_Ice_T2_Effect
+        /// <tag=WeaponAction_DirectAttack>時、対象に<tag=IceDamage>の20%分の追加ダメージを与えます。
+        public static ModWeapon DaggerIce { get; } = ModWeapon.CreateWeapon("Dagger_Ice_T2", 1203, 20).SetStandardEnhancements(14013, 14014, 14015).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_AdditionalElementalDamage>(out var status))
+            {
+                status.elementalType = EDamageElementalType.Ice;
+                status.additionalDamagePercent = 20;
+                status.statId = ECustomStat.IceDamage;
+                status.damageId = "Weapon_AdditionalElementalDamage_Ice";
+                status.effectText = new LocalizedString("WeaponAddon_Dagger_Ice_T2_Effect");
+
+                main.addons = [status];
+            }
+        }).SetBladeSprite(Vector3.zero);
+        /// <summary>
+        /// Weapon_Dagger_Ice_T3_Frostbite_Name
+        /// 冷風の刃
+        /// WeaponAddon_Dagger_Ice_T3_Frostbite_Effect
+        /// <tag=Frostbite>状態の敵の攻撃を<tag=WeaponAction_Parry>すると、<tag=WeaponAction_Trance>を追加で獲得します。\n<tag=WeaponAction_Fury>が命中した時、<tag=Frostbite>を付与します。
+        public static ModWeapon DaggerIceFrostbite { get; } = ModWeapon.CreateWeapon("Dagger_Ice_T3_Frostbite", 1203).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_AdditionalElementalDamage>(out var status))
+            {
+                status.elementalType = EDamageElementalType.Ice;
+                status.additionalDamagePercent = 20;
+                status.statId = ECustomStat.IceDamage;
+                status.damageId = "Weapon_AdditionalElementalDamage_Ice";
+                status.effectText = new LocalizedString("WeaponAddon_Dagger_Ice_T2_Effect");
+
+                var @unsafe = main.gameObject.AddComponent<WeaponAddonDagger_FuryFrostbite>();
+
+
+                @unsafe.effectText = new LocalizedString("WeaponAddon_Dagger_Ice_T3_Frostbite_Effect");
+                @unsafe.parent = status.parent;
+
+                if (main is WeaponSimple_Dagger dagger)
+                {
+                    dagger.maxFury = 2;
+                }
+
+                main.addons = [status, @unsafe];
+            }
+        }).SetBladeSprite(Vector3.zero);
+        /// <summary>
+        /// Weapon_Dagger_Ice_T3_Frost_Name
+        /// 静かな氷菓
+        /// WeaponAddon_Dagger_Ice_T3_Frost_Effect
+        /// <tag=WeaponAction_Parry>に成功すると<tag=WeaponAction_Trance>ではなく<tag=WeaponAction_IceTrance>を獲得します。\n<tag=WeaponAction_IceTrance>状態の間、<tag=FrostRelic>が1回追加発動します。<tag=WeaponAction_IceTrance>状態で<tag=WeaponAction_Parry>に成功すると、すべての<tag=FrostRelic>のチャージが加速します。
+        public static ModWeapon DaggerIceFrost { get; } = ModWeapon.CreateWeapon("Dagger_Ice_T3_Frost", 1203).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_AdditionalElementalDamage>(out var status))
+            {
+                status.elementalType = EDamageElementalType.Ice;
+                status.additionalDamagePercent = 20;
+                status.statId = ECustomStat.IceDamage;
+                status.damageId = "Weapon_AdditionalElementalDamage_Ice";
+                status.effectText = new LocalizedString("WeaponAddon_Dagger_Ice_T2_Effect");
+
+                var @unsafe = main.gameObject.AddComponent<WeaponAddonDagger_IceTrance>();
+
+
+                @unsafe.effectText = new LocalizedString("WeaponAddon_Dagger_Ice_T3_Frost_Effect");
+                @unsafe.parent = status.parent;
+
+                main.addons = [status, @unsafe];
+            }
+        }).SetBladeSprite(Vector3.zero);
+        /// <summary>
+        /// Weapon_Dagger_Ice_T3_Magic_Name
+        /// 凍てつく剣先
+        /// WeaponAddon_Dagger_Ice_T3_Magic_Effect
+        /// <tag=IceDamage>が6増加します。<tag=WeaponAction_Parry>に成功した時、霜の短剣が発動します。
+        public static ModWeapon DaggerIceMagic { get; } = ModWeapon.CreateWeapon("Dagger_Ice_T3_Magic", 1203).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_AdditionalElementalDamage>(out var status))
+            {
+                status.elementalType = EDamageElementalType.Ice;
+                status.additionalDamagePercent = 20;
+                status.statId = ECustomStat.IceDamage;
+                status.damageId = "Weapon_AdditionalElementalDamage_Ice";
+                status.effectText = new LocalizedString("WeaponAddon_Dagger_Ice_T2_Effect");
+
+                var @unsafe = main.gameObject.AddComponent<WeaponAddonDagger_IceDagger>();
+
+
+                @unsafe.effectText = new LocalizedString("WeaponAddon_Dagger_Ice_T3_Magic_Effect");
+                @unsafe.parent = status.parent;
+                @unsafe.status = [CreateWeaponStat(ECustomStat.IceDamage, 6)];
+
+                main.addons = [status, @unsafe];
+            }
+        }).SetBladeSprite(Vector3.zero);
+
 
         /// <summary>
         /// Passive_Grimoire_Name

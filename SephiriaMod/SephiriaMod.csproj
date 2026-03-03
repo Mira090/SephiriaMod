@@ -602,7 +602,10 @@
 		<Compile Include="Weapons\WeaponAddonCommon_SpecialFlameSword.cs" />
 		<Compile Include="Weapons\WeaponAddonDagger_CounterEvasion.cs" />
 		<Compile Include="Weapons\WeaponAddonDagger_FireFury.cs" />
+		<Compile Include="Weapons\WeaponAddonDagger_FuryFrostbite.cs" />
 		<Compile Include="Weapons\WeaponAddonDagger_FuryMP.cs" />
+		<Compile Include="Weapons\WeaponAddonDagger_IceDagger.cs" />
+		<Compile Include="Weapons\WeaponAddonDagger_IceTrance.cs" />
 		<Compile Include="Weapons\WeaponAddonKatana_FrostFlameSword.cs" />
 	</ItemGroup>
 	

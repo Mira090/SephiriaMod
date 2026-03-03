@@ -78,5 +78,17 @@ namespace SephiriaMod.Utilities
                 return _pallasSmallBullets;
             }
         }
+        private static GameObject _freezeNormalSlash;
+        public static GameObject FreezeNormalSlash
+        {
+            get
+            {
+                if (_freezeNormalSlash == null)
+                {
+                    _freezeNormalSlash = ItemDatabase.FindItemById(1268).resourcePrefab.GetComponent<Charm_FreezeNormalSlash>().slashFxPrefab;//永遠の冬
+                }
+                return _freezeNormalSlash;
+            }
+        }
     }
 }
