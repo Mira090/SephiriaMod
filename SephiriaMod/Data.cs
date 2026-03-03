@@ -820,6 +820,16 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm AddInventory { get; } = ModCharm.Create<Charm_AddInventory>("Add_Inventory", 0, true).SetActiveType(EItemActiveType.Hidden)
             .SetCategory().SetSimpleEffect().SetRarity(EItemRarity.Legend);
+        /// <summary>
+        /// Item_Shadow_Frostbite_Name
+        /// 闇色の雪結晶
+        /// Item_Shadow_Frostbite_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Shadow_Frostbite_Effect
+        /// <tag=Frostbite>を<tag=BlackFrostbite>に変える
+        /// </summary>
+        public static ModCharm ShadowFrostbite { get; } = ModCharmStatus.Create<Charm_ShadowFrostbite>("Shadow_Frostbite", 4, CreateStatusGroup("EVASION", 100, 200, 400, 700, 1100))
+            .SetCategory(ItemCategories.Glacier, ItemCategories.Shadow).SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect().SetDamageIdAbility("Debuff_ShadowFreeze");
 
         /// <summary>
         /// Item_Sacrifice_Fire_Name
@@ -1082,6 +1092,22 @@ namespace SephiriaMod
         /// <tag=FrostRelic>が1回追加発動します。
         /// </summary>
         public static ModKeyword IceTrance { get; } = ModKeyword.CreateKeyword("WeaponAction_IceTrance").SetTextColorOriginal("WeaponAction_Trance").SetDisplayDetails();
+        /// <summary>
+        /// Status_BlackFrostbite_Name
+        /// 黒い霜焼け
+        /// Status_BlackFrostbite_Description
+        /// <tag=Frostbite>の効果に加えて、対象の攻撃をスタックごとに4%の確率で回避します。5回蓄積すると<tag=Freeze>ではなく<tag=BlackFreeze>に変更されます。
+        /// </summary>
+        public static ModKeyword BlackFrostbite { get; } = ModKeyword.CreateKeyword("BlackFrostbite").SetTextColor(new Color(0.2f, 0.2f, 0.2f))
+            .SetKeywordImage(() => CustomSpriteAsset.BlackFrostbite).SetConnectedDetailEntities("Freeze", "BlackFreeze");
+        /// <summary>
+        /// Status_BlackFreeze_Name
+        /// 黒い氷結
+        /// Status_BlackFreeze_Description
+        /// <tag=Freeze>の効果に加えて、即座に<tag=Evasion>250%のダメージを与えます。対象のスタン耐性が減少します。
+        /// </summary>
+        public static ModKeyword BlackFreeze { get; } = ModKeyword.CreateKeyword("BlackFreeze").SetTextColor(new Color(0.2f, 0.2f, 0.2f))
+            .SetKeywordImage(() => CustomSpriteAsset.BlackFrostbite);
 
 
         /// <summary>

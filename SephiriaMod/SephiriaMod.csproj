@@ -544,6 +544,7 @@
 		<Compile Include="Items\Charm_ReservedMPEvasion.cs" />
 		<Compile Include="Items\Charm_ReviveHeal.cs" />
 		<Compile Include="Items\Charm_SeparateDirectAttack.cs" />
+		<Compile Include="Items\Charm_ShadowFrostbite.cs" />
 		<Compile Include="Items\Charm_StargazeTablet.cs" />
 		<Compile Include="Items\Charm_SuperMeteor.cs" />
 		<Compile Include="Items\Charm_ThrowGrimoire.cs" />

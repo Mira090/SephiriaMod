@@ -178,6 +178,18 @@ namespace SephiriaMod.Utilities
         {
             instance.GetType().GetField("lastUsedMagicServerside", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
         }
+        public static ElementalParticle GetLoopElementalParticle(this CharacterDebuff instance)
+        {
+            return (ElementalParticle)typeof(CharacterDebuff).GetField("loopElementalParticle", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static FreezeFx GetFreezeFx(this CharacterDebuff_Freeze instance)
+        {
+            return (FreezeFx)typeof(CharacterDebuff_Freeze).GetField("freezeFx", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static Timer GetStunCooldownTimer(this UnitAvatar instance)
+        {
+            return (Timer)typeof(UnitAvatar).GetField("stunCooldownTimer", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
 
 
 
