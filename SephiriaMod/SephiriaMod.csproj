@@ -520,6 +520,7 @@
 		<Compile Include="Items\Charm_FireCooldownRecovery.cs" />
 		<Compile Include="Items\Charm_FirstHeal.cs" />
 		<Compile Include="Items\Charm_FixedMoveSpeed.cs" />
+		<Compile Include="Items\Charm_GuardFrostbite.cs" />
 		<Compile Include="Items\Charm_GuardianDarkCloud.cs" />
 		<Compile Include="Items\Charm_HalfHP.cs" />
 		<Compile Include="Items\Charm_InventoryPower.cs" />
