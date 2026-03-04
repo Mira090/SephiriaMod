@@ -717,5 +717,23 @@ namespace SephiriaMod
             }
         }
 
+        [HarmonyPatch]
+        public static class UpdateInventorySizePatch
+        {
+            [HarmonyPatch(typeof(UI_OtherCharacterPanel), "UpdateInventorySize", [typeof(int), typeof(int), typeof(int)])]
+            [HarmonyPrefix]
+            static void OtherPrefix(int inventoryWidth, int inventoryHeight, ref int potionStorage)
+            {
+                if(potionStorage > 6)
+                    potionStorage = 6;
+            }
+            [HarmonyPatch(typeof(UI_CharacterStatusPanel), "SetPotionStorageCount", [typeof(int)])]
+            [HarmonyPrefix]
+            static void StatusPrefix(ref int obj)
+            {
+                if (obj > 6)
+                    obj = 6;
+            }
+        }
     }
 }
