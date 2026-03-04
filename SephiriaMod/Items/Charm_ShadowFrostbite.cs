@@ -96,7 +96,7 @@ namespace SephiriaMod.Items
                 int customStatUnsafe = __instance.NetworkAttacker.GetCustomStatUnsafe("FREEZEDAMAGE");
                 num += num * (float)customStatUnsafe / 100f;
                 DamageInstance damage = DamageInstance.GetDamage(__instance.NetworkAttacker, AbilityDamageId, __instance.NetworkTarget.transform.position, 4294967295L, num, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 0, 0f);
-                damage.elementalType = EDamageElementalType.Ice;
+                damage.SetCustomColor(true, new Color(0.3f, 0.3f, 0.3f));
                 __instance.NetworkTarget.ApplyDamage(damage);
 
 

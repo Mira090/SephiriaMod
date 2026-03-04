@@ -828,7 +828,7 @@ namespace SephiriaMod
         /// Item_Shadow_Frostbite_Effect
         /// <tag=Frostbite>を<tag=BlackFrostbite>に変える
         /// </summary>
-        public static ModCharm ShadowFrostbite { get; } = ModCharmStatus.Create<Charm_ShadowFrostbite>("Shadow_Frostbite", 4, CreateStatusGroup("EVASION", 100, 200, 400, 700, 1100))
+        public static ModCharm ShadowFrostbite { get; } = ModCharmStatus.Create<Charm_ShadowFrostbite>("Shadow_Frostbite", 4, CreateStatusGroup("ICE_DAMAGE", 2, 4, 6, 9, 13), CreateStatusGroup("EVASION", 200, 400, 600, 900, 1300))
             .SetCategory(ItemCategories.Glacier, ItemCategories.Shadow).SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect().SetDamageIdAbility("Debuff_ShadowFreeze");
 
         /// <summary>
