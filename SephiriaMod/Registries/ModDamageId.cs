@@ -35,6 +35,28 @@ namespace SephiriaMod.Registries
             };
             return damageId;
         }
+        public static ModDamageId CreateDebuff(string id)
+        {
+            var damageId = new ModDamageId
+            {
+                Name = new LocalizedString("Debuff_" + id + "_Name"),
+                Id = "Debuff_" + id.Replace("_", ""),
+                Category = DamageIdEntity.ECategory.Ability,
+                IconFileName = ModUtil.MiscPath + "DealUIAbility"
+            };
+            return damageId;
+        }
+        public static ModDamageId CreateDebuff(string id, string key)
+        {
+            var damageId = new ModDamageId
+            {
+                Name = new LocalizedString(key),
+                Id = "Debuff_" + id.Replace("_", ""),
+                Category = DamageIdEntity.ECategory.Ability,
+                IconFileName = ModUtil.MiscPath + "DealUIAbility"
+            };
+            return damageId;
+        }
         public DamageIdEntity CreateEntity()
         {
             var entity = ScriptableObject.CreateInstance<DamageIdEntity>();
