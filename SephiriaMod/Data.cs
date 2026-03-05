@@ -833,6 +833,15 @@ namespace SephiriaMod
         public static ModCharm ShadowFrostbite { get; } = ModCharmStatus.Create<Charm_ShadowFrostbite>("Shadow_Frostbite", 4, CreateStatusGroup("ICE_DAMAGE", 2, 4, 6, 9, 13), CreateStatusGroup("EVASION", 200, 400, 600, 900, 1300))
             .SetCategory(ItemCategories.Glacier, ItemCategories.Shadow).SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect().SetDamageIdDebuff("BlackFreeze", "Status_BlackFreeze_Name");
         /// <summary>
+        /// Item_Guard_Frostbite_Name
+        /// 精霊の盾
+        /// Item_Guard_Frostbite_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Guard_Frostbite_Effect
+        /// <tag=WeaponAction_Guard>に成功した時、攻撃者に<tag=Frostbite>を付与する\n<tag=WeaponAction_PerfectGuard>なら、<tag=Frostbite>ではなく<tag=Freeze>を付与する
+        /// </summary>
+        public static ModCharm GuardFrostbite { get; } = ModCharmStatus.Create<Charm_GuardFrostbite>("Guard_Frostbite", 2, CreateStatusGroup("ICE_DAMAGE", 3, 5, 8), CreateStatusGroup("MP_STEAL", 2, 3, 5))
+            .SetCategory(ItemCategories.Glacier).SetSimpleEffect().SetRarity(EItemRarity.Legend).SetRelatedWeapon(EWeaponType.SwordAndShield).SetIsUniqueEffect();
         /// <summary>
         /// Item_Add_Max_Miracle_Name
         /// 輝く樹の枝
