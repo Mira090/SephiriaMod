@@ -36,6 +36,8 @@ namespace SephiriaMod.Registries
             charm.effectsString = Effects;
             charm.isUniqueEffect = IsUniqueEffect;
             charm.stats = Stats;
+            charm.isWeaponRelatedCharm = IsWeaponRelatedCharm;
+            charm.relatedWeapon = RelatedWeapon;
             //charm.rewardEntity = RewardEntity();
             charm.useFromType = FromType.HasValue;
             charm.useElementalType = ElementalType.HasValue;
