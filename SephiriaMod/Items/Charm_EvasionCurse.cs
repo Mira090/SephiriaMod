@@ -90,7 +90,7 @@ namespace SephiriaMod.Items
                 damage.criticalChancePercent = 0;
                 damage.color = new Color(1, 0, 0, 0);
                 damage.useCustomColor = true;
-                damage.damage += avatar.MaxHp * 0.04f * avatar.Debuffs.Count();
+                damage.damage += avatar.hp * 0.02f * avatar.Debuffs.Count();
                 //damage.ignoreDefense += ignoreDegence.SafeRandomAccess(CurrentLevelToIdx());
                 //Melon<Core>.Logger.Msg("暗閃!: " + (max / min));
             }

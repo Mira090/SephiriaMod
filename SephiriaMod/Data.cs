@@ -1100,7 +1100,7 @@ namespace SephiriaMod
         /// Status_Assasination_Name
         /// 暗閃
         /// Status_Assasination_Description
-        /// <tag=WeaponAction_DirectAttack>が命中した時、確率で対象に付与されたデバフ1つにつき、<tag=MaxHP>の4%の追加ダメージを与えます
+        /// <tag=WeaponAction_DirectAttack>が命中した時、確率で対象に付与されたデバフ1つにつき、<tag=HP>の2%の追加ダメージを与えます
         /// </summary>
         public static ModKeyword Assasination { get; } = ModKeyword.CreateKeyword("Assasination").SetTextColor(new Color(0.9f, 0.1f, 0.1f)).SetKeywordImage(() => CustomSpriteAsset.Assasination);
         /// <summary>
