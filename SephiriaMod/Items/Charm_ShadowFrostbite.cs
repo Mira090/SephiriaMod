@@ -10,7 +10,7 @@ namespace SephiriaMod.Items
     public class Charm_ShadowFrostbite : Charm_StatusInstance
     {
         public static readonly string ShadowFrostbite = "ShadowFrostbite".ToUpperInvariant();
-        public static readonly string AbilityDamageId = "Debuff_ShadowFreeze";
+        public static readonly string AbilityDamageId = "Debuff_BlackFreeze";
         public static readonly int AbsoluteEvasionPercent = 4;
         public static readonly float BlackFreezeMultiplier = 2.5f;
 
