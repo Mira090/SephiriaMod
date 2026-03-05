@@ -1098,7 +1098,7 @@ namespace SephiriaMod
         /// Status_WeaponAction_IceTrance_Description
         /// <tag=FrostRelic>が1回追加発動します。
         /// </summary>
-        public static ModKeyword IceTrance { get; } = ModKeyword.CreateKeyword("WeaponAction_IceTrance").SetTextColorOriginal("WeaponAction_Trance").SetDisplayDetails();
+        public static ModKeyword IceTrance { get; } = ModKeyword.CreateKeyword("WeaponAction_IceTrance").SetTextColorOriginal("WeaponAction_Trance");
         /// <summary>
         /// Status_BlackFrostbite_Name
         /// 黒い霜焼け
@@ -1475,7 +1475,7 @@ namespace SephiriaMod
         /// Weapon_Dagger_Ice_T3_Frostbite_Name
         /// 冷風の刃
         /// WeaponAddon_Dagger_Ice_T3_Frostbite_Effect
-        /// <tag=Frostbite>状態の敵の攻撃を<tag=WeaponAction_Parry>すると、<tag=WeaponAction_Trance>を追加で獲得します。\n<tag=WeaponAction_Fury>が命中した時、<tag=Frostbite>を付与します。
+        /// <tag=Frostbite>状態の敵の攻撃を<tag=WeaponAction_Parry>すると、<tag=WeaponAction_Trance>を追加で獲得します。\n<tag=WeaponAction_SpecialAttack>が<tag=IceDamage>に変更されます。<tag=WeaponAction_Fury>が命中した時、<tag=Frostbite>を付与します。
         public static ModWeapon DaggerIceFrostbite { get; } = ModWeapon.CreateWeapon("Dagger_Ice_T3_Frostbite", 1203).SetMainPrefabModifier(main =>
         {
             if (main.gameObject.TryGetComponent<WeaponAddonCommon_AdditionalElementalDamage>(out var status))
@@ -1504,7 +1504,7 @@ namespace SephiriaMod
         /// Weapon_Dagger_Ice_T3_Frost_Name
         /// 静かな氷菓
         /// WeaponAddon_Dagger_Ice_T3_Frost_Effect
-        /// <tag=WeaponAction_Parry>に成功すると<tag=WeaponAction_Trance>ではなく<tag=WeaponAction_IceTrance>を獲得します。\n<tag=WeaponAction_IceTrance>状態の間、<tag=FrostRelic>が1回追加発動します。<tag=WeaponAction_IceTrance>状態で<tag=WeaponAction_Parry>に成功すると、すべての<tag=FrostRelic>のチャージが加速します。
+        /// <tag=WeaponAction_Parry>に成功すると<tag=WeaponAction_Trance>ではなく<tag=WeaponAction_IceTrance>を獲得します。\n<tag=WeaponAction_IceTrance>状態で<tag=WeaponAction_Parry>に成功すると、すべての<tag=FrostRelic>のチャージが加速します。
         public static ModWeapon DaggerIceFrost { get; } = ModWeapon.CreateWeapon("Dagger_Ice_T3_Frost", 1203).SetMainPrefabModifier(main =>
         {
             if (main.gameObject.TryGetComponent<WeaponAddonCommon_AdditionalElementalDamage>(out var status))
