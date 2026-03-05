@@ -489,6 +489,7 @@
 		<Compile Include="Buffs\CharacterBuffMod.cs" />
 		<Compile Include="Buffs\CharacterBuffMod_StatusInstance.cs" />
 		<Compile Include="Items\Charm_AddInventory.cs" />
+		<Compile Include="Items\Charm_AddOrphanedStatusInstance.cs" />
 		<Compile Include="Items\Charm_AddStarRuby.cs" />
 		<Compile Include="Items\Charm_AllIgnoreDefense.cs" />
 		<Compile Include="Items\Charm_AnotherExecution.cs" />
@@ -568,6 +569,7 @@
 		<Compile Include="ECustomItemRarity.cs" />
 		<Compile Include="Registries\IModDamageId.cs" />
 		<Compile Include="Registries\CustomSpriteAsset.cs" />
+		<Compile Include="Registries\ModCharmOrphanedStatus.cs" />
 		<Compile Include="Registries\ModCharmSacrifice.cs" />
 		<Compile Include="Registries\ModCharmSacrificeDamage.cs" />
 		<Compile Include="Registries\ModCustomStatus.cs" />
@@ -578,6 +580,7 @@
 		<Compile Include="Registries\ModPassive.cs" />
 		<Compile Include="Registries\ModPassivePerk.cs" />
 		<Compile Include="Registries\ModSpriteFx.cs" />
+		<Compile Include="StatusInstances\StatusInstance_MaxMiracleCount.cs" />
 		<Compile Include="Utilities\Enums.cs" />
 		<Compile Include="Utilities\ModUtil.cs" />
 		<Compile Include="Registries\ModWeapon.cs" />

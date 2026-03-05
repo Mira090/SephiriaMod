@@ -196,6 +196,18 @@ namespace SephiriaMod.Utilities
             var method = type.GetMethod("MakePool", BindingFlags.Instance | BindingFlags.NonPublic);
             method.Invoke(instance, [parent, prefab]);
         }
+        public static MiracleController GetActor(this UI_MiracleElement instance)
+        {
+            return (MiracleController)typeof(UI_MiracleElement).GetField("actor", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static MiracleMetadata GetEntity(this UI_MiracleElement instance)
+        {
+            return (MiracleMetadata)typeof(UI_MiracleElement).GetField("entity", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static MiracleSelector2 GetMiracleSelector(this UI_MiracleElement instance)
+        {
+            return (MiracleSelector2)typeof(UI_MiracleElement).GetField("miracleSelector", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
 
 
 

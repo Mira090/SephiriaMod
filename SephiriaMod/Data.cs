@@ -13,6 +13,7 @@ using SephiriaMod.Weapons;
 using SephiriaMod.Registries;
 using SephiriaMod.Buffs;
 using SephiriaMod.Items.Eternal;
+using SephiriaMod.StatusInstances;
 
 namespace SephiriaMod
 {
@@ -831,6 +832,15 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm ShadowFrostbite { get; } = ModCharmStatus.Create<Charm_ShadowFrostbite>("Shadow_Frostbite", 4, CreateStatusGroup("ICE_DAMAGE", 2, 4, 6, 9, 13), CreateStatusGroup("EVASION", 200, 400, 600, 900, 1300))
             .SetCategory(ItemCategories.Glacier, ItemCategories.Shadow).SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect().SetDamageIdDebuff("BlackFreeze", "Status_BlackFreeze_Name");
+        /// <summary>
+        /// <summary>
+        /// Item_Add_Max_Miracle_Name
+        /// 輝く樹の枝
+        /// Item_Add_Max_Miracle_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm AddMaxMiracle { get; } = ModCharmOrphanedStatus.Create("Add_Max_Miracle", CreateStatusGroup("MaxMiracleCount".ToSephiriaId(), 1)).SetActiveType(EItemActiveType.Hidden)
+            .SetCategory().SetSimpleEffects(0).SetRarity(EItemRarity.Legend);
 
         #region Sacrifices
         /// <summary>
@@ -1065,6 +1075,13 @@ namespace SephiriaMod
         /// サファイアを使って商人に入荷させた時の石版の数が増加します
         /// </summary>
         public static ModCustomStatus ReplenishmentTablet { get; } = ModCustomStatus.CreateStatus("ReplenishmentTablet");
+        /// <summary>
+        /// Status_MaxMiracleCount_Name
+        /// 奇跡の最大数
+        /// Status_MaxMiracleCount_Description
+        /// 奇跡の最大数が増加します
+        /// </summary>
+        public static ModCustomStatus MaxMiracleCount { get; } = ModCustomStatus.CreateStatus<StatusInstance_MaxMiracleCount>("MaxMiracleCount");
         /// <summary>
         /// Status_MagicExecution_Name
         /// 天罰
@@ -1607,6 +1624,10 @@ namespace SephiriaMod
         public static Charm_StatusInstance.StatusGroup CreateStatusGroupHide(string id, params int[] values)
         {
             return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = values, hideIfStatValueIsZero = true };
+        }
+        public static Charm_AddOrphanedStatusInstance.OrphanedStatusGroup CreateOrphanedStatusGroup(string id, int value)
+        {
+            return new Charm_AddOrphanedStatusInstance.OrphanedStatusGroup() { statusID = id, value = value };
         }
         public static ComboEffectBase.ComboStat CreateComboStat(int count, params string[] status)
         {

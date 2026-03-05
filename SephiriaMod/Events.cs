@@ -1,19 +1,20 @@
-﻿using HarmonyLib;
+﻿using FMOD;
+using FMOD.Studio;
+using FMODUnity;
+using HarmonyLib;
+using HeathenEngineering.SteamworksIntegration.API;
 using MelonLoader;
 using Mirror;
-using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Reflection;
-using System.Text;
-using UnityEngine;
-using static SephiriaMod.Core;
-using FMODUnity;
-using FMOD.Studio;
-using FMOD;
 using SephiriaMod.Items;
 using SephiriaMod.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Text;
 using TMPro;
+using UnityEngine;
+using static SephiriaMod.Core;
 
 namespace SephiriaMod
 {
@@ -470,6 +471,19 @@ namespace SephiriaMod
                     return;
                 System.Random random = new System.Random(__instance.Avatar.RandomID);
 
+                if (socialID.StartsWith("TrialMerchant_"))
+                {
+                    var splited = socialID.Split("TrialMerchant_");
+                    if(splited.Length == 1 && int.TryParse(splited[0], out var phase))
+                    {
+                        OnTrialMerchant(__instance, random, phase);
+                    }
+                    else
+                    {
+                        OnTrialMerchant(__instance, random);
+                    }
+                }
+
                 int more = DefaultAdditionalShop;
                 int legendary = DefaultAdditionalShopLegendary;
                 int money = DefaultAdditionalMoney;
@@ -635,6 +649,26 @@ namespace SephiriaMod
                     __instance.Avatar.Inventory.AddItems(list.ToArray());
                 }
             }
+            static void OnTrialMerchant(UnitAI_NewBasic __instance, System.Random random, int phase = -1)
+            {
+
+                List<ItemMetadata> list = new List<ItemMetadata>();
+
+                list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(Data.AddInventory.Id), 1));
+                list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(Data.AddMaxMiracle.Id), 1));
+
+                if (list.Count > 0)
+                {
+                    if ((bool)__instance.NetworkMySafe)
+                    {
+                        __instance.NetworkMySafe.GenerateItemInInventory(list.ToArray());
+                    }
+                    else if ((bool)__instance.Avatar.Inventory)
+                    {
+                        __instance.Avatar.Inventory.AddItems(list.ToArray());
+                    }
+                }
+            }
         }
         [HarmonyPatch(typeof(UnitAI_NewBasic), nameof(UnitAI_NewBasic.AddReplenishmentItemsClientside))]
         public static class AddReplenishmentItemsClientsidePatch
@@ -733,6 +767,128 @@ namespace SephiriaMod
             {
                 if (obj > 6)
                     obj = 6;
+            }
+        }
+
+        [HarmonyPatch(typeof(UI_MiracleElement), nameof(UI_MiracleElement.HandleClick))]
+        public static class MiracleElementPatch
+        {
+            static bool Prefix(UI_MiracleElement __instance)
+            {
+                var actor = __instance.GetActor();
+                var entity = __instance.GetEntity();
+                var miracleSelector = __instance.GetMiracleSelector();
+                int num = actor.UnitAvatar.Inventory.GetEmptySlotCount(EItemType.Charm);
+                int num2 = actor.UnitAvatar.Inventory.GetEnptyPotionStorageCount();
+                Miracle prefab = MiracleDatabase.FindMiracle(entity.id);
+                ItemMetadata[] items = prefab.GetItems(generateInstanceID: false, actor, entity.instanceID);
+                if (items != null)
+                {
+                    ItemMetadata[] array = items;
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        ItemEntity itemEntity = ItemDatabase.FindItemById(array[i].entityID);
+                        if (itemEntity.type == EItemType.Potion)
+                        {
+                            if (num2 > 0)
+                            {
+                                num2--;
+                            }
+                            else
+                            {
+                                num--;
+                            }
+                        }
+                        else if (itemEntity.type == EItemType.Charm)
+                        {
+                            Charm_Basic charmInstance;
+                            if (actor.UnitAvatar.Inventory.uniquePairCount > 0)
+                            {
+                                if (!actor.UnitAvatar.Inventory.HasItem(itemEntity, out var _, out var _, out var _))
+                                {
+                                    num--;
+                                }
+                            }
+                            else if (!actor.UnitAvatar.Inventory.TryGetUniqueEffect(itemEntity, out charmInstance))
+                            {
+                                num--;
+                            }
+                        }
+                        else
+                        {
+                            num--;
+                        }
+                    }
+                }
+
+                if (num >= 0 && num2 >= 0)
+                {
+                    if (actor.CanAddMiracle())
+                    {
+                        UIManager.Instance.GetElement<UI_MessageBoxHolder>().OpenYesNo(Loc.Convert(__instance.miracleSelectText.ToString(), "MIRACLE", prefab.aName.ToString()), delegate
+                        {
+                            actor.AddMiracle(entity.id);
+                            actor.CloseMiraclePanel();
+                            if (items != null)
+                            {
+                                actor.UnitAvatar.Inventory.AddItemsWithGenerateInstanceID(entity.instanceID, items);
+                            }
+
+                            miracleSelector.HandleMiracleAcquired(actor);
+                        }, null);
+                        return false;
+                    }
+
+                    LocalizedString aName = actor.miracles[0].aName;
+                    UIManager.Instance.GetElement<UI_MessageBoxHolder>().OpenYesNo(Loc.Convert(__instance.miracleChangeText.ToString(), "ALREADY", aName.ToString()), delegate
+                    {
+                        actor.RemoveMiracle(0);
+                        actor.AddMiracle(entity.id);
+                        actor.CloseMiraclePanel();
+                        if (items != null)
+                        {
+                            actor.UnitAvatar.Inventory.AddItemsWithGenerateInstanceID(entity.instanceID, items);
+                        }
+
+                        miracleSelector.HandleMiracleAcquired(actor);
+                    }, null);
+                    return false;
+                }
+
+                UIManager.Instance.GetElement<UI_MessageBoxHolder>().OpenYesNo(__instance.itemFullText.ToString(), delegate
+                {
+                    if (actor.CanAddMiracle())
+                    {
+                        UIManager.Instance.GetElement<UI_MessageBoxHolder>().OpenYesNo(Loc.Convert(__instance.miracleSelectText.ToString(), "MIRACLE", prefab.aName.ToString()), delegate
+                        {
+                            actor.AddMiracle(entity.id);
+                            actor.CloseMiraclePanel();
+                            if (items != null)
+                            {
+                                actor.UnitAvatar.Inventory.AddItemsWithGenerateInstanceID(entity.instanceID, items);
+                            }
+
+                            miracleSelector.HandleMiracleAcquired(actor);
+                        }, null);
+                    }
+                    else
+                    {
+                        LocalizedString aName2 = actor.miracles[0].aName;
+                        UIManager.Instance.GetElement<UI_MessageBoxHolder>().OpenYesNo(Loc.Convert(__instance.miracleChangeText.ToString(), "ALREADY", aName2.ToString()), delegate
+                        {
+                            actor.RemoveMiracle(0);
+                            actor.AddMiracle(entity.id);
+                            actor.CloseMiraclePanel();
+                            if (items != null)
+                            {
+                                actor.UnitAvatar.Inventory.AddItemsWithGenerateInstanceID(entity.instanceID, items);
+                            }
+
+                            miracleSelector.HandleMiracleAcquired(actor);
+                        }, null);
+                    }
+                }, null);
+                return false;
             }
         }
     }

@@ -21,6 +21,12 @@ namespace SephiriaMod.Registries
             Keyword = ModKeyword.CreateKeyword(name);
             return this;
         }
+        public static ModCustomStatus CreateStatus<T>(string name) where T : StatusInstance
+        {
+            var mod = new ModCustomStatus().SetStatus(name);
+            mod.ClassName = typeof(T).FullName;
+            return mod;
+        }
         public string Name { get; internal set; }
         public string ClassName { get; internal set; }
         public string Id { get; internal set; }
