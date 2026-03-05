@@ -27,7 +27,7 @@ namespace SephiriaMod.Weapons
         {
             if (behaviour is not UnitAvatar avatar)
                 return;
-            if (projectile.swingId == "FURY" || !isEnabled || avatar.IsDead)
+            if (projectile.swingId != "FURY" || !isEnabled || avatar.IsDead)
                 return;
             avatar.ApplyDebuff(SephiriaPrefabs.Frostbite, parent.Networkowner.unitAvatar);
 
