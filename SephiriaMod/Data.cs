@@ -831,6 +831,7 @@ namespace SephiriaMod
         public static ModCharm ShadowFrostbite { get; } = ModCharmStatus.Create<Charm_ShadowFrostbite>("Shadow_Frostbite", 4, CreateStatusGroup("ICE_DAMAGE", 2, 4, 6, 9, 13), CreateStatusGroup("EVASION", 200, 400, 600, 900, 1300))
             .SetCategory(ItemCategories.Glacier, ItemCategories.Shadow).SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect().SetDamageIdDebuff("BlackFreeze", "Status_BlackFreeze_Name");
 
+        #region Sacrifices
         /// <summary>
         /// Item_Sacrifice_Fire_Name
         /// 炎の儀式
@@ -888,7 +889,9 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm SacrificeLightningReward { get; } = ModCharmStatus.Create<Charm_MagitechDarkCloud>("Sacrifice_Lightning_Reward", 5, CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 5, 7, 10, 15), CreateStatusGroup("ELECTRIC_STACK", 1, 1, 2, 2, 3, 3))
             .SetCategory(ItemCategories.Magitech, ItemCategories.DarkCloud).SetIsDual().SetRarity(EItemRarity.Eternal).SetIsUniqueEffect().SetSimpleEffect();
+#endregion
 
+        #region ComboEffects
         /// <summary>
         /// ItemCategory_Vitality
         /// 生命
@@ -935,7 +938,9 @@ namespace SephiriaMod
         /// </summary>
         public static ModComboEffect Grimoire { get; } = ModComboEffect.Create("Grimoire").SetStats(CreateComboStatThreeDamage(2, "Grimoire", 3), CreateComboStatThreeDamage(4, "Grimoire", 6),
             CreateComboStatThreeDamage(6, "Grimoire", 9), CreateComboStatThreeDamage(8, "Grimoire", 12), CreateComboStatThreeDamage(10, "Grimoire", 15));
+#endregion
 
+        #region EffectHUDs
         /// <summary>
         /// EffectHUD_Physical_Damage_Buff_Name
         /// 暗影の凶刃
@@ -990,7 +995,9 @@ namespace SephiriaMod
         /// <tag=FrostRelic>が1回追加発動します。
         /// </summary>
         public static ModEffectHUD EffectIceTrance { get; } = ModEffectHUD.CreateStackEffectHUD("Immersion_Ice", UI_EffectHUD_Basic.EEffectType.Boon).SetHasStackText();
+#endregion
 
+        #region Keywords and Stats
         /// <summary>
         /// Status_StargazeLevel_Name
         /// 夜空アーティファクト最大レベル
@@ -1108,8 +1115,10 @@ namespace SephiriaMod
         /// </summary>
         public static ModKeyword BlackFreeze { get; } = ModKeyword.CreateKeyword("BlackFreeze").SetTextColor(new Color(0.2f, 0.2f, 0.2f))
             .SetKeywordImage(() => CustomSpriteAsset.BlackFrostbite);
+#endregion
 
 
+        #region Miracles
         /// <summary>
         /// Miracle_FlameSword_Name
         /// 炎の鍛冶屋
@@ -1152,7 +1161,9 @@ namespace SephiriaMod
         /// </summary>
         public static ModMiracle True { get; } = ModMiracleStatus.Create("True", CreatePositiveStat("TRUE_DAMAGE/12"), CreateNegativeStat("FINAL_WEAPONDAMAGE/-30"))
             .SetCategories();
+#endregion
 
+        #region Weapon Enhancements
         /// <summary>
         /// Weapon_SwordAndShield_Fire_T2_Name
         /// 熱い鼓動
@@ -1556,12 +1567,15 @@ namespace SephiriaMod
             .CreatePerk(EPassivePerkLv.lv5, "CooldownRecovery").SetPerkSupplierStatus("COOLDOWN_RECOVERY_SPEED/30").Parent
             .CreatePerk(EPassivePerkLv.lv10, "AddGrimoire").SetPerkSupplierStatus("ADD_GRIMOIRE/1", "MP_REGEN/4").Parent
             .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/20", "MAGIC_CRITICAL/5000").Parent;
+        #endregion
 
         public static Sprite IconInWorldPotion { get; internal set; }
         public static Sprite IconInWorldCharm { get; internal set; }
         public static Sprite IconInWorldTablet { get; internal set; }
 
         public static EventReference DefaultEnableSound { get; internal set; }
+
+        #region CreateParameters
         public static Charm_StatusInstance.StatusGroup CreateStatusGroup(string id, params int[] values)
         {
             return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = values };
@@ -1603,6 +1617,8 @@ namespace SephiriaMod
         {
             return new WeaponAddonCommon_StatusUnsafe.Stat() { statId = statId, value = value };
         }
+        #endregion
+
         public static void Init()
         {
             IconInWorldCharm = SpriteLoader.LoadSprite(ModUtil.MiscPath + "ItemInWorld_Charm");
@@ -1708,6 +1724,7 @@ namespace SephiriaMod
             }
             //CustomCostumeDatabase.Initialize();
         }
+        #region Registers
         public static void Register(List<UnityEngine.Object> list)
         {
             foreach (var moditem in All)
@@ -1896,6 +1913,9 @@ namespace SephiriaMod
                 list.Add(moditem.PassiveEntity);
             }
         }
+        #endregion
+
+        #region GetId
         public static int GetFirstModId()
         {
             return 14000;
@@ -1912,6 +1932,7 @@ namespace SephiriaMod
         {
             return 140;
         }
+        #endregion
 
         public static T CreateBuff<T>(string name, string hud) where T : CharacterBuffMod
         {
