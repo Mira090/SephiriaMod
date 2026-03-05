@@ -1550,7 +1550,9 @@ namespace SephiriaMod
             }
         }).SetBladeSprite(Vector3.zero);
 
+        #endregion
 
+        #region Passives
         /// <summary>
         /// Passive_Grimoire_Name
         /// 追憶
