@@ -190,6 +190,12 @@ namespace SephiriaMod.Utilities
         {
             return (Timer)typeof(UnitAvatar).GetField("stunCooldownTimer", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
         }
+        public static void InvokeMakePool<T>(this ObjectPoolingFactory<T> instance, Transform parent, GameObject prefab) where T : ObjectPoolable
+        {
+            var type = typeof(ObjectPoolingFactory<T>);
+            var method = type.GetMethod("MakePool", BindingFlags.Instance | BindingFlags.NonPublic);
+            method.Invoke(instance, [parent, prefab]);
+        }
 
 
 

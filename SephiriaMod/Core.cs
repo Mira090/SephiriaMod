@@ -10,6 +10,7 @@ using System.Reflection.Emit;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using Type = System.Type;
 
 [assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.9.4", "Mira", "https://github.com/Mira090/SephiriaMod")]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
@@ -1202,6 +1203,77 @@ namespace SephiriaMod
                     __instance.TopdownActor.animator.SetAnimationSpeed("GREATSWORDSWING_UPPER", () => (100f + (float)__instance.GetCustomStatUnsafe("ATTACKSPEED")) * 0.01f * __instance.GetGreatsworSwingSpeed());
                 }
                 __instance.TopdownRigidbody.MovementCollider.radius = __instance.GetCurrentCostumeObject().movementColliderRadius;
+            }
+        }
+
+        [HarmonyPatch(typeof(ObjectPoolingFactory<SpriteFx>), nameof(ObjectPoolingFactory<SpriteFx>.Initialize))]
+        public static class ObjectPoolingFactoryInitializePatch
+        {
+            static void Postfix(ObjectPoolingFactory<SpriteFx> __instance, Transform parent, IEnumerable<GameObject> poolablePrefabs, string defaultKey)
+            {
+                if (__instance == null)
+                    return;
+                if (!__instance.GetType().IsGenericType || __instance.GetType().GenericTypeArguments.FirstOrDefault() != typeof(SpriteFx))
+                    return;
+                    //Melon<Core>.Logger.Msg($"ObjectPoolingFactory<SpriteFx>.Initialize Postfix: {__instance.GetType().GenericTypeArguments.FirstOrDefault()}");
+
+                //var path = "IceDagger\\";
+                foreach (var original in poolablePrefabs)
+                {
+                    /*
+                    if (original.name == "DaggerDashFx")
+                    {
+                        if (DashFx == null)
+                        {
+                            DashFx = UnityEngine.Object.Instantiate(original);
+                            DashFx.name = "DaggerDashFx_Ice";
+                            if (DashFx.TryGetComponent<SpriteFx>(out var fx))
+                            {
+                                var set = ScriptableObject.CreateInstance<AnimationSet>();
+                                set.name = "DaggerDashFx_Ice";
+                                set.sprites = [];
+                                foreach (var state in fx.animator2D.currentSet.sprites)
+                                {
+                                    var newState = new AnimationSet.StateInfo();
+                                    newState.fps = state.fps;
+                                    newState.state = state.state;
+                                    newState.repeat = state.repeat;
+                                    newState.frameEvents = state.frameEvents;
+                                    newState.soundEvents = state.soundEvents;
+                                    newState.transformAttributes = state.transformAttributes;
+
+                                    newState.timeline = [
+                                        new AnimationSet.StateInfo.SpriteKeyFrame() { frameIdx = 0, sprite = SpriteLoader.LoadSprite(ModUtil.WeaponPath + path + "Weapon_Dagger_DashAttack_0") },
+                                    new AnimationSet.StateInfo.SpriteKeyFrame() { frameIdx = 1, sprite = SpriteLoader.LoadSprite(ModUtil.WeaponPath + path + "Weapon_Dagger_DashAttack_1") }
+                                        ];
+                                    set.sprites.Add(newState);
+                                }
+
+                                fx.animator2D.currentSet = set;
+                                fx.animator2D.ChangeSet(set);
+                            }
+                        }
+                    }*/
+
+                    foreach(var moditem in Data.SpriteFxs)
+                    {
+                        if(moditem.ResourcePrefab == null && original.name == moditem.OriginalName && original.TryGetComponent<SpriteFx>(out var fx))
+                        {
+                            moditem.InitPrefab(fx);
+                        }
+                    }
+                }
+                foreach (var moditem in Data.SpriteFxs)
+                {
+                    if (moditem.ResourcePrefab == null)
+                        continue;
+                    __instance.InvokeMakePool(parent, moditem.ResourcePrefab);
+                }
+
+                foreach(var moditem in Data.Weapons)
+                {
+                    moditem.OnSpriteFxRegistered();
+                }
             }
         }
     }

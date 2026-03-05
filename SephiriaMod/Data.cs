@@ -27,6 +27,7 @@ namespace SephiriaMod
         public static List<CharacterBuffMod> Buffs { get; private set; } = new();
         public static List<ModKeyword> Keywords { get; private set; } = new();
         public static List<ModPassive> Passives { get; private set; } = new();
+        public static List<ModSpriteFx> SpriteFxs { get; private set; } = new();
         public static List<string> AllResourcePrefabNames { get; private set; }
         /// <summary>
         /// Item_Malice_Name
@@ -1470,7 +1471,10 @@ namespace SephiriaMod
 
                 main.addons = [status];
             }
-        }).SetBladeSprite(Vector3.zero);
+        }).SetBladeSprite(Vector3.zero)
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 20, () => [DaggerIceAttack1Fx, DaggerIceAttack2Fx, DaggerIceAttack3Fx, DaggerIceAttack4Fx, DaggerIceAttack5Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 20, () => [DaggerIceDashFx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 20, () => [DaggerIceFuryFx, DaggerIceParryFx]);
         /// <summary>
         /// Weapon_Dagger_Ice_T3_Frostbite_Name
         /// 冷風の刃
@@ -1499,7 +1503,11 @@ namespace SephiriaMod
 
                 main.addons = [status, @unsafe];
             }
-        }).SetBladeSprite(Vector3.zero);
+        }).SetBladeSprite(Vector3.zero)
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 20, () => [DaggerIceAttack1Fx, DaggerIceAttack2Fx, DaggerIceAttack3Fx, DaggerIceAttack4Fx, DaggerIceAttack5Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 20, () => [DaggerIceDashFx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 20, () => [DaggerIceFuryFx, DaggerIceParryFx])
+            .AddFireDataChangeDamageElemental(ModWeapon.EAttackType.Special, EDamageElementalType.Ice);
         /// <summary>
         /// Weapon_Dagger_Ice_T3_Frost_Name
         /// 静かな氷菓
@@ -1523,7 +1531,10 @@ namespace SephiriaMod
 
                 main.addons = [status, @unsafe];
             }
-        }).SetBladeSprite(Vector3.zero);
+        }).SetBladeSprite(Vector3.zero)
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 20, () => [DaggerIceAttack1Fx, DaggerIceAttack2Fx, DaggerIceAttack3Fx, DaggerIceAttack4Fx, DaggerIceAttack5Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 20, () => [DaggerIceDashFx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 20, () => [DaggerIceFuryFx, DaggerIceParryFx]);
         /// <summary>
         /// Weapon_Dagger_Ice_T3_Magic_Name
         /// 凍てつく剣先
@@ -1548,8 +1559,10 @@ namespace SephiriaMod
 
                 main.addons = [status, @unsafe];
             }
-        }).SetBladeSprite(Vector3.zero);
-
+        }).SetBladeSprite(Vector3.zero)
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 20, () => [DaggerIceAttack1Fx, DaggerIceAttack2Fx, DaggerIceAttack3Fx, DaggerIceAttack4Fx, DaggerIceAttack5Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 20, () => [DaggerIceDashFx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 20, () => [DaggerIceFuryFx, DaggerIceParryFx]);
         #endregion
 
         #region Passives
@@ -1570,6 +1583,15 @@ namespace SephiriaMod
             .CreatePerk(EPassivePerkLv.lv10, "AddGrimoire").SetPerkSupplierStatus("ADD_GRIMOIRE/1", "MP_REGEN/4").Parent
             .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/20", "MAGIC_CRITICAL/5000").Parent;
         #endregion
+
+        public static ModSpriteFx DaggerIceAttack1Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing1Fx_Ice", "DaggerSwing1Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack1_", 3);
+        public static ModSpriteFx DaggerIceAttack2Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing2Fx_Ice", "DaggerSwing2Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack2_", 3);
+        public static ModSpriteFx DaggerIceAttack3Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing3Fx_Ice", "DaggerSwing3Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack3_", 3);
+        public static ModSpriteFx DaggerIceAttack4Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing4Fx_Ice", "DaggerSwing4Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack4_", 3);
+        public static ModSpriteFx DaggerIceAttack5Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing5Fx_Ice", "DaggerSwing5Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack5_", 4);
+        public static ModSpriteFx DaggerIceDashFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerDashFx_Ice", "DaggerDashFx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_DashAttack_", 2);
+        public static ModSpriteFx DaggerIceParryFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerParryFx_Ice", "DaggerParryFx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_ParryAttack_", 6).SetCopyPivot();
+        public static ModSpriteFx DaggerIceFuryFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerFuryFx_Ice", "DaggerFuryFx_Stack", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Fury0_", 6);
 
         public static Sprite IconInWorldPotion { get; internal set; }
         public static Sprite IconInWorldCharm { get; internal set; }
@@ -1723,6 +1745,15 @@ namespace SephiriaMod
                     Melon<Core>.Logger.Msg("New Passive: " + pro.Name);
                 moditem.Init(passiveId++, assetId++, assetId++, assetId++);
                 Passives.Add(moditem);
+            }
+            var pros10 = type.GetProperties(BindingFlags.Static | BindingFlags.Public).Where(p => p.PropertyType == typeof(ModSpriteFx) || p.PropertyType.IsSubclassOf(typeof(ModSpriteFx)));
+            foreach (var pro in pros10)
+            {
+                var moditem = pro.GetValue(type) as ModSpriteFx;
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New SpriteFx: " + pro.Name);
+                //moditem.Init(passiveId++, assetId++, assetId++, assetId++);
+                SpriteFxs.Add(moditem);
             }
             //CustomCostumeDatabase.Initialize();
         }

@@ -577,6 +577,7 @@
 		<Compile Include="Registries\ModMiracleStatusDice.cs" />
 		<Compile Include="Registries\ModPassive.cs" />
 		<Compile Include="Registries\ModPassivePerk.cs" />
+		<Compile Include="Registries\ModSpriteFx.cs" />
 		<Compile Include="Utilities\Enums.cs" />
 		<Compile Include="Utilities\ModUtil.cs" />
 		<Compile Include="Registries\ModWeapon.cs" />

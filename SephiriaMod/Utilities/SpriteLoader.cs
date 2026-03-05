@@ -39,12 +39,32 @@ namespace SephiriaMod.Utilities
             //sprite.bounds.extents = new Vector3(sprite.bounds.extents.x * 6, sprite.bounds.extents.y * 6, sprite.bounds.extents.z);
             return sprite;
         }
+        public static Sprite LoadSprite(string name, Vector2 pivot)
+        {
+            var path = GetCustomImagePath(name);
+            if (!File.Exists(path))
+            {
+                Melon<Core>.Logger.Warning(path + " is not exist!");
+                return null;
+            }
+
+            byte[] fileData = File.ReadAllBytes(path);
+            Texture2D tex = new Texture2D(2, 2, TextureFormat.ARGB32, false);
+            tex.LoadImage(fileData);
+
+            var sprite = Sprite.Create(
+                tex,
+                new Rect(0, 0, tex.width, tex.height),
+                pivot, 16
+            );
+            sprite.name = name;
+            sprite.texture.filterMode = FilterMode.Point;
+            //sprite.bounds.extents = new Vector3(sprite.bounds.extents.x * 6, sprite.bounds.extents.y * 6, sprite.bounds.extents.z);
+            return sprite;
+        }
         public static Sprite LoadSprite(string name, Rect rect)
         {
-            string dllPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            DirectoryInfo directoryInfo = Directory.GetParent(dllPath);
-            string dllDirectory = directoryInfo.FullName;
-            var path = dllDirectory + @"\CustomImages\" + name + ".png";
+            var path = GetCustomImagePath(name);
             if (!File.Exists(path))
             {
                 Melon<Core>.Logger.Warning(path + " is not exist!");

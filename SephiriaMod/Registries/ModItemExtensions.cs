@@ -1,4 +1,5 @@
-﻿using SephiriaMod.Buffs;
+﻿using MelonLoader;
+using SephiriaMod.Buffs;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -357,6 +358,144 @@ namespace SephiriaMod.Registries
             item.HeadSpritePosition = pos;
             return item;
         }
+        public static T SetFireDataModifier<T>(this T item, ModWeapon.EAttackType type, Action<NewWeaponFireData[]> modifier) where T : ModWeapon
+        {
+            if(type == ModWeapon.EAttackType.Basic)
+            {
+                item.BasicAttacksModifier = modifier;
+            }
+            else if (type == ModWeapon.EAttackType.Dash)
+            {
+                item.DashAttacksModifier = modifier;
+            }
+            else if (type == ModWeapon.EAttackType.Special)
+            {
+                item.SpecialAttacksModifier = modifier;
+            }
+            return item;
+        }
+        public static T SetFireDataChangeSpriteFx<T>(this T item, ModWeapon.EAttackType type, int original, Func<ModSpriteFx[]> fxsFunc) where T : ModWeapon
+        {
+            //Melon<Core>.Logger.Msg($"SetFireDataChangeSpriteFx: " + item.Name);
+            if (type == ModWeapon.EAttackType.Basic)
+            {
+                item.BasicAttacksModifier = attacks =>
+                {
+                    //Melon<Core>.Logger.Msg($"BasicAttacksModifier");
+                    if (item.NewBasicAttacks.Count > 0)
+                        return;
+
+                    var weapon = WeaponDatabase.FindWeaponById(original);
+                    //Melon<Core>.Logger.Msg($"weapon {weapon}");
+                    if (weapon == null || weapon.mainWeaponPrefab == null || !weapon.mainWeaponPrefab.TryGetComponent<WeaponSimple>(out var simple))
+                        return;
+
+                    var fxs = fxsFunc.Invoke();
+
+                    //Melon<Core>.Logger.Msg($"BasicAttacksModifier] {fxs}");
+                    for (int q = 0; q < fxs.Length; q++)
+                    {
+                        //Melon<Core>.Logger.Msg($"BasicAttacksModifier] {simple.basicComboAttacks}");
+                        if (simple.basicComboAttacks.Length <= q)
+                            break;
+                        if (simple.basicComboAttacks[q] is not NewWeaponFireData_MeleeAttack melee)
+                            break;
+
+                        var fire = ModWeapon.CopyNewWeaponFireData(melee);
+                        if (fxs[q] != null)
+                            fire.swingFxPrefab = fxs[q].ResourcePrefab;
+                        item.NewBasicAttacks.Add(fire);
+                    }
+                    //Melon<Core>.Logger.Msg($"BasicAttacksModifier] end");
+                };
+            }
+            else if (type == ModWeapon.EAttackType.Dash)
+            {
+                item.DashAttacksModifier = attacks =>
+                {
+                    if (item.NewDashAttacks.Count > 0)
+                        return;
+
+                    var weapon = WeaponDatabase.FindWeaponById(original);
+                    if (weapon == null || weapon.mainWeaponPrefab == null || !weapon.mainWeaponPrefab.TryGetComponent<WeaponSimple>(out var simple))
+                        return;
+                    var fxs = fxsFunc.Invoke();
+
+                    for (int q = 0; q < fxs.Length; q++)
+                    {
+                        if (simple.dashAttacks.Length <= q)
+                            break;
+                        if (simple.dashAttacks[q] is not NewWeaponFireData_MeleeAttack melee)
+                            break;
+                        var fire = ModWeapon.CopyNewWeaponFireData(melee);
+                        if (fxs[q] != null)
+                            fire.swingFxPrefab = fxs[q].ResourcePrefab;
+                        item.NewDashAttacks.Add(fire);
+                    }
+                };
+            }
+            else if (type == ModWeapon.EAttackType.Special)
+            {
+                item.SpecialAttacksModifier = attacks =>
+                {
+                    if (item.NewSpecialAttacks.Count > 0)
+                        return;
+
+                    var weapon = WeaponDatabase.FindWeaponById(original);
+                    if (weapon == null || weapon.mainWeaponPrefab == null || !weapon.mainWeaponPrefab.TryGetComponent<WeaponSimple>(out var simple))
+                        return;
+                    var fxs = fxsFunc.Invoke();
+
+                    for (int q = 0; q < fxs.Length; q++)
+                    {
+                        if (simple.specialAttacks.Length <= q)
+                            break;
+                        if (simple.specialAttacks[q] is not NewWeaponFireData_MeleeAttack melee)
+                            break;
+                        var fire = ModWeapon.CopyNewWeaponFireData(melee);
+                        if (fxs[q] != null)
+                            fire.swingFxPrefab = fxs[q].ResourcePrefab;
+                        item.NewSpecialAttacks.Add(fire);
+                    }
+                };
+            }
+            return item;
+        }
+        public static T AddFireDataChangeDamageElemental<T>(this T item, ModWeapon.EAttackType type, EDamageElementalType elemental) where T : ModWeapon
+        {
+            //Melon<Core>.Logger.Msg($"SetFireDataChangeSpriteFx: " + item.Name);
+            if (type == ModWeapon.EAttackType.Basic)
+            {
+                item.BasicAttacksModifier += attacks =>
+                {
+                    foreach(var fire in item.NewBasicAttacks)
+                    {
+                        fire.damageElementalType = elemental;
+                    }
+                };
+            }
+            else if (type == ModWeapon.EAttackType.Dash)
+            {
+                item.DashAttacksModifier += attacks =>
+                {
+                    foreach (var fire in item.NewDashAttacks)
+                    {
+                        fire.damageElementalType = elemental;
+                    }
+                };
+            }
+            else if (type == ModWeapon.EAttackType.Special)
+            {
+                item.SpecialAttacksModifier += attacks =>
+                {
+                    foreach (var fire in item.NewSpecialAttacks)
+                    {
+                        fire.damageElementalType = elemental;
+                    }
+                };
+            }
+            return item;
+        }
         public static T SetDefaultDuration<T>(this T item, float duration) where T : CharacterBuffMod
         {
             item.defaultDuration = duration;
@@ -392,6 +531,11 @@ namespace SephiriaMod.Registries
                 perk.stats = stats;
                 return perk;
             };
+            return item;
+        }
+        public static T SetCopyPivot<T>(this T item, bool copyPivot = true) where T : ModSpriteFx
+        {
+            item.CopyPivot = copyPivot;
             return item;
         }
 

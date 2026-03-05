@@ -1,10 +1,12 @@
-﻿using MelonLoader;
+﻿using FMODUnity;
+using MelonLoader;
 using Mirror;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using static MelonLoader.MelonLogger;
 
 namespace SephiriaMod.Registries
 {
@@ -134,6 +136,85 @@ namespace SephiriaMod.Registries
             entity.icon = Icon ?? SpriteLoader.LoadSprite(IconFileName);
             entity.wieldEntity = WeaponWieldEntity;
             return entity;
+        }
+        public Action<NewWeaponFireData[]> BasicAttacksModifier { get; internal set; }
+        public List<NewWeaponFireData> NewBasicAttacks { get; internal set; } = [];
+        public Action<NewWeaponFireData[]> DashAttacksModifier { get; internal set; }
+        public List<NewWeaponFireData> NewDashAttacks { get; internal set; } = [];
+        public Action<NewWeaponFireData[]> SpecialAttacksModifier { get; internal set; }
+        public List<NewWeaponFireData> NewSpecialAttacks { get; internal set; } = [];
+        public void OnSpriteFxRegistered()
+        {
+            if (MainWeaponPrefab == null)
+                return;
+            if (!MainWeaponPrefab.TryGetComponent<WeaponSimple>(out var simple))
+                return;
+            if (Core.LogMany)
+                Melon<Core>.Logger.Msg($"OnSpriteFxRegistered: {simple}");
+
+            BasicAttacksModifier?.Invoke(simple.basicComboAttacks);
+            //Melon<Core>.Logger.Msg($"OnSpriteFxRegistered2: {BasicAttacksModifier}");
+
+            for (int q = 0; q < simple.basicComboAttacks.Length; q++)
+            {
+                if (NewBasicAttacks.Count <= q)
+                    break;
+                simple.basicComboAttacks[q] = NewBasicAttacks[q];
+            }
+            //Melon<Core>.Logger.Msg($"OnSpriteFxRegistered3: {simple}");
+
+            DashAttacksModifier?.Invoke(simple.dashAttacks);
+
+            for (int q = 0; q < simple.dashAttacks.Length; q++)
+            {
+                if (NewDashAttacks.Count <= q)
+                    break;
+                simple.dashAttacks[q] = NewDashAttacks[q];
+            }
+            SpecialAttacksModifier?.Invoke(simple.specialAttacks);
+
+            for (int q = 0; q < simple.specialAttacks.Length; q++)
+            {
+                if (NewSpecialAttacks.Count <= q)
+                    break;
+                simple.specialAttacks[q] = NewSpecialAttacks[q];
+            }
+            //Melon<Core>.Logger.Msg($"OnSpriteFxRegistered: end");
+        }
+        public static NewWeaponFireData CopyNewWeaponFireData(NewWeaponFireData_MeleeAttack melee)
+        {
+            var fire = ScriptableObject.CreateInstance<NewWeaponFireData_MeleeAttack>();
+            fire.name = melee.name + "_Mod";
+            fire.projectilePrefab = melee.projectilePrefab;
+            fire.showSwingFxOnMeleeCollision = melee.showSwingFxOnMeleeCollision;
+            fire.attackDashDirectionType = melee.attackDashDirectionType;
+            fire.attackDashCurveType = melee.attackDashCurveType;
+            fire.attackDashSpeed = melee.attackDashSpeed;
+            fire.attackDashAngle = melee.attackDashAngle;
+            fire.attackDashTime = melee.attackDashTime;
+            fire.damageMultiplier = melee.damageMultiplier;
+            fire.staggeringLevel = melee.staggeringLevel;
+            fire.externalForcePower = melee.externalForcePower;
+            fire.swingID = melee.swingID;
+            fire.addDamagePerUsedMP = melee.addDamagePerUsedMP;
+            fire.damageElementalType = melee.damageElementalType;
+            fire.relatedStatFormula = melee.relatedStatFormula;
+            fire.useElementalTypeFromRelatedStatFormula = melee.useElementalTypeFromRelatedStatFormula;
+            fire.chaosDamageColor = melee.chaosDamageColor;
+            fire.hitStopTime = melee.hitStopTime;
+            fire.cameraShakeVelocityOnFire = melee.cameraShakeVelocityOnFire;
+            fire.aimSupport = melee.aimSupport;
+            fire.swingFxPrefab = melee.swingFxPrefab;
+            fire.attachSwingFxToOwner = melee.attachSwingFxToOwner;
+            fire.swingSoundEvent = melee.swingSoundEvent;
+            fire.relatedToMeleeAttackRangeBonus = melee.relatedToMeleeAttackRangeBonus;
+            return fire;
+        }
+        public enum EAttackType
+        {
+            Basic,
+            Dash,
+            Special
         }
     }
 }
