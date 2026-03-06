@@ -24,8 +24,12 @@ namespace SephiriaMod.Registries
 
         public static int width = 10;
         public static int height = 10;
+
+        public static Sprite NoneCategoryIcon;
         public static void InitSprites()
         {
+            NoneCategoryIcon = SpriteLoader.LoadSprite(ModUtil.ItemCategoryPath + "None");
+
             NewKeywordSprite = SpriteLoader.LoadSprite(ModUtil.UIPath + "Keyword");
             if(NewKeywordSprite == null)
             {

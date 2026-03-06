@@ -1,6 +1,7 @@
 ﻿using Harmony;
 using HeathenEngineering.SteamworksIntegration.API;
 using MelonLoader;
+using SephiriaMod.Registries;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,7 @@ namespace SephiriaMod.Items
                 keys.Add(pair.Key, list.Count);
                 list.Add(pair.Value);
                 var value = pair.Value.valuesByLevel[0];
-                if (pair.Value.statusID == "INV_LEVEL")
+                if (pair.Value.statusID == "INV_LEVEL" || pair.Value.statusID == "POTION_SLOT")
                     pair.Value.valuesByLevel = [value];
                 else
                     pair.Value.valuesByLevel = Enumerable.Range(1, ValiableMax + 1).Select(x => x * value).ToArray();
@@ -383,6 +384,47 @@ namespace SephiriaMod.Items
         public override bool Weaved()
         {
             return true;
+        }
+
+
+        public override int GetSubIconCount()
+        {
+            return 1;
+        }
+
+        public override Sprite GetSubIconImage(ItemPosition pos, bool isInstance, int idx)
+        {
+            if (!isInstance)
+            {
+                return null;
+            }
+
+            if (!NetworkAvatar)
+            {
+                return null;
+            }
+
+            foreach(var item in assignedCategory)
+            {
+                foreach(var category in ItemDatabase.GetAllItemCategory())
+                {
+                    if(item == category.id)
+                    {
+                        return category.categoryIcon;
+                    }
+                }
+            }
+            if(indexesClient.Count > 0)
+            {
+                return CustomSpriteAsset.NoneCategoryIcon;
+            }
+
+            return null;
+        }
+
+        public override Vector2 GetSubIconImageOffset(int index)
+        {
+            return new Vector2(4f, -4f);
         }
     }
 }
