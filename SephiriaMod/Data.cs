@@ -843,6 +843,16 @@ namespace SephiriaMod
         public static ModCharm GuardFrostbite { get; } = ModCharmStatus.Create<Charm_GuardFrostbite>("Guard_Frostbite", 2, CreateStatusGroup("ICE_DAMAGE", 3, 5, 8), CreateStatusGroup("MP_STEAL", 2, 3, 5))
             .SetCategory(ItemCategories.Glacier).SetSimpleEffect().SetRarity(EItemRarity.Legend).SetRelatedWeapon(EWeaponType.SwordAndShield).SetIsUniqueEffect();
         /// <summary>
+        /// Item_Over_Flame_Sword_Name
+        /// ソリス・クリスタ
+        /// Item_Over_Flame_Sword_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Over_Flame_Sword_Effect
+        /// 余分に拾った<tag=FlameSword>を地面に投げる
+        /// </summary>
+        public static ModCharm OverFlameSword { get; } = ModCharmStatus.Create<Charm_OverFlameSword>("Over_Flame_Sword", 3, CreateStatusGroup("FLAME_SWORD_CRITICAL", 5, 8, 11, 15))
+            .SetCategory(ItemCategories.FlameSword).SetSimpleEffect().SetRarity(EItemRarity.Uncommon).SetIsUniqueEffect();
+        /// <summary>
         /// Item_Add_Max_Miracle_Name
         /// 輝く樹の枝
         /// Item_Add_Max_Miracle_FlavorText

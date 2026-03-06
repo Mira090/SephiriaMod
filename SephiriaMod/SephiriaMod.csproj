@@ -537,6 +537,7 @@
 		<Compile Include="Items\Charm_DashAttackScaleUp.cs" />
 		<Compile Include="Items\Charm_OnDamagedCosumeDash.cs" />
 		<Compile Include="Items\Charm_OtherDefense.cs" />
+		<Compile Include="Items\Charm_OverFlameSword.cs" />
 		<Compile Include="Items\Charm_PallasAce.cs" />
 		<Compile Include="Items\Charm_PallasJoker.cs" />
 		<Compile Include="Items\Charm_PlanetMystic.cs" />
