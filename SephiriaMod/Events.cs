@@ -473,8 +473,8 @@ namespace SephiriaMod
 
                 if (socialID.StartsWith("TrialMerchant_"))
                 {
-                    var splited = socialID.Split("TrialMerchant_");
-                    if(splited.Length == 1 && int.TryParse(splited[0], out var phase))
+                    var splited = socialID.Split("_");
+                    if(splited.Length == 3 && int.TryParse(splited[1], out var phase))
                     {
                         OnTrialMerchant(__instance, random, phase);
                     }
@@ -651,10 +651,9 @@ namespace SephiriaMod
             }
             static void OnTrialMerchant(UnitAI_NewBasic __instance, System.Random random, int phase = -1)
             {
+                var list = new List<ItemMetadata>();
 
-                List<ItemMetadata> list = new List<ItemMetadata>();
-
-                list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(Data.AddInventory.Id), 1));
+                //list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(Data.AddInventory.Id), 1));
                 list.Add(new ItemMetadata(ItemDatabase.GenerateInstanceID(random), ItemDatabase.FindItemById(Data.AddMaxMiracle.Id), 1));
 
                 if (list.Count > 0)
