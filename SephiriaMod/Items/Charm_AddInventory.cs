@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MelonLoader;
+using SephiriaMod.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,7 +31,13 @@ namespace SephiriaMod.Items
             base.OnUpdate();
             if (reward && !rewardReceived)
             {
-                NetworkAvatar.Inventory.AddStorage(inventory);
+                //NetworkAvatar.Inventory.AddStorage(inventory);
+
+                var instance = StatusDatabase.CreateStatusEntity("InventorySlot".ToSephiriaId(), inventory);
+                NetworkAvatar.AddOrphanedStatusInstance(instance);
+                if (Core.LogMedium)
+                    Melon<Core>.Logger.Msg("Add Status: " + instance.ToString(false, false, false));
+
                 using (new GridInventory.Permission(NetworkAvatar.Inventory))
                 {
                     NetworkAvatar.Inventory.ForceRemoveItem(Item.XIdx, Item.YIdx);
