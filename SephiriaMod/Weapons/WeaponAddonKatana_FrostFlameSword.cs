@@ -10,17 +10,21 @@ namespace SephiriaMod.Weapons
 {
     public class WeaponAddonKatana_FrostFlameSword : WeaponAddonCommon_AdditionalElementalDamage
     {
+        public float restoreFlameSwordTime = 2f;
+        public float percent = 3f;
+
+        private float restoreTimer;
         protected override void OnEnableAddon()
         {
             base.OnEnableAddon();
-            parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FrostFlameSword".ToSephiriaUpperId(), 1);
-            parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FLAMESWORDCALLBACKFROST", 1);
+            //parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FrostFlameSword".ToSephiriaUpperId(), 1);
+            //parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FLAMESWORDCALLBACKFROST", 1);
         }
         protected override void OnDisableAddon()
         {
             base.OnDisableAddon();
-            parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FrostFlameSword".ToSephiriaUpperId(), -1);
-            parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FLAMESWORDCALLBACKFROST", -1);
+            //parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FrostFlameSword".ToSephiriaUpperId(), -1);
+            //parent.Networkowner.unitAvatar.AddCustomStatUnsafe("FLAMESWORDCALLBACKFROST", -1);
         }
         /* v0.10.6より前
         [HarmonyPatch(typeof(ComboEffect_FlameSword), "HandleAttackUnit", [typeof(UnitAvatar), typeof(DamageInstance)])]
@@ -46,5 +50,52 @@ namespace SephiriaMod.Weapons
                 }
             }
         }*/
+
+        public override Loc.KeywordValue[] BuildKeywords()
+        {
+            return new List<Loc.KeywordValue>(base.BuildKeywords())
+            {
+                new Loc.KeywordValue("VAL0", restoreFlameSwordTime.ToString()),
+                new Loc.KeywordValue("VAL1", percent + "%")
+            }.ToArray();
+        }
+
+
+        private void Update()
+        {
+            if (parent == null || parent.Networkowner == null)
+                return;
+            var NetworkAvatar = parent.Networkowner.unitAvatar;
+            if (!NetworkAvatar || NetworkAvatar.IsDead || !NetworkAvatar.Inventory)
+            {
+                return;
+            }
+
+            var amp = NetworkAvatar.GetCustomStatUnsafe("CHARGINGCHARMAMPLIFY");
+            if (amp < 0)
+                amp = 0;
+            var charge = NetworkAvatar.GetCustomStatUnsafe("CHARGINGCHARMBONUS");
+            if (charge < 0)
+                charge = 0;
+
+            ComboEffectBase comboEffectBase = NetworkAvatar.Inventory.FindComboEffect("FLAMESWORD");
+            if ((bool)comboEffectBase && comboEffectBase is ComboEffect_FlameSword { isFlameSwordEnabled: not false } comboEffect_FlameSword && !comboEffect_FlameSword.IsMax())
+            {
+                restoreTimer += Time.deltaTime * (1f + charge / 100f * percent);
+                if (restoreTimer >= restoreFlameSwordTime)
+                {
+                    restoreTimer = 0f;
+                    int b = comboEffect_FlameSword.maxSword + comboEffect_FlameSword.Networkavatar.GetCustomStatUnsafe("FLAMESWORDMAX");
+                    if(comboEffect_FlameSword.NetworkcurrentSword + 1 + amp > b)
+                    {
+                        comboEffect_FlameSword.AddSword(b - comboEffect_FlameSword.NetworkcurrentSword);
+                    }
+                    else
+                    {
+                        comboEffect_FlameSword.AddSword(1 + amp);
+                    }
+                }
+            }
+        }
     }
 }

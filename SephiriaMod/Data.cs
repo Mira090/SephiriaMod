@@ -1322,7 +1322,7 @@ namespace SephiriaMod
         /// Weapon_Katana_Ice_T3_Flame_Name
         /// ソリス・フロスト
         /// WeaponAddon_Katana_Ice_T3_Flame_Effect
-        /// <tag=WeaponAction_DirectAttack>時、対象に<tag=FireDamage>の40%分の追加ダメージを与えます。\n<tag=FrostRelic>でダメージを与えると、<tag=FlameSword>を投げます。
+        /// <tag=WeaponAction_DirectAttack>時、対象に<tag=FireDamage>の40%分の追加ダメージを与えます。\n{VAL0}秒ごとに<tag=FlameSword>を1つ生成します。<tag=FrostRelic>チャージ速度1%につき{VAL1}間隔が短くなり、<tag=FrostRelic>の追加発動1回につき生成する太陽剣が1つ増加します。
         public static ModWeapon KatanaIceFlame { get; } = ModWeaponKatana.CreateKatana("Katana_Ice_T3_Flame", 421, 419).SetMainPrefabModifier(main =>
         {
             if (main.gameObject.TryGetComponent<WeaponAddonKatana_Deflecting>(out var status))
