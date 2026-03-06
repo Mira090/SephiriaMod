@@ -144,7 +144,7 @@ namespace SephiriaMod
                 }
                 if (item.name.Contains("1017_ShieldEarring"))
                 {
-                    item.categories = new List<string> { ItemCategories.Guardian, ItemCategories.Vitality };
+                    item.categories = new List<string> { ItemCategories.Vitality };
                 }
                 //if (item.isDual)
                     //Melon<Core>.Logger.Msg(item.aName.ToString() + "(" + item.name + ")");
