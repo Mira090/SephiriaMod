@@ -97,7 +97,7 @@ namespace SephiriaMod.Items
                     var instance = StatusDatabase.CreateStatusEntity(stat.statusID, stat.valuesByLevel.SafeRandomAccess(0));
                     NetworkAvatar.AddOrphanedStatusInstance(instance);
                     if (Core.LogMedium)
-                        Melon<Core>.Logger.Msg("Add Status: " + instance.ToString());
+                        Melon<Core>.Logger.Msg("Add Status: " + instance.ToString(false, false, false));
                 }
                 using (new GridInventory.Permission(NetworkAvatar.Inventory))
                 {
