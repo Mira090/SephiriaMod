@@ -208,6 +208,18 @@ namespace SephiriaMod.Utilities
         {
             return (MiracleSelector2)typeof(UI_MiracleElement).GetField("miracleSelector", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
         }
+        public static void SetIsPicked(this FlameSwordPickLocal instance, bool value)
+        {
+            instance.GetType().GetField("isPicked", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
+        }
+        public static ComboEffect_FlameSword GetComboEffect(this FlameSwordPickLocal instance)
+        {
+            return (ComboEffect_FlameSword)typeof(FlameSwordPickLocal).GetField("comboEffect", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static List<FlameSwordPickLocal> GetPickList(this ComboEffect_FlameSword instance)
+        {
+            return (List<FlameSwordPickLocal>)typeof(ComboEffect_FlameSword).GetField("pickList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
 
 
 

@@ -850,8 +850,8 @@ namespace SephiriaMod
         /// Item_Over_Flame_Sword_Effect
         /// 余分に拾った<tag=FlameSword>を地面に投げる
         /// </summary>
-        public static ModCharm OverFlameSword { get; } = ModCharmStatus.Create<Charm_OverFlameSword>("Over_Flame_Sword", 3, CreateStatusGroup("FLAME_SWORD_CRITICAL", 5, 8, 11, 15))
-            .SetCategory(ItemCategories.FlameSword).SetSimpleEffect().SetRarity(EItemRarity.Uncommon).SetIsUniqueEffect();
+        public static ModCharm OverFlameSword { get; } = ModCharmStatus.Create<Charm_OverFlameSword>("Over_Flame_Sword", 3, CreateStatusGroup("FLAME_SWORD_DAMAGE", 5, 5, 10, 15), CreateStatusGroup("FLAME_SWORD_CRITICAL", 5, 8, 11, 15))
+            .SetCategory(ItemCategories.FlameSword).SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
         /// <summary>
         /// Item_Add_Max_Miracle_Name
         /// 輝く樹の枝
