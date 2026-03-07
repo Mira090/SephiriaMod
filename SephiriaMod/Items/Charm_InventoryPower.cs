@@ -1,6 +1,7 @@
 ﻿using Harmony;
 using HeathenEngineering.SteamworksIntegration.API;
 using MelonLoader;
+using Mirror;
 using SephiriaMod.Registries;
 using SephiriaMod.Utilities;
 using System;
@@ -359,7 +360,14 @@ namespace SephiriaMod.Items
 
             var count = saveData.GetInt($"CharmSaveData_InventoryPower_{Item.InstanceID}_Stack", 0);
             indexes.Clear();
-            Events.CommandValue(NetworkAvatar, Item, -1);
+            if (NetworkClient.active)
+            {
+                indexesClient.Clear();
+            }
+            else
+            {
+                Events.CommandValue(NetworkAvatar, Item, -1);
+            }
             for (int q = 0; q < count; q++)
             {
                 indexes.Add(saveData.GetInt($"CharmSaveData_InventoryPower_{Item.InstanceID}_Stack" + q, -1));
@@ -369,7 +377,14 @@ namespace SephiriaMod.Items
                 }
                 else
                 {
-                    Events.CommandValue(NetworkAvatar, Item, indexes[^1]);
+                    if (NetworkClient.active)
+                    {
+                        indexesClient.Add(indexes[^1]);
+                    }
+                    else
+                    {
+                        Events.CommandValue(NetworkAvatar, Item, indexes[^1]);
+                    }
                 }
             }
             var cate = saveData.GetString($"CharmSaveData_InventoryPower_{Item.InstanceID}_Category", null);
