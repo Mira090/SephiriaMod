@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -11,6 +12,12 @@ namespace SephiriaMod.Items
         public virtual int ValiableMax => 20;
         public int AdditionalMaxLevel { get; private set; }
         public int OriginalMaxLevel { get; private set; }
+        protected override void OnConnected(int instanceID)
+        {
+            base.OnConnected(instanceID);
+            OriginalMaxLevel = maxLevel;
+            //Melon<Core>.Logger.Msg($"OnConnected: {OriginalMaxLevel}");
+        }
         public override int GetSubIconCount()
         {
             return 0;
@@ -26,7 +33,7 @@ namespace SephiriaMod.Items
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
-            OriginalMaxLevel = maxLevel;
+            //OriginalMaxLevel = maxLevel;
             if (NetworkAvatar != null)
             {
                 SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
@@ -35,7 +42,7 @@ namespace SephiriaMod.Items
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
-            maxLevel = OriginalMaxLevel;
+            //maxLevel = OriginalMaxLevel;
         }
         public virtual void SetAdditionalMaxLevel(int level)
         {

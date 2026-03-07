@@ -17,10 +17,16 @@ namespace SephiriaMod.Items
         {
             UITierPatch.Init();
         }
+        protected override void OnConnected(int instanceID)
+        {
+            base.OnConnected(instanceID);
+            OriginalMaxLevel = maxLevel;
+            //Melon<Core>.Logger.Msg($"OnConnected: {OriginalMaxLevel}");
+        }
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
-            OriginalMaxLevel = maxLevel;
+            //OriginalMaxLevel = maxLevel;
             if(NetworkAvatar != null)
             {
                 SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
@@ -29,7 +35,7 @@ namespace SephiriaMod.Items
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
-            maxLevel = OriginalMaxLevel;
+            //maxLevel = OriginalMaxLevel;
         }
         public virtual void SetAdditionalMaxLevel(int level)
         {
