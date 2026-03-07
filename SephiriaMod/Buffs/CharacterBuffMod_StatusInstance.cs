@@ -69,7 +69,7 @@ namespace SephiriaMod.Buffs
             }
         }
 
-        public List<(string, string)> ConvertValue()
+        public override List<(string, string)> ConvertValue()
         {
             List<(string, string)> list = new List<(string, string)>();
             int num = 0;
