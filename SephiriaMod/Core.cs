@@ -214,6 +214,12 @@ namespace SephiriaMod
                 {
                     //item.activeType = EItemActiveType.Default;
                 }
+                if (item.id == 1188)//血石のイヤリング
+                {
+                    item.categories = [ItemCategories.Drunk, ItemCategories.Vitality];
+                    item.SetEntityRarity(EItemRarity.Rare);
+                    item.isDual = true;
+                }
 
                 if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<Charm_Basic>(out var c))
                 {
