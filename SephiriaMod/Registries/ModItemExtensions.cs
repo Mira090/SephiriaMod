@@ -34,6 +34,27 @@ namespace SephiriaMod.Registries
             };
             return item;
         }
+        public static T SetEntityRarity<T>(this T item, EItemRarity rarity) where T : ItemEntity
+        {
+            item.rarity = rarity;
+            item.cost = rarity switch
+            {
+                EItemRarity.Common => 400,
+                EItemRarity.Uncommon => 600,
+                EItemRarity.Rare => 800,
+                EItemRarity.Legend => 1100,
+                _ => 200
+            };
+            item.sapphirePrice = rarity switch
+            {
+                EItemRarity.Common => 2,
+                EItemRarity.Uncommon => 3,
+                EItemRarity.Rare => 4,
+                EItemRarity.Legend => 5,
+                _ => 1
+            };
+            return item;
+        }
         public static T SetSacrifice<T>(this T item) where T : ModItem
         {
             item.Rarity = ECustomItemRarity.Sacrifice.ToSephiria();
