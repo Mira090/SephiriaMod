@@ -219,6 +219,11 @@ namespace SephiriaMod
                     item.categories = [ItemCategories.Drunk, ItemCategories.Vitality];
                     item.SetEntityRarity(EItemRarity.Rare);
                     item.isDual = true;
+
+                    if(item.resourcePrefab.TryGetComponent<Charm_StatusInstance>(out var status) && status.stats.Length >= 2 && status.stats[1].statusID == "DEFENSE")
+                    {
+                        status.stats[1].valuesByLevel = [-10, -15, -20, -30];
+                    }
                 }
 
                 if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<Charm_Basic>(out var c))
