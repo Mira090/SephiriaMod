@@ -732,7 +732,7 @@ namespace SephiriaMod
         /// Item_Planet_Mystic_Effect
         /// 神秘のコンボ効果の枠に置いた惑星を巨大化
         /// Item_Planet_Mystic_Effect2
-        /// 神秘のコンボ効果の枠に置いた惑星のレベル合計1につき惑星攻撃速度 {SPEED}
+        /// 神秘のコンボ効果の枠に置いた惑星のレベル合計1につき惑星攻撃速度 {SPEED}\n[現在：{CURRENT}]
         /// </summary>
         public static ModCharm PlanetMystic { get; } = ModCharmStatus.Create<Charm_PlanetMystic>("Planet_Mystic", 4, CreateStatusGroup("PLANET_DAMAGE", 2, 4, 6, 8, 10))
             .SetCategory(ItemCategories.Planet, ItemCategories.Mystic).SetIsDual().SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect();

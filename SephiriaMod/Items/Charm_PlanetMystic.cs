@@ -14,9 +14,17 @@ namespace SephiriaMod.Items
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
             string value = showAllLevel ? speed.SafeRandomAccess(0) + "→" + speed.SafeRandomAccess(maxLevel) : speed.SafeRandomAccess(LevelToIdx(level)).ToString();
-            return new Loc.KeywordValue[1]
+            string value2 = "-";
+
+            if(avatar != null && avatar.Inventory != null && !ignoreAvatarStatus)
             {
-                new Loc.KeywordValue("SPEED", "+" + value + "%", GetPositiveColor(virtualLevelOffset))
+                value2 = (GetPlanetLevels(avatar) * speed.SafeRandomAccess(LevelToIdx(level))).ToString();
+            }
+
+            return new Loc.KeywordValue[2]
+            {
+                new Loc.KeywordValue("SPEED", "+" + value + "%", GetPositiveColor(virtualLevelOffset)),
+                new Loc.KeywordValue("CURRENT", value2 + "%", GetPositiveColor(virtualLevelOffset))
             };
         }
         protected override void OnEnabledEffect()
@@ -76,6 +84,41 @@ namespace SephiriaMod.Items
                 planet.SetEnhancement(true);
                 recentPlanets.Add(planet);
             }
+        }
+        private static int GetPlanetLevels(UnitAvatar avatar)
+        {
+            if(avatar == null || avatar.Inventory == null)
+                return 0;
+            var combo = avatar.Inventory.FindComboEffect(ItemCategories.Mystic);
+            if (combo == null || !combo.isEnabled || combo is not ComboEffect_Mystic mystic)
+                return 0;
+
+            List<ItemPosition> pos = new();
+            if (mystic.comboCount >= mystic.first)
+            {
+                for (int q = 0; q < mystic.firstEngravingCount; q++)
+                {
+                    pos.Add(mystic.GetPosition(avatar, q));
+                }
+            }
+            if (mystic.comboCount >= mystic.second)
+            {
+                for (int q = 0; q < mystic.secondEngravingCount; q++)
+                {
+                    pos.Add(mystic.GetPosition(avatar, q + mystic.firstEngravingCount));
+                }
+            }
+
+            int sum = 0;
+
+            foreach (var p in pos)
+            {
+                var item = avatar.Inventory.FindItem(p);
+                if (item == null || item.Charm == null || item.Charm is not Charm_SummonGreenBat planet)
+                    continue;
+                sum += Mathf.Min(planet.DisplayedLevel, planet.maxLevel);
+            }
+            return sum;
         }
         private void ClearStats()
         {
