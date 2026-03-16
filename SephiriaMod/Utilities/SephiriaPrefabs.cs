@@ -54,6 +54,18 @@ namespace SephiriaMod.Utilities
                 return _meteorBullet;
             }
         }
+        private static GameObject _explosionFx;
+        public static GameObject ExplosionFx
+        {
+            get
+            {
+                if (_explosionFx == null && MeteorBullet.TryGetComponent<BulletDestroyModule_Explode>(out var module) && module.destroyFxPrefab)
+                {
+                    _explosionFx = module.destroyFxPrefab;
+                }
+                return _explosionFx;
+            }
+        }
         private static GameObject[] _pallasBigBullets;
         public static GameObject[] PallasBigBullets
         {

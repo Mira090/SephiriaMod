@@ -860,6 +860,19 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm AddMaxMiracle { get; } = ModCharmOrphanedStatus.Create("Add_Max_Miracle", CreateStatusGroup("MaxMiracleCount".ToSephiriaId(), 1)).SetActiveType(EItemActiveType.Hidden)
             .SetCategory().SetSimpleEffects(0).SetRarity(EItemRarity.Legend);
+        /// <summary>
+        /// Item_Self_Explosion_Name
+        /// 自爆スイッチ
+        /// Item_Self_Explosion_FlavorText
+        /// 厳重なセキュリティの下で管理されています。
+        /// Item_Self_Explosion_Effect
+        /// <tag=Follower>がダメージを{TIME}回与えるたびにチャージ
+        /// Item_Self_Explosion_Effect2
+        /// <tag=Follower>{COUNT}体が自爆して<tag=FireDamage>を与える（<tag=FollowerDamage>と見なされる）\n[ダメージ：{DAMAGE}（{BASE}+<tag=FireDamage>{PERCENT}）]
+        /// </summary>
+        public static ModCharm SelfExplosion { get; } = ModCharmStatus.Create<Charm_SelfExplosion>("Self_Explosion", 5)
+            .SetCategory(ItemCategories.Companion, ItemCategories.Ember).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetIsDual().SetDamageId();
+
 
         #region Sacrifices
         /// <summary>

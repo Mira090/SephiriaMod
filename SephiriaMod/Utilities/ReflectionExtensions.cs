@@ -220,6 +220,14 @@ namespace SephiriaMod.Utilities
         {
             return (List<FlameSwordPickLocal>)typeof(ComboEffect_FlameSword).GetField("pickList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
         }
+        public static bool GetChance(this Charm_FireBulletInRange instance)
+        {
+            return (bool)typeof(Charm_FireBulletInRange).GetField("chance", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static void SetChance(this Charm_FireBulletInRange instance, bool value)
+        {
+            typeof(Charm_FireBulletInRange).GetField("chance", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
+        }
 
 
 
