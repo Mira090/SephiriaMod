@@ -204,6 +204,10 @@ namespace SephiriaMod.Utilities
                 UnityEngine.Object.Instantiate(breakFxFragment.gameObject, position + breakFxFragment.transform.localPosition, Quaternion.identity).SetActive(value: true);
             }
         }
+        public static ushort ToFunctionHashCode(this string function)
+        {
+            return (ushort)((uint)function.GetStableHashCode() & 0xFFFFu);
+        }
 
         #region region Delay関数
         /// <summary>
