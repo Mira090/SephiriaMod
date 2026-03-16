@@ -320,8 +320,8 @@ namespace SephiriaMod
         /// Item_Follower_Died_Heal_Effect
         /// HP消費以外によるダメージで<tag=Follower>が倒れた時、プレイヤーの<tag=HP>を回復する。（上限を超過して回復する）\n[HP回復量：倒れた<tag=Follower>の最大<tag=HP>{HEAL}]
         /// </summary>
-        public static ModCharm FollowerDiedHeal { get; } = ModCharm.Create<Charm_CompanionDiedHeal>("Follower_Died_Heal", 4, true)
-            .SetCategory(ItemCategories.Companion).SetSimpleEffect().SetRarity(EItemRarity.Legend);
+        public static ModCharm FollowerDiedHeal { get; } = ModCharmStatus.Create<Charm_CompanionDiedHeal>("Follower_Died_Heal", 4, CreateStatusGroup("FOLLOWER_REVIVE", 5, 10, 20, 35, 60))
+            .SetCategory(ItemCategories.Companion).SetSimpleEffect().SetRarity(EItemRarity.Legend).SetIsUniqueEffect();
         /// <summary>
         /// Item_Pallas_Joker_Name
         /// パラスのジョーカー

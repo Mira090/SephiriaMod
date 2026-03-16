@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_CompanionDiedHeal : Charm_Basic
+    public class Charm_CompanionDiedHeal : Charm_StatusInstance
     {
-        private int[] healByLevel = [4, 5, 7, 10, 15];
+        private int[] healByLevel = [2, 2, 3, 5, 8];
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
             string value = showAllLevel ? healByLevel.SafeRandomAccess(0) + "→" + healByLevel.SafeRandomAccess(maxLevel) : healByLevel.SafeRandomAccess(LevelToIdx(level)).ToString();
