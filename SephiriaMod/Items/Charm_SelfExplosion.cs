@@ -28,7 +28,7 @@ namespace SephiriaMod.Items
 
         private void Awake()
         {
-            coolDownTimer.time = 15f;
+            coolDownTimer.time = 12f;
             activeText = new LocalizedString("CharmActive_Effect_IceBow");
         }
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
