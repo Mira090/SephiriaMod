@@ -883,7 +883,7 @@ namespace SephiriaMod
         /// 隕石に命中した敵に<tag=Burn>デバフを付与
         /// </summary>
         public static ModCharm ActiveMeteor { get; } = ModCharmStatus.Create<Charm_ActiveMeteor>("Active_Meteor", 6)
-            .SetCategory(ItemCategories.Ember).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
+            .SetCategory(ItemCategories.Ember).SetEffects("Charm_FlameGround_Meteor_Effect", "Charm_FlameGround_Meteor_Effect2").SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
 
 
         #region Sacrifices
