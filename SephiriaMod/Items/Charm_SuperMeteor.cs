@@ -16,7 +16,7 @@ namespace SephiriaMod.Items
         public int[] percent = [0, 0, 0, 0, 0, 30];
         public int[] meteor = [300];
 
-        public Timer cooldownTimer = new Timer(1f, resetOnTime: false);
+        public Timer cooldownTimer = new Timer(1f);
         private bool isInCooldown = false;
         private void Awake()
         {
