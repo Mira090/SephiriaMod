@@ -872,6 +872,18 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm SelfExplosion { get; } = ModCharmStatus.Create<Charm_SelfExplosion>("Self_Explosion", 5)
             .SetCategory(ItemCategories.Companion, ItemCategories.Ember).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetIsDual().SetDamageId();
+        /// <summary>
+        /// Item_Active_Meteor_Name
+        /// 赤い蛇の牙
+        /// Item_Active_Meteor_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Active_Meteor_Effect
+        /// プレイヤーの周りに火属性ダメージの{DAMAGE}%の隕石を{COUNT}個落とす
+        /// Item_Active_Meteor_Effect2
+        /// 隕石に命中した敵に<tag=Burn>デバフを付与
+        /// </summary>
+        public static ModCharm ActiveMeteor { get; } = ModCharmStatus.Create<Charm_ActiveMeteor>("Active_Meteor", 6)
+            .SetCategory(ItemCategories.Ember).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
 
 
         #region Sacrifices
