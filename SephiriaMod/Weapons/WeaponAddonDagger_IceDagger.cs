@@ -24,7 +24,7 @@ namespace SephiriaMod.Weapons
             {
                 if(charm.Item != null && charm.Item.EntityID == ItemID && charm is Charm_Magic magic)
                 {
-                    ActiveSkill skillObject = magic.FireCasting(player.transform.position, player.transform.position, player.TopdownActor.CenterYPos, 1, false, false);
+                    ActiveSkill skillObject = magic.FireCasting(player.transform.position, player.transform.position, player.TopdownActor.CenterYPos, 1, false, false, null);
                     player.GetSkillController().SetLastUsedMagicServerside(magic);
                     return;
                 }

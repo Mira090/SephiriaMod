@@ -163,7 +163,7 @@ namespace SephiriaMod.Items
                 if (currentCastingTimer.Update(Time.deltaTime))
                 {
                     isCasting = false;
-                    ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, false);
+                    ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, false, null);
                     player.GetSkillController().SetLastUsedMagicServerside(magicCharm);
                     //Melon<Core>.Logger.Msg("cast!" + (skillObject == null));
                     slot.Use(skillObject);
