@@ -116,10 +116,10 @@ namespace SephiriaMod.Utilities
         {
             instance.GetType().GetField("cooldownTimer", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
         }
-        public static void InvokeLocalFireSword(this ComboEffect_FlameSword instance, Vector3 motionTo, bool isDirectAttack, bool isMagic)
+        public static void InvokeServerFireSword(this ComboEffect_FlameSword instance, Vector3 motionTo, bool isDirectAttack, bool isMagic)
         {
             var type = typeof(ComboEffect_FlameSword);
-            var method = type.GetMethod("LocalFireSword", BindingFlags.Instance | BindingFlags.NonPublic);
+            var method = type.GetMethod("ServerFireSword", BindingFlags.Instance | BindingFlags.NonPublic);
             method.Invoke(instance, [motionTo, isDirectAttack, isMagic]);
         }
         public static IEnumerator InvokeCreateFlameSword(this ComboEffect_FlameSword instance, Vector3 motionTo)

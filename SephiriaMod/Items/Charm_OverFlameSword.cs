@@ -30,10 +30,10 @@ namespace SephiriaMod.Items
                     return;
 
                 int b = __instance.maxSword + __instance.Networkavatar.GetCustomStatUnsafe("FLAMESWORDMAX");
-                var over = (__instance.currentSword + amount) - b;
+                var over = (__instance.currentSword + amount + __instance.Networkavatar.GetCustomStatUnsafe("FLAMESWORDPICKBONUS")) - b;
                 for (int q = 0; q < over; q++)
                 {
-                    __instance.InvokeLocalFireSword(__instance.Networkavatar.transform.position, false, false);
+                    __instance.InvokeServerFireSword(__instance.Networkavatar.transform.position, false, false);
                 }
             }
         }

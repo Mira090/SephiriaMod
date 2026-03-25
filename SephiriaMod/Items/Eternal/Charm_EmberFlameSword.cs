@@ -36,7 +36,7 @@ namespace SephiriaMod.Items.Eternal
                         {
                             __instance.SetIsCooldown(true);
                             __instance.SetCooldownTimer(0);
-                            __instance.InvokeLocalFireSword(target.transform.position, false, false);
+                            __instance.InvokeServerFireSword(target.transform.position, false, false);
                         }
                         return false;
                     }
@@ -65,7 +65,7 @@ namespace SephiriaMod.Items.Eternal
                 return true;
             }
         }
-        [HarmonyPatch(typeof(ComboEffect_FlameSword), "LocalFireSword")]
+        [HarmonyPatch(typeof(ComboEffect_FlameSword), "ServerFireSword")]
         public static class ComboEffect_FlameSwordLocalFireSwordPatch
         {
             static void Postfix(Vector3 motionTo, bool isDireectAttack, bool isMagic, ComboEffect_FlameSword __instance)
