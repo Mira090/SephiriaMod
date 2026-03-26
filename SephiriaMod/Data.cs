@@ -1645,6 +1645,7 @@ namespace SephiriaMod
             .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/20", "MAGIC_CRITICAL/5000").Parent;
         #endregion
 
+        #region SpriteFxs
         public static ModSpriteFx DaggerIceAttack1Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing1Fx_Ice", "DaggerSwing1Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack1_", 3);
         public static ModSpriteFx DaggerIceAttack2Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing2Fx_Ice", "DaggerSwing2Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack2_", 3);
         public static ModSpriteFx DaggerIceAttack3Fx { get; } = ModSpriteFx.CreateSpriteFx("DaggerSwing3Fx_Ice", "DaggerSwing3Fx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Attack3_", 3);
@@ -1653,6 +1654,7 @@ namespace SephiriaMod
         public static ModSpriteFx DaggerIceDashFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerDashFx_Ice", "DaggerDashFx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_DashAttack_", 2);
         public static ModSpriteFx DaggerIceParryFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerParryFx_Ice", "DaggerParryFx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_ParryAttack_", 6).SetCopyPivot();
         public static ModSpriteFx DaggerIceFuryFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerFuryFx_Ice", "DaggerFuryFx_Stack", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Fury0_", 6);
+        #endregion
 
         public static Sprite IconInWorldPotion { get; internal set; }
         public static Sprite IconInWorldCharm { get; internal set; }
