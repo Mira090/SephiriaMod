@@ -1644,6 +1644,39 @@ namespace SephiriaMod
             .CreatePerk(EPassivePerkLv.lv5, "CooldownRecovery").SetPerkSupplierStatus("COOLDOWN_RECOVERY_SPEED/30").Parent
             .CreatePerk(EPassivePerkLv.lv10, "AddGrimoire").SetPerkSupplierStatus("ADD_GRIMOIRE/1", "MP_REGEN/4").Parent
             .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/20", "MAGIC_CRITICAL/5000").Parent;
+        /// <summary>
+        /// Passive_Vampire_Name
+        /// 摂理
+        /// Passive_Vampire_Description
+        /// 王たる理を追求します。
+        /// Passive_Vampire_Effect_LV5
+        /// <tag=HP>の回復量が{VAL0}%減少しますが、最大HPが{VAL1}増加します。
+        /// Passive_Vampire_Effect_LV10
+        /// さらに<tag=HP>の回復量が{VAL0}%減少しますが、<tag=WeaponAction_DirectAttack>が命中した時、<tag=Debuff_Poison>デバフを付与します。
+        /// Passive_Vampire_Effect_LV20
+        /// <tag=Elemental_Chaos>ダメージの<tag=HPSteal>が{VAL0}増加します。
+        /// </summary>
+        /*public static ModPassive VampirePassive { get; } = ModPassive.CreatePassive("Vampire", new Color32(229, 61, 101, byte.MaxValue), "HP_STEAL/1", "FINAL_WEAPONDAMAGE/-2")
+            .CreatePerk(EPassivePerkLv.lv5, "HPDecrease").SetPerkSupplierStatus("HEALING_PENALTY/-25", "MAX_HP/15").Parent
+            .CreatePerk(EPassivePerkLv.lv10, "DirectAttackPoison").SetPerkSupplierStatus<ModPassivePerk, PassiveObject_DirectAttackPoison>("HEALING_PENALTY/-25").Parent
+            .CreatePerk(EPassivePerkLv.lv20, "ChaosSteal").SetPerkSupplier<ModPassivePerk, PassiveObject_ChaosSteal>().Parent;*/
+        /// <summary>
+        /// Passive_Movement_Name
+        /// 機動
+        /// Passive_Movement_Description
+        /// 昔から足が早いのが取り柄でした。
+        /// Passive_Movement_Effect_LV5
+        /// <tag=WeaponAction_DirectAttack>が命中した時、{VAL0}の追加<tag=PhysicalDamage>を与えます。
+        /// Passive_Movement_Effect_LV10
+        /// <tag=Toughness>と<tag=TrueDamage>が{VAL0}増加します。
+        /// Passive_Movement_Effect_LV20
+        /// 
+        /// </summary>
+        /*
+        public static ModPassive MovementPassive { get; } = ModPassive.CreatePassive("Movement", new Color32(168, 226, 61, byte.MaxValue), "MOVE_SPEED/2")
+            .CreatePerk(EPassivePerkLv.lv5, "AdditionalDamage").SetPerkSupplier<ModPassivePerk, PassiveObject_AdditionalDamage>().Parent
+            .CreatePerk(EPassivePerkLv.lv10, "TrueDamage").SetPerkSupplierStatus("TOUGHNESS/5", "TRUE_DAMAGE/5").Parent
+            .CreatePerk(EPassivePerkLv.lv20, "SpecialAttackSpeed").SetPerkSupplierStatus().Parent;*/
         #endregion
 
         #region SpriteFxs

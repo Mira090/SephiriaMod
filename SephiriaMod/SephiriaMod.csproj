@@ -567,6 +567,9 @@
 		<Compile Include="Items\Eternal\Charm_MagitechDarkCloud.cs" />
 		<Compile Include="Items\Sacrifice\Charm_Sacrifice.cs" />
 		<Compile Include="Items\Sacrifice\Charm_SacrificeDamage.cs" />
+		<Compile Include="Passives\PassiveObject_AdditionalDamage.cs" />
+		<Compile Include="Passives\PassiveObject_ChaosSteal.cs" />
+		<Compile Include="Passives\PassiveObject_DirectAttackPoison.cs" />
 		<Compile Include="Registries\CustomCostumeDatabase.cs" />
 		<Compile Include="Registries\CustomCostumeMetadata.cs" />
 		<Compile Include="ECustomItemRarity.cs" />
