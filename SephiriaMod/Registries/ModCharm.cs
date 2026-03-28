@@ -48,7 +48,7 @@ namespace SephiriaMod.Registries
         public override void Init(int id, uint assetId)
         {
             base.Init(id, assetId);
-            if (DamageId != null)
+            if (HasDamageId)
                 DamageIdEntity = DamageId.CreateEntity();
         }
     }
