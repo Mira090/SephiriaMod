@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Registries
 {
-    public class ModPassivePerk
+    public class ModPassivePerk : IModDamageId
     {
         public static ModPassivePerk CreatePassivePerk(ModPassive parent, string name, EPassivePerkLv lv)
         {
@@ -31,10 +31,16 @@ namespace SephiriaMod.Registries
 
         public GameObject PerkPrefab { get; internal set; }
 
+        public ModDamageId DamageId { get; internal set; }
+        public DamageIdEntity DamageIdEntity { get; internal set; }
+        public bool HasDamageId => DamageIdEntity != null;
+
         public void Init(uint assetId)
         {
             PerkPrefab = CreateResourcePrefab();
             AssetId = assetId;
+            if (HasDamageId)
+                DamageIdEntity = DamageId.CreateEntity();
         }
         public GameObject CreateResourcePrefab()
         {

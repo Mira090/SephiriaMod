@@ -57,6 +57,17 @@ namespace SephiriaMod.Registries
             };
             return damageId;
         }
+        public static ModDamageId CreatePerk(string id)
+        {
+            var damageId = new ModDamageId
+            {
+                Name = new LocalizedString("Perk_" + id + "_Name"),
+                Id = "Perk_" + id.Replace("_", ""),
+                Category = DamageIdEntity.ECategory.Ability,
+                IconFileName = ModUtil.MiscPath + "DealUIAbility"
+            };
+            return damageId;
+        }
         public DamageIdEntity CreateEntity()
         {
             var entity = ScriptableObject.CreateInstance<DamageIdEntity>();

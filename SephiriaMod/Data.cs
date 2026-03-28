@@ -14,6 +14,7 @@ using SephiriaMod.Registries;
 using SephiriaMod.Buffs;
 using SephiriaMod.Items.Eternal;
 using SephiriaMod.StatusInstances;
+using SephiriaMod.Passives;
 
 namespace SephiriaMod
 {
@@ -1850,6 +1851,27 @@ namespace SephiriaMod
                     if (Core.LogFew)
                         Melon<Core>.Logger.Msg("New DamageId: " + charm.DamageIdEntity.name);
                     list.Add(charm.DamageIdEntity);
+                }
+            }
+            foreach (var moditem in Passives)
+            {
+                if (moditem.Lv5Perk != null && moditem.Lv5Perk is IModDamageId perk5 && perk5.HasDamageId)
+                {
+                    if (Core.LogFew)
+                        Melon<Core>.Logger.Msg("New DamageId: " + perk5.DamageIdEntity.name);
+                    list.Add(perk5.DamageIdEntity);
+                }
+                if (moditem.Lv10Perk != null && moditem.Lv10Perk is IModDamageId perk10 && perk10.HasDamageId)
+                {
+                    if (Core.LogFew)
+                        Melon<Core>.Logger.Msg("New DamageId: " + perk10.DamageIdEntity.name);
+                    list.Add(perk10.DamageIdEntity);
+                }
+                if (moditem.Lv20Perk != null && moditem.Lv20Perk is IModDamageId perk20 && perk20.HasDamageId)
+                {
+                    if (Core.LogFew)
+                        Melon<Core>.Logger.Msg("New DamageId: " + perk20.DamageIdEntity.name);
+                    list.Add(perk20.DamageIdEntity);
                 }
             }
         }
