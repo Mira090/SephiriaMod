@@ -549,6 +549,25 @@ namespace SephiriaMod.Registries
             item.PerkSupplier = supplier;
             return item;
         }
+        public static T SetPerkSupplier<T, U>(this T item) where T : ModPassivePerk where U : PassiveObject
+        {
+            item.PerkSupplier = gameObject =>
+            {
+                var perk = gameObject.AddComponent<U>();
+                return perk;
+            };
+            return item;
+        }
+        public static T SetPerkSupplierStatus<T, U>(this T item, params string[] stats) where T : ModPassivePerk where U : PassiveObject_StatusInstance
+        {
+            item.PerkSupplier = gameObject =>
+            {
+                var perk = gameObject.AddComponent<PassiveObject_StatusInstance>();
+                perk.stats = stats;
+                return perk;
+            };
+            return item;
+        }
         public static T SetPerkSupplierStatus<T>(this T item, params string[] stats) where T : ModPassivePerk
         {
             item.PerkSupplier = gameObject =>
