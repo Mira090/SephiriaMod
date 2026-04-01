@@ -570,6 +570,7 @@
 		<Compile Include="Passives\PassiveObject_AdditionalDamage.cs" />
 		<Compile Include="Passives\PassiveObject_ChaosSteal.cs" />
 		<Compile Include="Passives\PassiveObject_DirectAttackPoison.cs" />
+		<Compile Include="Passives\PassiveObject_SpecialAttackSpeed.cs" />
 		<Compile Include="Registries\CustomCostumeDatabase.cs" />
 		<Compile Include="Registries\CustomCostumeMetadata.cs" />
 		<Compile Include="ECustomItemRarity.cs" />
