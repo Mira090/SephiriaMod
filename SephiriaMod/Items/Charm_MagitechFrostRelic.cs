@@ -47,7 +47,7 @@ namespace SephiriaMod.Items
             }
             else if(damage.id == "Debuff_Electric")
             {
-                NetworkAvatar.ApplyBuff(Data.MagitechFrostRelicBuff, 1, null, true);
+                NetworkAvatar.ApplyBuff(Data.MagitechFrostRelicBuff, 1, NetworkAvatar, true);
             }
         }
         protected override void OnDisabledEffect()
