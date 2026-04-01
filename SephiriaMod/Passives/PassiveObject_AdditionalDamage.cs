@@ -15,19 +15,12 @@ namespace SephiriaMod.Passives
         {
             base.OnEffectEnabled(player, runtime);
             player.OnAttackUnit += OnAttackUnit;
-            player.OnMove += OnMove;
-        }
-
-        private void OnMove(Vector2 input)
-        {
-            Melon<Core>.Logger.Msg("move: " + input);
         }
 
         protected override void OnEffectDisabled()
         {
             base.OnEffectDisabled();
             player.OnAttackUnit -= OnAttackUnit;
-            player.OnMove -= OnMove;
         }
 
         private void OnAttackUnit(UnitAvatar avatar, DamageInstance damage)
