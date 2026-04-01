@@ -17,7 +17,7 @@ namespace SephiriaMod.Passives
             if (damage.fromType != EDamageFromType.DirectAttack)
                 return;
 
-            player.ApplyBuff(Data.SpecialAttackSpeedBuff, 1, player, true);
+            //player.ApplyBuff(Data.SpecialAttackSpeedBuff, 1, player, true);
         }
 
         protected override void OnEffectDisabled()
