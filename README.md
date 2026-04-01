@@ -11,7 +11,7 @@ Team Horay の <a href="https://store.steampowered.com/app/2436940/_/">Sephiria<
 2. Releases から最新の `SephiriaMod-0.X.X.zip` をダウンロードし、解凍してください。
 3. `Program Files (x86)\Steam\steamapps\common\Sephiria\Mods` フォルダ内に `SephiriaMod.dll` を配置します。
 4. `Program Files (x86)\Steam\steamapps\common\Sephiria\Mods` フォルダ内に `CustomImages`フォルダをコピーします。
-5. 日本語ユーザーの場合<br> `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `ja-JP.json` を上書きコピーします。<br>韓国語ユーザーの場合<br> `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `ko-KR.json` を上書きコピーします。
+5. 日本語ユーザーの場合<br> `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization` フォルダ内に `SephiriaMod` フォルダを作成し、その中に `ja-JP.json` を配置します。<br>韓国語ユーザーの場合<br> `Program Files (x86)\Steam\steamapps\common\Sephiria\Sephiria_Data\StreamingAssets\Localization\SephiriaMod` フォルダ内に `SephiriaMod` フォルダを作成し、その中に `ko-KR.json` を配置します。
 
 例：
 ```
@@ -23,17 +23,15 @@ Sephiria/
     └── StreamingAssets/
         ├── Costume/
         │   └── RainbowRabbit/
-        └── Localization/
-            ├── ko-KR.json
-            └── ja-JP.json
+        └── Localization/SephiriaMod
+                ├── ko-KR.json
+                └── ja-JP.json
 ```
 
 6. ゲームを起動すると自動的に反映されます。
 
-※翻訳ファイル（ja-JP.json、ko-KR.json）は Sephiria 本体のアップデートによって上書きされる場合があります。ご自身で翻訳されたファイルは必ずバックアップしておいてください。
-
 ## 📝 注意事項
-- このリポジトリおよびその貢献者は、Sephiria、Team Horay、または関連団体とは一切関係がありません
+- このリポジトリおよびその貢献者は、Sephiria、TEAM HORAY、または関連団体とは一切関係がありません
 - 他の Mod と競合する可能性があります
 - マルチプレイで使用する場合は、ホストもクライアントも必ず全員がこのModをインストールする必要があります。全員の同意を得た上でプレイしてください。
 - 一部のアーティファクトはマルチプレイで上手く動作しないことがあります。（主に非ホスト側でアーティファクトの説明文が正しく表示されないことが多い）
@@ -165,7 +163,7 @@ HP回復や最大HP増加などの効果を持つアーティファクトが追�
 
 ### ◆ その他の要素
 
-- ジョーク石板が2つ追加されます。Mystic Potから出ると嫌なので出ないようにしてます（多分出ないはず）。
+- ジョーク石板が2つ追加されます。神秘の壺から出ると嫌なので出ないようにしてます（多分出ないはず）。
 - タイトル画面の左上にMelonLoaderのMod一覧が表示されます。
 
 ## 備考
@@ -173,7 +171,7 @@ HP回復や最大HP増加などの効果を持つアーティファクトが追�
 - <a href="https://github.com/Mira090/CustomCostume">Custom Costume Mod</a>は元々このModから分離させたModです。なので、そのソースコードがこのリポジトリにも残っています。
 
 ## スペシャルサンクス（敬称略）
-- 私の友人（ビリビリクリームクロワッサン、友情のリストバンド、烈火の原子時計などの一部のアーティファクトのイラスト）
+- 私の友人（ビリビリクリームクロワッサン、友情のリストバンド、烈火の原子時計などのイラスト）
 - Blue Marl!n（気炎鳳凰、打ち焦がす爪、ソリス・フロストなどのイラスト）
 - UwU（三体模型、魔法仕掛けの天球儀、ルビーの原石などのイラスト）
 - 韓狼（ko-KR.json）
