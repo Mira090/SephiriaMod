@@ -23,7 +23,8 @@ Sephiria/
     └── StreamingAssets/
         ├── Costume/
         │   └── RainbowRabbit/
-        └── Localization/SephiriaMod
+        └── Localization/
+            └── SephiriaMod/
                 ├── ko-KR.json
                 └── ja-JP.json
 ```
