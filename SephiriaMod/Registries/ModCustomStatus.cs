@@ -12,6 +12,14 @@ namespace SephiriaMod.Registries
         {
             return new ModCustomStatus().SetStatus(name);
         }
+        public static ModCustomStatus CreateStatusWithoutKeyword(string name)
+        {
+            return new ModCustomStatus().SetStatusWithoutKeyword(name, name.ToFileNameUpper());
+        }
+        public static ModCustomStatus CreateStatusWithoutKeyword(string name, string keyword)
+        {
+            return new ModCustomStatus().SetStatusWithoutKeyword(name, keyword);
+        }
         internal ModCustomStatus SetStatus(string name)
         {
             Name = name;
@@ -19,6 +27,15 @@ namespace SephiriaMod.Registries
             ClassName = "StatusInstance_Custom/" + name;
             Id = name.ToFileNameUpper();
             Keyword = ModKeyword.CreateKeyword(name);
+            return this;
+        }
+        internal ModCustomStatus SetStatusWithoutKeyword(string name, string keyword)
+        {
+            Name = name;
+            StatKeyword = name;
+            ClassName = "StatusInstance_Custom/" + name;
+            Id = keyword;
+            Keyword = null;
             return this;
         }
         public static ModCustomStatus CreateStatus<T>(string name) where T : StatusInstance
