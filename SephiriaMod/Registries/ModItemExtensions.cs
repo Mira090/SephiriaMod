@@ -562,7 +562,7 @@ namespace SephiriaMod.Registries
         {
             item.PerkSupplier = gameObject =>
             {
-                var perk = gameObject.AddComponent<PassiveObject_StatusInstance>();
+                var perk = gameObject.AddComponent<U>();
                 perk.stats = stats;
                 return perk;
             };
