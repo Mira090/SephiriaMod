@@ -18,5 +18,17 @@ namespace SephiriaMod.Buffs
             var identity = gameObject.AddComponent<NetworkIdentity>();
             identity.SetAssetId(AssetId);
         }
+        public void SetCurrentStack(int stack)
+        {
+            CurrentStack = stack;
+            if(CurrentStack > MaxStackCount)
+            {
+                CurrentStack = MaxStackCount;
+            }
+            if (CurrentStack <= 0)
+            {
+                RequestEnd();
+            }
+        }
     }
 }

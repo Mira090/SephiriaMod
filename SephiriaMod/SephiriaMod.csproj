@@ -581,12 +581,15 @@
 		<Compile Include="Registries\ModCharmSacrificeDamage.cs" />
 		<Compile Include="Registries\ModCustomStatus.cs" />
 		<Compile Include="Registries\ModKeyword.cs" />
+		<Compile Include="Registries\ModMeleeCollision.cs" />
 		<Compile Include="Registries\ModMiracle.cs" />
 		<Compile Include="Registries\ModMiracleStatus.cs" />
 		<Compile Include="Registries\ModMiracleStatusDice.cs" />
 		<Compile Include="Registries\ModPassive.cs" />
 		<Compile Include="Registries\ModPassivePerk.cs" />
+		<Compile Include="Registries\ModProjectile.cs" />
 		<Compile Include="Registries\ModSpriteFx.cs" />
+		<Compile Include="Registries\ModWeaponStaff.cs" />
 		<Compile Include="StatusInstances\StatusInstance_MaxMiracleCount.cs" />
 		<Compile Include="Utilities\Enums.cs" />
 		<Compile Include="Utilities\ModUtil.cs" />
@@ -610,7 +613,9 @@
 		<Compile Include="Utilities\SpriteLoader.cs" />
 		<Compile Include="Weapons\WeaponAddonCommon_BinaryPlanet.cs" />
 		<Compile Include="Weapons\WeaponAddonCommon_CriticalFire.cs" />
+		<Compile Include="Weapons\WeaponAddonCommon_DebuffByDefense.cs" />
 		<Compile Include="Weapons\WeaponAddonCommon_DirectFirePlanet.cs" />
+		<Compile Include="Weapons\WeaponAddonCommon_HealWeaponRange.cs" />
 		<Compile Include="Weapons\WeaponAddonCommon_PlanetWeaponDamage.cs" />
 		<Compile Include="Weapons\WeaponAddonCommon_SpecialFlameSword.cs" />
 		<Compile Include="Weapons\WeaponAddonDagger_CounterEvasion.cs" />

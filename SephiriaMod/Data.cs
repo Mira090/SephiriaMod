@@ -1015,6 +1015,15 @@ namespace SephiriaMod
         public static ModEffectHUD EffectMagitechFrostRelicBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Magitech_Frost_Relic_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
         public static CharacterBuffMod_StatusInstance MagitechFrostRelicBuff { get; } = CreateBuff("MagitechFrostRelicBuff", "MagitechFrostRelicBuff", 20, CreateBuffStatus("ICE_DAMAGE", 2))
             .SetDefaultDuration(Charm_MagitechFrostRelic.BuffDuration);
+        /// <summary>
+        /// EffectHUD_Soul_Steal_Buff_Name
+        /// 吸魂
+        /// EffectHUD_Soul_Steal_Buff_FlavorText
+        /// 近接攻撃範囲増加（最大50スタック）
+        /// </summary>
+        public static ModEffectHUD EffectWeaponRangeBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Soul_Steal_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
+        public static CharacterBuffMod_StatusInstance SoulStealBuff { get; } = CreateBuff("SoulStealBuff", "SoulStealBuff", 50, CreateBuffStatus("WEAPON_RANGE", 2))
+            .SetDefaultDuration(20f);
 
         /// <summary>
         /// EffectHUD_Stargaze_Tablet_Name
@@ -1178,7 +1187,14 @@ namespace SephiriaMod
         /// </summary>
         public static ModKeyword BlackFreeze { get; } = ModKeyword.CreateKeyword("BlackFreeze").SetTextColor(new Color(0.2f, 0.2f, 0.2f))
             .SetKeywordImage(() => CustomSpriteAsset.BlackFrostbite);
-#endregion
+        /// <summary>
+        /// Status_SoulSteal_Name
+        /// 吸魂
+        /// Status_SoulSteal_Description
+        /// 近接攻撃範囲がスタックごとに2%増加します。最大50スタックまで蓄積します。
+        /// </summary>
+        public static ModKeyword SoulSteal { get; } = ModKeyword.CreateKeyword("SoulSteal").SetTextColor(new Color(0.8f, 0.2f, 0.4f));
+        #endregion
 
 
         #region Miracles
@@ -1569,7 +1585,7 @@ namespace SephiriaMod
             .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 20, () => [DaggerIceAttack1Fx, DaggerIceAttack2Fx, DaggerIceAttack3Fx, DaggerIceAttack4Fx, DaggerIceAttack5Fx])
             .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 20, () => [DaggerIceDashFx])
             .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 20, () => [DaggerIceFuryFx, DaggerIceParryFx])
-            .AddFireDataChangeDamageElemental(ModWeapon.EAttackType.Special, EDamageElementalType.Ice);
+            .AddFireDataModifier(ModWeapon.EAttackType.Special, x => x.SetDamageElemental(EDamageElementalType.Ice));
         /// <summary>
         /// Weapon_Dagger_Ice_T3_Frost_Name
         /// 静かな氷菓
@@ -1625,6 +1641,103 @@ namespace SephiriaMod
             .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 20, () => [DaggerIceAttack1Fx, DaggerIceAttack2Fx, DaggerIceAttack3Fx, DaggerIceAttack4Fx, DaggerIceAttack5Fx])
             .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 20, () => [DaggerIceDashFx])
             .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 20, () => [DaggerIceFuryFx, DaggerIceParryFx]);
+        /// <summary>
+        /// Weapon_Staff_Sickle_T2_Name
+        /// 怨嗟の双鎌
+        /// WeaponAddon_Staff_Sickle_T2_Effect
+        /// <tag=WeaponAction_DirectAttack>のダメージ量が20%減少しますが、<tag=HighestElementalDamage>に変更されます。
+        public static ModWeapon QuarterstaffSickle { get; } = ModWeaponStaff.CreateStaff("Staff_Sickle_T2", 526).SetEnhanceFromId(500).SetStandardEnhancements(14017, 14018).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_ElementalBased>(out var elemental))
+            {
+                UnityEngine.Object.DestroyImmediate(elemental);
+            }
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_StatusUnsafe>(out var status))
+            {
+                status.effectText = new LocalizedString("WeaponAddon_Staff_Sickle_T2_Effect");
+                status.status = [CreateWeaponStat("STAFFEXTEND", 4)];
+
+                main.addons = [status];
+            }
+            if (main is WeaponSimple_QuartterStaff staff)
+            {
+                staff.currentStaffExtend = 4 * staff.extendPixelPerUnit;
+            }
+        }).SetBladeSprite(Vector3.zero).SetBorder(new Vector4(0, 18, 0, 19)).SetSizeFromTextureRect()
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 500, () => [StaffSickleAttack1Fx, null, StaffSickleAttack3Fx, StaffSickleAttack1Fx, null, StaffSickleAttack4Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 500, () => [StaffSickleAttack1Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 500, () => [StaffSickleAttack3Fx])
+            .SetSecondFireDataOverrideSpriteFx(500, true, () => [StaffSickleAttack5Fx, StaffSickleAttack5Fx])
+            .AddFireDataModifiers(x => x.SetRelatedStatFormulaAndChaos(new Color32(200, 50, 100, 255), "HIGHEST"))
+            .AddFireDataModifiers(x => x.SetDamageMultiplier(1.75f * 0.8f));
+        /// <summary>
+        /// Weapon_Staff_Sickle_T3_Debuff_Name
+        /// 儀式鎌
+        /// WeaponAddon_Staff_Sickle_T3_Debuff_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Defense>の絶対値10ごとに、30%の確率で<tag=Debuff_Poison><tag=Burn><tag=Frostbite><tag=Electric>を付与します。
+        public static ModWeapon QuarterstaffSickleDebuff { get; } = ModWeaponStaff.CreateStaff("Staff_Sickle_T3_Debuff", 526).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_ElementalBased>(out var elemental))
+            {
+                UnityEngine.Object.DestroyImmediate(elemental);
+            }
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_StatusUnsafe>(out var status))
+            {
+                status.effectText = new LocalizedString("WeaponAddon_Staff_Sickle_T2_Effect");
+                status.status = [CreateWeaponStat("STAFFEXTEND", 4)];
+
+                var @unsafe = main.gameObject.AddComponent<WeaponAddonCommon_DebuffByDefense>();
+
+                @unsafe.effectText = new LocalizedString("WeaponAddon_Staff_Sickle_T3_Debuff_Effect");
+                @unsafe.parent = status.parent;
+
+                main.addons = [status, @unsafe];
+            }
+            if (main is WeaponSimple_QuartterStaff staff)
+            {
+                staff.currentStaffExtend = 4 * staff.extendPixelPerUnit;
+            }
+        }).SetBladeSprite(Vector3.zero).SetBorder(new Vector4(0, 18, 0, 19)).SetSizeFromTextureRect()
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 500, () => [StaffSickleAttack1Fx, null, StaffSickleAttack3Fx, StaffSickleAttack1Fx, null, StaffSickleAttack4Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 500, () => [StaffSickleAttack1Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 500, () => [StaffSickleAttack3Fx])
+            .SetSecondFireDataOverrideSpriteFx(500, true, () => [StaffSickleAttack5Fx, StaffSickleAttack5Fx])
+            .AddFireDataModifiers(x => x.SetRelatedStatFormulaAndChaos(new Color32(200, 50, 100, 255), "HIGHEST"))
+            .AddFireDataModifiers(x => x.SetDamageMultiplier(1.75f * 0.8f));
+        /// <summary>
+        /// Weapon_Staff_Sickle_T3_Heal_Name
+        /// ラスティ
+        /// WeaponAddon_Staff_Sickle_T3_Heal_Effect
+        /// <tag=HP>を回復するたび吸魂バフを獲得します。\nダメージを与える時、最大5スタックまで消費して、消費した吸魂スタックごとに<tag=CriticalChance>が10%増加します。
+        public static ModWeapon QuarterstaffSickleHeal { get; } = ModWeaponStaff.CreateStaff("Staff_Sickle_T3_Heal", 526).SetMainPrefabModifier(main =>
+        {
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_ElementalBased>(out var elemental))
+            {
+                UnityEngine.Object.DestroyImmediate(elemental);
+            }
+            if (main.gameObject.TryGetComponent<WeaponAddonCommon_StatusUnsafe>(out var status))
+            {
+                status.effectText = new LocalizedString("WeaponAddon_Staff_Sickle_T2_Effect");
+                status.status = [CreateWeaponStat("STAFFEXTEND", 4)];
+
+                var @unsafe = main.gameObject.AddComponent<WeaponAddonCommon_HealWeaponRange>();
+
+                @unsafe.effectText = new LocalizedString("WeaponAddon_Staff_Sickle_T3_Heal_Effect");
+                @unsafe.parent = status.parent;
+
+                main.addons = [status, @unsafe];
+            }
+            if (main is WeaponSimple_QuartterStaff staff)
+            {
+                staff.currentStaffExtend = 4 * staff.extendPixelPerUnit;
+            }
+        }).SetBladeSprite(Vector3.zero).SetBorder(new Vector4(0, 18, 0, 19)).SetSizeFromTextureRect()
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Basic, 500, () => [StaffSickleAttack1Fx, null, StaffSickleAttack3Fx, StaffSickleAttack1Fx, null, StaffSickleAttack4Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Dash, 500, () => [StaffSickleAttack1Fx])
+            .SetFireDataChangeSpriteFx(ModWeapon.EAttackType.Special, 500, () => [StaffSickleAttack3Fx])
+            .SetSecondFireDataOverrideSpriteFx(500, true, () => [StaffSickleAttack5Fx, StaffSickleAttack5Fx])
+            .AddFireDataModifiers(x => x.SetRelatedStatFormulaAndChaos(new Color32(200, 50, 100, 255), "HIGHEST"))
+            .AddFireDataModifiers(x => x.SetDamageMultiplier(1.75f * 0.8f));
         #endregion
 
         #region Passives
@@ -1688,6 +1801,11 @@ namespace SephiriaMod
         public static ModSpriteFx DaggerIceDashFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerDashFx_Ice", "DaggerDashFx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_DashAttack_", 2);
         public static ModSpriteFx DaggerIceParryFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerParryFx_Ice", "DaggerParryFx", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_ParryAttack_", 6).SetCopyPivot();
         public static ModSpriteFx DaggerIceFuryFx { get; } = ModSpriteFx.CreateSpriteFx("DaggerFuryFx_Ice", "DaggerFuryFx_Stack", $"{ModUtil.WeaponPath}Dagger_Ice\\Weapon_Dagger_Fury0_", 6);
+        public static ModSpriteFx StaffSickleAttack1Fx { get; } = ModSpriteFx.CreateSpriteFx("StaffSwing123Fx1_Sickle", "StaffSwingFx_Attack1", $"{ModUtil.WeaponPath}Staff_Sickle\\Weapon_Staff_Attack1_", 8).SetFps(20);
+        public static ModSpriteFx StaffSickleAttack2Fx { get; } = ModSpriteFx.CreateSpriteFx("StaffSwing123Fx2_Sickle", "StaffSwingFx_Attack2", $"{ModUtil.WeaponPath}Staff_Sickle\\Weapon_Staff_Attack2_", 7).SetFps(20);
+        public static ModSpriteFx StaffSickleAttack3Fx { get; } = ModSpriteFx.CreateSpriteFx("StaffSwing123Fx3_Sickle", "StaffSwingFx_Attack2", $"{ModUtil.WeaponPath}Staff_Sickle\\Weapon_Staff_Attack3_", 7).SetFps(20);
+        public static ModSpriteFx StaffSickleAttack4Fx { get; } = ModSpriteFx.CreateSpriteFx("StaffSwing123Fx4_Sickle", "StaffSwingFx_Attack3", $"{ModUtil.WeaponPath}Staff_Sickle\\Weapon_Staff_Attack4_", 5).SetFps(20);
+        public static ModSpriteFx StaffSickleAttack5Fx { get; } = ModSpriteFx.CreateSpriteFx("StaffSwing123Fx5_Sickle", "StaffSwingFx_Attack1", $"{ModUtil.WeaponPath}Staff_Sickle\\Weapon_Staff_Attack5_", 8).SetFps(20);
         #endregion
 
         public static Sprite IconInWorldPotion { get; internal set; }
