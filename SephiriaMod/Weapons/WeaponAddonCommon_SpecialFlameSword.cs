@@ -28,7 +28,7 @@ namespace SephiriaMod.Weapons
                 var angle = (360f / count) * q + random;
                 var dir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0).normalized;
                 var pos = center + dir * range;
-                flame.InvokeServerFireSword(pos, true, false);
+                flame.ServerFireSword(pos, true, false);
             }
             this.Delay(0.5f,() => {
                 if (!isEnabled)
@@ -45,7 +45,7 @@ namespace SephiriaMod.Weapons
                     var angle = (360f / (count * 2)) * q + random;
                     var dir = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0).normalized;
                     var pos = center + dir * range * 2;
-                    flame.InvokeServerFireSword(pos, true, false);
+                    flame.ServerFireSword(pos, true, false);
                 }
             });
         }

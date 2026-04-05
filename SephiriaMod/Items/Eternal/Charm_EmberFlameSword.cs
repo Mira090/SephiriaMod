@@ -36,7 +36,7 @@ namespace SephiriaMod.Items.Eternal
                         {
                             __instance.SetIsCooldown(true);
                             __instance.SetCooldownTimer(0);
-                            __instance.InvokeServerFireSword(target.transform.position, false, false);
+                            __instance.ServerFireSword(target.transform.position, false, false);
                         }
                         return false;
                     }

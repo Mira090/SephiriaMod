@@ -25,7 +25,7 @@ namespace SephiriaMod.Items
                 return;
 
 
-            flame.InvokeServerFireSword((Vector2)NetworkAvatar.transform.position + motionTo / 2f, false, false);
+            flame.ServerFireSword((Vector2)NetworkAvatar.transform.position + motionTo / 2f, false, false);
         }
     }
 }
