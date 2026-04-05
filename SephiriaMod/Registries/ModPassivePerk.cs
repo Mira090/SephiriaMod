@@ -39,7 +39,7 @@ namespace SephiriaMod.Registries
         {
             PerkPrefab = CreateResourcePrefab();
             AssetId = assetId;
-            if (HasDamageId)
+            if (DamageId != null)
                 DamageIdEntity = DamageId.CreateEntity();
         }
         public GameObject CreateResourcePrefab()

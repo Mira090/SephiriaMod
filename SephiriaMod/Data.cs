@@ -1988,7 +1988,7 @@ namespace SephiriaMod
         {
             foreach (var moditem in All)
             {
-                if(moditem is IModDamageId charm && charm.HasDamageId)
+                if (moditem is IModDamageId charm && charm.HasDamageId)
                 {
                     if (Core.LogFew)
                         Melon<Core>.Logger.Msg("New DamageId: " + charm.DamageIdEntity.name);
