@@ -42,7 +42,7 @@ namespace SephiriaMod
             };
         }
 
-
+        #region Chat
         public static void CommandValue(UnitAvatar player, NewItemOwnInstance item, int value)
         {
             if ((bool)DungeonManager.Instance)
@@ -130,7 +130,9 @@ namespace SephiriaMod
                 return;
             }
         }
+        #endregion
 
+        #region Mod一覧表示
         [HarmonyPatch(typeof(UI_TitleLobby), ("Start"))]
         public static class UI_TitleLobbyPatch
         {
@@ -164,6 +166,9 @@ namespace SephiriaMod
                 ModListText.raycastTarget = false;
             }
         }
+        #endregion
+
+        #region 神秘の壺ブラックリスト
         [HarmonyPatch(typeof(UnitAvatar), nameof(UnitAvatar.GetMysticPotItems), [typeof(EItemRarity)])]
         public static class UnitAvatarGetMysticPotItemsPatch
         {
@@ -183,30 +188,9 @@ namespace SephiriaMod
                 }
             }
         }
-        [HarmonyPatch(typeof(WeaponSimple_Crossbow), nameof(WeaponSimple_Crossbow.SubAttackButtonDown))]
-        public static class WeaponSimple_CrossbowPatch
-        {
-            static void Postfix(WeaponSimple_Crossbow __instance)
-            {
-                OnSubAttackCrossbow?.Invoke(__instance);
-            }
-        }
-        [HarmonyPatch(typeof(WeaponSimple_Katana), nameof(WeaponSimple_Katana.SubAttackButtonDown))]
-        public static class WeaponSimple_KatanaPatch
-        {
-            static void Postfix(WeaponSimple_Katana __instance)
-            {
-                OnSubAttackKatana?.Invoke(__instance);
-            }
-        }
-        [HarmonyPatch(typeof(WeaponSimple_GreatSword), nameof(WeaponSimple_GreatSword.SubAttackButtonUp))]
-        public static class WeaponSimple_GreatSwordPatch
-        {
-            static void Postfix(WeaponSimple_GreatSword __instance)
-            {
-                OnSubAttackGreatSword?.Invoke(__instance);
-            }
-        }
+        #endregion
+
+        #region パラスのジョーカー
         [HarmonyPatch(typeof(Charm_PallasCard), "OnBeginAttackAnimation", new Type[] { typeof(int) })]
         public static class Charm_PallasCardOnBeginAttackAnimationPatch
         {
@@ -223,6 +207,9 @@ namespace SephiriaMod
         {
             OnAceSpawnChance?.Invoke(__instance, idx);
         }
+        #endregion
+
+        #region ModChat
         [HarmonyPatch(typeof(DungeonManager), "UserCode_RpcChat__PlayerAvatar__String__String", new Type[] { typeof(PlayerAvatar), typeof(string), typeof(string) })]
         public static class DungeonManagerChatPatch
         {
@@ -285,6 +272,9 @@ namespace SephiriaMod
                 return true;
             }
         }
+        #endregion
+
+        #region 音叉MKII
         [HarmonyPatch(typeof(DungeonManager), "UserCode_RpcBulletDestroyed__UInt32__Boolean__String__Vector3__Single__Single", new Type[] { typeof(uint), typeof(bool), typeof(string), typeof(Vector3), typeof(float), typeof(float) })]
         public static class DungeonManagerBulletDestroyPatch
         {
@@ -303,6 +293,9 @@ namespace SephiriaMod
                 return true;
             }
         }
+        #endregion
+
+        #region 天罰・暗閃
         [HarmonyPatch(typeof(UnitAvatar), "RpcShowDamageParticle", [typeof(Vector2), typeof(string), typeof(Color), typeof(int), typeof(bool), typeof(UnitAvatar), typeof(UnitAvatar)])]
         public static class UnitAvatarRpcShowDamageParticlePatch
         {
@@ -364,6 +357,33 @@ namespace SephiriaMod
                     damage = damage.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=MagicDamageBonus>");
                     color = new Color(0.2784f, 0.5529f, 0.9804f);
                 }
+            }
+        }
+        #endregion
+
+        #region 武器イベント
+        [HarmonyPatch(typeof(WeaponSimple_Crossbow), nameof(WeaponSimple_Crossbow.SubAttackButtonDown))]
+        public static class WeaponSimple_CrossbowPatch
+        {
+            static void Postfix(WeaponSimple_Crossbow __instance)
+            {
+                OnSubAttackCrossbow?.Invoke(__instance);
+            }
+        }
+        [HarmonyPatch(typeof(WeaponSimple_Katana), nameof(WeaponSimple_Katana.SubAttackButtonDown))]
+        public static class WeaponSimple_KatanaPatch
+        {
+            static void Postfix(WeaponSimple_Katana __instance)
+            {
+                OnSubAttackKatana?.Invoke(__instance);
+            }
+        }
+        [HarmonyPatch(typeof(WeaponSimple_GreatSword), nameof(WeaponSimple_GreatSword.SubAttackButtonUp))]
+        public static class WeaponSimple_GreatSwordPatch
+        {
+            static void Postfix(WeaponSimple_GreatSword __instance)
+            {
+                OnSubAttackGreatSword?.Invoke(__instance);
             }
         }
         [HarmonyPatch]
@@ -431,7 +451,9 @@ namespace SephiriaMod
                 OnPreSpecialAttack?.Invoke(__instance.owner, __instance.owner.unitAvatar);
             }
         }
+        #endregion
 
+        #region 魔導書カテゴリー
         [HarmonyPatch(typeof(Charm_Basic), nameof(Charm_Basic.GetItemCategory), [])]
         public static class CharmGetItemCategoryPatch
         {
@@ -445,8 +467,9 @@ namespace SephiriaMod
                 }
             }
         }
+        #endregion
 
-
+        #region ショップ拡張
         public static readonly string AdditionalShop = "AdditionalShop".ToUpperInvariant();
         public static readonly string AdditionalShopLegendary = "AdditionalShopLegendary".ToUpperInvariant();
         public static readonly string AdditionalShopInventory = "AdditionalShopInventory".ToUpperInvariant();
@@ -707,7 +730,6 @@ namespace SephiriaMod
                 return true;
             }
         }
-
         public static void AddTradingCharms(System.Random itemSeed, List<ItemMetadata> list, int charms, EItemRarity rarity)
         {
             if (charms <= 0)
@@ -749,7 +771,9 @@ namespace SephiriaMod
                 }
             }
         }
+        #endregion
 
+        #region ポーションバッグ枠
         [HarmonyPatch]
         public static class UpdateInventorySizePatch
         {
@@ -768,7 +792,9 @@ namespace SephiriaMod
                     obj = 6;
             }
         }
+        #endregion
 
+        #region 奇跡の最大数
         [HarmonyPatch(typeof(UI_MiracleElement), nameof(UI_MiracleElement.HandleClick))]
         public static class MiracleElementPatch
         {
@@ -890,6 +916,9 @@ namespace SephiriaMod
                 return false;
             }
         }
+        #endregion
+
+        #region 総合訓練所のリセット
         [HarmonyPatch(typeof(TrainingSchoolLeaveDoor), nameof(TrainingSchoolLeaveDoor.MoveTo))]
         public static class TrainingSchoolLeaveDoorMoveToPatch
         {
@@ -906,5 +935,6 @@ namespace SephiriaMod
                 }
             }
         }
+        #endregion
     }
 }
