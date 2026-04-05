@@ -384,6 +384,28 @@ namespace SephiriaMod.Registries
             item.HeadSpritePosition = pos;
             return item;
         }
+        public static T SetSizeFromTextureRect<T>(this T item, bool setSizeFromTextureRect = true) where T : ModWeapon
+        {
+            item.SetSizeFromTextureRect = setSizeFromTextureRect;
+            return item;
+        }
+        public static T SetEnhanceFromId<T>(this T item) where T : ModWeapon
+        {
+            item.EnhanceFromId = item.Dependency;
+            item.Dependency = -1;
+            return item;
+        }
+        public static T SetEnhanceFromId<T>(this T item, int enhanceFromId) where T : ModWeapon
+        {
+            item.EnhanceFromId = enhanceFromId;
+            item.Dependency = -1;
+            return item;
+        }
+        public static T SetBorder<T>(this T item, Vector4 border) where T : ModWeaponStaff
+        {
+            item.Border = border;
+            return item;
+        }
         public static T SetFireDataModifier<T>(this T item, ModWeapon.EAttackType type, Action<NewWeaponFireData[]> modifier) where T : ModWeapon
         {
             if(type == ModWeapon.EAttackType.Basic)

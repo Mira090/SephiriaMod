@@ -40,6 +40,7 @@ namespace SephiriaMod.Registries
         public WeaponEntity WeaponEntity { get; internal set; }
         public LocalizedString LocalizedName { get; internal set; }
         public GameObject MainWeaponPrefab { get; internal set; }
+        public bool SetSizeFromTextureRect { get; internal set; }
         public string MainSpriteFileName { get; internal set; }
         public string SubSpriteFileName { get; internal set; }
         public string BladeSpriteFileName { get; internal set; }
@@ -47,6 +48,7 @@ namespace SephiriaMod.Registries
         public string IconFileName { get; internal set; }
         public Sprite Icon { get; internal set; }
         public int Dependency { get; internal set; }
+        public int? EnhanceFromId { get; internal set; }
         public int Copy { get; internal set; }
         public WeaponWieldEntity WeaponWieldEntity { get; internal set; }
         public List<int> StandardEnhancements { get; internal set; } = [];
@@ -68,6 +70,11 @@ namespace SephiriaMod.Registries
             InitPrefab(copy);
             WeaponEntity = CreateWeaponEntity();
         }
+        protected virtual Sprite LoadSprite(string fileName)
+        {
+            var sprite = SpriteLoader.LoadSprite(fileName);
+            return sprite;
+        }
         public void InitPrefab(WeaponEntity copy)
         {
             if (Core.LogMedium)
@@ -81,23 +88,38 @@ namespace SephiriaMod.Registries
             {
                 if (simple.mainWeaponBody != null)
                 {
-                    simple.mainWeaponBody.weaponSpriteRenderer.sprite = SpriteLoader.LoadSprite(MainSpriteFileName);
-                    simple.mainWeaponBody.weaponStencilRenderer.sprite = SpriteLoader.LoadSprite(MainSpriteFileName);
+                    var sprite = LoadSprite(MainSpriteFileName);
+                    simple.mainWeaponBody.weaponSpriteRenderer.sprite = sprite;
+                    simple.mainWeaponBody.weaponStencilRenderer.sprite = sprite;
+                    if (SetSizeFromTextureRect && sprite != null)
+                    {
+                        //simple.mainWeaponBody.weaponSpriteRenderer.size = sprite.textureRect.size / 16f;
+                        simple.mainWeaponBody.bladeArea.size = sprite.textureRect.size / 16f;
+                    }
 
                     if (HasBladeSprite && simple.mainWeaponBody.bladeAddOnRenderer != null)
                     {
-                        simple.mainWeaponBody.bladeAddOnRenderer.sprite = SpriteLoader.LoadSprite(BladeSpriteFileName);
+                        simple.mainWeaponBody.bladeAddOnRenderer.sprite = LoadSprite(BladeSpriteFileName);
                         if (BladeSpritePosition.HasValue)
                             simple.mainWeaponBody.bladeAddOnRenderer.transform.localPosition = BladeSpritePosition.Value;
+                        /*
+                        if(SetSizeFromTextureRect && simple.mainWeaponBody.bladeAddOnRenderer.sprite != null)
+                        {
+                            simple.mainWeaponBody.bladeAddOnRenderer.size = simple.mainWeaponBody.bladeAddOnRenderer.sprite.textureRect.size / 16f;
+                        }*/
                     }
                     if (HasBladeUnlitSprite)
                     {
                         var unlit = simple.mainWeaponBody.transform.Find("BladeUnlit");
                         if (unlit != null && unlit.gameObject.TryGetComponent<SpriteRenderer>(out var unlitSprite))
                         {
-                            unlitSprite.sprite = SpriteLoader.LoadSprite(BladeSpriteFileName);
+                            unlitSprite.sprite = LoadSprite(BladeSpriteFileName);
                             if (BladeUnlitSpritePosition.HasValue)
                                 unlit.localPosition = BladeUnlitSpritePosition.Value;
+                            if (SetSizeFromTextureRect && unlitSprite.sprite != null)
+                            {
+                                unlitSprite.size = unlitSprite.sprite.textureRect.size / 16f;
+                            }
                         }
                     }
                     if (HasHeadSprite)
@@ -105,21 +127,29 @@ namespace SephiriaMod.Registries
                         var head = simple.mainWeaponBody.weaponSpriteRenderer.transform.Find("Head");
                         if (head != null && head.gameObject.TryGetComponent<SpriteRenderer>(out var headSprite))
                         {
-                            headSprite.sprite = SpriteLoader.LoadSprite(HeadSpriteFileName);
+                            headSprite.sprite = LoadSprite(HeadSpriteFileName);
                             if (HeadSpritePosition.HasValue)
                                 head.localPosition = HeadSpritePosition.Value;
+
+                            /*
+                            if(SetSizeFromTextureRect && headSprite.sprite != null)
+                            {
+                                headSprite.size = headSprite.sprite.textureRect.size / 16f;
+                            }*/
                         }
                     }
                 }
                 if (simple.subWeaponBody != null)
                 {
-                    simple.subWeaponBody.weaponSpriteRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
-                    simple.subWeaponBody.weaponStencilRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
+                    var sprite = LoadSprite(SubSpriteFileName);
+                    simple.subWeaponBody.weaponSpriteRenderer.sprite = sprite;
+                    simple.subWeaponBody.weaponStencilRenderer.sprite = sprite;
                 }
                 if (simple.subWeapon != null && simple.subWeapon.gameObject.TryGetComponent<SubWeapon>(out var shield))
                 {
-                    shield.weaponSpriteRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
-                    shield.weaponStencilRenderer.sprite = SpriteLoader.LoadSprite(SubSpriteFileName);
+                    var sprite = LoadSprite(SubSpriteFileName);
+                    shield.weaponSpriteRenderer.sprite = sprite;
+                    shield.weaponStencilRenderer.sprite = sprite;
                 }
                 MainPrefabModifier?.Invoke(simple);
             }
@@ -135,15 +165,20 @@ namespace SephiriaMod.Registries
             entity.mainWeaponPrefab = MainWeaponPrefab;
             entity.icon = Icon ?? SpriteLoader.LoadSprite(IconFileName);
             entity.wieldEntity = WeaponWieldEntity;
+            if(EnhanceFromId.HasValue)
+                entity.enhanceFromId = EnhanceFromId.Value;
             return entity;
         }
         public Action<NewWeaponFireData[]> BasicAttacksModifier { get; internal set; }
         public List<NewWeaponFireData> NewBasicAttacks { get; internal set; } = [];
+        public bool NewBasicAttacksOverride { get; internal set; } = false;
         public Action<NewWeaponFireData[]> DashAttacksModifier { get; internal set; }
         public List<NewWeaponFireData> NewDashAttacks { get; internal set; } = [];
+        public bool NewDashAttacksOverride { get; internal set; } = false;
         public Action<NewWeaponFireData[]> SpecialAttacksModifier { get; internal set; }
         public List<NewWeaponFireData> NewSpecialAttacks { get; internal set; } = [];
-        public void OnSpriteFxRegistered()
+        public bool NewSpecialAttacksOverride { get; internal set; } = false;
+        public virtual void OnSpriteFxRegistered()
         {
             if (MainWeaponPrefab == null)
                 return;
@@ -155,29 +190,50 @@ namespace SephiriaMod.Registries
             BasicAttacksModifier?.Invoke(simple.basicComboAttacks);
             //Melon<Core>.Logger.Msg($"OnSpriteFxRegistered2: {BasicAttacksModifier}");
 
-            for (int q = 0; q < simple.basicComboAttacks.Length; q++)
+            if (NewBasicAttacksOverride)
             {
-                if (NewBasicAttacks.Count <= q)
-                    break;
-                simple.basicComboAttacks[q] = NewBasicAttacks[q];
+                simple.basicComboAttacks = NewBasicAttacks.ToArray();
+            }
+            else
+            {
+                for (int q = 0; q < simple.basicComboAttacks.Length; q++)
+                {
+                    if (NewBasicAttacks.Count <= q)
+                        break;
+                    simple.basicComboAttacks[q] = NewBasicAttacks[q];
+                }
             }
             //Melon<Core>.Logger.Msg($"OnSpriteFxRegistered3: {simple}");
 
             DashAttacksModifier?.Invoke(simple.dashAttacks);
 
-            for (int q = 0; q < simple.dashAttacks.Length; q++)
+            if (NewDashAttacksOverride)
             {
-                if (NewDashAttacks.Count <= q)
-                    break;
-                simple.dashAttacks[q] = NewDashAttacks[q];
+                simple.dashAttacks = NewDashAttacks.ToArray();
+            }
+            else
+            {
+                for (int q = 0; q < simple.dashAttacks.Length; q++)
+                {
+                    if (NewDashAttacks.Count <= q)
+                        break;
+                    simple.dashAttacks[q] = NewDashAttacks[q];
+                }
             }
             SpecialAttacksModifier?.Invoke(simple.specialAttacks);
 
-            for (int q = 0; q < simple.specialAttacks.Length; q++)
+            if (NewSpecialAttacksOverride)
             {
-                if (NewSpecialAttacks.Count <= q)
-                    break;
-                simple.specialAttacks[q] = NewSpecialAttacks[q];
+                simple.specialAttacks = NewSpecialAttacks.ToArray();
+            }
+            else
+            {
+                for (int q = 0; q < simple.specialAttacks.Length; q++)
+                {
+                    if (NewSpecialAttacks.Count <= q)
+                        break;
+                    simple.specialAttacks[q] = NewSpecialAttacks[q];
+                }
             }
             //Melon<Core>.Logger.Msg($"OnSpriteFxRegistered: end");
         }
