@@ -1644,7 +1644,7 @@ namespace SephiriaMod
             .CreatePerk(EPassivePerkLv.lv5, "CooldownRecovery").SetPerkSupplierStatus("COOLDOWN_RECOVERY_SPEED/30").Parent
             .CreatePerk(EPassivePerkLv.lv10, "AddGrimoire").SetPerkSupplierStatus("ADD_GRIMOIRE/1", "MP_REGEN/4").Parent
             .CreatePerk(EPassivePerkLv.lv20, "AddMagicDamage").SetPerkSupplierStatus("MAGIC_DAMAGE_BONUS/20", "MAGIC_CRITICAL/5000").Parent;
-        /*
+
         /// <summary>
         /// Passive_Vampire_Name
         /// 摂理
@@ -1655,13 +1655,13 @@ namespace SephiriaMod
         /// Passive_Vampire_Effect_LV10
         /// さらに<tag=HP>の回復量が{VAL0}%減少しますが、<tag=WeaponAction_DirectAttack>が命中した時、<tag=Debuff_Poison>デバフを付与します。
         /// Passive_Vampire_Effect_LV20
-        /// <tag=Elemental_Chaos>ダメージの<tag=HPSteal>が{VAL0}増加します。
+        /// <tag=Debuff_Poison>デバフの最大スタック数が{VAL1}増加し、<tag=Elemental_Chaos>ダメージの<tag=HPSteal>が{VAL0}増加します。
         /// </summary>
         public static ModPassive VampirePassive { get; } = ModPassive.CreatePassive("Vampire", new Color32(229, 61, 101, byte.MaxValue), "HP_STEAL/1", "TRUE_DAMAGE/-1")
             .CreatePerk(EPassivePerkLv.lv5, "HPDecrease").SetPerkSupplierStatus("HEALING_PENALTY/-25", "MAX_HP/15").Parent
             .CreatePerk(EPassivePerkLv.lv10, "DirectAttackPoison").SetPerkSupplierStatus<ModPassivePerk, PassiveObject_DirectAttackPoison>("HEALING_PENALTY/-25").Parent
             .CreatePerk(EPassivePerkLv.lv20, "ChaosSteal").SetPerkSupplier<ModPassivePerk, PassiveObject_ChaosSteal>().Parent;
-        /// <summary>
+        /*/// <summary>
         /// Passive_Movement_Name
         /// 機動
         /// Passive_Movement_Description
