@@ -890,5 +890,21 @@ namespace SephiriaMod
                 return false;
             }
         }
+        [HarmonyPatch(typeof(TrainingSchoolLeaveDoor), nameof(TrainingSchoolLeaveDoor.MoveTo))]
+        public static class TrainingSchoolLeaveDoorMoveToPatch
+        {
+            static void Postfix(TrainingSchoolLeaveDoor __instance, GameObject actor)
+            {
+                if (actor.TryGetComponent<PlayerAvatar>(out var player))
+                {
+                    player.ClearOrphanedStatusInstance();
+                    player.Inventory?.ClearDungeonTempLevels();
+                }
+                if (actor.TryGetComponent<MiracleController>(out var miracle))
+                {
+                    miracle.ClearMiracle();
+                }
+            }
+        }
     }
 }
