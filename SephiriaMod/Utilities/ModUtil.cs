@@ -310,27 +310,28 @@ namespace SephiriaMod.Utilities
         {
             return type switch
             {
-                EItemType.Charm => "アーティファクト",
-                EItemType.StoneTablet => "石版",
-                EItemType.Potion => "ポーション",
-                EItemType.Scroll => "呪文書",
-                EItemType.ThrowingWeapon => "投擲武器",
-                EItemType.Identifiable => "未鑑定アイテム",
-                EItemType.Food => "食べ物",
-                EItemType.Misc => "その他",
-                _ => "その他？",
+                EItemType.Charm => new LocalizedString("ItemType_Charm").ToString(),
+                EItemType.StoneTablet => new LocalizedString("ItemType_StoneTablet").ToString(),
+                EItemType.Potion => new LocalizedString("ItemType_Potion").ToString(),
+                EItemType.Scroll => new LocalizedString("ItemType_Scroll").ToString(),
+                EItemType.ThrowingWeapon => new LocalizedString("ItemType_ThrowingWeapon").ToString(),
+                EItemType.Identifiable => new LocalizedString("ItemType_Identifiable").ToString(),
+                EItemType.Food => new LocalizedString("ItemType_Food").ToString(),
+                EItemType.Misc => new LocalizedString("ItemType_Misc").ToString(),
+                _ => new LocalizedString("ItemType_Misc").ToString() + "?",
             };
         }
         public static string ToJapanese(this EItemRarity type)
         {
             return type switch
             {
-                EItemRarity.Common => "普通",
-                EItemRarity.Uncommon => "高級",
-                EItemRarity.Rare => "希少",
-                EItemRarity.Legend => "伝説",
-                EItemRarity.Eternal => "永遠",
-                _ => "？？？",
+                EItemRarity.Common => new LocalizedString("ItemRarity_Common").ToString(),
+                EItemRarity.Uncommon => new LocalizedString("ItemRarity_Uncommon").ToString(),
+                EItemRarity.Rare => new LocalizedString("ItemRarity_Rare").ToString(),
+                EItemRarity.Legend => new LocalizedString("ItemRarity_Legend").ToString(),
+                EItemRarity.Eternal => new LocalizedString("ItemRarity_Eternal").ToString(),
+                (EItemRarity)ECustomItemRarity.Sacrifice => new LocalizedString("ItemRarity_Sacrifice").ToString(),
+                _ => "???",
             };
         }
         public static string ToJapanese(this EItemActiveType type)
@@ -343,7 +344,7 @@ namespace SephiriaMod.Utilities
                 EItemActiveType.Locked => "Locked",
                 EItemActiveType.Disabled => "Disabled",
                 EItemActiveType.TestOnly => "TestOnly",
-                _ => "？？？",
+                _ => "???",
             };
         }
         public static string ToNoTag(this string text)

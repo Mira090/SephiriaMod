@@ -31,6 +31,18 @@ namespace SephiriaMod
                 return sb.ToString();
             }
         }
+        public static string ItemIdOnly
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                foreach (var line in ItemIdOnlyDic.OrderBy(x => x.Key).Select(x => x.Value))
+                {
+                    sb.AppendLine(line.Replace('^', '	'));
+                }
+                return sb.ToString();
+            }
+        }
         public static string StatusId
         {
             get
@@ -53,6 +65,7 @@ namespace SephiriaMod
             }
         }
         public static Dictionary<int, string> ItemIdDic = new Dictionary<int, string>();
+        public static Dictionary<int, string> ItemIdOnlyDic = new Dictionary<int, string>();
         public static Dictionary<string, StatusEntity> StatusIdDic = new Dictionary<string, StatusEntity>();
 
         public List<List<string>> ModOptions => [["No Log", "Few", "Medium", "Many"]];
@@ -225,22 +238,45 @@ namespace SephiriaMod
                         status.stats[1].valuesByLevel = [-10, -15, -20, -30];
                     }
                 }
-
+                var bond = "(" + new LocalizedString("ItemRarity_Dual").ToString() + ")";
                 if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<Charm_Basic>(out var c))
                 {
-                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? "(絆)" : "")}^{c.GetType().Name}";
+                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}^{c.GetType().Name}";
                 }
                 else if(item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<StoneTablet>(out var t))
                 {
-                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? "(絆)" : "")}^{t.GetType().Name}";
+                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}^{t.GetType().Name}";
                 }
                 else if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<PotionEffect>(out var p))
                 {
-                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? "(絆)" : "")}^{p.GetType().Name}";
+                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}^{p.GetType().Name}";
                 }
                 else
                 {
-                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? "(絆)" : "")}^{(item.resourcePrefab == null ? "プレハブ無し" : "プレハブ有り")}";
+                    ItemIdDic[item.id] = $"{item.id}^{item.name}^{item.aName.ToString()}^{item.activeType.ToJapanese()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}^{(item.resourcePrefab == null ? "プレハブ無し" : "プレハブ有り")}";
+                }
+                ItemIds(item);
+            }
+            private static void ItemIds(ItemEntity item)
+            {
+                if (item.activeType == EItemActiveType.Disabled)
+                    return;
+                var bond = "(" + new LocalizedString("ItemRarity_Dual").ToString() + ")";
+                if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<Charm_Basic>(out var c))
+                {
+                    ItemIdOnlyDic[item.id] = $"{item.id}^{item.aName.ToString()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}";
+                }
+                else if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<StoneTablet>(out var t))
+                {
+                    ItemIdOnlyDic[item.id] = $"{item.id}^{item.aName.ToString()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}";
+                }
+                else if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<PotionEffect>(out var p))
+                {
+                    ItemIdOnlyDic[item.id] = $"{item.id}^{item.aName.ToString()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}";
+                }
+                else
+                {
+                    ItemIdOnlyDic[item.id] = $"{item.id}^{item.aName.ToString()}^{item.type.ToJapanese()}^{item.rarity.ToJapanese() + (item.isDual ? bond : "")}";
                 }
             }
             private static void ModifyItemCategoryEntity(ItemCategoryEntity category)
