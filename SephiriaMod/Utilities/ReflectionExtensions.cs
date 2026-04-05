@@ -222,6 +222,13 @@ namespace SephiriaMod.Utilities
         {
             typeof(Charm_FireBulletInRange).GetField("chance", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
         }
+        public static void InvokeOnDamagedServerside(this UnitAvatar instance, DamageInstance damage)
+        {
+            var type = typeof(UnitAvatar);
+            var field = type.GetField(nameof(instance.OnDamagedServerside), BindingFlags.Instance | BindingFlags.NonPublic);
+            var del = (Delegate)field.GetValue(instance);
+            del.DynamicInvoke(damage);
+        }
 
 
 

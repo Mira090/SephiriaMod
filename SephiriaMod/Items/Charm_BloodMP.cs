@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MelonLoader;
 using Newtonsoft.Json;
 using SephiriaMod.Utilities;
 using System;
@@ -97,6 +98,15 @@ namespace SephiriaMod.Items
                 NetworkAvatar.Networkmp = Mathf.Max(0, NetworkAvatar.mp - used);
             }*/
             NetworkAvatar.SetHp(NetworkAvatar.hp - consume * (percent.SafeRandomAccess(CurrentLevelToIdx()) / 100f));
+
+            try
+            {
+                NetworkAvatar.InvokeOnDamagedServerside(null);
+            }
+            catch (Exception e)
+            {
+                Melon<Core>.Logger.Warning(e);
+            }
 
             if (NetworkAvatar.hp <= 0f)
             {
