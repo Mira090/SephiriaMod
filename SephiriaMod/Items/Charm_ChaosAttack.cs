@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SephiriaMod.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Unity.VisualScripting;
@@ -42,6 +43,7 @@ namespace SephiriaMod.Items
             {
                 float customStatUnsafe = NetworkAvatar.GetCustomStat("FireDamage") + NetworkAvatar.GetCustomStat("IceDamage") + NetworkAvatar.GetCustomStat("LightningDamage");
                 customStatUnsafe *= percentByLevel.SafeRandomAccess(CurrentLevelToIdx()) / 100f;
+                customStatUnsafe += this.GetCharmDamageBonus(customStatUnsafe);
                 if (customStatUnsafe > 0 && unitAvatar != null && !(UnityEngine.Random.Range(0f, 1f) > chanceByLevel.SafeRandomAccess(CurrentLevelToIdx()) / 100f))
                 {
                     DamageInstance damage = DamageInstance.GetDamage(NetworkAvatar, damageId, unitAvatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 0, 0f);

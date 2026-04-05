@@ -143,6 +143,7 @@ namespace SephiriaMod.Items
 
             float x = UnityEngine.Random.Range(0, 2) == 0 ? 2f : -2f;
             float damage = NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * (meteor.SafeRandomAccess(CurrentLevelToIdx()) / 100f);
+            damage += this.GetCharmDamageBonus(damage);
             Bullet.Pool.Spawn(SephiriaPrefabs.MeteorBullet, vector, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, damage, 25, 3f, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), 4.5f, vector + new Vector2(x, 0f), vector, null, HandleAttack, 0f, EDamageElementalType.Fire);
         }
         private void HandleAttack(CombatBehaviour behaviour, DamageInstance instance, ProjectileBase @base)

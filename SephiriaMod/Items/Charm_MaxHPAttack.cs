@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SephiriaMod.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -39,9 +40,11 @@ namespace SephiriaMod.Items
         {
             if (damageInstance.id == "Charm_MinHPKill")//白い卵の殻は除外
                 return;
+            
             if (!NetworkAvatar.IsDead && IsEffectEnabled && damageInstance.id != damageId)
             {
                 float customStatUnsafe = NetworkAvatar.MaxHp * (damageByLevel.SafeRandomAccess(CurrentLevelToIdx()) * 0.01f);
+                customStatUnsafe += this.GetCharmDamageBonus(customStatUnsafe);
                 if (customStatUnsafe > 0 && unitAvatar != null)
                 {
                     DamageInstance damage = DamageInstance.GetDamage(NetworkAvatar, damageId, unitAvatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 0, 0f);

@@ -402,5 +402,10 @@ namespace SephiriaMod.Utilities
         }
         public static Color FourGradation = new Color(0, 1, 0, 0);
         public static Color FourGradationMagicExecution = new Color(0, 0, 1, 0);
+
+        public static float GetCharmDamageBonus(this Charm_Basic charm, float damage)
+        {
+            return damage * charm.RequestCharmDamageBonus() / 100f;
+        }
     }
 }

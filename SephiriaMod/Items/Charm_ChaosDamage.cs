@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SephiriaMod.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -57,6 +58,7 @@ namespace SephiriaMod.Items
             {
                 isInCooldown = true;
                 float damage = damageByLevel.SafeRandomAccess(CurrentLevelToIdx());
+                damage += this.GetCharmDamageBonus(damage);
                 DamageInstance damage2 = DamageInstance.GetDamage(NetworkAvatar, damageId, target.transform.position, 4294967295L, damage, EDamageType.Slice, EDamageFromType.None, Vector2.zero, 0, 0f);
                 damage2.SetCustomColor(true, new Color(0.5f, 0, 0));
                 target.ApplyDamage(damage2);

@@ -66,7 +66,8 @@ namespace SephiriaMod.Items
                 Vector3 motionDataBegin = NetworkAvatar.transform.position + vector3FromAngle * 0.2f;
                 Vector3 motionDataEnd = NetworkAvatar.transform.position + vector3FromAngle * 8f;
                 bool flag = UnityEngine.Random.Range(0f, 1f) < 0.2f;
-                Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, instance.bulletDamage, instance.staggeringLevel, instance.externalForcePower, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
+                var d = instance.bulletDamage + this.GetCharmDamageBonus(instance.bulletDamage);
+                Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, d, instance.staggeringLevel, instance.externalForcePower, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
                 bullet.pierceCreatureCount = 2;
                 Vector3 pos = NetworkAvatar.transform.position + (Vector3)(UnityEngine.Random.insideUnitCircle * 3f);
                 bullet.SetSpeedScale(2);
@@ -95,7 +96,8 @@ namespace SephiriaMod.Items
                 Vector3 motionDataBegin = NetworkAvatar.transform.position + vector3FromAngle * 0.2f;
                 Vector3 motionDataEnd = NetworkAvatar.transform.position + vector3FromAngle * 8f;
                 bool flag = UnityEngine.Random.Range(0f, 1f) < 0.2f;
-                Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, instance.bulletDamage, instance.staggeringLevel, instance.externalForcePower, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
+                var d = instance.bulletDamage + this.GetCharmDamageBonus(instance.bulletDamage);
+                Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, d, instance.staggeringLevel, instance.externalForcePower, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
                 bullet.pierceCreatureCount = 2;
                 Vector3 pos = NetworkAvatar.transform.position + (Vector3)(UnityEngine.Random.insideUnitCircle * 3f);
                 bullet.SetSpeedScale(2);

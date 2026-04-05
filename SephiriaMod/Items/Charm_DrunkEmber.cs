@@ -76,6 +76,7 @@ namespace SephiriaMod.Items
                 {
                     float customStatUnsafe = damage.SafeRandomAccess(CurrentLevelToIdx()) / 100f * Mathf.Max(0, -NetworkAvatar.GetCustomStat(ECustomStat.DamageReduction));
                     customStatUnsafe += customStatUnsafe * NetworkAvatar.GetCustomStatUnsafe("BURNDAMAGE") / 100f;
+                    customStatUnsafe += this.GetCharmDamageBonus(customStatUnsafe);
                     if (customStatUnsafe > 0 && unitAvatar != null)
                     {
                         DamageInstance d = DamageInstance.GetDamage(NetworkAvatar, damageId, unitAvatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 1, 1f);

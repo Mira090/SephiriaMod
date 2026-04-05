@@ -130,6 +130,7 @@ namespace SephiriaMod.Items
                     {
                         float d = damageByLevel.SafeRandomAccess(CurrentLevelToIdx()) + NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * percent.SafeRandomAccess(CurrentLevelToIdx()) / 100f;
                         d += d * NetworkAvatar.GetCustomStatUnsafe("FOLLOWERDAMAGE") / 100f;
+                        d += this.GetCharmDamageBonus(d);
                         DamageInstance damage = DamageInstance.GetDamage(base.NetworkAvatar, DamageId, vector, base.NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), d, EDamageType.Projectile, EDamageFromType.None, Vector2.zero, 0, 0f);
                         damage.elementalType = EDamageElementalType.Fire;
                         damage.criticalChancePercent += NetworkAvatar.GetCustomStat("FOLLOWERCRITICAL") / 100f;
