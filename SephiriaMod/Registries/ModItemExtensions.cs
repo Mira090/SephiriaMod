@@ -605,6 +605,11 @@ namespace SephiriaMod.Registries
             item.CopyPivot = copyPivot;
             return item;
         }
+        public static T SetFps<T>(this T item, int fps) where T : ModSpriteFx
+        {
+            item.Fps = fps;
+            return item;
+        }
 
 
         public static Charm_StatusInstance.StatusGroup CreateStatusGroup(string id, params int[] values)

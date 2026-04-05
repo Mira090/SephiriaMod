@@ -25,6 +25,7 @@ namespace SephiriaMod.Registries
         public int TimelineCount { get; internal set; }
         public string SpritePath { get; internal set; } = ModUtil.WeaponPath + "Dagger_Ice\\Weapon_Dagger_DashAttack_";
         public bool CopyPivot { get; internal set; } = false;
+        public int? Fps { get; internal set; }
 
         public GameObject ResourcePrefab { get; internal set; }
 
@@ -39,7 +40,10 @@ namespace SephiriaMod.Registries
             foreach (var state in fx.animator2D.currentSet.sprites)
             {
                 var newState = new AnimationSet.StateInfo();
-                newState.fps = state.fps;
+                if(Fps.HasValue)
+                    newState.fps = Fps.Value;
+                else
+                    newState.fps = state.fps;
                 newState.state = state.state;
                 newState.repeat = state.repeat;
                 newState.frameEvents = state.frameEvents;
