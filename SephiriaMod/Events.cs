@@ -928,6 +928,14 @@ namespace SephiriaMod
                 {
                     player.ClearOrphanedStatusInstance();
                     player.Inventory?.ClearDungeonTempLevels();
+                    if(actor.TryGetComponent<TreeShopItemStorage>(out var tree))
+                    {
+                        player.SetMoney(tree.GettStartingMoney());
+                    }
+                    else
+                    {
+                        player.SetMoney(0);
+                    }
                 }
                 if (actor.TryGetComponent<MiracleController>(out var miracle))
                 {
