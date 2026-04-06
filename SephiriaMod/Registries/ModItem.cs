@@ -1,4 +1,5 @@
-﻿using SephiriaMod.Utilities;
+﻿using SephiriaMod.Entities;
+using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,6 +41,7 @@ namespace SephiriaMod.Registries
         public bool CannotBeReward { get; internal set; } = false;
         public bool CannotThrow { get; internal set; } = false;
         public bool IsDual { get; internal set; } = false;
+        public bool IsJewelry { get; internal set; } = false;
         public GameObject ResourcePrefab
         {
             get
@@ -76,7 +78,7 @@ namespace SephiriaMod.Registries
         }
         public ItemEntity CreateItemEntity()
         {
-            var entity = ScriptableObject.CreateInstance<ItemEntity>();
+            var entity = IsJewelry ? ScriptableObject.CreateInstance<ItemEntity_Jewelry>() : ScriptableObject.CreateInstance<ItemEntity>();
             entity.name = Id + ItemEntityName;
             entity.activeType = ActiveType;
             entity.aName = LocalizedName;

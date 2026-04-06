@@ -1,20 +1,22 @@
 ﻿using FMODUnity;
 using MelonLoader;
+using SephiriaMod.Buffs;
+using SephiriaMod.Combos;
+using SephiriaMod.Items;
+using SephiriaMod.Items.Eternal;
+using SephiriaMod.Items.Jewelry;
+using SephiriaMod.Items.Savvy;
+using SephiriaMod.Passives;
+using SephiriaMod.Registries;
+using SephiriaMod.StatusInstances;
+using SephiriaMod.Utilities;
+using SephiriaMod.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
 using BuffStatus = CharacterBuff_StatusInstance.Status;
-using SephiriaMod.Items;
-using SephiriaMod.Combos;
-using SephiriaMod.Utilities;
-using SephiriaMod.Weapons;
-using SephiriaMod.Registries;
-using SephiriaMod.Buffs;
-using SephiriaMod.Items.Eternal;
-using SephiriaMod.StatusInstances;
-using SephiriaMod.Passives;
 
 namespace SephiriaMod
 {
@@ -31,6 +33,7 @@ namespace SephiriaMod
         public static List<ModPassive> Passives { get; private set; } = new();
         public static List<ModSpriteFx> SpriteFxs { get; private set; } = new();
         public static List<string> AllResourcePrefabNames { get; private set; }
+        public static Dictionary<string, List<ModCharm>> Jewelries { get; private set; } = new();
         /// <summary>
         /// Item_Malice_Name
         /// 利敵
@@ -886,6 +889,26 @@ namespace SephiriaMod
         public static ModCharm ActiveMeteor { get; } = ModCharmStatus.Create<Charm_ActiveMeteor>("Active_Meteor", 6)
             .SetCategory(ItemCategories.Ember).SetEffects("Charm_FlameGround_Meteor_Effect", "Charm_FlameGround_Meteor_Effect2").SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
 
+        private static readonly System.Random JewelryRandom = new();
+        public static ModCharm GetRandomJewelry(this Charm_Basic charm)
+        {
+            var list = charm.NetworkAvatar.Inventory.lastAppliedComboEffects.OrderByDescending(x => x.Value.comboCount).ToList();
+            foreach(var combo in list)
+            {
+                if (combo.Key == ItemCategories.Savvy)
+                    continue;
+                if(Jewelries.ContainsKey(combo.Key) && Jewelries[combo.Key] != null && Jewelries[combo.Key].Count > 0)
+                    return Jewelries[combo.Key].GetRandom();
+            }
+            return null;
+        }
+        public static void AddRandomJewelry(this Charm_Basic charm)
+        {
+            var random = charm.GetRandomJewelry();
+            if (random == null || charm.Inventory == null)
+                return;
+            charm.Inventory.AddItem(new ItemMetadata(ItemDatabase.GenerateInstanceID(JewelryRandom), random.Id, 1));
+        }
 
         #region Sacrifices
         /// <summary>
@@ -1194,6 +1217,13 @@ namespace SephiriaMod
         /// 近接攻撃範囲がスタックごとに2%増加します。最大50スタックまで蓄積します。
         /// </summary>
         public static ModKeyword SoulSteal { get; } = ModKeyword.CreateKeyword("SoulSteal").SetTextColor(new Color(0.8f, 0.2f, 0.4f));
+        /// <summary>
+        /// Status_ItemRarity_Jewelry_Name
+        /// 宝飾
+        /// Status_ItemRarity_Jewelry_Description
+        /// 価値の高い特殊なアーティファクト。このアーティファクトを手に入れた時、所持する<tag=Leaf>をすべて消費して、消費した<tag=Leaf>100ごとに最大レベルが1増加します。
+        /// </summary>
+        public static ModKeyword ItemRarityJewelry { get; } = ModKeyword.CreateKeyword("ItemRarity_Jewelry").SetTextColor(new Color32(255, 120, 0, 255));
         #endregion
 
 
@@ -1823,6 +1853,15 @@ namespace SephiriaMod
         {
             return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = values, hideIfStatValueIsZero = true };
         }
+        public static Charm_StatusInstance.StatusGroup CreateStatusGroupBy(string id, int baseValue, int count = 20)
+        {
+            var list = new List<int>();
+            for(int q = 0; q < count; q++)
+            {
+                list.Add(baseValue * (q + 1));
+            }
+            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray() };
+        }
         public static Charm_AddOrphanedStatusInstance.OrphanedStatusGroup CreateOrphanedStatusGroup(string id, int value)
         {
             return new Charm_AddOrphanedStatusInstance.OrphanedStatusGroup() { statusID = id, value = value };
@@ -1879,6 +1918,13 @@ namespace SephiriaMod
                 var moditem = pro.GetValue(type) as ModItem;
                 moditem.Init(id++, assetId++);
                 All.Add(moditem);
+                if (moditem.IsJewelry)
+                {
+                    var category = moditem.Categories.FirstOrDefault();
+                    if (!Jewelries.ContainsKey(category))
+                        Jewelries[category] = new List<ModCharm>();
+                    Jewelries[category].Add(moditem as ModCharm);
+                }
             }
             AllResourcePrefabNames = new();
             foreach (var item in All)

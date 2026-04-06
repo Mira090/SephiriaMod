@@ -102,6 +102,14 @@ namespace SephiriaMod.Registries
             item.IsDual = isDual;
             return item;
         }
+        public static T SetIsJewelry<T>(this T item, EItemRarity rarity) where T : ModItem
+        {
+            item.SetRarity(rarity);
+            item.IsJewelry = true;
+            item.Cost += item.Cost / 2;
+            item.ActiveType = EItemActiveType.Hidden;
+            return item;
+        }
         public static T SetSimpleEffect<T>(this T item) where T : ModCharm
         {
             item.Effects = [new LocalizedString("Item_" + item.Name + "_Effect")];

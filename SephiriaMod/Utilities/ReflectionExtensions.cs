@@ -229,6 +229,14 @@ namespace SephiriaMod.Utilities
             var del = (Delegate)field.GetValue(instance);
             del.DynamicInvoke(damage);
         }
+        public static TMP_Text GetNameText(this UI_CharmTooltip instance)
+        {
+            return (TMP_Text)typeof(UI_CharmTooltip).GetField("nameText", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
+        public static TMP_Text GetTypeText(this UI_CharmTooltip instance)
+        {
+            return (TMP_Text)typeof(UI_CharmTooltip).GetField("typeText", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
+        }
 
 
 
