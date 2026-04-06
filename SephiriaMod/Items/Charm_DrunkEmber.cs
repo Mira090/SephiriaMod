@@ -31,7 +31,7 @@ namespace SephiriaMod.Items
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            if (isInCooldown && cooldownTimer.Update(Time.deltaTime * (1 + NetworkAvatar.GetCustomStat(ECustomStat.Evasion) / 100f)))
+            if (isInCooldown && cooldownTimer.Update(Time.deltaTime))
             {
                 isInCooldown = false;
             }
