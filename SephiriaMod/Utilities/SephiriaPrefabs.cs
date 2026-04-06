@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using static UnityEngine.UI.Image;
+using Random = UnityEngine.Random;
 
 namespace SephiriaMod.Utilities
 {
@@ -100,6 +103,68 @@ namespace SephiriaMod.Utilities
                     _freezeNormalSlash = ItemDatabase.FindItemById(1268).resourcePrefab.GetComponent<Charm_FreezeNormalSlash>().slashFxPrefab;//永遠の冬
                 }
                 return _freezeNormalSlash;
+            }
+        }
+
+        private static GameObject _money;
+        public static GameObject Money
+        {
+            get
+            {
+                if(_money == null)
+                {
+                    _money = Resources.Load<GameObject>("Money");
+                }
+                return _money;
+            }
+        }
+        private static GameObject _moneyBig;
+        public static GameObject MoneyBig
+        {
+            get
+            {
+                if (_moneyBig == null)
+                {
+                    _moneyBig = Resources.Load<GameObject>("MoneyBig");
+                }
+                return _moneyBig;
+            }
+        }
+        private static GameObject _moneyHuge;
+        public static GameObject MoneyHuge
+        {
+            get
+            {
+                if (_moneyHuge == null)
+                {
+                    _moneyHuge = Resources.Load<GameObject>("MoneyHuge");
+                }
+                return _moneyHuge;
+            }
+        }
+        public static void SpawnMoney(int money, Vector3 pos)
+        {
+            var i = money;
+            while (i >= 1000)
+            {
+                GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(MoneyHuge, pos + (Vector3)Random.insideUnitCircle, Quaternion.identity);
+                gameObject.GetComponent<Money>().AddPhysicalForce(Random.insideUnitCircle * 7f, Random.Range(6f, 10f));
+                NetworkServer.Spawn(gameObject);
+                i -= 1000;
+            }
+            while (i >= 100)
+            {
+                GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(MoneyBig, pos + (Vector3)Random.insideUnitCircle, Quaternion.identity);
+                gameObject2.GetComponent<Money>().AddPhysicalForce(Random.insideUnitCircle * 7f, Random.Range(6f, 10f));
+                NetworkServer.Spawn(gameObject2);
+                i -= 100;
+            }
+            while (i > 0)
+            {
+                GameObject gameObject3 = UnityEngine.Object.Instantiate<GameObject>(Money, pos + (Vector3)Random.insideUnitCircle, Quaternion.identity);
+                gameObject3.GetComponent<Money>().AddPhysicalForce(Random.insideUnitCircle * 7f, Random.Range(6f, 10f));
+                NetworkServer.Spawn(gameObject3);
+                i -= 10;
             }
         }
     }

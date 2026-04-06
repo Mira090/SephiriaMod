@@ -407,5 +407,7 @@ namespace SephiriaMod.Utilities
         {
             return damage * charm.RequestCharmDamageBonus() / 100f;
         }
+
+
     }
 }
