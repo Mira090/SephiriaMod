@@ -9,7 +9,7 @@ namespace SephiriaMod.Items
     public class Charm_VariableMaxLevelWhitePaper : Charm_WhitePaper
     {
         public virtual string StatusName => "STARGAZELEVEL";
-        public virtual int ValiableMax => 20;
+        public virtual int ValiableMax => 16;
         public int AdditionalMaxLevel { get; private set; }
         public int OriginalMaxLevel { get; private set; }
         protected override void OnConnected(int instanceID)
@@ -36,7 +36,8 @@ namespace SephiriaMod.Items
             //OriginalMaxLevel = maxLevel;
             if (NetworkAvatar != null)
             {
-                SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
+                if(!string.IsNullOrEmpty(StatusName))
+                    SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
             }
         }
         protected override void OnDisabledEffect()
@@ -58,8 +59,11 @@ namespace SephiriaMod.Items
             base.OnCharmEffectRefreshed();
             if (NetworkAvatar != null)
             {
-                SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
-                Inventory.UpdatePing(Item.Position);
+                if (!string.IsNullOrEmpty(StatusName))
+                {
+                    SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
+                    Inventory.UpdatePing(Item.Position);
+                }
             }
         }
     }
