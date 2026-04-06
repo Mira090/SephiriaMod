@@ -9,7 +9,7 @@ namespace SephiriaMod.Items
     public class Charm_DrunkVitality : Charm_StatusInstance
     {
         public int[] heal = [5, 5, 10];
-        public int[] percent = [500];
+        public int[] percent = [250];
         public string damageId = "Charm_DrunkVitality";
         public LocalizedString item = new LocalizedString("Item_First_Heal_Name");
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
