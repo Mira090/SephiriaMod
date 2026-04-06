@@ -1023,7 +1023,7 @@ namespace SephiriaMod
         /// </summary>
         public static ModEffectHUD EffectWeaponRangeBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Soul_Steal_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
         public static CharacterBuffMod_StatusInstance SoulStealBuff { get; } = CreateBuff("SoulStealBuff", "SoulStealBuff", 50, CreateBuffStatus("WEAPON_RANGE", 2))
-            .SetDefaultDuration(20f);
+            .SetDefaultDuration(30f);
 
         /// <summary>
         /// EffectHUD_Stargaze_Tablet_Name
@@ -1672,7 +1672,7 @@ namespace SephiriaMod
             .AddFireDataModifiers(x => x.SetDamageMultiplier(1.75f * 0.8f));
         /// <summary>
         /// Weapon_Staff_Sickle_T3_Debuff_Name
-        /// 儀式鎌
+        /// 儀式刃
         /// WeaponAddon_Staff_Sickle_T3_Debuff_Effect
         /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Defense>の絶対値10ごとに、30%の確率で<tag=Debuff_Poison><tag=Burn><tag=Frostbite><tag=Electric>を付与します。
         public static ModWeapon QuarterstaffSickleDebuff { get; } = ModWeaponStaff.CreateStaff("Staff_Sickle_T3_Debuff", 526).SetMainPrefabModifier(main =>
@@ -1708,7 +1708,7 @@ namespace SephiriaMod
         /// Weapon_Staff_Sickle_T3_Heal_Name
         /// ラスティ
         /// WeaponAddon_Staff_Sickle_T3_Heal_Effect
-        /// <tag=HP>を回復するたび吸魂バフを獲得します。\nダメージを与える時、最大5スタックまで消費して、消費した吸魂スタックごとに<tag=CriticalChance>が10%増加します。
+        /// <tag=HP>を回復するたび吸魂バフを獲得します。\n<tag=Elemental_Chaos>ダメージを与える時、最大5スタックまで消費して、消費した吸魂スタックごとに<tag=CriticalChance>が10%増加します。
         public static ModWeapon QuarterstaffSickleHeal { get; } = ModWeaponStaff.CreateStaff("Staff_Sickle_T3_Heal", 526).SetMainPrefabModifier(main =>
         {
             if (main.gameObject.TryGetComponent<WeaponAddonCommon_ElementalBased>(out var elemental))
