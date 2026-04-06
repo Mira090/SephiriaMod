@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using static MelonLoader.MelonLogger;
 
 namespace SephiriaMod.Items
 {
     public class Charm_VariableMaxLevel : Charm_StatusInstance
     {
         public virtual string StatusName => "STARGAZELEVEL";
-        public virtual int ValiableMax => 20;
+        public virtual int ValiableMax => 16;
         public int AdditionalMaxLevel { get; protected set; }
         public int OriginalMaxLevel { get; protected set; }
         private void Awake()
@@ -29,6 +30,7 @@ namespace SephiriaMod.Items
             //OriginalMaxLevel = maxLevel;
             if(NetworkAvatar != null)
             {
+                if(!string.IsNullOrEmpty(StatusName))
                 SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
             }
         }
@@ -51,9 +53,12 @@ namespace SephiriaMod.Items
             base.OnCharmEffectRefreshed();
             if (NetworkAvatar != null)
             {
+                if (!string.IsNullOrEmpty(StatusName))
+                {
                 SetAdditionalMaxLevel(NetworkAvatar.GetCustomStatUnsafe(StatusName));
                 Inventory.UpdatePing(Item.Position);
             }
+        }
         }
         [HarmonyPatch(typeof(UI_CharmTierDisplay), nameof(UI_CharmTierDisplay.SetTier), [typeof(int), typeof(int), typeof(int), typeof(int)])]
         public static class UITierPatch
