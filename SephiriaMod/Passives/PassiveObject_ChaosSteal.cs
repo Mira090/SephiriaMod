@@ -6,7 +6,7 @@ namespace SephiriaMod.Passives
 {
     public class PassiveObject_ChaosSteal : PassiveObject
     {
-        public int Steal = 20;
+        public int Steal = 12;
         public int PoisonStack = 3;
         protected override void OnEffectEnabled(PlayerAvatar player, bool runtime)
         {
