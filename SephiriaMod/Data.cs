@@ -888,6 +888,38 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm ActiveMeteor { get; } = ModCharmStatus.Create<Charm_ActiveMeteor>("Active_Meteor", 6)
             .SetCategory(ItemCategories.Ember).SetEffects("Charm_FlameGround_Meteor_Effect", "Charm_FlameGround_Meteor_Effect2").SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
+        /*
+        /// <summary>
+        /// Item_Savvy_Precision_Name
+        /// ギロックの鶴嘴
+        /// Item_Savvy_Precision_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Savvy_Precision_Effect
+        /// <tag=Critical>発生時に{LEAF}<tag=Leaf>を生成
+        /// Item_Savvy_Precision_Effect2
+        /// 攻撃の<tag=CriticalChance>が100％を超えた場合、超過した分だけ<tag=Excavation>の発生率が増加する
+        /// </summary>
+        public static ModCharm SavvyPrecision { get; } = ModCharmStatus.Create<Charm_SavvyPrecision>("Savvy_Precision", 3, CreateStatusGroup("CRITICAL", 250, 500, 750, 1000))
+            .SetCategory(ItemCategories.Savvy, ItemCategories.Precision).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();*/
+
+        #region Jewelries
+        /*
+        /// <summary>
+        /// Item_Jewelry_Study_Name
+        /// 輝くダイヤモンド
+        /// Item_Jewelry_Study_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm JewelryStudy { get; } = ModCharmStatus.Create<Charm_Jewelry>("Jewelry_Study", 0, CreateStatusGroupBy("PhysicalDamage".ToSephiriaId(), 1))
+            .SetCategory(ItemCategories.Sturdy).SetSimpleEffects(0).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Precision_Name
+        /// 煌めくシトリン
+        /// Item_Jewelry_Precision_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm JewelryPrecision { get; } = ModCharmStatus.Create<Charm_Jewelry>("Jewelry_Precision", 0, CreateStatusGroupBy("CriticalDamageRate".ToSephiriaId(), 10))
+            .SetCategory(ItemCategories.Precision).SetSimpleEffects(0).SetIsJewelry(EItemRarity.Rare);*/
 
         private static readonly System.Random JewelryRandom = new();
         public static ModCharm GetRandomJewelry(this Charm_Basic charm)
@@ -909,6 +941,7 @@ namespace SephiriaMod
                 return;
             charm.Inventory.AddItem(new ItemMetadata(ItemDatabase.GenerateInstanceID(JewelryRandom), random.Id, 1));
         }
+        #endregion
 
         #region Sacrifices
         /// <summary>
@@ -1224,6 +1257,13 @@ namespace SephiriaMod
         /// 価値の高い特殊なアーティファクト。このアーティファクトを手に入れた時、所持する<tag=Leaf>をすべて消費して、消費した<tag=Leaf>100ごとに最大レベルが1増加します。
         /// </summary>
         public static ModKeyword ItemRarityJewelry { get; } = ModKeyword.CreateKeyword("ItemRarity_Jewelry").SetTextColor(new Color32(255, 120, 0, 255));
+        /// <summary>
+        /// Status_Excavation_Name
+        /// 発掘
+        /// Status_Excavation_Description
+        /// 所持する<tag=Leaf>500ごとに1%の確率で<tag=ItemRarity_Jewelry>アーティファクトを手に入れる
+        /// </summary>
+        public static ModKeyword Excavation { get; } = ModKeyword.CreateKeyword("Excavation").SetTextColor(new Color32(200, 100, 0, 255)).SetConnectedDetailEntities("ItemRarity_Jewelry");
         #endregion
 
 

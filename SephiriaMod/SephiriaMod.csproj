@@ -567,8 +567,13 @@
 		<Compile Include="Items\Eternal\Charm_GlacierFrost.cs" />
 		<Compile Include="Items\Eternal\Charm_MagitechDarkCloud.cs" />
 		<Compile Include="Items\Jewelry\Charm_Jewelry.cs" />
+		<Compile Include="Items\Jewelry\Charm_JewelryBurn.cs" />
+		<Compile Include="Items\Jewelry\Charm_JewelryDebuff.cs" />
+		<Compile Include="Items\Jewelry\Charm_JewelryElectric.cs" />
+		<Compile Include="Items\Jewelry\Charm_JewelryFrostbite.cs" />
 		<Compile Include="Items\Sacrifice\Charm_Sacrifice.cs" />
 		<Compile Include="Items\Sacrifice\Charm_SacrificeDamage.cs" />
+		<Compile Include="Items\Savvy\Charm_SavvyPrecision.cs" />
 		<Compile Include="Passives\PassiveObject_AdditionalDamage.cs" />
 		<Compile Include="Passives\PassiveObject_ChaosSteal.cs" />
 		<Compile Include="Passives\PassiveObject_DirectAttackPoison.cs" />
