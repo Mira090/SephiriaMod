@@ -1,5 +1,6 @@
 ﻿using FMODUnity;
 using MelonLoader;
+using Mirror;
 using SephiriaMod.Buffs;
 using SephiriaMod.Combos;
 using SephiriaMod.Items;
@@ -8,6 +9,7 @@ using SephiriaMod.Items.Jewelry;
 using SephiriaMod.Items.Savvy;
 using SephiriaMod.Passives;
 using SephiriaMod.Registries;
+using SephiriaMod.Sephirites;
 using SephiriaMod.StatusInstances;
 using SephiriaMod.Utilities;
 using SephiriaMod.Weapons;
@@ -32,6 +34,7 @@ namespace SephiriaMod
         public static List<ModKeyword> Keywords { get; private set; } = new();
         public static List<ModPassive> Passives { get; private set; } = new();
         public static List<ModSpriteFx> SpriteFxs { get; private set; } = new();
+        public static List<ModSephirite> Sephirites { get; private set; } = new();
         public static List<string> AllResourcePrefabNames { get; private set; }
         public static Dictionary<string, List<ModCharm>> Jewelries { get; private set; } = new();
         /// <summary>
@@ -936,6 +939,14 @@ namespace SephiriaMod
         }
         public static void AddRandomJewelry(this Charm_Basic charm)
         {
+            if (Sephirite_Jewelry.HasSephirite(charm.connectionToClient))
+                return;
+            if(charm.NetworkAvatar.TryGetComponent<LevelController>(out var level))
+            {
+                level.GenerateItem(Data.SephiriteJewelry, level.currentLevel + charm.NetworkAvatar.Money);
+                return;
+            }
+
             var random = charm.GetRandomJewelry();
             if (random == null || charm.Inventory == null)
                 return;
@@ -1884,6 +1895,18 @@ namespace SephiriaMod
 
         public static EventReference DefaultEnableSound { get; internal set; }
 
+
+        public static void GenerateItem(this LevelController level, ModSephirite sephirite, int seed)
+        {
+            GameObject gameObject = UnityEngine.Object.Instantiate(sephirite.Prefab, new Vector3(-1000f, -1000f), Quaternion.identity);
+            var identity = gameObject.AddComponent<NetworkIdentity>();
+            identity.SetAssetId(sephirite.AssetId);
+            Sephirite component = gameObject.GetComponent<Sephirite>();
+            component.Initialize(seed);
+            NetworkServer.Spawn(gameObject, level.gameObject);
+            level.levelUpQueue.Add(component);
+        }
+
         #region CreateParameters
         public static Charm_StatusInstance.StatusGroup CreateStatusGroup(string id, params int[] values)
         {
@@ -2059,6 +2082,15 @@ namespace SephiriaMod
                     Melon<Core>.Logger.Msg("New SpriteFx: " + pro.Name);
                 //moditem.Init(passiveId++, assetId++, assetId++, assetId++);
                 SpriteFxs.Add(moditem);
+            }
+            var pros11 = type.GetProperties(BindingFlags.Static | BindingFlags.Public).Where(p => p.PropertyType == typeof(ModSephirite) || p.PropertyType.IsSubclassOf(typeof(ModSephirite)));
+            foreach (var pro in pros11)
+            {
+                var moditem = pro.GetValue(type) as ModSephirite;
+                if (Core.LogFew)
+                    Melon<Core>.Logger.Msg("New Sephirite: " + pro.Name);
+                moditem.Init(assetId++);
+                Sephirites.Add(moditem);
             }
             //CustomCostumeDatabase.Initialize();
         }

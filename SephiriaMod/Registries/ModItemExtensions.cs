@@ -880,6 +880,11 @@ namespace SephiriaMod.Registries
             item.Fps = fps;
             return item;
         }
+        public static T SetAppearLimit<T>(this T item, int appearLimit) where T : ModSephirite
+        {
+            item.AppearLimit = appearLimit;
+            return item;
+        }
 
 
         public static Charm_StatusInstance.StatusGroup CreateStatusGroup(string id, params int[] values)

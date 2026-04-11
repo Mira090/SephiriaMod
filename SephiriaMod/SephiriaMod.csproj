@@ -595,8 +595,11 @@
 		<Compile Include="Registries\ModPassive.cs" />
 		<Compile Include="Registries\ModPassivePerk.cs" />
 		<Compile Include="Registries\ModProjectile.cs" />
+		<Compile Include="Registries\ModSephirite.cs" />
 		<Compile Include="Registries\ModSpriteFx.cs" />
 		<Compile Include="Registries\ModWeaponStaff.cs" />
+		<Compile Include="Sephirites\Sephirite_Custom.cs" />
+		<Compile Include="Sephirites\Sephirite_Jewelry.cs" />
 		<Compile Include="StatusInstances\StatusInstance_MaxMiracleCount.cs" />
 		<Compile Include="Utilities\Enums.cs" />
 		<Compile Include="Utilities\ModUtil.cs" />
