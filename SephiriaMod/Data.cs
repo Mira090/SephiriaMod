@@ -1922,14 +1922,26 @@ namespace SephiriaMod
         {
             return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = values, hideIfStatValueIsZero = true };
         }
-        public static Charm_StatusInstance.StatusGroup CreateStatusGroupBy(string id, int baseValue, int count = 20)
+        public static Charm_StatusInstance.StatusGroup CreateStatusGroupBy(string id, int baseValue)
         {
             var list = new List<int>();
-            for(int q = 0; q < count; q++)
+            for(int q = 0; q < 20; q++)
             {
                 list.Add(baseValue * (q + 1));
             }
-            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray() };
+            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray(), hideIfStatValueIsZero = true };
+        }
+        public static Charm_StatusInstance.StatusGroup CreateStatusGroupBy(string id, int zero, int baseValue)
+        {
+            var list = new List<int>();
+            for (int q = 0; q < 20; q++)
+            {
+                if (q < zero)
+                    list.Add(0);
+                else
+                    list.Add(baseValue * ((q - zero) + 1));
+            }
+            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray(), hideIfStatValueIsZero = true };
         }
         public static Charm_AddOrphanedStatusInstance.OrphanedStatusGroup CreateOrphanedStatusGroup(string id, int value)
         {
