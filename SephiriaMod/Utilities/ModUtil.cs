@@ -207,6 +207,12 @@ namespace SephiriaMod.Utilities
         {
             return (ushort)((uint)function.GetStableHashCode() & 0xFFFFu);
         }
+        public static float GetEvasionPercent(int evasion)
+        {
+            if (evasion > 10000)
+                evasion = 10000;
+            return 100f * Mathf.Log(evasion / 6200f + 1f) * 0.8f;
+        }
 
         #region region Delay関数
         /// <summary>
