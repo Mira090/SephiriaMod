@@ -1272,7 +1272,11 @@ namespace SephiriaMod
         /// Status_Excavation_Name
         /// 発掘
         /// Status_Excavation_Description
-        /// 所持する<tag=Leaf>500ごとに1%の確率で<tag=ItemRarity_Jewelry>アーティファクトを手に入れる
+        /// 所持する<tag=Leaf>500ごとに2%の確率で<tag=ItemRarity_Jewelry>アーティファクトを手に入れます。
+        /// </summary>
+        public static ModKeyword Excavation { get; } = ModKeyword.CreateKeyword("Excavation").SetTextColor(new Color32(200, 100, 0, 255))
+            .SetConnectedDetailEntities("ItemRarity_Jewelry").SetKeywordImage(() => CustomSpriteAsset.Excavation);
+        public static ModKeyword Crime { get; } = ModKeyword.CreateKeyword("Crime", "Debuff_Crime", "Debuff_Crime_Description").SetTextColor(new Color32(160, 0, 0, 255)).SetKeywordImage(() => CustomSpriteAsset.Crime);
         /// </summary>
         public static ModKeyword Excavation { get; } = ModKeyword.CreateKeyword("Excavation").SetTextColor(new Color32(200, 100, 0, 255)).SetConnectedDetailEntities("ItemRarity_Jewelry");
         #endregion

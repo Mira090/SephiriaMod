@@ -297,6 +297,7 @@ namespace SephiriaMod
 
         #region 天罰・暗閃
         [HarmonyPatch(typeof(UnitAvatar), "RpcShowDamageParticle", [typeof(Vector2), typeof(string), typeof(Color), typeof(int), typeof(bool), typeof(UnitAvatar), typeof(UnitAvatar)])]
+        [Obsolete]
         public static class UnitAvatarRpcShowDamageParticlePatch
         {
             static void Prefix(Vector2 position, ref string msg, ref Color color, int fontSize, bool isPrivate, UnitAvatar self, UnitAvatar attacker, UnitAvatar __instance)
@@ -351,6 +352,16 @@ namespace SephiriaMod
                     text.enableVertexGradient = true;
                     damage = damage.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=MagicDamageBonus>");
                     color = Color.white;
+                }
+                else if(color == ModUtil.Excavation)
+                {
+                    damage = damage.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=ExcavationJewelry>");
+                    color = new Color32(255, 216, 53, 255);
+                }
+                else if (color == ModUtil.ExcavationFaild)
+                {
+                    damage = damage.Replace("<sprite=\"Keyword\" name=CriticalChance>", "<sprite=\"Keyword\" name=Excavation>");
+                    color = new Color32(178, 175, 120, 255);
                 }
                 else if (color.a == 0)
                 {

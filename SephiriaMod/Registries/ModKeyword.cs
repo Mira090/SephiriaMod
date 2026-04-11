@@ -12,6 +12,13 @@ namespace SephiriaMod.Registries
         {
             return new ModKeyword().SetKeyword(name);
         }
+        public static ModKeyword CreateKeyword(string name, string nameKey, string descKey)
+        {
+            var keyword = new ModKeyword().SetKeyword(name);
+            keyword.VisualText = new LocalizedString(nameKey);
+            keyword.Description = new LocalizedString(descKey);
+            return keyword;
+        }
         internal ModKeyword SetKeyword(string name)
         {
             Keyword = name;

@@ -2,6 +2,7 @@
 using FMODUnity;
 using MelonLoader;
 using Mirror;
+using SephiriaMod.Registries;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -400,8 +401,22 @@ namespace SephiriaMod.Utilities
                 return false;
             return damage.color == FourGradation;
         }
+        public static bool IsExcavation(this DamageInstance damage)
+        {
+            if (!damage.useCustomColor)
+                return false;
+            return damage.color == Excavation;
+        }
+        public static bool IsExcavationFaild(this DamageInstance damage)
+        {
+            if (!damage.useCustomColor)
+                return false;
+            return damage.color == ExcavationFaild;
+        }
         public static Color FourGradation = new Color(0, 1, 0, 0);
         public static Color FourGradationMagicExecution = new Color(0, 0, 1, 0);
+        public static Color32 Excavation = new Color32(255, 255, 0, 0);
+        public static Color32 ExcavationFaild = new Color32(255, 100, 0, 0);
 
         public static float GetCharmDamageBonus(this Charm_Basic charm, float damage)
         {

@@ -21,6 +21,9 @@ namespace SephiriaMod.Registries
         public static Sprite Assasination;
         public static Sprite MerchantLeaf;
         public static Sprite BlackFrostbite;
+        public static Sprite Excavation;
+        public static Sprite ExcavationJewelry;
+        public static Sprite Crime;
 
         public static int width = 10;
         public static int height = 10;
@@ -51,6 +54,9 @@ namespace SephiriaMod.Registries
             Assasination = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Assasination", new Rect(0, height * 5, width, height));
             MerchantLeaf = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "MerchantLeaf", new Rect(0, height * 6, width, height));
             BlackFrostbite = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "BlackFrostbite", new Rect(0, height * 7, width, height));
+            Excavation = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Excavation", new Rect(0, height * 8, width, height));
+            ExcavationJewelry = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "ExcavationJewelry", new Rect(0, height * 9, width, height));
+            Crime = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Crime", new Rect(width, height * 0, width, height));
         }
         public static void InitSpriteAsset()
         {
@@ -78,6 +84,9 @@ namespace SephiriaMod.Registries
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 5, name = "Assasination", sprite = Assasination });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 6, name = "MerchantLeaf", sprite = MerchantLeaf });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 7, name = "BlackFrostbite", sprite = BlackFrostbite });
+            SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 8, name = "Excavation", sprite = Excavation });
+            SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 9, name = "ExcavationJewelry", sprite = ExcavationJewelry });
+            SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = width * 1, y = max - height * 0, name = "Crime", sprite = Crime });
             foreach (var sprite in SpriteAsset.spriteInfoList)
             {
                 sprite.id = id++;
