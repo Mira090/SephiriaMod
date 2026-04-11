@@ -167,5 +167,17 @@ namespace SephiriaMod.Utilities
                 i -= 10;
             }
         }
+        private static GameObject _sephiriteLvUp;
+        public static GameObject SephiriteLvUp
+        {
+            get
+            {
+                if (_sephiriteLvUp == null)
+                {
+                    _sephiriteLvUp = Resources.Load<GameObject>("Sephirite/Sephirite_LVUP");
+                }
+                return _sephiriteLvUp;
+            }
+        }
     }
 }
