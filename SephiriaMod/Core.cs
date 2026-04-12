@@ -1071,6 +1071,23 @@ namespace SephiriaMod
                         return ob;
                     }
                 }
+                foreach (var modItem in Data.Sephirites)
+                {
+                    if (original.name == modItem.Prefab.name)
+                    {
+                        //Melon<Core>.Logger.Msg($"Bypassing Instantiate for: {original.name}");
+
+                        var ob = UnityEngine.Object.Instantiate(original, position, rotation);
+                        var identity = ob.AddComponent<NetworkIdentity>();
+                        var assetId = identity.GetType().GetProperty("assetId");
+                        assetId.SetValue(identity, modItem.AssetId);
+                        if (ob.TryGetComponent<Sephirite>(out var sephirite))
+                        {
+                            sephirite.enabled = true;
+                        }
+                        return ob;
+                    }
+                }
 
                 // 通常の Instantiate
                 return UnityEngine.Object.Instantiate(original, position, rotation);
