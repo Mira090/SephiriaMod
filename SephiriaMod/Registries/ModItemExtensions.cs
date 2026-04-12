@@ -106,7 +106,16 @@ namespace SephiriaMod.Registries
         {
             item.SetRarity(rarity);
             item.IsJewelry = true;
-            item.Cost += item.Cost / 2;
+            item.Cost += item.Cost;
+            item.ActiveType = EItemActiveType.Hidden;
+            return item;
+        }
+        public static T SetIsExcludedJewelry<T>(this T item, EItemRarity rarity) where T : ModItem
+        {
+            item.SetRarity(rarity);
+            item.IsJewelry = true;
+            item.IsExcludedJewelry = true;
+            item.Cost += item.Cost;
             item.ActiveType = EItemActiveType.Hidden;
             return item;
         }

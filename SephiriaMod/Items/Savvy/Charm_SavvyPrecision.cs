@@ -3,17 +3,48 @@ using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace SephiriaMod.Items.Savvy
 {
     public class Charm_SavvyPrecision : Charm_StatusInstance
     {
-        public int[] moneyByLevel = [5, 5, 10];
+        public int[] moneyByLevel = [2, 3, 5];
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
+            NetworkAvatar.OnAttackUnitBeforeOperation += OnAttackUnitBeforeOperation;
             NetworkAvatar.OnAttackUnit += OnAttackUnit;
         }
+
+        private void OnAttackUnitBeforeOperation(UnitAvatar avatar, DamageInstance damage)
+        {
+            var execute = Mathf.Clamp(damage.criticalChancePercent - 100f, 0f, 100f);
+
+            if (execute.Percent())
+            {
+                damage.criticalChancePercent = 0;
+                damage.isCriticalAttack = true;
+                damage.useCustomColor = true;
+
+                var add = moneyByLevel.SafeRandomAccess(CurrentLevelToIdx());
+                int money = ((NetworkAvatar.Money + add) / 500) * 2;
+                if (money > 0 && money.Percent())
+                {
+                    if(avatar.monsterType != EMonsterType.Dummy)
+                        this.AddRandomJewelry();
+                    damage.color = ModUtil.Excavation;
+                }
+                else
+                {
+                    damage.color = ModUtil.ExcavationFaild;
+                }
+
+                var addDamage = NetworkAvatar.GetCustomStatUnsafe("ExcavationDamage".ToSephiriaUpperId());
+                damage.damage += damage.damage * addDamage / 100f;
+            }
+        }
+
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
             string value = showAllLevel ? moneyByLevel.SafeRandomAccess(0) + "→" + moneyByLevel.SafeRandomAccess(maxLevel) : moneyByLevel.SafeRandomAccess(LevelToIdx(level)).ToString();
@@ -22,9 +53,17 @@ namespace SephiriaMod.Items.Savvy
             new Loc.KeywordValue("LEAF", "+" + value, GetPositiveColor(virtualLevelOffset))
             };
         }
+        public override void OnCharmEffectRefreshed()
+        {
+            base.OnCharmEffectRefreshed();
+            NetworkAvatar.OnAttackUnitBeforeOperation -= OnAttackUnitBeforeOperation;
+            NetworkAvatar.OnAttackUnitBeforeOperation += OnAttackUnitBeforeOperation;
+        }
 
         private void OnAttackUnit(UnitAvatar avatar, DamageInstance damage)
         {
+            if (avatar.monsterType == EMonsterType.Dummy)
+                return;
             if (damage.isCriticalAttack)
             {
                 var add = moneyByLevel.SafeRandomAccess(CurrentLevelToIdx());
@@ -32,21 +71,12 @@ namespace SephiriaMod.Items.Savvy
                 //SephiriaPrefabs.SpawnMoney(add, avatar.transform.position);
                 NetworkAvatar.AddMoney(add);
             }
-            if (damage.isExecutionAttack)
-                return;
-            var dig = damage.criticalChancePercent - 100;
-            if (dig <= 0 || !dig.Percent())
-                return;
-            int money = NetworkAvatar.Money / 500;
-            if (money > 0 && money.Percent())
-            {
-                this.AddRandomJewelry();
-            }
         }
 
         protected override void OnDisabledEffect()
         {
             base.OnDisabledEffect();
+            NetworkAvatar.OnAttackUnitBeforeOperation -= OnAttackUnitBeforeOperation;
             NetworkAvatar.OnAttackUnit -= OnAttackUnit;
         }
     }

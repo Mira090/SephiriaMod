@@ -2,6 +2,7 @@
 using FMODUnity;
 using MelonLoader;
 using Mirror;
+using SephiriaMod.Entities;
 using SephiriaMod.Registries;
 using System;
 using System.Collections;
@@ -212,6 +213,10 @@ namespace SephiriaMod.Utilities
             if (evasion > 10000)
                 evasion = 10000;
             return 100f * Mathf.Log(evasion / 6200f + 1f) * 0.8f;
+        }
+        public static bool IsJewelry(this ItemEntity entity)
+        {
+            return entity is ItemEntity_Jewelry;
         }
 
         #region region Delay関数

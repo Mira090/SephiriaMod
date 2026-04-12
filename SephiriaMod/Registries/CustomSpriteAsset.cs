@@ -24,6 +24,7 @@ namespace SephiriaMod.Registries
         public static Sprite Excavation;
         public static Sprite ExcavationJewelry;
         public static Sprite Crime;
+        public static Sprite Looting;
 
         public static int width = 10;
         public static int height = 10;
@@ -57,6 +58,7 @@ namespace SephiriaMod.Registries
             Excavation = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Excavation", new Rect(0, height * 8, width, height));
             ExcavationJewelry = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "ExcavationJewelry", new Rect(0, height * 9, width, height));
             Crime = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Crime", new Rect(width, height * 0, width, height));
+            Looting = SpriteLoader.CreateSprite(NewKeywordSprite.texture, "Looting", new Rect(width, height * 1, width, height));
         }
         public static void InitSpriteAsset()
         {
@@ -87,6 +89,7 @@ namespace SephiriaMod.Registries
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 8, name = "Excavation", sprite = Excavation });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = 0, y = max - height * 9, name = "ExcavationJewelry", sprite = ExcavationJewelry });
             SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = width * 1, y = max - height * 0, name = "Crime", sprite = Crime });
+            SpriteAsset.spriteInfoList.Add(new TMP_Sprite() { x = width * 1, y = max - height * 1, name = "Looting", sprite = Looting });
             foreach (var sprite in SpriteAsset.spriteInfoList)
             {
                 sprite.id = id++;

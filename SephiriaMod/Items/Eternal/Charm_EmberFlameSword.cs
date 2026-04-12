@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using SephiriaMod.Items.Jewelry;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -65,36 +66,57 @@ namespace SephiriaMod.Items.Eternal
                 return true;
             }
         }
-        [HarmonyPatch(typeof(ComboEffect_FlameSword), "ServerFireSword")]
+        [HarmonyPatch(typeof(ComboEffect_FlameSword), nameof(ComboEffect_FlameSword.ServerFireSword))]
         public static class ComboEffect_FlameSwordLocalFireSwordPatch
         {
             static void Postfix(Vector3 motionTo, bool isDireectAttack, bool isMagic, ComboEffect_FlameSword __instance)
             {
                 if(ComboEffect_FlameSwordHandleAttackUnitPatch.RecentTarget == null)
                     return;
+                ByBurn(__instance, motionTo, isDireectAttack, isMagic);
+            }
+            private static void ByBurn(ComboEffect_FlameSword __instance, Vector3 motionTo, bool isDireectAttack, bool isMagic)
+            {
                 var addition = __instance.Networkavatar.GetCustomStatUnsafe("FlameSwordAdditionBurn".ToUpperInvariant());
                 if (addition <= 0)
                     return;
 
                 int burn = 0;
-                foreach(var debuff in ComboEffect_FlameSwordHandleAttackUnitPatch.RecentTarget.Debuffs)
+                foreach (var debuff in ComboEffect_FlameSwordHandleAttackUnitPatch.RecentTarget.Debuffs)
                 {
-                    if(debuff.ID == "BURN")
+                    if (debuff.ID == "BURN")
                     {
                         burn += debuff.CurrentStack;
                     }
                 }
 
-                for(int q = 0;q<burn * addition; q++)
+                for (int q = 0; q < burn * addition; q++)
                 {
+                    Vector3 motionFrom = motionTo + (Vector3)UnityEngine.Random.insideUnitCircle.normalized * 2.5f;
+                    __instance.FireSword(motionFrom, motionTo);
+                    /*
                     if (__instance.currentSword <= 0)
                     {
                         return;
                     }
 
                     __instance.NetworkcurrentSword = __instance.currentSword - 1;
-                    __instance.StartCoroutine(__instance.InvokeCreateFlameSword(motionTo));
+                    __instance.StartCoroutine(__instance.InvokeCreateFlameSword(motionTo));*/
                 }
+            }
+            private static void ByLeaf(ComboEffect_FlameSword __instance, Vector3 motionTo, bool isDireectAttack, bool isMagic)
+            {
+                var addition = __instance.Networkavatar.GetCustomStatUnsafe(Charm_JewelryFlameSword.Status);
+                if (addition <= 0)
+                    return;
+
+                var money = __instance.Networkavatar.Money;
+                if (money < addition)
+                    return;
+                __instance.Networkavatar.AddMoney(-money);
+
+                Vector3 motionFrom = motionTo + (Vector3)UnityEngine.Random.insideUnitCircle.normalized * 2.5f;
+                __instance.FireSword(motionFrom, motionTo);
             }
         }
     }

@@ -42,6 +42,7 @@ namespace SephiriaMod.Registries
         public bool CannotThrow { get; internal set; } = false;
         public bool IsDual { get; internal set; } = false;
         public bool IsJewelry { get; internal set; } = false;
+        public bool IsExcludedJewelry { get; internal set; } = false;
         public GameObject ResourcePrefab
         {
             get

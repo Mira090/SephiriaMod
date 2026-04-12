@@ -891,7 +891,6 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm ActiveMeteor { get; } = ModCharmStatus.Create<Charm_ActiveMeteor>("Active_Meteor", 6)
             .SetCategory(ItemCategories.Ember).SetEffects("Charm_FlameGround_Meteor_Effect", "Charm_FlameGround_Meteor_Effect2").SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
-        /*
         /// <summary>
         /// Item_Bond_Coin_Name
         /// 結束のコイン
@@ -908,31 +907,198 @@ namespace SephiriaMod
         /// Item_Savvy_Precision_Effect
         /// <tag=Critical>発生時に{LEAF}<tag=Leaf>を生成
         /// Item_Savvy_Precision_Effect2
-        /// 攻撃の<tag=CriticalChance>が100％を超えた場合、超過した分だけ<tag=Excavation>の発生率が増加する
+        /// 攻撃の<tag=CriticalChance>が100％を超えた場合、超過した分の確率が<tag=Excavation>の発生率に変換される
         /// </summary>
         public static ModCharm SavvyPrecision { get; } = ModCharmStatus.Create<Charm_SavvyPrecision>("Savvy_Precision", 3, CreateStatusGroup("CRITICAL", 250, 500, 750, 1000))
-            .SetCategory(ItemCategories.Savvy, ItemCategories.Precision).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();*/
+            .SetCategory(ItemCategories.Savvy, ItemCategories.Precision).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Savvy_Curse_Name
+        /// 錆びた銅貨
+        /// Item_Savvy_Curse_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Savvy_Curse_Effect
+        /// <tag=Crime>スタック1つごとに次の効果を獲得
+        /// Item_Savvy_Curse_Effect2
+        /// <tag=DebuffDamage> {DAMAGE}
+        /// Item_Savvy_Curse_Effect3
+        /// <tag=DebuffDuration> {DURATION}
+        /// Item_Savvy_Curse_Effect4
+        /// デバフスタック {STACK}
+        /// Item_Savvy_Curse_Effect5
+        /// <tag=Crime>を犯すたび、追加で{LEAF}<tag=Leaf>を生成し、<tag=ItemRarity_Jewelry>アーティファクトを手に入れる
+        /// </summary>
+        public static ModCharm SavvyCurse { get; } = ModCharmStatus.Create<Charm_SavvyCurse>("Savvy_Curse", 3, CreateStatusGroup("HIGHEST_ELEMENTAL_DAMAGE", 1, 1, 2, 2))
+            .SetCategory(ItemCategories.Savvy, ItemCategories.Curse).SetSimpleEffects(5).SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Savvy_Shadow_Name
+        /// 黒の貨幣
+        /// Item_Savvy_Shadow_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Savvy_Shadow_Effect
+        /// <tag=Evasion>成功時、<tag=Looting>が発生する
+        /// Item_Savvy_Shadow_Effect2
+        /// {COUNT}回<tag=Looting>するたび<tag=Leaf>ではなく<tag=ItemRarity_Jewelry>アーティファクトを手に入れる
+        /// </summary>
+        public static ModCharm SavvyShadow { get; } = ModCharmStatus.Create<Charm_SavvyShadow>("Savvy_Shadow", 5, CreateStatusGroup("EVASION", 200, 300, 500, 700, 1000, 1400))
+            .SetCategory(ItemCategories.Savvy, ItemCategories.Shadow).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();
+        /// <summary>
+        /// Item_Savvy_Academy_Name
+        /// 財宝地図
+        /// Item_Savvy_Academy_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Savvy_Academy_Effect
+        /// <tag=MP>を<color=red>永久に{MP}</color><color=red><tag=ReservedMP></color>して、{COIN}を1つ手に入れる
+        /// Item_Savvy_Academy_Effect2
+        /// 呪印：{COIN}を捨てると、このアーティファクトは発動時効果を失い、他の{COIN}はすべて壊れる。そして、<tag=ReservedMP>されている<tag=MP>{PER}ごとに<tag=ItemRarity_Jewelry>アーティファクトを手に入れる
+        /// </summary>
+        public static ModCharm SavvyAcademy { get; } = ModCharmStatus.Create<Charm_SavvyAcademy>("Savvy_Academy", 2, CreateStatusGroup("COOLDOWN_RECOVERY_SPEED", 5, 10, 20))
+            .SetCategory(ItemCategories.Savvy, ItemCategories.Academy).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();
 
         #region Jewelries
-        /*
+        /// <summary>
+        /// Item_Jewelry_Coin_Name
+        /// 魔法の金貨
+        /// Item_Jewelry_Coin_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Coin_Effect
+        /// <tag=ItemRarity_Jewelry>アーティファクト：所持する<tag=Leaf>を最大400まで消費して、消費した<tag=Leaf>200ごとに最大レベルが1増加する
+        /// Item_Jewelry_Coin_Effect2
+        /// 所持する<tag=Leaf>{LEAF}ごとに<tag=MagicDamageBonus> {DAMAGE}
+        /// </summary>
+        public static ModCharm JewelryCoin { get; } = ModCharmStatus.Create<Charm_JewelryCoin>("Jewelry_Coin", 0)
+            .SetCategory(ItemCategories.Academy).SetSimpleEffects(2).SetIsExcludedJewelry(EItemRarity.Uncommon);
+
         /// <summary>
         /// Item_Jewelry_Study_Name
         /// 輝くダイヤモンド
         /// Item_Jewelry_Study_FlavorText
         /// フレーバーテキスト募集中
+        /// Item_Jewelry_Study_Effect
+        /// <tag=WeaponAction_DirectAttack>時、<tag=Leaf>を{LEAF}消費して3秒間<tag=FinalWeaponDamage>{DAMAGE}
         /// </summary>
-        public static ModCharm JewelryStudy { get; } = ModCharmStatus.Create<Charm_Jewelry>("Jewelry_Study", 0, CreateStatusGroupBy("PhysicalDamage".ToSephiriaId(), 1))
-            .SetCategory(ItemCategories.Sturdy).SetSimpleEffects(0).SetIsJewelry(EItemRarity.Rare);
+        public static ModCharm JewelryStudy { get; } = ModCharmStatus.Create<Charm_JewelrySturdy>("Jewelry_Study", 0, 
+            CreateStatusGroupBy("PhysicalDamage".ToSephiriaId(), 3),
+            CreateStatusGroupBy("WeaponRange".ToSephiriaId(), 3, 20))
+            .SetCategory(ItemCategories.Sturdy).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Wind_Name
+        /// 靡くエメラルド
+        /// Item_Jewelry_Wind_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Wind_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Leaf>を{LEAF}消費して{DAMAGE}の追加<tag=PhysicalDamage>を与える
+        /// </summary>
+        public static ModCharm JewelryWind { get; } = ModCharmStatus.Create<Charm_JewelryDamage>("Jewelry_Wind", 0,
+            CreateStatusGroupBy("AttackSpeed".ToSephiriaId(), 5),
+            CreateStatusGroupBy("TrueDamage".ToSephiriaId(), 3, 3))
+            .SetCategory(ItemCategories.WindSong).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Precision_Name
         /// 煌めくシトリン
         /// Item_Jewelry_Precision_FlavorText
         /// フレーバーテキスト募集中
+        /// Item_Jewelry_Precision_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Leaf>を{LEAF}消費して<tag=CriticalChance>が{CRITICAL}増加する
         /// </summary>
-        public static ModCharm JewelryPrecision { get; } = ModCharmStatus.Create<Charm_Jewelry>("Jewelry_Precision", 0, CreateStatusGroupBy("CriticalDamageRate".ToSephiriaId(), 10))
-            .SetCategory(ItemCategories.Precision).SetSimpleEffects(0).SetIsJewelry(EItemRarity.Rare);*/
+        public static ModCharm JewelryPrecision { get; } = ModCharmStatus.Create<Charm_JewelryCritical>("Jewelry_Precision", 0, 
+            CreateStatusGroupBy("CriticalDamageRate".ToSephiriaId(), 20))
+            .SetCategory(ItemCategories.Precision).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Excavation_Name
+        /// 震えるトパーズ
+        /// Item_Jewelry_Excavation_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm JewelryExcavation { get; } = ModCharmStatus.Create<Charm_JewelryExcavation>("Jewelry_Excavation", 0, 
+            CreateStatusGroupBy("CriticalDamageRate".ToSephiriaId(), 20),
+            CreateStatusGroupBy("ExcavationDamage".ToSephiriaId(), 3, 50))
+            .SetCategory(ItemCategories.Precision).SetSimpleEffects(0).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Ember_Name
+        /// 燃えるルビー
+        /// Item_Jewelry_Ember_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Ember_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Leaf>を{LEAF}消費して<tag=Burn>デバフを付与する
+        /// </summary>
+        public static ModCharm JewelryEmber { get; } = ModCharmStatus.Create<Charm_JewelryBurn>("Jewelry_Ember", 0,
+            CreateStatusGroupBy("FireDamage".ToSephiriaId(), 3),
+            CreateStatusGroup("BurnStack".ToSephiriaId(), 0, 0, 0, 1, 2, 4))
+            .SetCategory(ItemCategories.Ember).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Flame_Name
+        /// 焼き尽くすガーネット
+        /// Item_Jewelry_Flame_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Flame_Effect
+        /// <tag=FlameSword>が発動した時、<tag=Leaf>を{LEAF}消費して1回追加発動する
+        /// </summary>
+        public static ModCharm JewelryFlame { get; } = ModCharmStatus.Create<Charm_JewelryFlameSword>("Jewelry_Flame", 0,
+            CreateStatusGroupBy("FireDamage".ToSephiriaId(), 3),
+            CreateStatusGroupBy("FlameSwordFastFall".ToSephiriaId(), 3, 20))
+            .SetCategory(ItemCategories.FlameSword).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Glacier_Name
+        /// 冷たいサファイア
+        /// Item_Jewelry_Glacier_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Glacier_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Leaf>を{LEAF}消費して<tag=Frostbite>デバフを付与する
+        /// </summary>
+        public static ModCharm JewelryGlacier { get; } = ModCharmStatus.Create<Charm_JewelryFrostbite>("Jewelry_Glacier", 0,
+            CreateStatusGroupBy("IceDamage".ToSephiriaId(), 3),
+            CreateStatusGroupBy("FreezeDamage".ToSephiriaId(), 3, 40))
+            .SetCategory(ItemCategories.Glacier).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Frost_Name
+        /// 凍て尽くすアクアマリン
+        /// Item_Jewelry_Frost_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Frost_Effect
+        /// <tag=FrostRelic>が発動した時、<tag=Leaf>を{LEAF}消費して1回追加発動する
+        /// </summary>
+        public static ModCharm JewelryFrost { get; } = ModCharmStatus.Create<Charm_JewelryFrostRelic>("Jewelry_Frost", 0,
+            CreateStatusGroupBy("IceDamage".ToSephiriaId(), 3),
+            CreateStatusGroupBy("ChargingCharmBonus".ToSephiriaId(), 3, 30))
+            .SetCategory(ItemCategories.Frost).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Electric_Name
+        /// 弾けるターコイズ
+        /// Item_Jewelry_Electric_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Electric_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Leaf>を{LEAF}消費して<tag=Electric>デバフを付与する
+        /// </summary>
+        public static ModCharm JewelryElectric { get; } = ModCharmStatus.Create<Charm_JewelryElectric>("Jewelry_Electric", 0,
+            CreateStatusGroupBy("LightningDamage".ToSephiriaId(), 3),
+            CreateStatusGroup("ElectricStack".ToSephiriaId(), 0, 0, 0, 1, 2, 4))
+            .SetCategory(ItemCategories.Magitech).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Cloud_Name
+        /// 貫くマラカイト
+        /// Item_Jewelry_Cloud_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Cloud_Effect
+        /// <tag=DarkCloud>が発動した時、<tag=Leaf>を{LEAF}消費して点射数が1増加する
+        /// </summary>
+        public static ModCharm JewelryCloud { get; } = ModCharmStatus.Create<Charm_JewelryDarkCloud>("Jewelry_Cloud", 0,
+            CreateStatusGroupBy("LightningDamage".ToSephiriaId(), 3),
+            CreateStatusGroupBy("DarkCloudSpeed".ToSephiriaId(), 3, 30))
+            .SetCategory(ItemCategories.DarkCloud).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_Curse_Name
+        /// 蠢くオパール
+        /// Item_Jewelry_Curse_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Jewelry_Curse_Effect
+        /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Leaf>を{LEAF}消費して<tag=Debuff_Poison>デバフを付与する
+        /// </summary>
+        public static ModCharm JewelryCurse { get; } = ModCharmStatus.Create<Charm_JewelryDebuff>("Jewelry_Curse", 0,
+            CreateStatusGroupBy("DebuffDamage".ToSephiriaId(), 8),
+            CreateStatusGroupBy("DebuffDuration".ToSephiriaId(), 3, 30))
+            .SetCategory(ItemCategories.Curse).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
 
-        private static readonly System.Random JewelryRandom = new();
+        public static readonly System.Random JewelryRandom = new();
         public static ModCharm GetRandomJewelry(this Charm_Basic charm)
         {
             var list = charm.NetworkAvatar.Inventory.lastAppliedComboEffects.OrderByDescending(x => x.Value.comboCount).ToList();
@@ -1096,9 +1262,18 @@ namespace SephiriaMod
         /// EffectHUD_Soul_Steal_Buff_FlavorText
         /// 近接攻撃範囲増加（最大50スタック）
         /// </summary>
-        public static ModEffectHUD EffectWeaponRangeBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Soul_Steal_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
+        public static ModEffectHUD EffectSoulStealBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Soul_Steal_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
         public static CharacterBuffMod_StatusInstance SoulStealBuff { get; } = CreateBuff("SoulStealBuff", "SoulStealBuff", 50, CreateBuffStatus("WEAPON_RANGE", 2))
             .SetDefaultDuration(30f);
+        /// <summary>
+        /// EffectHUD_Weapon_Damage_Buff_Name
+        /// ダイヤモンド
+        /// EffectHUD_Weapon_Damage_Buff_FlavorText
+        /// <tag=FinalWeaponDamage>が増加します。
+        /// </summary>
+        public static ModEffectHUD EffectWeaponDamageBuff { get; } = ModEffectHUD.CreateStackEffectHUD("Weapon_Damage_Buff", UI_EffectHUD_Basic.EEffectType.Boon);
+        public static CharacterBuffMod_StatusInstance WeaponDamageBuff { get; } = CreateBuff("WeaponDamageBuff", "WeaponDamageBuff", 1, CreateBuffStatus("FINAL_WEAPONDAMAGE", 8))
+            .SetDefaultDuration(3f);
 
         /// <summary>
         /// EffectHUD_Stargaze_Tablet_Name
@@ -1135,7 +1310,14 @@ namespace SephiriaMod
         /// <tag=FrostRelic>が1回追加発動します。
         /// </summary>
         public static ModEffectHUD EffectIceTrance { get; } = ModEffectHUD.CreateStackEffectHUD("Immersion_Ice", UI_EffectHUD_Basic.EEffectType.Boon).SetHasStackText();
-#endregion
+        /// <summary>
+        /// EffectHUD_Savvy_Shadow_Name
+        /// 黒の貨幣
+        /// EffectHUD_Savvy_Shadow_FlavorText
+        /// <tag=Looting>した回数
+        /// </summary>
+        public static ModEffectHUD EffectSavvyShadow { get; } = ModEffectHUD.CreateStackEffectHUD("Savvy_Shadow", UI_EffectHUD_Basic.EEffectType.Boon);
+        #endregion
 
         #region Keywords and Stats
         /// <summary>
@@ -1212,6 +1394,13 @@ namespace SephiriaMod
         /// </summary>
         public static ModCustomStatus MaxMiracleCount { get; } = ModCustomStatus.CreateStatus<StatusInstance_MaxMiracleCount>("MaxMiracleCount");
         /// <summary>
+        /// Status_ExcavationDamage_Name
+        /// 発掘ダメージ
+        /// Status_ExcavationDamage_Description
+        /// <tag=Excavation>時のダメージが増加します
+        /// </summary>
+        public static ModCustomStatus ExcavationDamage { get; } = ModCustomStatus.CreateStatus("ExcavationDamage").SetSymbol("%").DoKeyword(keyword => keyword.SetKeywordImage(() => CustomSpriteAsset.Excavation));
+        /// <summary>
         /// Status_MagicExecution_Name
         /// 天罰
         /// Status_MagicExecution_Description
@@ -1273,7 +1462,7 @@ namespace SephiriaMod
         /// Status_ItemRarity_Jewelry_Name
         /// 宝飾
         /// Status_ItemRarity_Jewelry_Description
-        /// 価値の高い特殊なアーティファクト。このアーティファクトを手に入れた時、所持する<tag=Leaf>をすべて消費して、消費した<tag=Leaf>100ごとに最大レベルが1増加します。
+        /// 価値の高い特殊なアーティファクト。このアーティファクトを手に入れた時、所持する<tag=Leaf>をすべて消費して、消費した<tag=Leaf>200ごとに最大レベルが1増加します。（最大5レベルまで）
         /// </summary>
         public static ModKeyword ItemRarityJewelry { get; } = ModKeyword.CreateKeyword("ItemRarity_Jewelry").SetTextColor(new Color32(255, 120, 0, 255));
         /// <summary>
@@ -1285,8 +1474,13 @@ namespace SephiriaMod
         public static ModKeyword Excavation { get; } = ModKeyword.CreateKeyword("Excavation").SetTextColor(new Color32(200, 100, 0, 255))
             .SetConnectedDetailEntities("ItemRarity_Jewelry").SetKeywordImage(() => CustomSpriteAsset.Excavation);
         public static ModKeyword Crime { get; } = ModKeyword.CreateKeyword("Crime", "Debuff_Crime", "Debuff_Crime_Description").SetTextColor(new Color32(160, 0, 0, 255)).SetKeywordImage(() => CustomSpriteAsset.Crime);
+        /// <summary>
+        /// Status_Looting_Name
+        /// 略奪
+        /// Status_Looting_Description
+        /// 対象の<tag=Leaf>を盗み取ります。<tag=Evasion>と同様の確率で盗み取る<tag=Leaf>が増加します。
         /// </summary>
-        public static ModKeyword Excavation { get; } = ModKeyword.CreateKeyword("Excavation").SetTextColor(new Color32(200, 100, 0, 255)).SetConnectedDetailEntities("ItemRarity_Jewelry");
+        public static ModKeyword Looting { get; } = ModKeyword.CreateKeyword("Looting").SetTextColor(new Color32(200, 100, 0, 255)).SetKeywordImage(() => CustomSpriteAsset.Looting);
         #endregion
 
 
@@ -1937,7 +2131,7 @@ namespace SephiriaMod
             {
                 list.Add(baseValue * (q + 1));
             }
-            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray(), hideIfStatValueIsZero = true };
+            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray(), hideIfStatValueIsZero = false };
         }
         public static Charm_StatusInstance.StatusGroup CreateStatusGroupBy(string id, int zero, int baseValue)
         {
@@ -1949,7 +2143,7 @@ namespace SephiriaMod
                 else
                     list.Add(baseValue * ((q - zero) + 1));
             }
-            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray(), hideIfStatValueIsZero = true };
+            return new Charm_StatusInstance.StatusGroup() { statusID = id, valuesByLevel = list.ToArray(), hideIfStatValueIsZero = false };
         }
         public static Charm_AddOrphanedStatusInstance.OrphanedStatusGroup CreateOrphanedStatusGroup(string id, int value)
         {
@@ -2007,7 +2201,7 @@ namespace SephiriaMod
                 var moditem = pro.GetValue(type) as ModItem;
                 moditem.Init(id++, assetId++);
                 All.Add(moditem);
-                if (moditem.IsJewelry)
+                if (moditem.IsJewelry && !moditem.IsExcludedJewelry)
                 {
                     var category = moditem.Categories.FirstOrDefault();
                     if (!Jewelries.ContainsKey(category))

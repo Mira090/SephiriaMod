@@ -532,6 +532,11 @@ namespace SephiriaMod
             static void Postfix(ItemEntity entity, ref int __result, ref GridInventory __instance)
             {
                 int bonus = 0;
+                if (__instance.itemDropBonusBySemantic.TryGetValue("DUAL", out bonus) && entity.isDual)
+                {
+                    //Debug.Log(string.Format("마법서 드롭 확률 보너스 가중치: {0}", bonus));
+                    __result += bonus;
+                }
                 if (__instance.itemDropBonusBySemantic.TryGetValue("TABLET", out bonus) && entity.type == EItemType.StoneTablet)
                 {
                     //Debug.Log(string.Format("마법서 드롭 확률 보너스 가중치: {0}", bonus));

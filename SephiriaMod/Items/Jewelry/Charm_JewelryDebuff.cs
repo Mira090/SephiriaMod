@@ -8,17 +8,17 @@ namespace SephiriaMod.Items.Jewelry
 {
     public class Charm_JewelryDebuff : Charm_Jewelry
     {
-        public int[] consume = [25];
-        public virtual CharacterDebuff Debuff => SephiriaPrefabs.Burn;
+        public override int[] Consume => consumeMedium;
+        public virtual CharacterDebuff Debuff => SephiriaPrefabs.Poison;
 
         public Timer cooldownTimer = new Timer(0.5f);
         private bool isInCooldown = false;
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
-            string value = showAllLevel ? consume.SafeRandomAccess(0) + "→" + consume.SafeRandomAccess(maxLevel) : consume.SafeRandomAccess(LevelToIdx(level)).ToString();
+            string value = showAllLevel ? Consume.SafeRandomAccess(0) + "→" + Consume.SafeRandomAccess(maxLevel) : Consume.SafeRandomAccess(LevelToIdx(level)).ToString();
             return new Loc.KeywordValue[1]
             {
-            new Loc.KeywordValue("LEAF", "+" + value, GetNegativeColor(virtualLevelOffset))
+            new Loc.KeywordValue("LEAF", value, GetNegativeColor(virtualLevelOffset))
             };
         }
         protected override void OnEnabledEffect()
@@ -33,10 +33,11 @@ namespace SephiriaMod.Items.Jewelry
                 return;
             if (isInCooldown || damage.fromType != EDamageFromType.DirectAttack|| avatar.IsDead)
                 return;
-            if(NetworkAvatar.Money >= consume.SafeRandomAccess(CurrentLevelToIdx()))
+            if(NetworkAvatar.Money >= Consume.SafeRandomAccess(CurrentLevelToIdx()))
             {
                 isInCooldown = true;
-                NetworkAvatar.AddMoney(-consume.SafeRandomAccess(CurrentLevelToIdx()));
+                if(avatar.monsterType != EMonsterType.Dummy)
+                    NetworkAvatar.AddMoney(-Consume.SafeRandomAccess(CurrentLevelToIdx()));
                 avatar.ApplyDebuff(Debuff, NetworkAvatar);
             }
         }
