@@ -14,6 +14,7 @@ using System.Reflection.Emit;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using static GridInventory;
 using static SephiriaMod.Core;
 
 namespace SephiriaMod
@@ -938,7 +939,6 @@ namespace SephiriaMod
                 if (actor.TryGetComponent<PlayerAvatar>(out var player))
                 {
                     player.ClearOrphanedStatusInstance();
-                    player.Inventory?.ClearDungeonTempLevels();
                     if(actor.TryGetComponent<TreeShopItemStorage>(out var tree))
                     {
                         player.SetMoney(tree.GettStartingMoney());
@@ -947,10 +947,33 @@ namespace SephiriaMod
                     {
                         player.SetMoney(0);
                     }
+                    player.NetworkreservedMp = 0;
+                    player.Inventory?.ClearDungeonTempLevels();
+                    RemoveOtherItems(player.Inventory);
                 }
                 if (actor.TryGetComponent<MiracleController>(out var miracle))
                 {
                     miracle.ClearMiracle();
+                }
+                if(actor.TryGetComponent<LevelController>(out var level))
+                {
+                    level.levelUpQueue.Clear();
+                }
+            }
+            private static void RemoveOtherItems(GridInventory inventory)
+            {
+                if (inventory == null)
+                    return;
+                using (new Permission(inventory))
+                {
+                    foreach (ItemPosition item in new List<ItemPosition>(inventory.inventoryMatrix.Keys))
+                    {
+                        NewItemOwnInstance newItemOwnInstance = inventory.inventoryMatrix[item];
+                        if (newItemOwnInstance.Entity != null && (newItemOwnInstance.Entity.rarity == EItemRarity.Eternal || newItemOwnInstance.Entity.IsJewelry()))
+                        {
+                            inventory.ForceRemoveItem(item.x, item.y);
+                        }
+                    }
                 }
             }
         }
