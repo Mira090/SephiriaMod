@@ -499,6 +499,7 @@
 		<Compile Include="Items\Charm_AutoMagicDarkCloud.cs" />
 		<Compile Include="Items\Charm_AutoMagicLegend.cs" />
 		<Compile Include="Items\Charm_BloodMP.cs" />
+		<Compile Include="Items\Charm_BondCoin.cs" />
 		<Compile Include="Items\Charm_BondMaker.cs" />
 		<Compile Include="Items\Charm_ChaosAttack.cs" />
 		<Compile Include="Items\Charm_ChaosDamage.cs" />

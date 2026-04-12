@@ -893,6 +893,14 @@ namespace SephiriaMod
             .SetCategory(ItemCategories.Ember).SetEffects("Charm_FlameGround_Meteor_Effect", "Charm_FlameGround_Meteor_Effect2").SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
         /*
         /// <summary>
+        /// Item_Bond_Coin_Name
+        /// 結束のコイン
+        /// Item_Bond_Coin_FlavorText
+        /// 堅い絆の証。
+        /// </summary>
+        public static ModCharm BondCoin { get; } = ModCharmStatus.Create<Charm_BondCoin>("Bond_Coin", 2, CreateStatusGroup("NEGOTIATION", 2, 3, 5))
+            .SetCategory(ItemCategories.Savvy).SetEffects("Charm_MagicianCoin_Effect").SetRarity(EItemRarity.Common).SetIsUniqueEffect();
+        /// <summary>
         /// Item_Savvy_Precision_Name
         /// ギロックの鶴嘴
         /// Item_Savvy_Precision_FlavorText
