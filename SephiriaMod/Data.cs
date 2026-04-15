@@ -7,6 +7,7 @@ using SephiriaMod.Items;
 using SephiriaMod.Items.Eternal;
 using SephiriaMod.Items.Jewelry;
 using SephiriaMod.Items.Savvy;
+using SephiriaMod.Miracles;
 using SephiriaMod.Passives;
 using SephiriaMod.Registries;
 using SephiriaMod.Sephirites;
@@ -1570,8 +1571,8 @@ namespace SephiriaMod
         /// Miracle_Miner_Effect
         /// <tag=ItemRarity_Jewelry>アーティファクトを獲得
         /// </summary>
-        public static ModMiracle Miner { get; } = ModMiracleStatus.Create("Miner", CreateNegativeStat("ATTACK_SPEED/-15"), CreateNegativeStat("MOVE_SPEED/-12")).SetJewelryGivenItems()
-            .SetCategories(ItemCategories.Savvy).SetNotAutoGenerateEffectString(3, [EEffectType.Positive, EEffectType.Negative, EEffectType.Negative]);
+        public static ModMiracle Miner { get; } = ModMiracleStatus.Create<Miracle_GiveJewelry>("Miner", CreateNegativeStat("ATTACK_SPEED/-15"), CreateNegativeStat("MOVE_SPEED/-12"))
+            .SetCategories(ItemCategories.Savvy).SetJewelryGivenItems().SetNotAutoGenerateEffectString(3, [EEffectType.Positive, EEffectType.Negative, EEffectType.Negative]);
         #endregion
 
         #region Weapon Enhancements
