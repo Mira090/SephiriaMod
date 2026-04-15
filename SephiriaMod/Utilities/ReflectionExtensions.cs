@@ -237,6 +237,12 @@ namespace SephiriaMod.Utilities
         {
             return (TMP_Text)typeof(UI_CharmTooltip).GetField("typeText", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(instance);
         }
+        public static void InvokeSendRPCInternal(this NetworkBehaviour instance, string functionFullName, int functionHashCode, NetworkWriter writer, int channelId, bool includeOwner)
+        {
+            var type = typeof(NetworkBehaviour);
+            var method = type.GetMethod("SendRPCInternal", BindingFlags.Instance | BindingFlags.NonPublic);
+            method.Invoke(instance, [functionFullName, functionHashCode, writer, channelId, includeOwner]);
+        }
 
 
 

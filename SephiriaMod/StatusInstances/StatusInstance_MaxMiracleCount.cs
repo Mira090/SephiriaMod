@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Mirror;
+using Mirror.RemoteCalls;
+using SephiriaMod.Items;
+using SephiriaMod.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace SephiriaMod.StatusInstances
 {
@@ -17,6 +22,7 @@ namespace SephiriaMod.StatusInstances
             if (CurrentTarget.gameObject.TryGetComponent<MiracleController>(out var miracle))
             {
                 miracle.maxMiracleCount += Value;
+                CurrentTarget.RpcSetMaxMiracleCount(miracle.maxMiracleCount);
             }
         }
 
@@ -26,7 +32,9 @@ namespace SephiriaMod.StatusInstances
             if (CurrentTarget.gameObject.TryGetComponent<MiracleController>(out var miracle))
             {
                 miracle.maxMiracleCount -= Value;
+                CurrentTarget.RpcSetMaxMiracleCount(miracle.maxMiracleCount);
             }
         }
+
     }
 }

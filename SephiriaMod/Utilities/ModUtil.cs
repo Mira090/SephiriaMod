@@ -2,7 +2,9 @@
 using FMODUnity;
 using MelonLoader;
 using Mirror;
+using Mirror.RemoteCalls;
 using SephiriaMod.Entities;
+using SephiriaMod.Items;
 using SephiriaMod.Registries;
 using System;
 using System.Collections;
@@ -218,6 +220,46 @@ namespace SephiriaMod.Utilities
         {
             return entity is ItemEntity_Jewelry;
         }
+
+        #region RPC Miracle Controller
+
+        [ClientRpc]
+        public static void RpcSetMaxMiracleCount(this UnitAvatar avatar, int count)
+        {
+            NetworkWriterPooled writer = NetworkWriterPool.Get();
+            writer.WriteInt(count);
+            var func = "System.Void ModUtil::RpcSetMaxMiracleCount(System.Int32)";
+            avatar.InvokeSendRPCInternal(func, func.ToFunctionHashCode(), writer, 0, includeOwner: true);
+            NetworkWriterPool.Return(writer);
+        }
+
+        public static void UserCode_SetMaxMiracleCount__Int32(this UnitAvatar avatar, int count)
+        {
+            if (avatar.gameObject.TryGetComponent<MiracleController>(out var miracle))
+            {
+                miracle.maxMiracleCount = count;
+                if(Core.LogMedium)
+                Melon<Core>.Logger.Msg($"Set {avatar.Name}'s maxMiracleCount: {count}");
+            }
+        }
+
+        public static void InvokeUserCode_SetMaxMiracleCount__Int32(NetworkBehaviour obj, NetworkReader reader, NetworkConnectionToClient senderConnection)
+        {
+            if (!NetworkClient.active)
+            {
+                Debug.LogError("RPC SetMaxMiracleCount called on server.");
+            }
+            else
+            {
+                ((UnitAvatar)obj).UserCode_SetMaxMiracleCount__Int32(reader.ReadInt());
+            }
+        }
+
+        static ModUtil()
+        {
+            RemoteProcedureCalls.RegisterRpc(typeof(UnitAvatar), "System.Void ModUtil::RpcSetMaxMiracleCount(System.Int32)", InvokeUserCode_SetMaxMiracleCount__Int32);
+        }
+        #endregion
 
         #region region Delay関数
         /// <summary>
