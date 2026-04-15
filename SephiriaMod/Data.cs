@@ -1959,7 +1959,7 @@ namespace SephiriaMod
             .AddFireDataModifiers(x => x.SetDamageMultiplier(1.75f * 0.8f));
         /// <summary>
         /// Weapon_Staff_Sickle_T3_Debuff_Name
-        /// 儀式刃
+        /// ユークリッド
         /// WeaponAddon_Staff_Sickle_T3_Debuff_Effect
         /// <tag=WeaponAction_DirectAttack>が命中した時、<tag=Defense>の絶対値10ごとに、30%の確率で<tag=Debuff_Poison><tag=Burn><tag=Frostbite><tag=Electric>を付与します。
         public static ModWeapon QuarterstaffSickleDebuff { get; } = ModWeaponStaff.CreateStaff("Staff_Sickle_T3_Debuff", 526).SetMainPrefabModifier(main =>
