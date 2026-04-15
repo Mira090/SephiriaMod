@@ -586,6 +586,7 @@
 		<Compile Include="Items\Savvy\Charm_SavvyCurse.cs" />
 		<Compile Include="Items\Savvy\Charm_SavvyPrecision.cs" />
 		<Compile Include="Items\Savvy\Charm_SavvyShadow.cs" />
+		<Compile Include="Miracles\Miracle_AddJewelry.cs" />
 		<Compile Include="Passives\PassiveObject_AdditionalDamage.cs" />
 		<Compile Include="Passives\PassiveObject_ChaosSteal.cs" />
 		<Compile Include="Passives\PassiveObject_DirectAttackPoison.cs" />
