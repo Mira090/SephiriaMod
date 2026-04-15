@@ -1546,7 +1546,33 @@ namespace SephiriaMod
         /// </summary>
         public static ModMiracle True { get; } = ModMiracleStatus.Create("True", CreatePositiveStat("TRUE_DAMAGE/12"), CreateNegativeStat("FINAL_WEAPONDAMAGE/-30"))
             .SetCategories();
-#endregion
+        /// <summary>
+        /// Miracle_Merchant_Name
+        /// 商人
+        /// </summary>
+        public static ModMiracle Merchant { get; } = ModMiracleStatus.Create("Merchant", CreatePositiveStat("NEGOTIATION/10"), CreatePositiveStat("ADDITIONAL_SHOP/2"))
+            .SetCategories(ItemCategories.Savvy);
+        /// <summary>
+        /// Miracle_Executioner_Name
+        /// 執行人
+        /// </summary>
+        public static ModMiracle Executioner { get; } = ModMiracleStatus.Create("Executioner", CreatePositiveStat("DEBUFF_DAMAGE/12"), CreatePositiveStat("HIGHEST_ELEMENTAL_DAMAGE/3"))
+            .SetCategories(ItemCategories.Curse);
+        /// <summary>
+        /// Miracle_Astrologist_Name
+        /// 航海士
+        /// </summary>
+        public static ModMiracle Astrologist { get; } = ModMiracleStatus.Create("Astrologist", CreatePositiveStat("STARGAZE_LEVEL/2"))
+            .SetCategories(ItemCategories.Stargaze);
+        /// <summary>
+        /// Miracle_Miner_Name
+        /// 採鉱者
+        /// Miracle_Miner_Effect
+        /// <tag=ItemRarity_Jewelry>アーティファクトを獲得
+        /// </summary>
+        public static ModMiracle Miner { get; } = ModMiracleStatus.Create("Miner", CreateNegativeStat("ATTACK_SPEED/-15"), CreateNegativeStat("MOVE_SPEED/-12")).SetJewelryGivenItems()
+            .SetCategories(ItemCategories.Savvy).SetNotAutoGenerateEffectString(3, [EEffectType.Positive, EEffectType.Negative, EEffectType.Negative]);
+        #endregion
 
         #region Weapon Enhancements
         /// <summary>
