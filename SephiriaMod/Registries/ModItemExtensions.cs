@@ -235,9 +235,23 @@ namespace SephiriaMod.Registries
             item.Effects = effects;
             return item;
         }
-        public static T SetManuallyGivenItems<T>(this T item, params int[] manuallyGivenItems) where T : ModMiracle
+        public static T SetManuallyGivenItems<T>(this T item, Func<ItemEntity[]> manuallyGivenItems) where T : ModMiracle
         {
-            item.ManuallyGivenItemsId = manuallyGivenItems;
+            item.ManuallyGivenItems = manuallyGivenItems;
+            item.GiveItem = EItemGiveType.GiveItemManually;
+            return item;
+        }
+        public static T SetJewelryGivenItems<T>(this T item) where T : ModMiracle
+        {
+            item.ManuallyGivenItems = () =>
+            {
+                var list = new List<ItemEntity>();
+                foreach (var jewelry in Data.Jewelries.Values)
+                {
+                    list.AddRange(jewelry.Select(x => x.ItemEntity));
+                }
+                return list.ToArray();
+            };
             item.GiveItem = EItemGiveType.GiveItemManually;
             return item;
         }
@@ -280,6 +294,17 @@ namespace SephiriaMod.Registries
             for (int q = 1; q <= count; q++)
                 list.Add(CreateEffect("Miracle_" + item.Name + "_Effect" + (q == 1 ? "" : q.ToString()), type));
             if(notGiveItem)
+                list.Add(CreateNegativeEffect("Miracle_Gambler_Effect2"));
+            item.SetMiracleEffects(list.ToArray());
+            return item;
+        }
+        public static T SetNotAutoGenerateEffectString<T>(this T item, int count, EEffectType[] types, bool notGiveItem = false) where T : ModMiracleStatus
+        {
+            item.AutoGenerateEffectString = false;
+            var list = new List<Effect>();
+            for (int q = 1; q <= count; q++)
+                list.Add(CreateEffect("Miracle_" + item.Name + "_Effect" + (q == 1 ? "" : q.ToString()), types.SafeRandomAccess(q - 1)));
+            if (notGiveItem)
                 list.Add(CreateNegativeEffect("Miracle_Gambler_Effect2"));
             item.SetMiracleEffects(list.ToArray());
             return item;

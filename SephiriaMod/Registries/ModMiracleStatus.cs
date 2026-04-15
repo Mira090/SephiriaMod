@@ -34,7 +34,6 @@ namespace SephiriaMod.Registries
             miracle.id = Id;
             miracle.aName = LocalizedName;
             miracle.giveItem = GiveItem;
-            miracle.manuallyGivenItems = ManuallyGivenItemsId.Select(x => ItemDatabase.FindItemById(x)).ToArray();
             miracle.categories = Categories;
             miracle.miracleImage = MiracleImage ?? SpriteLoader.LoadSprite(MiracleImageFileName);
             miracle.tier = Tier;

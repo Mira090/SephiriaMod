@@ -41,7 +41,7 @@ namespace SephiriaMod.Registries
         public Sprite MiracleImage { get; internal set; }
         public string[] Categories { get; internal set; } = [];
         public Miracle.Effect[] Effects { get; internal set; } = [];
-        public int[] ManuallyGivenItemsId { get; internal set; } = [];
+        public Func<ItemEntity[]> ManuallyGivenItems { get; internal set; }
         public Type MiracleType { get; internal set; }
         public GameObject Prefab { get; internal set; }
         public uint AssetId { get; internal set; }
@@ -60,13 +60,24 @@ namespace SephiriaMod.Registries
             miracle.id = Id;
             miracle.aName = LocalizedName;
             miracle.giveItem = GiveItem;
-            miracle.manuallyGivenItems = ManuallyGivenItemsId.Select(x => ItemDatabase.FindItemById(x)).ToArray();
             miracle.categories = Categories;
             miracle.miracleImage = MiracleImage ?? SpriteLoader.LoadSprite(MiracleImageFileName);
             miracle.tier = Tier;
             miracle.effects = Effects;
             //miracle.enabled = false;
             return o;
+        }
+        public virtual void LoadManuallyGivenItems()
+        {
+            if (Prefab == null || !Prefab.TryGetComponent<Miracle>(out var miracle))
+                return;
+            miracle.manuallyGivenItems = GetManuallyGivenItems();
+        }
+        protected virtual ItemEntity[] GetManuallyGivenItems()
+        {
+            if (ManuallyGivenItems == null)
+                return [];
+            return ManuallyGivenItems?.Invoke();
         }
     }
 }

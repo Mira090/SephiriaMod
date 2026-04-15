@@ -1099,9 +1099,11 @@ namespace SephiriaMod
             .SetCategory(ItemCategories.Curse).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
 
         public static readonly System.Random JewelryRandom = new();
-        public static ModCharm GetRandomJewelry(this Charm_Basic charm)
+        public static ModCharm GetRandomJewelry(this UnitAvatar avatar)
         {
-            var list = charm.NetworkAvatar.Inventory.lastAppliedComboEffects.OrderByDescending(x => x.Value.comboCount).ToList();
+            if (avatar == null || avatar.Inventory == null)
+                return null;
+            var list = avatar.Inventory.lastAppliedComboEffects.OrderByDescending(x => x.Value.comboCount).ToList();
             foreach(var combo in list)
             {
                 if (combo.Key == ItemCategories.Savvy)
@@ -1121,10 +1123,27 @@ namespace SephiriaMod
                 return;
             }
 
-            var random = charm.GetRandomJewelry();
+            var random = charm.NetworkAvatar.GetRandomJewelry();
             if (random == null || charm.Inventory == null)
                 return;
             charm.Inventory.AddItem(new ItemMetadata(ItemDatabase.GenerateInstanceID(JewelryRandom), random.Id, 1));
+        }
+        public static void AddRandomJewelry(this Miracle miracle)
+        {
+            if (Sephirite_Jewelry.HasSephirite(miracle.connectionToClient))
+                return;
+            if (miracle.Owner == null)
+                return;
+            if (miracle.Owner.TryGetComponent<LevelController>(out var level))
+            {
+                level.GenerateItem(Data.SephiriteJewelry, level.currentLevel + miracle.Owner.Money);
+                return;
+            }
+
+            var random = miracle.Owner.GetRandomJewelry();
+            if (random == null || miracle.Owner.Inventory == null)
+                return;
+            miracle.Owner.Inventory.AddItem(new ItemMetadata(ItemDatabase.GenerateInstanceID(JewelryRandom), random.Id, 1));
         }
         #endregion
 

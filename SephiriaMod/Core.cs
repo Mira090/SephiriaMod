@@ -1166,6 +1166,10 @@ namespace SephiriaMod
                     return;
                 if (Core.LogFew)
                     Melon<Core>.Logger.Msg("Mod GameData Loading...");
+                foreach(var miracle in Data.Miracles)
+                {
+                    miracle.LoadManuallyGivenItems();
+                }
                 //CustomCostumeDatabase.LoadAllStartingItems(CostumeDatabase.GetAll());
             }
         }
