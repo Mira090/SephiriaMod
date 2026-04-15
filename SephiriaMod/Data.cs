@@ -893,6 +893,16 @@ namespace SephiriaMod
         public static ModCharm ActiveMeteor { get; } = ModCharmStatus.Create<Charm_ActiveMeteor>("Active_Meteor", 6)
             .SetCategory(ItemCategories.Ember).SetEffects("Charm_FlameGround_Meteor_Effect", "Charm_FlameGround_Meteor_Effect2").SetRarity(EItemRarity.Rare).SetIsUniqueEffect().SetDamageId();
         /// <summary>
+        /// Item_Companion_Chaos_More_Name
+        /// 忠誠の記章
+        /// Item_Companion_Chaos_More_FlavorText
+        /// フレーバーテキスト募集中
+        /// Item_Companion_Chaos_More_Effect
+        /// インベントリ内の同じ列または行に配置された仲間が<tag=Elemental_Chaos>ダメージを与える
+        /// </summary>
+        public static ModCharm CompanionChaosMore { get; } = ModCharmStatus.Create<Charm_CompanionChaosMore>("Companion_Chaos_More", 3, CreateStatusGroup("FOLLOWER_ATTACK_SPEED", 10, 15, 20, 30), CreateStatusGroup("FOLLOWER_CRITICAL", 300, 500, 800, 1200))
+            .SetCategory(ItemCategories.Companion).SetSimpleEffect().SetRarity(EItemRarity.Rare).SetIsUniqueEffect();
+        /// <summary>
         /// Item_Bond_Coin_Name
         /// 結束のコイン
         /// Item_Bond_Coin_FlavorText

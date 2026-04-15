@@ -503,6 +503,7 @@
 		<Compile Include="Items\Charm_BondMaker.cs" />
 		<Compile Include="Items\Charm_ChaosAttack.cs" />
 		<Compile Include="Items\Charm_ChaosDamage.cs" />
+		<Compile Include="Items\Charm_CompanionChaosMore.cs" />
 		<Compile Include="Items\Charm_CompanionDiedHeal.cs" />
 		<Compile Include="Items\Charm_CompanionSacrifice.cs" />
 		<Compile Include="Items\Charm_CopyAcademy.cs" />
