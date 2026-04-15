@@ -40,7 +40,7 @@ namespace SephiriaMod.Items
         [HarmonyPatch(typeof(FlameSwordPickLocal), "Pick")]
         public static class PickLocalPatch
         {
-            static void Prefix(FlameSwordPickLocal __instance)
+            static void Prefix(FlameSwordPickLocal __instance, ref bool addsword)
             {
                 var combo = __instance.GetComboEffect();
                 if (combo == null || combo.Networkavatar.GetCustomStatUnsafe(OverFlameSword) <= 0 || !combo.Networkavatar.IsInBattle)
@@ -48,15 +48,12 @@ namespace SephiriaMod.Items
 
                 if (__instance.autoDestroyTimer.GetTimer() == 0f)
                 {
-                    __instance.SetIsPicked(true);
-                }
-                if ((bool)__instance.pickFxPrefab)
-                {
-                    SpriteFx.Pool.Spawn(__instance.pickFxPrefab, __instance.transform.position);
+                    addsword = false;
                 }
             }
         }
-        [HarmonyPatch(typeof(ComboEffect_FlameSword), "UserCode_RpcClearAllPick")]
+        //[HarmonyPatch(typeof(ComboEffect_FlameSword), "UserCode_RpcClearAllPick")]
+        [Obsolete]
         public static class OnStartBattlePatch
         {
             static bool Prefix(ComboEffect_FlameSword __instance)
@@ -79,7 +76,7 @@ namespace SephiriaMod.Items
                 }
                 catch (Exception message)
                 {
-                    Debug.LogError(message);
+                    Debug.LogWarning(message);
                 }
                 return false;
             }
