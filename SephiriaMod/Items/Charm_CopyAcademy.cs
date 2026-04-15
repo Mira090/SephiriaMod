@@ -22,6 +22,8 @@ namespace SephiriaMod.Items
         private bool questCleared;
         private bool rewardReceived;
         public Sprite magicCharmIconSprite;
+
+        public SkillController skillController;
         private void Awake()
         {
             effectHUD_ID = "Copy_Academy".ToSephiriaUpperId();
@@ -49,11 +51,25 @@ namespace SephiriaMod.Items
             new Loc.KeywordValue("CURRENT", countView.ToString(), GetPositiveColor(virtualLevelOffset))
             };
         }
+        protected override void OnConnected(int instanceID)
+        {
+            base.OnConnected(instanceID);
+            if (NetworkAvatar is PlayerAvatar player)
+            {
+                skillController = player.GetSkillController();
+            }
+            //networkAvatar.OnMpUsedServerside += OnMpUsedServerside;
+        }
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
             NetworkAvatar.Inventory.AddItemDropBonusBySemantic(semantic, semanticDropWeight);
             NetworkAvatar.SetEffectHUDValue(GetCharmHUDID(), $"{countView}/{countRequire}");
+
+            if (skillController != null)
+            {
+                skillController.OnCreateMagicServerside += OnCreateMagicServerside;
+            }
         }
 
         private void OnValueRecieved(string command, uint netId, int value)
@@ -69,6 +85,11 @@ namespace SephiriaMod.Items
         {
             base.OnDisabledEffect();
             NetworkAvatar.Inventory.AddItemDropBonusBySemantic(semantic, -semanticDropWeight);
+
+            if (skillController != null)
+            {
+                skillController.OnCreateMagicServerside -= OnCreateMagicServerside;
+            }
         }
         public override void OnCharmEffectRefreshed()
         {
@@ -98,26 +119,8 @@ namespace SephiriaMod.Items
                 rewardReceived = true;
             }
         }
-        protected override void OnConnected(int instanceID)
-        {
-            base.OnConnected(instanceID);
-            UnitAvatar networkAvatar = NetworkAvatar;
-            if(networkAvatar is PlayerAvatar player)
-            {
-                var skill = player.GetSkillController();
-                if(skill != null)
-                {
-                    skill.OnBeginCastMagicServerside += OnBeginCastMagicServerside;
-                }
-                else
-                {
-                    Melon<Core>.Logger.Warning("could not get SkillController");
-                }
-            }
-            //networkAvatar.OnMpUsedServerside += OnMpUsedServerside;
-        }
 
-        private void OnBeginCastMagicServerside()
+        private void OnCreateMagicServerside(ActiveSkill skill)
         {
             if (questCleared)
                 return;
@@ -147,25 +150,6 @@ namespace SephiriaMod.Items
             NetworkAvatar.SetEffectHUDValue(GetCharmHUDID(), $"{count}/{countRequire}");
             NetworkAvatar.SetEffectHUDFlash(GetCharmHUDID());
             SaveItemOnServer(SaveManager.CurrentRun);
-        }
-
-        protected override void OnDisconnected()
-        {
-            base.OnDisconnected();
-            UnitAvatar networkAvatar = NetworkAvatar;
-            if (networkAvatar is PlayerAvatar player)
-            {
-                var skill = player.GetSkillController();
-                if (skill != null)
-                {
-                    skill.OnBeginCastMagicServerside -= OnBeginCastMagicServerside;
-                }
-                else
-                {
-                    Melon<Core>.Logger.Warning("could not get SkillController");
-                }
-            }
-            //networkAvatar.OnMpUsedServerside -= OnMpUsedServerside;
         }
 
         public override void SaveItemOnServer(ISaveData saveData)
