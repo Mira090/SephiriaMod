@@ -1,4 +1,5 @@
 ﻿using MelonLoader;
+using Mirror;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace SephiriaMod.Items
         {
             if(netId == base.netId)
             {
-                if(value == 1 && isServer)
+                if(value == 1 && NetworkServer.active)
                 {
                     OnDashConsumed();
                 }
@@ -75,7 +76,7 @@ namespace SephiriaMod.Items
             {
                 isInCooldown = true;
                 NetworkAvatar.CurrentDashModule.currentDashCount += consume.SafeRandomAccess(CurrentLevelToIdx());
-                if (isServer)
+                if (NetworkServer.active)
                 {
                     NetworkAvatar.Heal(damage.damage * (percent.SafeRandomAccess(CurrentLevelToIdx()) / 100f));
                     OnDashConsumed();
@@ -89,9 +90,16 @@ namespace SephiriaMod.Items
         }
         private void OnDashConsumed()
         {
+            if (!NetworkServer.active)
+            {
+                Debug.LogWarning("[Server] function 'System.Void Charm_OnDamagedCosumeDash::OnDashConsumed()' called when server was not active");
+                return;
+            }
             if (Core.LogMedium)
-                Melon<Core>.Logger.Msg("OnDashConsumed");
-            NetworkAvatar.OnDashServerside(NetworkAvatar.transform.position, true);
+                Melon<Core>.Logger.Msg("OnDashConsumed: " + NetworkAvatar);
+            if (NetworkAvatar == null)
+                return;
+            NetworkAvatar.OnDashServerside?.Invoke(NetworkAvatar.transform.position, true);
             return;
             if (WeaponController.currentWeapon.gameObject.TryGetComponent<WeaponAddonKatana_SummonGhost>(out var ghost))
             {
