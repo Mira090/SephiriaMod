@@ -171,8 +171,8 @@ namespace SephiriaMod
         /// 星の力が注がれたエネルギーの塊。
         /// </summary>
         public static ModCharm DoubleDebuffStack { get; } = ModCharmStatus.Create<Charm_VariableMaxLevel>("Double_Debuff_Stack", 6,
-            CreateStatusGroup("BURN_STACK", 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5),
-            CreateStatusGroup("ELECTRIC_STACK", 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5))
+            CreateStatusGroup("BURN_STACK", 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 6, 7),
+            CreateStatusGroup("ELECTRIC_STACK", 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 6, 7))
             .SetCategory(ItemCategories.Stargaze).SetIsUniqueEffect().SetRarity(EItemRarity.Uncommon);
         /// <summary>
         /// Item_Create_Stone_Tablet_Name
@@ -184,7 +184,7 @@ namespace SephiriaMod
         /// Item_Create_Stone_Tablet_Effect2
         /// {MAX}回発動するとこの効果は失われる。\n[現在の発動回数：{COUNT}]
         /// </summary>
-        public static ModCharm CreateStoneTablet { get; } = ModCharmStatus.Create<Charm_CreateStoneTablet>("Create_Stone_Tablet", 0, CreateStatusGroupHide("EXP_DROP", 0, 5, 10, 15, 20))
+        public static ModCharm CreateStoneTablet { get; } = ModCharmStatus.Create<Charm_CreateStoneTablet>("Create_Stone_Tablet", 0, CreateStatusGroupHide("EXP_DROP", 0, 5, 10, 15, 20, 25, 30))
             .SetCategory(ItemCategories.Stargaze).SetSimpleEffects(2).SetIsUniqueEffect().SetRarity(EItemRarity.Uncommon);
         /// <summary>
         /// Item_Triple_Attack_Debuff_Name
@@ -195,9 +195,9 @@ namespace SephiriaMod
         /// 次に火属性のダメージを与えた時、<tag=Burn>デバフを付与し、次に氷属性のダメージを与えた時、<tag=Frostbite>を付与する。この次に雷属性のダメージを与えた時、<tag=Electric>を付与し、最初に戻る。[クールタイム：{INTERVAL}秒]
         /// </summary>
         public static ModCharm TripleAttackDebuff { get; } = ModCharmStatus.Create<Charm_TripleAttackDebuff>("Triple_Attack_Debuff", 6,
-            CreateStatusGroup("FIRE_DAMAGE", 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15),
-            CreateStatusGroup("ICE_DAMAGE", 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15),
-            CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15))
+            CreateStatusGroup("FIRE_DAMAGE", 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 17, 20),
+            CreateStatusGroup("ICE_DAMAGE", 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 17, 20),
+            CreateStatusGroup("LIGHTNING_DAMAGE", 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 17, 20))
             .SetCategory(ItemCategories.Stargaze).SetIsUniqueEffect().SetSimpleEffect().SetRarity(EItemRarity.Rare);
         /// <summary>
         /// Item_Chaos_Attack_Name

@@ -10,7 +10,7 @@ namespace SephiriaMod.Items
     public class Charm_ChaosAttack : Charm_VariableMaxLevel
     {
         public int[] chanceByLevel = new int[10] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
-        public int[] percentByLevel = new int[10] { 10, 20, 25, 30, 35, 40, 50, 60, 70, 80 };
+        public int[] percentByLevel = [10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100];
         public string damageId = "Charm_ChaosAttack";
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {

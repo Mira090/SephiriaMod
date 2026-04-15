@@ -19,7 +19,7 @@ namespace SephiriaMod.Items
         private bool questCleared;
         public static LocalizedString Notice = new LocalizedString("Item_Stargaze_Tablet_Notice");
 
-        private int[] levelByLevel = [1, 2, 3, 4, 5, 6, 8, 10, 12];
+        private int[] levelByLevel = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18];
 
         private int power = 0;
 
