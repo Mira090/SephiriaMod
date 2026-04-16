@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MelonLoader;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,14 +27,22 @@ namespace SephiriaMod.Items
         {
             static void Prefix(ComboEffect_FlameSword __instance, int amount)
             {
-                if (__instance.Networkavatar.GetCustomStatUnsafe(OverFlameSword) <= 0 || !__instance.Networkavatar.IsInBattle)
-                    return;
-
-                int b = __instance.maxSword + __instance.Networkavatar.GetCustomStatUnsafe("FLAMESWORDMAX");
-                var over = (__instance.currentSword + amount + __instance.Networkavatar.GetCustomStatUnsafe("FLAMESWORDPICKBONUS")) - b;
-                for (int q = 0; q < over; q++)
+                try
                 {
-                    __instance.ServerFireSword(__instance.Networkavatar.transform.position, false, false);
+                    if (__instance.Networkavatar.GetCustomStatUnsafe(OverFlameSword) <= 0 || !__instance.Networkavatar.IsInBattle)
+                        return;
+
+                    int b = __instance.maxSword + __instance.Networkavatar.GetCustomStatUnsafe("FLAMESWORDMAX");
+                    var over = (__instance.currentSword + amount + __instance.Networkavatar.GetCustomStatUnsafe("FLAMESWORDPICKBONUS")) - b;
+                    for (int q = 0; q < over; q++)
+                    {
+                        __instance.ServerFireSword(__instance.Networkavatar.transform.position, false, false);
+                    }
+                }
+                catch(Exception e)
+                {
+                    Debug.LogWarning(e);
+                    Melon<Core>.Logger.Warning(e);
                 }
             }
         }
@@ -42,13 +51,21 @@ namespace SephiriaMod.Items
         {
             static void Prefix(FlameSwordPickLocal __instance, ref bool addsword)
             {
-                var combo = __instance.GetComboEffect();
-                if (combo == null || combo.Networkavatar.GetCustomStatUnsafe(OverFlameSword) <= 0 || !combo.Networkavatar.IsInBattle)
-                    return;
-
-                if (__instance.autoDestroyTimer.GetTimer() == 0f)
+                try
                 {
-                    addsword = false;
+                    var combo = __instance.GetComboEffect();
+                    if (combo == null || combo.Networkavatar.GetCustomStatUnsafe(OverFlameSword) <= 0 || !combo.Networkavatar.IsInBattle)
+                        return;
+
+                    if (__instance.autoDestroyTimer.GetTimer() == 0f)
+                    {
+                        addsword = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning(e);
+                    Melon<Core>.Logger.Warning(e);
                 }
             }
         }
