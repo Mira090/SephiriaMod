@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_SuperMeteor : Charm_StatusInstance
+    public class Charm_SuperMeteor : Charm_StatusInstance, IAttackableCharm
     {
         public string damageId = "Charm_SuperMeteor";
 
@@ -142,9 +142,14 @@ namespace SephiriaMod.Items
             }
 
             float x = UnityEngine.Random.Range(0, 2) == 0 ? 2f : -2f;
-            float damage = NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * (meteor.SafeRandomAccess(CurrentLevelToIdx()) / 100f);
-            damage += this.GetCharmDamageBonus(damage);
+            float damage = Charm_Basic.CalculateDamage(this);
             Bullet.Pool.Spawn(SephiriaPrefabs.MeteorBullet, vector, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, damage, 25, 3f, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), 4.5f, vector + new Vector2(x, 0f), vector, null, HandleAttack, 0f, EDamageElementalType.Fire);
+        }
+
+        public float GetDamage(UnitAvatar avatar)
+        {
+            float damage = NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * (meteor.SafeRandomAccess(CurrentLevelToIdx()) / 100f);
+            return damage;
         }
         private void HandleAttack(CombatBehaviour behaviour, DamageInstance instance, ProjectileBase @base)
         {

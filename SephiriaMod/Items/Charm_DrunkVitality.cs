@@ -41,7 +41,7 @@ namespace SephiriaMod.Items
             if(damage.origin is UnitAvatar avatar && !avatar.IsDead)
             {
                 float customStatUnsafe = damage.damageResult * (percent.SafeRandomAccess(CurrentLevelToIdx()) * 0.01f);
-                this.GetCharmDamageBonus(customStatUnsafe);
+
                 if (customStatUnsafe > 0)
                 {
                     DamageInstance d = DamageInstance.GetDamage(NetworkAvatar, damageId, avatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 0, 0f);

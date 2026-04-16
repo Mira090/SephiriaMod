@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_DrunkEmber : Charm_StatusInstance
+    public class Charm_DrunkEmber : Charm_StatusInstance, IAttackableCharm
     {
         public string damageId = "Charm_DrunkEmber";
         public int[] damage = [35, 40, 45, 55, 65, 80, 100];
@@ -74,9 +74,7 @@ namespace SephiriaMod.Items
 
                 for(int q = 0; q < stack; q++)
                 {
-                    float customStatUnsafe = damage.SafeRandomAccess(CurrentLevelToIdx()) / 100f * Mathf.Max(0, -NetworkAvatar.GetCustomStat(ECustomStat.DamageReduction));
-                    customStatUnsafe += customStatUnsafe * NetworkAvatar.GetCustomStatUnsafe("BURNDAMAGE") / 100f;
-                    customStatUnsafe += this.GetCharmDamageBonus(customStatUnsafe);
+                    float customStatUnsafe = Charm_Basic.CalculateDamage(this);
                     if (customStatUnsafe > 0 && unitAvatar != null)
                     {
                         DamageInstance d = DamageInstance.GetDamage(NetworkAvatar, damageId, unitAvatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 1, 1f);
@@ -91,6 +89,12 @@ namespace SephiriaMod.Items
             base.OnDisabledEffect();
             NetworkAvatar.OnAddedDebuffOnTarget -= OnAddedDebuffOnTarget;
             NetworkAvatar.OnAttackUnit -= OnAttackUnit;
+        }
+        public float GetDamage(UnitAvatar avatar)
+        {
+            float customStatUnsafe = damage.SafeRandomAccess(CurrentLevelToIdx()) / 100f * Mathf.Max(0, -NetworkAvatar.GetCustomStat(ECustomStat.DamageReduction));
+            customStatUnsafe += customStatUnsafe * NetworkAvatar.GetCustomStatUnsafe("BURNDAMAGE") / 100f;
+            return customStatUnsafe;
         }
     }
 }

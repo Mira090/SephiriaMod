@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_ChaosDamage : Charm_VariableMaxLevel
+    public class Charm_ChaosDamage : Charm_VariableMaxLevel, IAttackableCharm
     {
         public EDamageElementalType elementalType = EDamageElementalType.Chaos;
 
@@ -57,8 +57,7 @@ namespace SephiriaMod.Items
             if (!NetworkAvatar.IsDead && IsEffectEnabled && !isInCooldown && (damageInstance.fromType == EDamageFromType.DirectAttack || damageInstance.fromType == EDamageFromType.Magic) && !target.IsDead)
             {
                 isInCooldown = true;
-                float damage = damageByLevel.SafeRandomAccess(CurrentLevelToIdx());
-                damage += this.GetCharmDamageBonus(damage);
+                float damage = Charm_Basic.CalculateDamage(this);
                 DamageInstance damage2 = DamageInstance.GetDamage(NetworkAvatar, damageId, target.transform.position, 4294967295L, damage, EDamageType.Slice, EDamageFromType.None, Vector2.zero, 0, 0f);
                 damage2.SetCustomColor(true, new Color(0.5f, 0, 0));
                 target.ApplyDamage(damage2);
@@ -68,6 +67,12 @@ namespace SephiriaMod.Items
         public override bool Weaved()
         {
             return true;
+        }
+
+        public float GetDamage(UnitAvatar avatar)
+        {
+            float damage = damageByLevel.SafeRandomAccess(CurrentLevelToIdx());
+            return damage;
         }
     }
 }

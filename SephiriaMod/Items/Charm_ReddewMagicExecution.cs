@@ -64,9 +64,8 @@ namespace SephiriaMod.Items
             private static void Damage(UnitAvatar unit, DamageInstance damage, Charm_Reddew __instance, int percent)
             {
                 Vector2 vector = unit.transform.position;
-                ECustomStat highestDamageElementalType = __instance.GetHighestDamageElementalType();
+                ECustomStat highestDamageElementalType = __instance.GetHighestDamageElementalType(unit);
                 float damage2 = (float)__instance.NetworkAvatar.GetCustomStat(highestDamageElementalType) * percent / 100f;
-                damage2 += __instance.GetCharmDamageBonus(damage2);
                 RaycastHit2D[] allocatedHits = new RaycastHit2D[12];
                 int num = Physics2D.CircleCastNonAlloc(vector, __instance.attackRadius, Vector2.zero, allocatedHits, 0f, CombatManager.Topdown1FLayerMask);
                 for (int i = 0; i < num; i++)

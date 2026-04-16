@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_SelfExplosion : Charm_FireBulletInRange
+    public class Charm_SelfExplosion : Charm_FireBulletInRange, IAttackableCharm
     {
 
         public static string DamageId = "Charm_SelfExplosion";
@@ -128,9 +128,7 @@ namespace SephiriaMod.Items
                     CombatBehaviour combatBehaviour = component.GetCombatBehaviour(0);
                     if ((bool)combatBehaviour)
                     {
-                        float d = damageByLevel.SafeRandomAccess(CurrentLevelToIdx()) + NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * percent.SafeRandomAccess(CurrentLevelToIdx()) / 100f;
-                        d += d * NetworkAvatar.GetCustomStatUnsafe("FOLLOWERDAMAGE") / 100f;
-                        d += this.GetCharmDamageBonus(d);
+                        float d = ModUtil.CalculateDamage(this);
                         DamageInstance damage = DamageInstance.GetDamage(base.NetworkAvatar, DamageId, vector, base.NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), d, EDamageType.Projectile, EDamageFromType.None, Vector2.zero, 0, 0f);
                         damage.elementalType = EDamageElementalType.Fire;
                         damage.criticalChancePercent += NetworkAvatar.GetCustomStat("FOLLOWERCRITICAL") / 100f;
@@ -147,6 +145,12 @@ namespace SephiriaMod.Items
             {
                 CreateBurnExplosionFx(avatar.transform.position, -1);
             }
+        }
+        public new float GetDamage(UnitAvatar avatar)
+        {
+            float d = damageByLevel.SafeRandomAccess(CurrentLevelToIdx()) + NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * percent.SafeRandomAccess(CurrentLevelToIdx()) / 100f;
+            d += d * NetworkAvatar.GetCustomStatUnsafe("FOLLOWERDAMAGE") / 100f;
+            return d;
         }
 
         [ClientRpc]

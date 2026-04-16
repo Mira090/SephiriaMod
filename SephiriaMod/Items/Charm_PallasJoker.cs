@@ -66,7 +66,7 @@ namespace SephiriaMod.Items
                 Vector3 motionDataBegin = NetworkAvatar.transform.position + vector3FromAngle * 0.2f;
                 Vector3 motionDataEnd = NetworkAvatar.transform.position + vector3FromAngle * 8f;
                 bool flag = UnityEngine.Random.Range(0f, 1f) < 0.2f;
-                var d = instance.bulletDamage + this.GetCharmDamageBonus(instance.bulletDamage);
+                var d = Charm_Basic.CalculateDamage(instance);
                 Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, d, instance.staggeringLevel, instance.externalForcePower, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
                 bullet.pierceCreatureCount = 2;
                 Vector3 pos = NetworkAvatar.transform.position + (Vector3)(UnityEngine.Random.insideUnitCircle * 3f);
@@ -96,7 +96,7 @@ namespace SephiriaMod.Items
                 Vector3 motionDataBegin = NetworkAvatar.transform.position + vector3FromAngle * 0.2f;
                 Vector3 motionDataEnd = NetworkAvatar.transform.position + vector3FromAngle * 8f;
                 bool flag = UnityEngine.Random.Range(0f, 1f) < 0.2f;
-                var d = instance.bulletDamage + this.GetCharmDamageBonus(instance.bulletDamage);
+                var d = Charm_Basic.CalculateDamage(instance);
                 Bullet bullet = Bullet.Pool.Spawn(instance.bulletBigPrefab.GetRandom(), NetworkAvatar.transform.position, canBeTransparentOnMultiplayer: true, EDamageFromType.None, damageId, d, instance.staggeringLevel, instance.externalForcePower, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), NetworkAvatar.TopdownActor.CenterYPos, motionDataBegin, motionDataEnd, null, null);
                 bullet.pierceCreatureCount = 2;
                 Vector3 pos = NetworkAvatar.transform.position + (Vector3)(UnityEngine.Random.insideUnitCircle * 3f);
@@ -165,7 +165,6 @@ namespace SephiriaMod.Items
         {
             return true;
         }
-
 
         [HarmonyPatch(typeof(Charm_PallasCard), nameof(Charm_PallasCard.BuildKeywords), new Type[] { typeof(UnitAvatar), typeof(int), typeof(int), typeof(bool), typeof(bool) })]
         public static class KeywordsPatch

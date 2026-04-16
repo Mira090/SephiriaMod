@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_ChaosAttack : Charm_VariableMaxLevel
+    public class Charm_ChaosAttack : Charm_VariableMaxLevel, IAttackableCharm
     {
         public int[] chanceByLevel = new int[10] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
         public int[] percentByLevel = [10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100];
@@ -41,9 +41,7 @@ namespace SephiriaMod.Items
         {
             if (!NetworkAvatar.IsDead && IsEffectEnabled && damageInstance.id != damageId && damageInstance.fromType == EDamageFromType.DirectAttack)
             {
-                float customStatUnsafe = NetworkAvatar.GetCustomStat("FireDamage") + NetworkAvatar.GetCustomStat("IceDamage") + NetworkAvatar.GetCustomStat("LightningDamage");
-                customStatUnsafe *= percentByLevel.SafeRandomAccess(CurrentLevelToIdx()) / 100f;
-                customStatUnsafe += this.GetCharmDamageBonus(customStatUnsafe);
+                float customStatUnsafe = Charm_Basic.CalculateDamage(this);
                 if (customStatUnsafe > 0 && unitAvatar != null && !(UnityEngine.Random.Range(0f, 1f) > chanceByLevel.SafeRandomAccess(CurrentLevelToIdx()) / 100f))
                 {
                     DamageInstance damage = DamageInstance.GetDamage(NetworkAvatar, damageId, unitAvatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 0, 0f);
@@ -51,6 +49,13 @@ namespace SephiriaMod.Items
                     unitAvatar.ApplyDamage(damage);
                 }
             }
+        }
+
+        public float GetDamage(UnitAvatar avatar)
+        {
+            float customStatUnsafe = NetworkAvatar.GetCustomStat("FireDamage") + NetworkAvatar.GetCustomStat("IceDamage") + NetworkAvatar.GetCustomStat("LightningDamage");
+            customStatUnsafe *= percentByLevel.SafeRandomAccess(CurrentLevelToIdx()) / 100f;
+            return customStatUnsafe;
         }
     }
 }

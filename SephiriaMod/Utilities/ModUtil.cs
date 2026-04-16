@@ -473,7 +473,40 @@ namespace SephiriaMod.Utilities
 
         public static float GetCharmDamageBonus(this Charm_Basic charm, float damage)
         {
-            return damage * charm.RequestCharmDamageBonus() / 100f;
+            return damage * charm.RequestCharmDamageBonusOnRoot() / 100f;
+        }
+
+        public static float CalculateDamage(Charm_ActiveMeteor charm)
+        {
+            if (charm.netIdentity == null || charm.netIdentity.netId == 0)
+            {
+                return 0f;
+            }
+
+            float num = 0f;
+            if (charm is IAttackableCharm attackableCharm && attackableCharm.IsAttackableCharm())
+            {
+                num = charm.GetDamage(charm.NetworkAvatar);
+            }
+
+            int num2 = charm.RequestCharmDamageBonusOnRoot();
+            return num + num * (float)num2 / 100f;
+        }
+        public static float CalculateDamage(Charm_SelfExplosion charm)
+        {
+            if (charm.netIdentity == null || charm.netIdentity.netId == 0)
+            {
+                return 0f;
+            }
+
+            float num = 0f;
+            if (charm is IAttackableCharm attackableCharm && attackableCharm.IsAttackableCharm())
+            {
+                num = charm.GetDamage(charm.NetworkAvatar);
+            }
+
+            int num2 = charm.RequestCharmDamageBonusOnRoot();
+            return num + num * (float)num2 / 100f;
         }
 
 

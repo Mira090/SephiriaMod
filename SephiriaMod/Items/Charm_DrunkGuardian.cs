@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_DrunkGuardian : Charm_StatusInstance
+    public class Charm_DrunkGuardian : Charm_StatusInstance, IAttackableCharm
     {
         public int[] percent = [1000, 1500, 2000, 2500];
         public int[] minus = [100];
@@ -47,10 +47,9 @@ namespace SephiriaMod.Items
         {
             if(damage.fromType == EDamageFromType.DirectAttack)
             {
-                var customStatUnsafe = GetDamage(NetworkAvatar, WeaponController.currentWeapon);
+                var customStatUnsafe = Charm_Basic.CalculateDamage(this);
                 if (customStatUnsafe > 0)
                 {
-                    customStatUnsafe += this.GetCharmDamageBonus(customStatUnsafe);
                     DamageInstance d = DamageInstance.GetDamage(NetworkAvatar, damageId, avatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.Slice, EDamageFromType.None, Vector2.zero, 0, 0f);
                     d.elementalType = EDamageElementalType.Physical;
                     d.SetCustomColor(false, new Color(0.4f, 0.4f, 0.4f));
@@ -71,6 +70,15 @@ namespace SephiriaMod.Items
         {
             base.OnDisabledEffect();
             NetworkAvatar.OnAttackUnit -= OnAttackUnit;
+        }
+
+        public float GetDamage(UnitAvatar avatar)
+        {
+            float weight = WeaponController.currentWeapon.attackWeightPerSwing;
+            int drunk = avatar.Inventory.charms.Values.Count(x => x.GetItemCategory().Contains(ItemCategories.Drunk));
+            int guardian = avatar.Inventory.charms.Values.Count(x => x.GetItemCategory().Contains(ItemCategories.Guardian));
+            float damage = drunk * guardian * (percent.SafeRandomAccess(CurrentLevelToIdx()) * weight / 100f) - Mathf.Abs(avatar.GetCustomStat(ECustomStat.DamageReduction)) * (minus.SafeRandomAccess(CurrentLevelToIdx()) / 100f);
+            return damage;
         }
     }
 }

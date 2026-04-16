@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    public class Charm_ActiveMeteor : Charm_FireBulletInRange
+    public class Charm_ActiveMeteor : Charm_FireBulletInRange, IAttackableCharm
     {
         public static string DamageId = "Charm_ActiveMeteor";
         public int[] meteor = [130, 140, 150, 170, 180, 200, 220];
@@ -79,7 +79,7 @@ namespace SephiriaMod.Items
                 }
 
                 float x = ((UnityEngine.Random.Range(0, 2) == 0) ? 2f : (-2f));
-                float damage = (float)base.NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * (meteor.SafeRandomAccess(CurrentLevelToIdx()) / 100f);
+                float damage = ModUtil.CalculateDamage(this);
                 Bullet.Pool.Spawn(SephiriaPrefabs.MeteorBullet, vector, canBeTransparentOnMultiplayer: true, EDamageFromType.None, DamageId, damage, 25, 3f, base.NetworkAvatar, base.NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), 4.5f, vector + new Vector2(x, 0f), vector, null, HandleAttack, 0f, EDamageElementalType.Fire);
                 yield return new WaitForSeconds(0.05f);
             }
@@ -100,8 +100,7 @@ namespace SephiriaMod.Items
             }
 
             float x = UnityEngine.Random.Range(0, 2) == 0 ? 2f : -2f;
-            float damage = NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * (meteor.SafeRandomAccess(CurrentLevelToIdx()) / 100f);
-            damage += this.GetCharmDamageBonus(damage);
+            float damage = ModUtil.CalculateDamage(this);
             Bullet.Pool.Spawn(SephiriaPrefabs.MeteorBullet, vector, canBeTransparentOnMultiplayer: true, EDamageFromType.None, DamageId, damage, 25, 3f, NetworkAvatar, NetworkAvatar.GetHostileFactionLayers(EDamageFromType.None), 4.5f, vector + new Vector2(x, 0f), vector, null, HandleAttack, 0f, EDamageElementalType.Fire);
         }
         private void HandleAttack(CombatBehaviour behaviour, DamageInstance instance, ProjectileBase @base)
@@ -110,6 +109,11 @@ namespace SephiriaMod.Items
             {
                 unitAvatar.ApplyDebuff(SephiriaPrefabs.Burn, base.NetworkAvatar);
             }
+        }
+        public new float GetDamage(UnitAvatar avatar)
+        {
+            float damage = (float)base.NetworkAvatar.GetCustomStat(ECustomStat.FireDamage) * (meteor.SafeRandomAccess(CurrentLevelToIdx()) / 100f);
+            return damage;
         }
     }
 }

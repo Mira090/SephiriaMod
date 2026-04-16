@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SephiriaMod.Items
 {
-    internal class Charm_MaxHPAttack : Charm_StatusInstance
+    internal class Charm_MaxHPAttack : Charm_StatusInstance, IAttackableCharm
     {
 
         public int[] damageByLevel = new int[6] { 3, 4, 5, 6, 7, 8 };
@@ -43,8 +43,7 @@ namespace SephiriaMod.Items
             
             if (!NetworkAvatar.IsDead && IsEffectEnabled && damageInstance.id != damageId)
             {
-                float customStatUnsafe = NetworkAvatar.MaxHp * (damageByLevel.SafeRandomAccess(CurrentLevelToIdx()) * 0.01f);
-                customStatUnsafe += this.GetCharmDamageBonus(customStatUnsafe);
+                float customStatUnsafe =  Charm_Basic.CalculateDamage(this);
                 if (customStatUnsafe > 0 && unitAvatar != null)
                 {
                     DamageInstance damage = DamageInstance.GetDamage(NetworkAvatar, damageId, unitAvatar.transform.position, 4294967295L, customStatUnsafe, EDamageType.ElementalEffectDamage, EDamageFromType.None, Vector2.zero, 0, 0f);
@@ -53,6 +52,11 @@ namespace SephiriaMod.Items
                     unitAvatar.ApplyDamage(damage);
                 }
             }
+        }
+        public float GetDamage(UnitAvatar avatar)
+        {
+            float customStatUnsafe = NetworkAvatar.MaxHp * (damageByLevel.SafeRandomAccess(CurrentLevelToIdx()) * 0.01f);
+            return customStatUnsafe;
         }
     }
 }
