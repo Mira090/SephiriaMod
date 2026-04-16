@@ -615,20 +615,20 @@ namespace SephiriaMod
                         {
                             int charms = random.Next(0, more + 1);
                             int stoneTablets = more - charms;
-                            UnitAI_NewBasic.AddTradingItems(random, list, charms, stoneTablets);
+                            UnitAI_NewBasic.AddTradingItemsToList(random, list, charms, stoneTablets, 0);
                             break;
                         }
                     case EProceduralMerchantType.MerchantUnionVendor:
                         {
                             int charms2 = random.Next(0, more + 1);
                             int stoneTablets2 = more - charms2;
-                            UnitAI_NewBasic.AddTradingItems(random, list, charms2, stoneTablets2);
+                            UnitAI_NewBasic.AddTradingItemsToList(random, list, charms2, stoneTablets2, 0);
                             break;
                         }
                     case EProceduralMerchantType.SmallVendor:
                         {
                             int charms3 = more;
-                            UnitAI_NewBasic.AddTradingItems(random, list, charms3, 0);
+                            UnitAI_NewBasic.AddTradingItemsToList(random, list, charms3, 0, 0);
                             break;
                         }
                     case EProceduralMerchantType.PotionVendor:
