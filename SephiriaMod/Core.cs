@@ -12,7 +12,7 @@ using TMPro;
 using UnityEngine;
 using Type = System.Type;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.9.10", "Mira", "https://github.com/Mira090/SephiriaMod")]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.10.0", "Mira", "https://github.com/Mira090/SephiriaMod")]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod
@@ -111,7 +111,12 @@ namespace SephiriaMod
             guid.Data3 = -200955986;
             guid.Data4 = -1225937978;
             Melon<Core>.Logger.Msg("Heal Sound: " + guid.GUIDToPath());*/
-            
+
+            /*
+            foreach(var ass in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Melon<Core>.Logger.Msg($"{ass.FullName}");
+            }*/
         }
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
@@ -237,6 +242,14 @@ namespace SephiriaMod
                     {
                         status.stats[1].valuesByLevel = [-10, -15, -20, -30];
                     }
+                }
+                if (item.id == 1260)//雷の足跡
+                {
+                    //item.activeType = EItemActiveType.Default;
+                }
+                if (item.id == 1120)//血石の指輪
+                {
+                    item.categories = [ItemCategories.Vitality];
                 }
                 var bond = "(" + new LocalizedString("ItemRarity_Dual").ToString() + ")";
                 if (item.resourcePrefab != null && item.resourcePrefab.TryGetComponent<Charm_Basic>(out var c))
