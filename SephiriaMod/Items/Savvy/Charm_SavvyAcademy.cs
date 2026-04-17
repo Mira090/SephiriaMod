@@ -103,8 +103,10 @@ namespace SephiriaMod.Items.Savvy
             {
                 using (new GridInventory.Permission(Inventory))
                 {
-                    foreach (var charm in Inventory.charms)
+                    var list = new List<KeyValuePair<ItemPosition, Charm_Basic>>(Inventory.charms);
+                    for(int q= 0;q < list.Count; q++)
                     {
+                        var charm = list[q];
                         if (charm.Value is Charm_JewelryCoin coin)
                         {
                             Inventory.ForceRemoveItem(charm.Key.x, charm.Key.y);
