@@ -38,10 +38,12 @@ namespace SephiriaMod.Items.Jewelry
                     NetworkAvatar.SetMoney(remain);
                 }
                 SaveItemOnServer(instanceID, SaveManager.CurrentRun);
+                RpcSetAdditionalMaxLevel(moneyLevel);
             }
             else
             {
                 SetAdditionalMaxLevel(moneyLevel);
+                RpcSetAdditionalMaxLevel(moneyLevel);
             }
         }
         protected virtual int FirstLevel => 2;
