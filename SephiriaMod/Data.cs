@@ -1107,7 +1107,16 @@ namespace SephiriaMod
         public static ModCharm JewelryCurse { get; } = ModCharmStatus.Create<Charm_JewelryDebuff>("Jewelry_Curse", 0,
             CreateStatusGroupBy("DebuffDamage".ToSephiriaId(), 8),
             CreateStatusGroupBy("DebuffDuration".ToSephiriaId(), 3, 30))
-            .SetCategory(ItemCategories.Curse).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Curse).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
+        /// <summary>
+        /// Item_Jewelry_All_Name
+        /// 鮮やかなアイリスクォーツ
+        /// Item_Jewelry_All_FlavorText
+        /// フレーバーテキスト募集中
+        /// </summary>
+        public static ModCharm JewelryAll { get; } = ModCharmStatus.Create<Charm_JewelryExcavation>("Jewelry_All", 0,
+            CreateStatusGroupBy("FINAL_DAMAGE".ToSephiriaId(), 4))
+            .SetCategory(ItemCategories.Mystic).SetSimpleEffects(0).SetIsExcludedJewelry(EItemRarity.Rare);
 
         public static readonly System.Random JewelryRandom = new();
         public static ModCharm GetRandomJewelry(this UnitAvatar avatar)
