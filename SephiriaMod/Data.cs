@@ -1115,8 +1115,8 @@ namespace SephiriaMod
         /// フレーバーテキスト募集中
         /// </summary>
         public static ModCharm JewelryAll { get; } = ModCharmStatus.Create<Charm_JewelryExcavation>("Jewelry_All", 0,
-            CreateStatusGroupBy("FINAL_DAMAGE".ToSephiriaId(), 4))
-            .SetCategory(ItemCategories.Mystic).SetSimpleEffects(0).SetIsExcludedJewelry(EItemRarity.Rare);
+            CreateStatusGroupBy("FINAL_DAMAGE", 4))
+            .SetCategory(ItemCategories.Mystic).SetSimpleEffects(0).SetIsExcludedJewelry(EItemRarity.Legend);
 
         public static readonly System.Random JewelryRandom = new();
         public static ModCharm GetRandomJewelry(this UnitAvatar avatar)
