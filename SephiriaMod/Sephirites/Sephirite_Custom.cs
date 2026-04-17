@@ -25,8 +25,9 @@ namespace SephiriaMod.Sephirites
         }
         protected virtual void OnDisconnected(NetworkConnectionToClient client)
         {
-            
+
         }
+        protected virtual int MaxLoopCount => 1000;
         protected virtual int ModifyChoiceCount(int stat)
         {
             return stat;
@@ -50,6 +51,10 @@ namespace SephiriaMod.Sephirites
         protected virtual EItemRarity GetRandomRarity(Type type, System.Random rand, float luck)
         {
             return RarityDice(type, rand, luck);
+        }
+        protected virtual List<int> GetDefaultItems(UnitAvatar avatar, PlayerSpawner player)
+        {
+            return new List<int>(player.unlockedCharms);
         }
         public virtual void GenerateItemsCustom(GameObject actor)
         {
@@ -234,8 +239,17 @@ namespace SephiriaMod.Sephirites
                 }
             }
 
+            int count = 0;
             for (int i = 0; i < choices; i++)
             {
+                count++;
+                if(count > MaxLoopCount)
+                {
+                    var defaults = GetDefaultItems(avatar, player);
+                    for (int q = 0; q < choices - i; q++)
+                        rewards.Add(new SephiriteRewardMetadata(ItemDatabase.GenerateInstanceID(random), defaults.GetRandom()));
+                    break;
+                }
                 int limit = appearLimit;
                 EItemRarity key;
                 if (type == Type.TABLET_BOSS)

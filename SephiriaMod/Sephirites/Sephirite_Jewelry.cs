@@ -49,5 +49,9 @@ namespace SephiriaMod.Sephirites
         {
             return 0;
         }
+        protected override List<int> GetDefaultItems(UnitAvatar avatar, PlayerSpawner player)
+        {
+            return [Data.JewelryAll.Id];
+        }
     }
 }

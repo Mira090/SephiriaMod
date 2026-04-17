@@ -2160,7 +2160,7 @@ namespace SephiriaMod
         public static ModSpriteFx StaffSickleAttack5Fx { get; } = ModSpriteFx.CreateSpriteFx("StaffSwing123Fx5_Sickle", "StaffSwingFx_Attack1", $"{ModUtil.WeaponPath}Staff_Sickle\\Weapon_Staff_Attack5_", 8).SetFps(20);
         #endregion
 
-        public static ModSephirite SephiriteJewelry { get; } = ModSephirite.Create<Sephirite_Jewelry>("Jewelry").SetAppearLimit(5);
+        public static ModSephirite SephiriteJewelry { get; } = ModSephirite.Create<Sephirite_Jewelry>("Jewelry").SetAppearLimit(2);
 
         public static Sprite IconInWorldPotion { get; internal set; }
         public static Sprite IconInWorldCharm { get; internal set; }
