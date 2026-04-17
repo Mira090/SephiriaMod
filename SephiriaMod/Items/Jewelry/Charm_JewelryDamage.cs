@@ -7,7 +7,7 @@ namespace SephiriaMod.Items.Jewelry
 {
     public class Charm_JewelryDamage : Charm_Jewelry
     {
-        public string DamageId = "Charm_JewelryDamage";
+        public string DamageId = "Charm_JewelryWind";
         public int[] damage = [0, 0, 5, 10, 15, 20];
         public override int[] Consume => consumeSmall;
 
