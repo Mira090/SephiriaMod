@@ -990,7 +990,7 @@ namespace SephiriaMod
         public static ModCharm JewelryStudy { get; } = ModCharmStatus.Create<Charm_JewelrySturdy>("Jewelry_Study", 0, 
             CreateStatusGroupBy("PhysicalDamage".ToSephiriaId(), 3),
             CreateStatusGroupBy("WeaponRange".ToSephiriaId(), 3, 20))
-            .SetCategory(ItemCategories.Sturdy).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Sturdy).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Wind_Name
         /// 靡くエメラルド
@@ -1002,7 +1002,7 @@ namespace SephiriaMod
         public static ModCharm JewelryWind { get; } = ModCharmStatus.Create<Charm_JewelryDamage>("Jewelry_Wind", 0,
             CreateStatusGroupBy("AttackSpeed".ToSephiriaId(), 5),
             CreateStatusGroupBy("TrueDamage".ToSephiriaId(), 3, 3))
-            .SetCategory(ItemCategories.WindSong).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.WindSong).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Precision_Name
         /// 煌めくシトリン
@@ -1013,7 +1013,7 @@ namespace SephiriaMod
         /// </summary>
         public static ModCharm JewelryPrecision { get; } = ModCharmStatus.Create<Charm_JewelryCritical>("Jewelry_Precision", 0, 
             CreateStatusGroupBy("CriticalDamageRate".ToSephiriaId(), 20))
-            .SetCategory(ItemCategories.Precision).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Precision).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Excavation_Name
         /// 震えるトパーズ
@@ -1023,7 +1023,7 @@ namespace SephiriaMod
         public static ModCharm JewelryExcavation { get; } = ModCharmStatus.Create<Charm_JewelryExcavation>("Jewelry_Excavation", 0, 
             CreateStatusGroupBy("CriticalDamageRate".ToSephiriaId(), 20),
             CreateStatusGroupBy("ExcavationDamage".ToSephiriaId(), 3, 50))
-            .SetCategory(ItemCategories.Precision).SetSimpleEffects(0).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Precision).SetSimpleEffects(0).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Ember_Name
         /// 燃えるルビー
@@ -1035,7 +1035,7 @@ namespace SephiriaMod
         public static ModCharm JewelryEmber { get; } = ModCharmStatus.Create<Charm_JewelryBurn>("Jewelry_Ember", 0,
             CreateStatusGroupBy("FireDamage".ToSephiriaId(), 3),
             CreateStatusGroup("BurnStack".ToSephiriaId(), 0, 0, 0, 1, 2, 4))
-            .SetCategory(ItemCategories.Ember).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Ember).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Flame_Name
         /// 焼き尽くすガーネット
@@ -1047,7 +1047,7 @@ namespace SephiriaMod
         public static ModCharm JewelryFlame { get; } = ModCharmStatus.Create<Charm_JewelryFlameSword>("Jewelry_Flame", 0,
             CreateStatusGroupBy("FireDamage".ToSephiriaId(), 3),
             CreateStatusGroupBy("FlameSwordFastFall".ToSephiriaId(), 3, 20))
-            .SetCategory(ItemCategories.FlameSword).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.FlameSword).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Glacier_Name
         /// 冷たいサファイア
@@ -1059,7 +1059,7 @@ namespace SephiriaMod
         public static ModCharm JewelryGlacier { get; } = ModCharmStatus.Create<Charm_JewelryFrostbite>("Jewelry_Glacier", 0,
             CreateStatusGroupBy("IceDamage".ToSephiriaId(), 3),
             CreateStatusGroupBy("FreezeDamage".ToSephiriaId(), 3, 40))
-            .SetCategory(ItemCategories.Glacier).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Glacier).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Frost_Name
         /// 凍て尽くすアクアマリン
@@ -1071,7 +1071,7 @@ namespace SephiriaMod
         public static ModCharm JewelryFrost { get; } = ModCharmStatus.Create<Charm_JewelryFrostRelic>("Jewelry_Frost", 0,
             CreateStatusGroupBy("IceDamage".ToSephiriaId(), 3),
             CreateStatusGroupBy("ChargingCharmBonus".ToSephiriaId(), 3, 30))
-            .SetCategory(ItemCategories.Frost).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Frost).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Electric_Name
         /// 弾けるターコイズ
@@ -1083,7 +1083,7 @@ namespace SephiriaMod
         public static ModCharm JewelryElectric { get; } = ModCharmStatus.Create<Charm_JewelryElectric>("Jewelry_Electric", 0,
             CreateStatusGroupBy("LightningDamage".ToSephiriaId(), 3),
             CreateStatusGroup("ElectricStack".ToSephiriaId(), 0, 0, 0, 1, 2, 4))
-            .SetCategory(ItemCategories.Magitech).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.Magitech).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Cloud_Name
         /// 貫くマラカイト
@@ -1095,7 +1095,7 @@ namespace SephiriaMod
         public static ModCharm JewelryCloud { get; } = ModCharmStatus.Create<Charm_JewelryDarkCloud>("Jewelry_Cloud", 0,
             CreateStatusGroupBy("LightningDamage".ToSephiriaId(), 3),
             CreateStatusGroupBy("DarkCloudSpeed".ToSephiriaId(), 3, 30))
-            .SetCategory(ItemCategories.DarkCloud).SetSimpleEffects(1).SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.DarkCloud).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
         /// <summary>
         /// Item_Jewelry_Curse_Name
         /// 蠢くオパール
