@@ -12,7 +12,7 @@ using TMPro;
 using UnityEngine;
 using Type = System.Type;
 
-[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.10.0", "Mira", "https://github.com/Mira090/SephiriaMod")]
+[assembly: MelonInfo(typeof(SephiriaMod.Core), "SephiriaMod", "0.10.1", "Mira", "https://github.com/Mira090/SephiriaMod")]
 [assembly: MelonGame("TEAMHORAY", "Sephiria")]
 
 namespace SephiriaMod
@@ -76,6 +76,7 @@ namespace SephiriaMod
         public static bool LogFew => LogMode >= 1;
         public static bool LogMedium => LogMode >= 2;
         public static bool LogMany => LogMode >= 3;
+
         public void OnModOptionChanged(int index, int value)
         {
             if (index == 0)

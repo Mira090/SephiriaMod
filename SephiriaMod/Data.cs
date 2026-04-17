@@ -1020,7 +1020,7 @@ namespace SephiriaMod
         /// Item_Jewelry_Excavation_FlavorText
         /// フレーバーテキスト募集中
         /// </summary>
-        public static ModCharm JewelryExcavation { get; } = ModCharmStatus.Create<Charm_JewelryExcavation>("Jewelry_Excavation", 0, 
+        public static ModCharm JewelryExcavation { get; } = ModCharmStatus.Create<Charm_JewelryExcavation>("Jewelry_Excavation", 0,
             CreateStatusGroupBy("ExcavationDamage".ToSephiriaId(), 3, 40),
             CreateStatusGroupBy("CriticalDamageRate".ToSephiriaId(), 20))
             .SetCategory(ItemCategories.Precision).SetSimpleEffects(0).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
