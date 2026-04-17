@@ -1,5 +1,8 @@
 ﻿using HarmonyLib;
+using Mirror;
+using Mirror.RemoteCalls;
 using SephiriaMod.Items.Jewelry;
+using SephiriaMod.Items.Savvy;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -43,6 +46,15 @@ namespace SephiriaMod.Items
         public virtual void SetAdditionalMaxLevel(int level)
         {
             if(OriginalMaxLevel + level > ValiableMax)
+            {
+                level = ValiableMax - OriginalMaxLevel;
+            }
+            AdditionalMaxLevel = level;
+            maxLevel = OriginalMaxLevel + AdditionalMaxLevel;
+        }
+        protected virtual void SetAdditionalMaxLevelOnClient(int level)
+        {
+            if (OriginalMaxLevel + level > ValiableMax)
             {
                 level = ValiableMax - OriginalMaxLevel;
             }
@@ -181,6 +193,46 @@ namespace SephiriaMod.Items
                     __instance.starImages[index].sprite = JewelryTierEnchantVirtual;
                 }
             }
+        }
+
+
+
+        [ClientRpc]
+        public void RpcSetAdditionalMaxLevel(int additional)
+        {
+            NetworkWriterPooled writer = NetworkWriterPool.Get();
+            writer.WriteInt(additional);
+            var func = "System.Void Charm_VariableMaxLevel::RpcSetAdditionalMaxLevel(System.Int32)";
+            SendRPCInternal(func, func.ToFunctionHashCode(), writer, 0, includeOwner: true);
+            NetworkWriterPool.Return(writer);
+        }
+
+        public override bool Weaved()
+        {
+            return true;
+        }
+
+        protected void UserCode_RpcSetAdditionalMaxLevel__Int32(int additional)
+        {
+            Debug.Log("UserCode_RpcSetAdditionalMaxLevel__Int32: " + additional);
+            SetAdditionalMaxLevelOnClient(additional);
+        }
+
+        protected static void InvokeUserCode_RpcSetAdditionalMaxLevel__Int32(NetworkBehaviour obj, NetworkReader reader, NetworkConnectionToClient senderConnection)
+        {
+            if (!NetworkClient.active)
+            {
+                Debug.LogError("RPC RpcSetAdditionalMaxLevel called on server.");
+            }
+            else
+            {
+                ((Charm_VariableMaxLevel)obj).UserCode_RpcSetAdditionalMaxLevel__Int32(reader.ReadInt());
+            }
+        }
+
+        static Charm_VariableMaxLevel()
+        {
+            RemoteProcedureCalls.RegisterRpc(typeof(Charm_VariableMaxLevel), "System.Void Charm_VariableMaxLevel::RpcSetAdditionalMaxLevel(System.Int32)", InvokeUserCode_RpcSetAdditionalMaxLevel__Int32);
         }
     }
 }
