@@ -1,5 +1,6 @@
 ﻿using MelonLoader;
 using Mirror;
+using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,6 +39,10 @@ namespace SephiriaMod.Items.Jewelry
                     NetworkAvatar.SetMoney(remain);
                 }
                 SaveItemOnServer(instanceID, SaveManager.CurrentRun);
+
+                var instance = StatusDatabase.CreateStatusEntity("JewelryCount".ToSephiriaId(), 1);
+                NetworkAvatar.AddOrphanedStatusInstance(instance);
+
                 RpcSetAdditionalMaxLevel(moneyLevel);
             }
             else
@@ -86,5 +91,7 @@ namespace SephiriaMod.Items.Jewelry
             base.LoadItemOnServer(saveData);
             moneyLevel = saveData?.GetInt($"CharmSaveData_Jewelry_{instanceID}_Stack", -1) ?? -1;
         }
+
+        
     }
 }

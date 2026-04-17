@@ -1433,6 +1433,13 @@ namespace SephiriaMod
         /// </summary>
         public static ModCustomStatus MaxMiracleCount { get; } = ModCustomStatus.CreateStatus<StatusInstance_MaxMiracleCount>("MaxMiracleCount").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
+        /// Status_JewelryCount_Name
+        /// <tag=ItemRarity_Jewelry>アーティファクトの獲得回数
+        /// Status_JewelryCount_Description
+        /// <tag=ItemRarity_Jewelry>アーティファクトを入手した回数です
+        /// </summary>
+        public static ModCustomStatus JewelryCount { get; } = ModCustomStatus.CreateStatus("JewelryCount").DoKeyword(keyword => keyword.SetNotDisplayDetails());
+        /// <summary>
         /// Status_ExcavationDamage_Name
         /// 発掘ダメージ
         /// Status_ExcavationDamage_Description
