@@ -7,7 +7,7 @@ namespace SephiriaMod.Items.Jewelry
 {
     public class Charm_JewelryExcavation : Charm_Jewelry
     {
-        protected override int FirstLevel => 5;
+        protected override int FirstLevel => 3;
         protected override int SecondLevel => 0;
 
     }
