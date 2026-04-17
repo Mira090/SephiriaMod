@@ -15,7 +15,6 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using static GridInventory;
-using static SephiriaMod.Core;
 
 namespace SephiriaMod
 {
@@ -32,6 +31,7 @@ namespace SephiriaMod
         public static event Action<WeaponControllerSimple, UnitAvatar> OnPreBasicAttack;
         public static event Action<WeaponControllerSimple, UnitAvatar> OnPreSpecialAttack;
         public static event Action<WeaponControllerSimple, UnitAvatar> OnPreDashAttack;
+        public static event Action<CharacterBuff> OnAppliedBuff;
 
         public static EventReference HealSound { get; } = RuntimeManager.PathToEventReference("event:/Scene/healPotion_Small01");
         public static EventReference PerkSound { get; } = RuntimeManager.PathToEventReference("event:/System/talentPerk");
@@ -209,6 +209,23 @@ namespace SephiriaMod
             OnAceSpawnChance?.Invoke(__instance, idx);
         }
         #endregion
+
+        [HarmonyPatch(typeof(CharacterBuff), nameof(CharacterBuff.AddStack))]
+        public static class CharacterBuffAddStackPatch
+        {
+            static void Postfix(CharacterBuff __instance)
+            {
+                OnAppliedBuff?.Invoke(__instance);
+            }
+        }
+        [HarmonyPatch(typeof(CharacterBuff), nameof(CharacterBuff.Initialize))]
+        public static class CharacterBuffInitializePatch
+        {
+            static void Postfix(CharacterBuff __instance)
+            {
+                OnAppliedBuff?.Invoke(__instance);
+            }
+        }
 
         #region ModChat
         [HarmonyPatch(typeof(DungeonManager), "UserCode_RpcChat__PlayerAvatar__String__String", new Type[] { typeof(PlayerAvatar), typeof(string), typeof(string) })]

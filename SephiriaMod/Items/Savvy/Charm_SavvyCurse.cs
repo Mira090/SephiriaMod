@@ -34,25 +34,23 @@ namespace SephiriaMod.Items.Savvy
         protected override void OnEnabledEffect()
         {
             base.OnEnabledEffect();
-            NetworkAvatar.OnAddedBuff += OnAddedBuff;
+            //NetworkAvatar.OnAddedBuff += OnAddedBuff;
             NetworkAvatar.OnRemovedBuff += OnRemovedBuff;
-            NetworkAvatar.OnKillUnit += OnKillUnit;
+            Events.OnAppliedBuff += OnAppliedBuff;
+            //NetworkAvatar.OnKillUnit += OnKillUnit;
             Apply();
         }
-        protected override void OnDisabledEffect()
+
+        private void OnAppliedBuff(CharacterBuff buff)
         {
-            base.OnDisabledEffect();
-            NetworkAvatar.OnAddedBuff -= OnAddedBuff;
-            NetworkAvatar.OnRemovedBuff -= OnRemovedBuff;
-            NetworkAvatar.OnKillUnit -= OnKillUnit;
-            Remove(CurrentLevelToIdx());
-        }
-        private void OnKillUnit(UnitAvatar avatar, DamageInstance damage)
-        {
-            if (!avatar.TryGetComponent<UnitAI_NewBasic>(out var npc) || string.IsNullOrWhiteSpace(npc.socialID))
+            if (Core.LogMany)
+                Melon<Core>.Logger.Msg("[Charm_SavvyCurse] OnAppliedBuff: " + buff.ID);
+            if (buff.NetworkTarget != NetworkAvatar)
                 return;
-            if (RuntimeFactionManager.Instance.GetRelationValue(npc.Avatar.faction, "Player") <= 21)
+            if (buff.ID != Crime)
                 return;
+            UpdateCrime(buff);
+
             int crime = SaveManager.CurrentRun.GetInt("CrimeCount", 0);
 
             NetworkAvatar.AddMoney(moneyByLevel.SafeRandomAccess(CurrentLevelToIdx()));
@@ -61,6 +59,23 @@ namespace SephiriaMod.Items.Savvy
             {
                 //NetworkAvatar.AddMoney(moneyByLevel.SafeRandomAccess(CurrentLevelToIdx()));
             }
+        }
+
+        protected override void OnDisabledEffect()
+        {
+            base.OnDisabledEffect();
+            //NetworkAvatar.OnAddedBuff -= OnAddedBuff;
+            NetworkAvatar.OnRemovedBuff -= OnRemovedBuff;
+            Events.OnAppliedBuff -= OnAppliedBuff;
+            //NetworkAvatar.OnKillUnit -= OnKillUnit;
+            Remove(CurrentLevelToIdx());
+        }
+        private void OnKillUnit(UnitAvatar avatar, DamageInstance damage)
+        {
+            if (!avatar.TryGetComponent<UnitAI_NewBasic>(out var npc) || string.IsNullOrWhiteSpace(npc.socialID))
+                return;
+            if (RuntimeFactionManager.Instance.GetRelationValue(npc.Avatar.faction, "Player") <= 21)
+                return;
         }
         private void OnRemovedBuff(CharacterBuff buff)
         {
@@ -75,6 +90,8 @@ namespace SephiriaMod.Items.Savvy
 
         private void OnAddedBuff(CharacterBuff buff)
         {
+            if (Core.LogMedium)
+                Melon<Core>.Logger.Msg("[Charm_SavvyCurse] OnAddedBuff: " + buff.ID);
             if (buff.ID != Crime)
                 return;
             UpdateCrime();
@@ -89,6 +106,11 @@ namespace SephiriaMod.Items.Savvy
         {
             Remove(CurrentLevelToIdx());
             Apply();
+        }
+        public void UpdateCrime(CharacterBuff buff)
+        {
+            Remove(CurrentLevelToIdx());
+            Apply(buff);
         }
         public void Remove(int idx)
         {
@@ -115,6 +137,19 @@ namespace SephiriaMod.Items.Savvy
             
             applied += crime;
         }
+        public void Apply(CharacterBuff buff)
+        {
+            var crime = GetCrimeCount(buff);
+            NetworkAvatar.AddCustomStatUnsafe("BURNSTACK", crime * stack.SafeRandomAccess(CurrentLevelToIdx()));
+            NetworkAvatar.AddCustomStatUnsafe("ELECTRICSTACK", crime * stack.SafeRandomAccess(CurrentLevelToIdx()));
+            NetworkAvatar.AddCustomStatUnsafe("POISONSTACK", crime * stack.SafeRandomAccess(CurrentLevelToIdx()));
+            NetworkAvatar.AddCustomStatUnsafe("WOUNDSTACK", crime * stack.SafeRandomAccess(CurrentLevelToIdx()));
+
+            NetworkAvatar.AddCustomStatUnsafe("DEBUFFDAMAGE", crime * damage.SafeRandomAccess(CurrentLevelToIdx()));
+            NetworkAvatar.AddCustomStat(ECustomStat.DebuffDuration, crime * duration.SafeRandomAccess(CurrentLevelToIdx()));
+
+            applied += crime;
+        }
         public int GetCrimeCount()
         {
             foreach(var buff in NetworkAvatar.Buffs)
@@ -122,6 +157,12 @@ namespace SephiriaMod.Items.Savvy
                 if (buff.ID == Crime)
                     return buff.CurrentStack;
             }
+            return 0;
+        }
+        public int GetCrimeCount(CharacterBuff buff)
+        {
+            if (buff.ID == Crime)
+                return buff.CurrentStack;
             return 0;
         }
     }
