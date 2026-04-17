@@ -918,7 +918,7 @@ namespace SephiriaMod
         /// Item_Savvy_Precision_Effect
         /// <tag=Critical>発生時に{LEAF}<tag=Leaf>を生成
         /// Item_Savvy_Precision_Effect2
-        /// 攻撃の<tag=CriticalChance>が100％を超えた場合、超過した分の確率が<tag=Excavation>の発生率に変換される
+        /// 攻撃の<tag=CriticalChance>が100％を超えた場合、超過した分の確率が<tag=Excavation>の発生率に変換される\n[<tag=Excavation>の成功確率：{PERCENT}]
         /// </summary>
         public static ModCharm SavvyPrecision { get; } = ModCharmStatus.Create<Charm_SavvyPrecision>("Savvy_Precision", 3, CreateStatusGroup("CRITICAL", 250, 500, 750, 1000))
             .SetCategory(ItemCategories.Savvy, ItemCategories.Precision).SetSimpleEffects(2).SetRarity(EItemRarity.Rare).SetIsDual().SetIsUniqueEffect();
@@ -1515,7 +1515,7 @@ namespace SephiriaMod
         /// Status_Excavation_Name
         /// 発掘
         /// Status_Excavation_Description
-        /// 所持する<tag=Leaf>500ごとに2%の確率で<tag=ItemRarity_Jewelry>アーティファクトを手に入れます。
+        /// 所持する<tag=Leaf>500ごとに1%の確率で<tag=ItemRarity_Jewelry>アーティファクトを手に入れます。<tag=ItemRarity_Jewelry>アーティファクトを入手するたび、必要な所持する<tag=Leaf>が100%増加します
         /// </summary>
         public static ModKeyword Excavation { get; } = ModKeyword.CreateKeyword("Excavation").SetTextColor(new Color32(200, 100, 0, 255))
             .SetConnectedDetailEntities("ItemRarity_Jewelry").SetKeywordImage(() => CustomSpriteAsset.Excavation);

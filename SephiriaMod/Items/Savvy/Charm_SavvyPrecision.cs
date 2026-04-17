@@ -28,7 +28,8 @@ namespace SephiriaMod.Items.Savvy
                 damage.useCustomColor = true;
 
                 var add = moneyByLevel.SafeRandomAccess(CurrentLevelToIdx());
-                int money = ((NetworkAvatar.Money + add) / 500) * 2;
+                var count = 1 + NetworkAvatar.GetCustomStatUnsafe("JewelryCount".ToSephiriaUpperId());
+                int money = ((NetworkAvatar.Money + add) / (500 * count)) * 1;
                 if (money > 0 && money.Percent())
                 {
                     if(avatar.monsterType != EMonsterType.Dummy)
@@ -47,10 +48,18 @@ namespace SephiriaMod.Items.Savvy
 
         public override Loc.KeywordValue[] BuildKeywords(UnitAvatar avatar, int level, int virtualLevelOffset, bool showAllLevel, bool ignoreAvatarStatus)
         {
-            string value = showAllLevel ? moneyByLevel.SafeRandomAccess(0) + "→" + moneyByLevel.SafeRandomAccess(maxLevel) : moneyByLevel.SafeRandomAccess(LevelToIdx(level)).ToString();
-            return new Loc.KeywordValue[1]
+            int? percent = null;
+            if(avatar != null && !ignoreAvatarStatus)
             {
-            new Loc.KeywordValue("LEAF", "+" + value, GetPositiveColor(virtualLevelOffset))
+                var add = moneyByLevel.SafeRandomAccess(LevelToIdx(level));
+                var count = 1 + avatar.GetCustomStatUnsafe("JewelryCount".ToSephiriaUpperId());
+                percent = ((avatar.Money + add) / (500 * count)) * 1;
+            }
+            string value = showAllLevel ? moneyByLevel.SafeRandomAccess(0) + "→" + moneyByLevel.SafeRandomAccess(maxLevel) : moneyByLevel.SafeRandomAccess(LevelToIdx(level)).ToString();
+            return new Loc.KeywordValue[2]
+            {
+            new Loc.KeywordValue("LEAF", "+" + value, GetPositiveColor(virtualLevelOffset)),
+            new Loc.KeywordValue("PERCENT", (percent.HasValue ? percent.Value : "-") + "%")
             };
         }
         public override void OnCharmEffectRefreshed()
