@@ -355,7 +355,7 @@ namespace SephiriaMod.Registries
             item.NeedParseValueOnVisualText = needParseValueOnVisualText;
             return item;
         }
-        public static T SetDisplayDetails<T>(this T item, bool displayDetails = false) where T : ModKeyword
+        public static T SetNotDisplayDetails<T>(this T item, bool displayDetails = false) where T : ModKeyword
         {
             item.DisplayDetails = displayDetails;
             return item;

@@ -1365,21 +1365,21 @@ namespace SephiriaMod
         /// Status_StargazeLevel_Description
         /// インベントリにある夜空アーティファクトの最大レベルが増加します
         /// </summary>
-        public static ModCustomStatus StargazeLevel { get; } = ModCustomStatus.CreateStatus("StargazeLevel");
+        public static ModCustomStatus StargazeLevel { get; } = ModCustomStatus.CreateStatus("StargazeLevel").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
         /// Status_InvLevel_Name
         /// カジノチップの最大レベル
         /// Status_InvLevel_Description
         /// インベントリにあるカジノチップの最大レベルが増加します
         /// </summary>
-        public static ModCustomStatus InvLevel { get; } = ModCustomStatus.CreateStatus("InvLevel");
+        public static ModCustomStatus InvLevel { get; } = ModCustomStatus.CreateStatus("InvLevel").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
         /// Status_AddGrimoire_Name
         /// 
         /// Status_AddGrimoire_Description
         /// 
         /// </summary>
-        public static ModCustomStatus AddGrimoire { get; } = ModCustomStatus.CreateStatus("AddGrimoire");
+        public static ModCustomStatus AddGrimoire { get; } = ModCustomStatus.CreateStatus("AddGrimoire").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
         /// Status_AdditionalShop_Name
         /// ステージを移動した時、そのステージにいる商人の品数が{VALUE}増加
@@ -1387,7 +1387,7 @@ namespace SephiriaMod
         /// 商人が持つアイテムの数が増加します。
         /// </summary>
         public static ModCustomStatus AdditionalShop { get; } = ModCustomStatus.CreateStatus("AdditionalShop").SetIncludePositiveNegativeSign()
-            .DoKeyword(keyword => keyword.SetNeedParseValueOnVisualText());
+            .DoKeyword(keyword => keyword.SetNotDisplayDetails().SetNeedParseValueOnVisualText());
         /// <summary>
         /// Status_AdditionalShopLegendary_Name
         /// ステージを移動した時、そのステージにいる商人に伝説アーティファクトを{VALUE}個追加
@@ -1395,14 +1395,14 @@ namespace SephiriaMod
         /// 商人が持つ伝説アーティファクトの数が増加します
         /// </summary>
         public static ModCustomStatus AdditionalShopLegendary { get; } = ModCustomStatus.CreateStatus("AdditionalShopLegendary").SetIncludePositiveNegativeSign()
-            .DoKeyword(keyword => keyword.SetNeedParseValueOnVisualText());
+            .DoKeyword(keyword => keyword.SetNotDisplayDetails().SetNeedParseValueOnVisualText());
         /// <summary>
         /// Status_AdditionalShopInventory_Name
         /// ステージを移動した時、そのステージにいる商人がバッグの枠拡張キットを売る確率
         /// Status_AdditionalShopInventory_Description
         /// 確率で商人がバッグの枠拡張キットを売ります
         /// </summary>
-        public static ModCustomStatus AdditionalShopInventory { get; } = ModCustomStatus.CreateStatus("AdditionalShopInventory").SetSymbol("%");
+        public static ModCustomStatus AdditionalShopInventory { get; } = ModCustomStatus.CreateStatus("AdditionalShopInventory").SetSymbol("%").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
         /// Status_AdditionalMoney_Name
         /// ステージを移動した時、そのステージにいる<tag=MerchantLeaf>が{VALUE}増加
@@ -1410,35 +1410,35 @@ namespace SephiriaMod
         /// 商人が持つ<tag=Leaf>が増加します。
         /// </summary>
         public static ModCustomStatus AdditionalMoney { get; } = ModCustomStatus.CreateStatus("AdditionalMoney").SetIncludePositiveNegativeSign()
-            .DoKeyword(keyword => keyword.SetNeedParseValueOnVisualText());
+            .DoKeyword(keyword => keyword.SetNotDisplayDetails().SetNeedParseValueOnVisualText());
         /// <summary>
         /// Status_ReplenishmentCharm_Name
         /// サファイアを使った時に商人が入荷するアーティファクトの数
         /// Status_ReplenishmentCharm_Description
         /// サファイアを使って商人に入荷させた時のアーティファクトの数が増加します
         /// </summary>
-        public static ModCustomStatus ReplenishmentCharm { get; } = ModCustomStatus.CreateStatus("ReplenishmentCharm");
+        public static ModCustomStatus ReplenishmentCharm { get; } = ModCustomStatus.CreateStatus("ReplenishmentCharm").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
         /// Status_ReplenishmentTablet_Name
         /// サファイアを使った時に商人が入荷する石版の数
         /// Status_ReplenishmentTablet_Description
         /// サファイアを使って商人に入荷させた時の石版の数が増加します
         /// </summary>
-        public static ModCustomStatus ReplenishmentTablet { get; } = ModCustomStatus.CreateStatus("ReplenishmentTablet");
+        public static ModCustomStatus ReplenishmentTablet { get; } = ModCustomStatus.CreateStatus("ReplenishmentTablet").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
         /// Status_MaxMiracleCount_Name
         /// 奇跡の最大数
         /// Status_MaxMiracleCount_Description
         /// 奇跡の最大数が増加します
         /// </summary>
-        public static ModCustomStatus MaxMiracleCount { get; } = ModCustomStatus.CreateStatus<StatusInstance_MaxMiracleCount>("MaxMiracleCount");
+        public static ModCustomStatus MaxMiracleCount { get; } = ModCustomStatus.CreateStatus<StatusInstance_MaxMiracleCount>("MaxMiracleCount").DoKeyword(keyword => keyword.SetNotDisplayDetails());
         /// <summary>
         /// Status_ExcavationDamage_Name
         /// 発掘ダメージ
         /// Status_ExcavationDamage_Description
         /// <tag=Excavation>時のダメージが増加します
         /// </summary>
-        public static ModCustomStatus ExcavationDamage { get; } = ModCustomStatus.CreateStatus("ExcavationDamage").SetSymbol("%").DoKeyword(keyword => keyword.SetKeywordImage(() => CustomSpriteAsset.Excavation));
+        public static ModCustomStatus ExcavationDamage { get; } = ModCustomStatus.CreateStatus("ExcavationDamage").SetSymbol("%").DoKeyword(keyword => keyword.SetNotDisplayDetails().SetKeywordImage(() => CustomSpriteAsset.Excavation));
         /// <summary>
         /// Status_MagicExecution_Name
         /// 天罰
@@ -1466,7 +1466,7 @@ namespace SephiriaMod
         /// Status_MerchantLeaf_Description
         /// 商人が持つ<tag=Leaf>です
         /// </summary>
-        public static ModKeyword MerchantLeaf { get; } = ModKeyword.CreateKeyword("MerchantLeaf").SetDisplayDetails().SetKeywordImage(() => CustomSpriteAsset.MerchantLeaf);
+        public static ModKeyword MerchantLeaf { get; } = ModKeyword.CreateKeyword("MerchantLeaf").SetNotDisplayDetails().SetKeywordImage(() => CustomSpriteAsset.MerchantLeaf);
         /// <summary>
         /// Status_WeaponAction_IceTrance_Name
         /// 冷静
