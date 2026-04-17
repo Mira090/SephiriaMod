@@ -1002,7 +1002,7 @@ namespace SephiriaMod
         public static ModCharm JewelryWind { get; } = ModCharmStatus.Create<Charm_JewelryDamage>("Jewelry_Wind", 0,
             CreateStatusGroupBy("AttackSpeed".ToSephiriaId(), 5),
             CreateStatusGroupBy("TrueDamage".ToSephiriaId(), 3, 3))
-            .SetCategory(ItemCategories.WindSong).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare);
+            .SetCategory(ItemCategories.WindSong).SetSimpleEffects(1).SetIsUniqueEffect().SetIsJewelry(EItemRarity.Rare).SetDamageId();
         /// <summary>
         /// Item_Jewelry_Precision_Name
         /// 煌めくシトリン
