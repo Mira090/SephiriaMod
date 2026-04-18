@@ -42,14 +42,42 @@ namespace SephiriaMod.Items.Jewelry
 
                 var instance = StatusDatabase.CreateStatusEntity("JewelryCount".ToSephiriaId(), 1);
                 NetworkAvatar.AddOrphanedStatusInstance(instance);
-
-                RpcSetAdditionalMaxLevel(moneyLevel);
             }
             else
             {
                 SetAdditionalMaxLevel(moneyLevel);
-                RpcSetAdditionalMaxLevel(moneyLevel);
             }
+        }
+        protected override void OnEnabledEffect()
+        {
+            base.OnEnabledEffect();
+            RpcSetAdditionalMaxLevel(moneyLevel);
+            if (NetworkAvatar is PlayerAvatar player)
+            {
+                player.GetSkillController().OnCreateMagicServerside += OnCreateMagicServerside;
+                WeaponController.OnBeginAttackAnimation += OnBeginAttackAnimation;
+            }
+        }
+
+        private void OnCreateMagicServerside(ActiveSkill skill)
+        {
+            if (Core.LogMany)
+                Melon<Core>.Logger.Msg("OnCreateMagicServerside: " + skill.name);
+        }
+        private void OnBeginAttackAnimation(int idx)
+        {
+            if (Core.LogMany)
+                Melon<Core>.Logger.Msg("OnBeginAttackAnimation");
+        }
+
+        protected override void OnDisabledEffect()
+        {
+            base.OnDisabledEffect();
+            if (NetworkAvatar is PlayerAvatar player)
+            {
+                player.GetSkillController().OnCreateMagicServerside -= OnCreateMagicServerside;
+            }
+            WeaponController.OnBeginAttackAnimation -= OnBeginAttackAnimation;
         }
         protected virtual int FirstLevel => 2;
         protected virtual int SecondLevel => 0;
@@ -71,8 +99,6 @@ namespace SephiriaMod.Items.Jewelry
         }
         public void SaveItemOnServer(int instanceID, ISaveData saveData)
         {
-            if (Item == null)
-                return;
             base.SaveItemOnServer(saveData);
             saveData.SetInt($"CharmSaveData_Jewelry_{instanceID}_Stack", moneyLevel);
         }
@@ -86,10 +112,11 @@ namespace SephiriaMod.Items.Jewelry
         }
         public void LoadItemOnServer(int instanceID, ISaveData saveData)
         {
-            if (Item == null)
-                return;
+            Debug.Log("[Charm_Jewelry] Load: " + instanceID);
             base.LoadItemOnServer(saveData);
             moneyLevel = saveData?.GetInt($"CharmSaveData_Jewelry_{instanceID}_Stack", -1) ?? -1;
+
+            Debug.Log("[Charm_Jewelry] Result: " + moneyLevel);
         }
 
         

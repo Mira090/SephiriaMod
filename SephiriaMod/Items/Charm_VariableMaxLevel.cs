@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using static MelonLoader.MelonLogger;
 
 namespace SephiriaMod.Items
 {
@@ -200,6 +199,8 @@ namespace SephiriaMod.Items
         [ClientRpc]
         public void RpcSetAdditionalMaxLevel(int additional)
         {
+            Debug.Log("[Charm_VariableMaxLevel] RpcSetAdditionalMaxLevel: " + additional);
+
             NetworkWriterPooled writer = NetworkWriterPool.Get();
             writer.WriteInt(additional);
             var func = "System.Void Charm_VariableMaxLevel::RpcSetAdditionalMaxLevel(System.Int32)";
@@ -214,7 +215,7 @@ namespace SephiriaMod.Items
 
         protected void UserCode_RpcSetAdditionalMaxLevel__Int32(int additional)
         {
-            Debug.Log("UserCode_RpcSetAdditionalMaxLevel__Int32: " + additional);
+            Debug.Log("[Charm_VariableMaxLevel] UserCode_RpcSetAdditionalMaxLevel__Int32: " + additional);
             SetAdditionalMaxLevelOnClient(additional);
         }
 
