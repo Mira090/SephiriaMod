@@ -106,7 +106,14 @@ namespace SephiriaMod.Registries
 
             SpriteAsset.UpdateLookupTables();
 
-            TMP_Settings.instance.SetDefaultSpriteAsset(SpriteAsset);
+            if(TMP_Settings.defaultSpriteAsset != null)
+            {
+                TMP_Settings.defaultSpriteAsset.fallbackSpriteAssets.Add(SpriteAsset);
+            }
+            else
+            {
+                TMP_Settings.instance.SetDefaultSpriteAsset(SpriteAsset);
+            }
 
             int count = 0;
             foreach (var item in SpriteAsset.spriteCharacterTable)
