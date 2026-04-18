@@ -976,7 +976,8 @@ namespace SephiriaMod
         /// Item_Jewelry_Coin_Effect2
         /// 所持する<tag=Leaf>{LEAF}ごとに<tag=MagicDamageBonus> {DAMAGE}
         /// </summary>
-        public static ModCharm JewelryCoin { get; } = ModCharmStatus.Create<Charm_JewelryCoin>("Jewelry_Coin", 0)
+        public static ModCharm JewelryCoin { get; } = ModCharmStatus.Create<Charm_JewelryCoin>("Jewelry_Coin", 0,
+            CreateStatusGroup("LeafDrop".ToSephiriaId(), 40))
             .SetCategory(ItemCategories.Academy).SetSimpleEffects(2).SetIsExcludedJewelry(EItemRarity.Uncommon);
 
         /// <summary>
