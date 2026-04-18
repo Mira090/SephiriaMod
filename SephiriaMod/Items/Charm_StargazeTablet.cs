@@ -91,9 +91,11 @@ namespace SephiriaMod.Items
         }
         private static bool IsValidPos(GridInventory inventory, int x, int y)
         {
-            if(x < 0 || y < 0)
+            if (x < 0 || y < 0)
                 return false;
-            if(inventory.PosToIdx(new ItemPosition(x, y)) >= inventory.CurrentInventoryStorage)
+            if (x >= inventory.Width)
+                return false;
+            if (inventory.PosToIdx(new ItemPosition(x, y)) >= inventory.CurrentInventoryStorage)
                 return false;
             return !inventory.charms.TryGetValue(new ItemPosition(x, y), out var _);
         }
