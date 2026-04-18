@@ -22,7 +22,7 @@ namespace SephiriaMod.Items.Savvy
             count++;
             if (count % countRequire == 0)
             {
-                this.AddRandomJewelry();
+                this.AddRandomJewelry(true);
             }
             else
             {
