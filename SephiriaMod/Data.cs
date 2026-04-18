@@ -1134,14 +1134,18 @@ namespace SephiriaMod
             }
             return null;
         }
-        public static void AddRandomJewelry(this Charm_Basic charm)
+        public static void AddRandomJewelry(this Charm_Basic charm, bool duplicate = false)
         {
-            if (Sephirite_Jewelry.HasSephirite(charm.connectionToClient))
+            if (!duplicate && Sephirite_Jewelry.HasSephirite(charm.connectionToClient))
                 return;
             if(charm.NetworkAvatar.TryGetComponent<LevelController>(out var level))
             {
                 level.GenerateItem(Data.SephiriteJewelry, level.currentLevel + charm.NetworkAvatar.Money);
                 return;
+            }
+            else
+            {
+                Debug.Log("[AddRandomJewelry] LevelController not found");
             }
 
             var random = charm.NetworkAvatar.GetRandomJewelry();
@@ -2179,12 +2183,14 @@ namespace SephiriaMod
 
         public static void GenerateItem(this LevelController level, ModSephirite sephirite, int seed)
         {
+            Debug.Log("[LevelController] GenerateItem: " + sephirite.Name);
             GameObject gameObject = UnityEngine.Object.Instantiate(sephirite.Prefab, new Vector3(-1000f, -1000f), Quaternion.identity);
             var identity = gameObject.AddComponent<NetworkIdentity>();
             identity.SetAssetId(sephirite.AssetId);
             Sephirite component = gameObject.GetComponent<Sephirite>();
             component.Initialize(seed);
             NetworkServer.Spawn(gameObject, level.gameObject);
+            Debug.Log("[LevelController] Spawn ModSephirite: " + gameObject.name);
             level.levelUpQueue.Add(component);
         }
 
