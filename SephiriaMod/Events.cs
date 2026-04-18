@@ -6,6 +6,7 @@ using HeathenEngineering.SteamworksIntegration.API;
 using MelonLoader;
 using Mirror;
 using SephiriaMod.Items;
+using SephiriaMod.UI;
 using SephiriaMod.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ using System.Reflection.Emit;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static AvatarStatsHooker;
 using static GridInventory;
 
 namespace SephiriaMod
@@ -224,6 +227,96 @@ namespace SephiriaMod
             static void Postfix(CharacterBuff __instance)
             {
                 OnAppliedBuff?.Invoke(__instance);
+            }
+        }
+
+        [HarmonyPatch(typeof(UI_StatsPanel), nameof(UI_StatsPanel.Connect))]
+        public static class UIStatsPanelPatch
+        {
+            public static bool Patched { get; internal set; }
+            static void Prefix(UI_StatsPanel __instance)
+            {
+                if (Patched)
+                    return;
+                Patched = true;
+                try
+                {
+                    var tab = __instance.tab;
+                    var common = tab.tabContents[0];
+                    var special = tab.tabContents[1];
+
+                    var jewelry = InstantiateInfo(__instance, special);
+                    jewelry?.SetStats(new LocalizedString("ItemType_Misc"), Data.MaxMiracleCount.Id, Data.JewelryCount.Id);
+                }
+                catch (Exception e)
+                {
+                    Melon<Core>.Logger.Warning("Status display patch failed.");
+                    Melon<Core>.Logger.Warning(e);
+                }
+            }
+            private static UI_StatusTooltipOpenerManager InstantiateInfo(UI_StatsPanel panel, UI_TabContent tab)
+            {
+                var content = GetContent(tab);
+                var example = GetInfoExample(content);
+                return InstantiateInfo(panel, content, example);
+            }
+            private static RectTransform GetContent(UI_TabContent tab)
+            {
+                if (!tab.TryGetComponent<ScrollRect>(out var scroll))
+                    return null;
+                return scroll.content;
+            }
+            private static RectTransform GetInfoExample(RectTransform content)
+            {
+                if (content.childCount == 0)
+                    return null;
+                return content.GetChild(content.childCount - 1) as RectTransform;
+            }
+            private static UI_StatusTooltipOpenerManager InstantiateInfo(UI_StatsPanel panel, RectTransform content, RectTransform example)
+            {
+                var ob = UnityEngine.Object.Instantiate(example, content);
+                var manager = ob.gameObject.AddComponent<UI_StatusTooltipOpenerManager>();
+                manager.Init();
+                panel.statElements = [.. panel.statElements, .. manager.Stats];
+                return manager;
+            }
+        }
+        [HarmonyPatch(typeof(AvatarStatsHooker), nameof(AvatarStatsHooker.HookStat))]
+        public static class AvatarStatsHookerPatch
+        {
+            static void Postfix(AvatarStatsHooker __instance, ref string __result, string id, ref EStatValueSign sign)
+            {
+                if (!__instance.TryGetComponent<UnitAvatar>(out var avatar))
+                    return;
+
+                if(id == Data.JewelryCount.Id)
+                {
+                    sign = GetStandardSign(avatar.GetCustomStatUnsafe(Data.JewelryCount.Name.ToSephiriaUpperId()));
+                    __result = avatar.GetCustomStatUnsafe(Data.JewelryCount.Name.ToSephiriaUpperId()).ToString();
+                }
+                else if (id == Data.MaxMiracleCount.Id)
+                {
+                    if(avatar.gameObject.TryGetComponent<MiracleController>(out var miracle))
+                    {
+                        sign = GetStandardSign(miracle.maxMiracleCount - 1);
+                        __result = (miracle.maxMiracleCount).ToString();
+                    }
+                }
+                //Melon<Core>.Logger.Msg(id + ": " + __result);
+            }
+            private static EStatValueSign GetStandardSign(float value, float defaultValue = 0f)
+            {
+                if (Mathf.Abs(value - defaultValue) <= float.Epsilon)
+                {
+                    return EStatValueSign.Neutral;
+                }
+
+                if (value < defaultValue)
+                {
+                    return EStatValueSign.Negative;
+                }
+
+                return EStatValueSign.Positive;
             }
         }
 

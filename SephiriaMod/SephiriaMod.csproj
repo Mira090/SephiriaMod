@@ -616,6 +616,7 @@
 		<Compile Include="Sephirites\Sephirite_Custom.cs" />
 		<Compile Include="Sephirites\Sephirite_Jewelry.cs" />
 		<Compile Include="StatusInstances\StatusInstance_MaxMiracleCount.cs" />
+		<Compile Include="UI\UI_StatusTooltipOpenerManager.cs" />
 		<Compile Include="Utilities\Enums.cs" />
 		<Compile Include="Utilities\ModUtil.cs" />
 		<Compile Include="Registries\ModWeapon.cs" />

@@ -220,6 +220,17 @@ namespace SephiriaMod.Utilities
         {
             return entity is ItemEntity_Jewelry;
         }
+        public static void SetStatus(this UI_StatusTooltipOpener opener, StatusEntity entity)
+        {
+            opener.statHookID = entity.id;
+            opener.statKeyword = entity.statKeyword;
+            opener.SetKeyword(KeywordDatabase.GetEntity(opener.statKeyword));
+            if(opener.TryGetComponent<UI_StatusName>(out var name))
+            {
+                name.statKeyword = entity.statKeyword;
+                name.Initialize();
+            }
+        }
 
         #region RPC Miracle Controller
 

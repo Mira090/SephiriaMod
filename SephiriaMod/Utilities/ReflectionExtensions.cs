@@ -243,6 +243,10 @@ namespace SephiriaMod.Utilities
             var method = type.GetMethod("SendRPCInternal", BindingFlags.Instance | BindingFlags.NonPublic);
             method.Invoke(instance, [functionFullName, functionHashCode, writer, channelId, includeOwner]);
         }
+        public static void SetKeyword(this UI_StatusTooltipOpener instance, KeywordEntity value)
+        {
+            typeof(UI_StatusTooltipOpener).GetField("keyword", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(instance, value);
+        }
 
 
 
