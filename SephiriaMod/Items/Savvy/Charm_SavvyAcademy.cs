@@ -18,13 +18,12 @@ namespace SephiriaMod.Items.Savvy
         public LocalizedString itemName = new LocalizedString("Item_Jewelry_Coin_Name");
         public int[] mp = [10];
 
-        public bool curse;
         public bool release;
         public bool released;
         public int per = 20;
         private void Awake()
         {
-            coolDownTimer.time = 12f;
+            coolDownTimer.time = 8f;
             //activeText = new LocalizedString("CharmActive_Effect_IceBow");
         }
         public override string GetEffectString(int idx, int level, int virtualLevelOffset, bool showAllLevel)
@@ -80,19 +79,7 @@ namespace SephiriaMod.Items.Savvy
         protected override void OnDisconnected()
         {
             base.OnDisconnected();
-            this.NetworkAvatar.Delay(() =>
-            {
-                using (new GridInventory.Permission(NetworkAvatar.Inventory))
-                {
-                    foreach (var charm in NetworkAvatar.Inventory.charms)
-                    {
-                        if (charm.Value is Charm_Jewelry)
-                        {
-                            NetworkAvatar.Inventory.ForceRemoveItem(charm.Key.x, charm.Key.y);
-                        }
-                    }
-                }
-            });
+            Debug.Log("[SavvyAcademy] OnDisconnected");
         }
         protected override void Update()
         {
@@ -101,6 +88,7 @@ namespace SephiriaMod.Items.Savvy
                 return;
             if(base.isServer && release)
             {
+                Debug.Log("[SavvyAcademy] Release");
                 using (new GridInventory.Permission(Inventory))
                 {
                     var list = new List<KeyValuePair<ItemPosition, Charm_Basic>>(Inventory.charms);
@@ -113,9 +101,11 @@ namespace SephiriaMod.Items.Savvy
                         }
                     }
                 }
+                Debug.Log("[SavvyAcademy] ReservedMp: " + NetworkAvatar.reservedMp);
                 for (int q = 0; q < NetworkAvatar.reservedMp / per; q++)
                 {
-                    this.AddRandomJewelry();
+                    Debug.Log("[SavvyAcademy] Add Jewelry");
+                    this.AddRandomJewelry(true);
                 }
                 release = false;
                 released = true;
