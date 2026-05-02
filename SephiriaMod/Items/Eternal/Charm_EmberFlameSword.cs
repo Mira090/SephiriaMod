@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MelonLoader;
 using SephiriaMod.Items.Jewelry;
 using SephiriaMod.Utilities;
 using System;
@@ -33,7 +34,9 @@ namespace SephiriaMod.Items.Eternal
 
                     if (magitech > 0)
                     {
-                        if(damage.id == "Debuff_Electric")
+                        if (Core.LogMany)
+                            Melon<Core>.Logger.Msg($"DamageId: {damage.id}");
+                        if(damage.id == "Debuff_Electric" || damage.id == "Debuff_Plasma")
                         {
                             __instance.SetIsCooldown(true);
                             __instance.SetCooldownTimer(0);

@@ -45,7 +45,7 @@ namespace SephiriaMod.Items
                     }
                 }
             }
-            else if(damage.id == "Debuff_Electric")
+            else if(damage.id == "Debuff_Electric" || damage.id == "Debuff_Plasma")
             {
                 NetworkAvatar.ApplyBuff(Data.MagitechFrostRelicBuff, 1, NetworkAvatar, true);
             }
