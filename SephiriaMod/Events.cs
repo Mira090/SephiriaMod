@@ -165,7 +165,7 @@ namespace SephiriaMod
                 }
                 ModListText.text = sb.ToString();
                 ModListText.fontSize = 8;
-                ModListText.enableWordWrapping = false;
+                ModListText.textWrappingMode = TextWrappingModes.NoWrap;
                 ModListText.margin = Vector4.one * 12f;
                 ModListText.raycastTarget = false;
             }
@@ -1088,5 +1088,17 @@ namespace SephiriaMod
             }
         }
         #endregion
+        /*
+
+        [HarmonyPatch(typeof(NewItemOwnInstance), nameof(NewItemOwnInstance.DoClickAction))]
+        public static class Patch
+        {
+            static void Postfix(NewItemOwnInstance __instance)
+            {
+                if (__instance.Entity == null || __instance.Entity.type != EItemType.Identifiable)
+                    return;
+                IdentifiableItem_Rarity
+            }
+        }*/
     }
 }
