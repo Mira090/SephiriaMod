@@ -26,6 +26,11 @@ namespace SephiriaMod.Items
 
 
 
+        [Header("Cooldown")]
+        private bool isInCooldown;
+
+        private Timer cooldownTimer = new Timer(10f);
+
         public Timer castIntervalTimer = new Timer(4f);
 
         private bool isCasting;
@@ -155,15 +160,21 @@ namespace SephiriaMod.Items
             {
                 return;
             }
+            if (isInCooldown && cooldownTimer.Update(Time.deltaTime))
+            {
+                isInCooldown = false;
+            }
             if (isCasting)
             {
-                if (currentCastingTimer.Update(Time.deltaTime))
+                if (currentCastingTimer.Update(Time.deltaTime) || NetworkAvatar.HasQuickCast())
                 {
                     isCasting = false;
+                    isInCooldown = true;
+                    cooldownTimer.SetTimer(0f);
+                    cooldownTimer.time = magicCharm.NetworkcooldownTimeInThisCycle;
                     castingPosition = NetworkAvatar.transform.position;
-                    ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, true, null);
+                    magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, true, null);
                     //Melon<Core>.Logger.Msg("cast!" + (skillObject == null));
-                    slot.Use(skillObject);
                     if ((bool)currentCastingCircle)
                     {
                         currentCastingCircle.FX.SetParent(null);
@@ -186,7 +197,7 @@ namespace SephiriaMod.Items
             }
 
             //Melon<Core>.Logger.Msg("waiting... " + castIntervalTimer.GetTimer());
-            if (slot != null && slot.HasAnyAmmo && !slot.CurrentUsing && castIntervalTimer.Update(Time.deltaTime))
+            if (slot != null && slot.HasAnyAmmo && !slot.CurrentUsing && castIntervalTimer.Update(Time.deltaTime) && !isInCooldown)
             {
                 isCasting = true;
                 SpriteFx spriteFx = string.IsNullOrEmpty(magicCharm.ContainedMagic.castingCircleOverride) ? SpriteFx.Pool.Spawn(ActiveSkillDatabase.FindCastingCircleByClass(magicCharm.ContainedMagic.GetMajorClass()), NetworkAvatar.transform.position + new Vector3(0f, 0.001f)) : SpriteFx.Pool.Spawn(magicCharm.ContainedMagic.castingCircleOverride, NetworkAvatar.transform.position + new Vector3(0f, 0.001f));

@@ -22,6 +22,10 @@ namespace SephiriaMod.Items
         private EquippedMagicInstance slot;
 
 
+        [Header("Cooldown")]
+        private bool isInCooldown;
+
+        private Timer cooldownTimer = new Timer(10f);
 
         public Timer castIntervalTimer = new Timer(4f);
 
@@ -158,15 +162,21 @@ namespace SephiriaMod.Items
             if (combo == null || combo is not ComboEffect_DarkCloud darkCloud || darkCloud.darkCloud < cloud.SafeRandomAccess(CurrentLevelToIdx()))
                 return;
 
+            if (isInCooldown && cooldownTimer.Update(Time.deltaTime))
+            {
+                isInCooldown = false;
+            }
             if (isCasting)
             {
-                if (currentCastingTimer.Update(Time.deltaTime))
+                if (currentCastingTimer.Update(Time.deltaTime) || NetworkAvatar.HasQuickCast())
                 {
                     isCasting = false;
-                    ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, false, null);
+                    isInCooldown = true;
+                    cooldownTimer.SetTimer(0f);
+                    cooldownTimer.time = magicCharm.NetworkcooldownTimeInThisCycle;
+                    magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, false, null);
                     player.GetSkillController().SetLastUsedMagicServerside(magicCharm);
                     //Melon<Core>.Logger.Msg("cast!" + (skillObject == null));
-                    slot.Use(skillObject);
                     if ((bool)currentCastingCircle)
                     {
                         currentCastingCircle.FX.SetParent(null);
@@ -187,7 +197,7 @@ namespace SephiriaMod.Items
             }
 
             //Melon<Core>.Logger.Msg("waiting... " + castIntervalTimer.GetTimer());
-            if (slot != null && slot.HasAnyAmmo && !slot.CurrentUsing && magicCharm.CanCast(magicCharm.NetworkAvatar, true, false) == ECanUseSkillResult.Succeeded)
+            if (slot != null && slot.HasAnyAmmo && !slot.CurrentUsing && magicCharm.CanCast(magicCharm.NetworkAvatar, true, false) == ECanUseSkillResult.Succeeded && !isInCooldown)
             {
                 if (castIntervalTimer.Update(Time.deltaTime))
                 {

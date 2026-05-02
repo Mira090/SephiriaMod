@@ -231,6 +231,12 @@ namespace SephiriaMod.Utilities
                 name.Initialize();
             }
         }
+        public static bool HasQuickCast(this UnitAvatar avatar)
+        {
+            if (avatar == null)
+                return false;
+            return avatar.GetCustomStatUnsafe("MAGICQUICKCAST") > 0;
+        }
 
         #region RPC Miracle Controller
 

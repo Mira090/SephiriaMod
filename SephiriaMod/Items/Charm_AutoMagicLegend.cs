@@ -16,9 +16,12 @@ namespace SephiriaMod.Items
 
         public Charm_Magic magicCharm;
 
-        private EquippedMagicInstance slot;
 
 
+        [Header("Cooldown")]
+        private bool isInCooldown;
+
+        private Timer cooldownTimer = new Timer(10f);
 
         public Timer castIntervalTimer = new Timer(4f);
 
@@ -71,11 +74,9 @@ namespace SephiriaMod.Items
         {
             NewItemOwnInstance newItemOwnInstance = NetworkAvatar.Inventory.FindItem(new ItemPosition(Item.XIdx, (sbyte)(Item.YIdx + offset)));
             magicCharm = null;
-            slot = null;
             if (newItemOwnInstance != null && (bool)newItemOwnInstance.Charm && newItemOwnInstance.Charm.IsEffectEnabled && newItemOwnInstance.Charm is Charm_Magic charm_Magic)
             {
                 magicCharm = charm_Magic;
-                slot = new EquippedMagicInstance(magicCharm);
             }
             Inventory.UpdatePing(Item.Position);
         }
@@ -152,15 +153,23 @@ namespace SephiriaMod.Items
                 return;
             }
 
+            //float num6 = (100f + magicCharm.AdditionalcooldownRecoverySpeed) / 100f;
+            var time = Time.deltaTime;
+            if (isInCooldown && cooldownTimer.Update(time))
+            {
+                isInCooldown = false;
+            }
             if (isCasting)
             {
-                if (currentCastingTimer.Update(Time.deltaTime))
+                if (currentCastingTimer.Update(Time.deltaTime) || NetworkAvatar.HasQuickCast())
                 {
                     isCasting = false;
-                    ActiveSkill skillObject = magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, true, null);
+                    isInCooldown = true;
+                    cooldownTimer.SetTimer(0f);
+                    cooldownTimer.time = magicCharm.NetworkcooldownTimeInThisCycle;
+                    magicCharm.FireCasting(NetworkAvatar.transform.position, castingPosition, TopdownActor.CenterYPos, 1, true, true, null);
                     player.GetSkillController().SetLastUsedMagicServerside(magicCharm);
                     //Melon<Core>.Logger.Msg("cast!" + (skillObject == null));
-                    slot.Use(skillObject);
                     if ((bool)currentCastingCircle)
                     {
                         currentCastingCircle.FX.SetParent(null);
@@ -172,13 +181,8 @@ namespace SephiriaMod.Items
                 return;
             }
 
-            if (slot != null)
-            {
-                slot.Update(0);
-            }
-
             //Melon<Core>.Logger.Msg("waiting... " + castIntervalTimer.GetTimer());
-            if (slot != null && slot.HasAnyAmmo && !slot.CurrentUsing && magicCharm.CanCast(magicCharm.NetworkAvatar, true, true) == ECanUseSkillResult.Succeeded)
+            if (magicCharm.CanCast(magicCharm.NetworkAvatar, true, true) == ECanUseSkillResult.Succeeded && !isInCooldown)
             {
                 if (castIntervalTimer.Update(Time.deltaTime))
                 {
