@@ -1,5 +1,9 @@
 # SephiriaMod
 
+## こちらは古いバージョンです！
+
+新しいバージョンは<a href="https://github.com/Mira090/MiraItemMod">こちら</a>です
+
 ## 📌 概要
 
 Team Horay の <a href="https://store.steampowered.com/app/2436940/_/">Sephiria</a> に50以上の新しいアーティファクトを追加する Mod です。
